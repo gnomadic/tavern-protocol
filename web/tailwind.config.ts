@@ -14,9 +14,13 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
-    colors: {
-      slate: '#00101C',
-    },
+    // colors: {
+      
+    //   white: '#FFFFFF',
+    //   offwhite: "#FEFEFE",
+
+    //   slate: '#00101C',
+    // },
     fontFamily: {
       roboto: ['Roboto Condensed', 'sans-serif'],
       anon: ['Anonymous Pro', 'monospace'],

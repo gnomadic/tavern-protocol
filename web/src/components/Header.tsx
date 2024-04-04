@@ -31,7 +31,7 @@ export default function Header() {
           </div>
 
           <nav>
-            <ul className='text-md text-offwhite hidden uppercase tracking-wider lg:flex lg:flex-wrap lg:gap-8'>
+            <ul className='text-sm text-offwhite hidden uppercase tracking-wider lg:flex lg:flex-wrap lg:gap-8'>
               {NavItems.map((element, i) => {
                 return (
                   <Fragment key={i}>
@@ -42,11 +42,9 @@ export default function Header() {
                         </div>
                       </Link>
                     </li>
-                    {i == NavItems.length - 1 ? (
-                      <></>
-                    ) : (
+                    
                       <div className='border-r-2' />
-                    )}
+                    
                   </Fragment>
                 );
               })}
@@ -55,10 +53,10 @@ export default function Header() {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://docs.twomoons.app"
+                  href="https://docs.playmint.app"
                 >
                   <div className="relative cursor-pointer">
-                    Whitepaper
+                    docs
                     <ArrowUpRightIcon
                       className="w-4 h-4 mb-1 -ml-1"
                       style={{ display: "inline" }}

@@ -7,7 +7,7 @@ import { Deployments } from '../domain/deployments';
 const useDeployment = () => {
   const { chain } = useAccount();
   const [deploy, setDeploy] = useState<Deployment>({
-    chainellationAddress: '0x0',
+    gameFactory: '0x0',
     displayName: 'playmint',
     currency: 'eth',
     decoAddress: '0x0',
@@ -17,11 +17,11 @@ const useDeployment = () => {
   useEffect(() => {
     console.log('Network Change detected to: ' + chain?.name);
     chain?.name &&
-      chain.name.toLowerCase() != deploy.chainellationAddress &&
+      chain.name.toLowerCase() != deploy.gameFactory &&
       Deployments.hasOwnProperty(chain.name.toLowerCase())
       ? setDeploy(Deployments[chain.name.toLowerCase()])
       : setDeploy(Deployments['playmint']);
-  }, [chain, deploy?.chainellationAddress]);
+  }, [chain, deploy?.gameFactory]);
 
   return { deploy };
 };

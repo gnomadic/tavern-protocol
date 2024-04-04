@@ -23,7 +23,7 @@ export default function Create() {
     const tokenId = formData.get('tokenId') as string
     const displayName = formData.get('displayName') as string
 
-    createGame(address, displayName);
+    createGame(address as Address, displayName);
 
   }
 

@@ -5,7 +5,7 @@ import "solady/utils/UUPSUpgradeable.sol";
 import "solady/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import {LibClone} from "solady/utils/LibClone.sol";
-import {IGame} from "./interfaces/IGame.sol";
+import {IGame, GameSummary} from "./interfaces/IGame.sol";
 
 contract GameFactory {
     address public gameContract;
@@ -28,7 +28,7 @@ contract GameFactory {
         games.push(IGame(game));
 
         // Emit an event for successful game creation
-        // emit GameCreated(game);
+        emit GameCreated(_gm, game);
     }
 
     //returns an array of size 10 always, but some items will be empty when returning a page without 10 items.
@@ -40,18 +40,22 @@ contract GameFactory {
         //     }
         // }else{
         for (uint8 i = startAt; i < games.length && i < (pageSize + startAt); i++) {
-            result[i] = GameSummary(address(games[i]), games[i].gm(), games[i].displayName());
+            result[i] = games[i].getSummary();// GameSummary(address(games[i]), games[i].gm(), games[i].displayName());
         }
         // }
 
         return result;
     }
 
-    struct GameSummary {
-        address game;
-        address gm;
-        string displayName;
+    function getGameCount() external view returns (uint256) {
+        return games.length;
     }
 
-    event GameCreated(address dm, address game);
+    // struct GameSummary {
+    //     address game;
+    //     address gm;
+    //     string displayName;
+    // }
+
+    event GameCreated(address gm, address game);
 }

@@ -2,11 +2,11 @@
 pragma solidity ^0.8.24;
 // Imports
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Initializable} from "solady/utils/Initializable.sol";
 
 import "./EntityFactory.sol";
-import {IGame, GameRoles} from "./interfaces/IGame.sol";
+import {IGame, GameRoles, GameSummary} from "./interfaces/IGame.sol";
 import {BasicEntity} from "./BasicEntity.sol";
 import {IModule} from "./interfaces/IModule.sol";
 import {DailyInteractionModule} from "./modules/DailyInteractionModule.sol";
@@ -30,6 +30,10 @@ contract Game is IGame, GameRoles, Initializable {
     function initialize(address _gm, string calldata _displayName) public initializer {
         gm = _gm;
         displayName = _displayName;
+    }
+
+    function getSummary() external view returns (GameSummary memory) {
+        return GameSummary(address(this), gm, displayName);
     }
 
     function addEntity(address entity) public {
@@ -62,7 +66,7 @@ contract Game is IGame, GameRoles, Initializable {
         //     if (availableEntityData[requiredStrings[i]] == address(0)) revert MissingProperty();
         // }
 
-        newModule.initialize(address(this));
+        newModule.initialize();
         modules.push(newModule);
     }
 

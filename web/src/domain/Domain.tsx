@@ -7,13 +7,3 @@ export type Deployment = {
 };
 
 export type Address = `0x${string}` | undefined;
-
-export type Decoration = {
-  address: Address;
-  name: string;
-};
-
-export type ColorSet = {
-  primary: number;
-  secondary: number;
-};

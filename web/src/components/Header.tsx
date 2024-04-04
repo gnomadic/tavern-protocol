@@ -2,31 +2,17 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import MobileNav from './MobileNav';
-import { ArrowUpRightIcon, GlobeAltIcon } from '@heroicons/react/20/solid';
+import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import { NavItems } from '../domain/Nav';
-import { Address, Deployment } from '../domain/Domain';
 import useDeployment from '../hooks/useDeployment';
-// import { headers } from 'next/headers';
 import { usePathname } from 'next/navigation'
 
 export default function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const { deploy } = useDeployment();
-  const [currentUrl, setCurrentUrl] = useState('');
-  const pathname = usePathname()
-  // const headersList = headers();
-  // const hostname = headersList.get('x-forwarded-host');
-  // const { value, setValue } = useContext(UserContext);
-
-  useEffect(() => {
-    // Check if the code is running on the client side
-    if (process) {
-      // Access the current page URL using window.location
-      setCurrentUrl(window.location.href);
-    }
-  }, []);
+  const pathname = usePathname();
 
   const handleMobileNavClick = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
@@ -65,7 +51,7 @@ export default function Header() {
                 );
               })}
 
-              {/* <li>
+              <li>
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
@@ -79,7 +65,7 @@ export default function Header() {
                     />
                   </div>
                 </a>
-              </li> */}
+              </li>
             </ul>
           </nav>
           <div className='flex'>

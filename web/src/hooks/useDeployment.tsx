@@ -1,8 +1,7 @@
 'use client';
-import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useContractRead, useAccount } from 'wagmi';
-import { Address, Deployment } from '../domain/Domain';
+import { useAccount } from 'wagmi';
+import { Deployment } from '../domain/Domain';
 import { Deployments } from '../domain/deployments';
 
 const useDeployment = () => {
@@ -15,26 +14,13 @@ const useDeployment = () => {
     chain: 'none',
   });
 
-  // const {
-  //   data: supply,
-  //   isError: isCurSupplyError,
-  //   isLoading: isCurSupplyLoading,
-  // } = useContractRead({
-  //   address: contractAddress,
-  //   abi: abi,
-  //   functionName: "currentSupply",
-  //   enabled: enabled != undefined ? enabled : true,
-  // });
-
-  // const [curSupply, setCurSupply] = useState(BigNumber.from(0));
-
   useEffect(() => {
-    console.log('index effect: ' + chain?.name);
+    console.log('useDeployment index effect: ' + chain?.name);
     chain?.name &&
-    chain.name.toLowerCase() != deploy.chainellationAddress &&
-    Deployments.hasOwnProperty(chain.name.toLowerCase())
+      chain.name.toLowerCase() != deploy.chainellationAddress &&
+      Deployments.hasOwnProperty(chain.name.toLowerCase())
       ? setDeploy(Deployments[chain.name.toLowerCase()])
-      : setDeploy(Deployments['chainellation']);
+      : setDeploy(Deployments['playmint']);
   }, [chain, deploy?.chainellationAddress]);
 
   return { deploy };

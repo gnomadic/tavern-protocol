@@ -5,6 +5,8 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 interface IGame {
     // function gm() external view returns (address);
+
+    function initialize(address _gm) external;
 }
 
 contract GameRoles is AccessControl {

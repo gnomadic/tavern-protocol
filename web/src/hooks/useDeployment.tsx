@@ -15,7 +15,7 @@ const useDeployment = () => {
   });
 
   useEffect(() => {
-    console.log('useDeployment index effect: ' + chain?.name);
+    console.log('Network Change detected to: ' + chain?.name);
     chain?.name &&
       chain.name.toLowerCase() != deploy.chainellationAddress &&
       Deployments.hasOwnProperty(chain.name.toLowerCase())

@@ -1,3 +1,5 @@
+import { Address } from "viem";
+
 export type Deployment = {
   chainellationAddress: Address;
   displayName: string;
@@ -6,4 +8,4 @@ export type Deployment = {
   chain: string;
 };
 
-export type Address = `0x${string}` | undefined;
+// export type Address = `0x${string}` | undefined;

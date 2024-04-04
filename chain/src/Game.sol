@@ -21,15 +21,14 @@ contract Game is IGame, GameRoles, Initializable {
 
     address public gm;
 
-    constructor() {
-        //TODO don't use msg.sender
-        gm = msg.sender;
-    }
-
     BasicEntity[] public entities;
     DailyInteractionModule[] public modules;
 
     mapping(string => address) public availableEntityData;
+
+    function initialize(address _gm) public initializer {
+        gm = _gm;
+    }
 
     function addEntity(address entity) public {
         BasicEntity newEntity = BasicEntity(entity);

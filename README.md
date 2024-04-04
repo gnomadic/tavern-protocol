@@ -1,9 +1,5 @@
-# RPG Protocol
+# PLAYMINT
 
-Our mission is to make web3 communities stronger.
+Our mission is to make communities stronger. Everything we do, we try to enable and empower existing communites and their members. We also believe in the power of play.
 
-We believe that playing games together strengthens communities.
-
-This is RPG-Protocol, enabling you to bring games to your existing communities.
-
-
+PLAYMINT is an on-chain game engine made for existing NFTs and their communities. Plug in your favorite NFT and launch your own game for your own community today.

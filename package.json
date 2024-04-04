@@ -1,8 +1,11 @@
 {
-  "dependencies": {
-    "ethers": "^6.11.1"
-  },
-  "devDependencies": {
-    "encoding": "^0.1.13"
-  }
+    "private": true,
+    "scripts": {
+        "build": "turbo run build"
+    },
+    "dependencies": {},
+    "packageManager": "pnpm@8.15.4",
+    "engines": {
+        "pnpm": "8.15.4"
+    }
 }

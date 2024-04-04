@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "ethers": "^6.11.1"
+  },
+  "devDependencies": {
+    "encoding": "^0.1.13"
   }
 }

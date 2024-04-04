@@ -20,14 +20,16 @@ contract Game is IGame, GameRoles, Initializable {
     // 4. expose state from the entities
 
     address public gm;
+    string public displayName;
 
     BasicEntity[] public entities;
     DailyInteractionModule[] public modules;
 
     mapping(string => address) public availableEntityData;
 
-    function initialize(address _gm) public initializer {
+    function initialize(address _gm, string calldata _displayName) public initializer {
         gm = _gm;
+        displayName = _displayName;
     }
 
     function addEntity(address entity) public {

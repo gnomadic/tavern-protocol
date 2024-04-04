@@ -4,9 +4,10 @@ pragma solidity ^0.8.24;
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 interface IGame {
-    // function gm() external view returns (address);
+    function gm() external view returns (address);
+    function displayName() external view returns (string memory);
 
-    function initialize(address _gm) external;
+    function initialize(address _gm, string calldata displayName) external;
 }
 
 contract GameRoles is AccessControl {

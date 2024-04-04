@@ -1,7 +1,7 @@
 import { Address } from "viem";
 
 export type Deployment = {
-  chainellationAddress: Address;
+  gameFactory: Address;
   displayName: string;
   currency: string;
   decoAddress: Address;

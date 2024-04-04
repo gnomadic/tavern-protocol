@@ -1,7 +1,14 @@
+'use client';
+
 import Header from '@/components/Header';
+import useCurrentGames from '@/hooks/useCurrentGames';
+import useCurrentSupply from '@/hooks/useCurrentGames';
 import Image from 'next/image';
+import { cursorTo } from 'readline';
 
 export default function Discover() {
+
+  const  { curSupply, isCurSupplyError } = useCurrentGames({contractAddress: "0x3eF20038Cca34663DEb65e6F42065C04385616b9", pageStart: 0})
   return (
     <main className='font-anon flex flex-col items-center p-40'>
 
@@ -9,6 +16,12 @@ export default function Discover() {
           <p> Explore Games that others have deployed </p>
           <p> Explore Modules that others have deployed and you can use for your games </p>
 
+
+<ul>
+{JSON.stringify(curSupply)}
+{/* {curSupply} */}
+
+</ul>
       {/* </section>
       <section id='connect' className='relative -mt-48 items-center'>
     

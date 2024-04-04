@@ -14,21 +14,31 @@ const abi = [
   {
     "type": "function",
     "name": "createGame",
-    "inputs": [],
+    "inputs": [
+      {
+        "name": "_gm",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "displayName",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
     "outputs": [],
     "stateMutability": "nonpayable"
   },
 ];
 
 
-
-
-
-const useCreateGame =  ({
+const useCreateGame = ({
   contractAddress,
+
   // enabled,
 }: {
   contractAddress: Address;
+
   // enabled?: boolean | undefined;
 }) => {
 
@@ -53,17 +63,16 @@ const useCreateGame =  ({
 
   // const { writeContract } = useWriteContract()
 
-  const writeToChain = async () => {
+  const writeToChain = async (gm: Address, displayName: string) => {
 
     writeContract({
       abi,
       address: contractAddress,
       functionName: 'createGame',
-      // args: [
-      //   '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-      //   '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-      //   123n,
-      // ],
+      args: [
+        gm,
+        displayName,
+      ],
     })
   };
 

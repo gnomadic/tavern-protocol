@@ -4,26 +4,51 @@ import { Address } from "viem";
 
 const abi = [
   {
-    inputs: [],
-    name: "currentSupply",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
+        "internalType": "uint8",
+        "name": "startAt",
+        "type": "uint8"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "name": "getGames",
+    "outputs": [
+      {
+        "internalType": "struct GameFactory.GameSummary[10]",
+        "name": "result",
+        "type": "tuple[10]",
+        "components": [
+          {
+            "internalType": "address",
+            "name": "game",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "gm",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "displayName",
+            "type": "string"
+          }
+        ]
+      }
+    ]
   },
 ];
 
-const useCurrentSupply = ({
+const useCurrentGames = ({
   contractAddress,
-  enabled,
+  pageStart,
+  // enabled,
 }: {
   contractAddress: Address;
-  enabled?: boolean | undefined;
+  pageStart: number;
+  // enabled?: boolean | undefined;
 }) => {
   const {
     data: supply,
@@ -32,19 +57,22 @@ const useCurrentSupply = ({
   } = useContractRead({
     address: contractAddress,
     abi: abi,
-    functionName: "currentSupply",
+    functionName: "getGames",
+    args: [
+      pageStart
+    ]
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [curSupply, setCurSupply] = useState(BigInt(0));
+  const [curSupply, setCurSupply] = useState();
 
   useEffect(() => {
     if (supply) {
-      setCurSupply(BigInt(supply as number));
+      setCurSupply(supply);
     }
   }, [supply]);
 
   return { curSupply, isCurSupplyError };
 };
 
-export default useCurrentSupply;
+export default useCurrentGames;

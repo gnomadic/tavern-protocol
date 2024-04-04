@@ -10,3 +10,6 @@
 [submodule "chain/lib/openzeppelin-contracts"]
 	path = chain/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "chain/lib/ERC721A"]
+	path = chain/lib/ERC721A
+	url = https://github.com/chiru-labs/ERC721A

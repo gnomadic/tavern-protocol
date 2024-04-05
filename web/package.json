@@ -21,6 +21,7 @@
     "framer-motion": "^11.0.24",
     "jotai": "^2.7.2",
     "next": "14.1.4",
+    "obscenity": "^0.2.1",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",
     "react": "^18",

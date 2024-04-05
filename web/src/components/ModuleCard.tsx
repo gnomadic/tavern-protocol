@@ -1,20 +1,20 @@
-import { GameSummary } from '@/domain/Domain';
+import { GameSummary, ModuleSummary } from '@/domain/Domain';
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import { censor, pretty } from '../domain/utils';
 
 
-type GameCardProps = {
-  gameSummary: GameSummary;
+type ModuleCardProps = {
+  moduleSummary: ModuleSummary;
 }
 
-export default function GameCard(props: GameCardProps) {
+export default function ModuleCard(props: ModuleCardProps) {
   return (
     <div className='justify-center bg-slate-800'>
       <div className='text-5xl pl-5 pt-3'>
-        {censor(props.gameSummary.displayName)}
+        {censor(props.moduleSummary.displayName)}
       </div>
       <div className='pt-12 pl-2 pb-2'>
-        created by: {pretty(props.gameSummary.gm)}
+        provides: {props.moduleSummary.functions}
       </div>
     </div>
   );

@@ -57,10 +57,10 @@ PLAYMINT is compatible with a wide range of NFTs. As long as your NFT has public
 
 PLAYMINT offers a fun and interactive way to engage your community members. It allows you to create shared experiences centered around your NFTs and foster stronger connections.
 
-### What are the monetization options for Playmint games?
+### What are the monetization options for PLAYMINT games?
 
 We're still figuring this out!  Of course your NFT projects are yours to monetize, but that has nothing to do with PLAYMINT.  
 
-### Where can I learn more about building games with Playmint?
+### Where can I learn more about building games with PLAYMINT?
 
 We're just getting started!  [Join our discord](https://discord.gg/2rdEHsPZHN) and [reach out on warpcast](https://warpcast.com/playmint)!

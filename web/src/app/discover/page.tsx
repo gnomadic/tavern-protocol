@@ -2,7 +2,8 @@
 
 import GameCard from '@/components/GameCard';
 import Header from '@/components/Header';
-import { GameSummary } from '@/domain/Domain';
+import ModuleCard from '@/components/ModuleCard';
+import { GameSummary, ModuleSummary } from '@/domain/Domain';
 import useCurrentGames from '@/hooks/useCurrentGames';
 import useCurrentSupply from '@/hooks/useCurrentGames';
 import useCurrentModules from '@/hooks/useCurrentModules';
@@ -21,37 +22,39 @@ export default function Discover() {
   const { currentModules, currentModulesError } = useCurrentModules({ deploy: deploy, pageStart: 0 })
 
   return (
-    <main className='font-anon flex flex-col items-center p-40'>
+    <main className='font-anon flex  items-center pt-40 px-24'>
 
-      <section id='hero' className='relative  items-center pt-8'>
+      <section id='hero' className='pt-8'>
         <p> Explore Games that others have deployed </p>
 
         <p> There are {gameCount}  </p>
         <ul>
-          {JSON.stringify(currentGames)}
+          {/* {JSON.stringify(currentGames)} */}
           {/* {curSupply} */}
 
         </ul>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
           {Array.from({ length: currentGames?.length }).map((object, i) => {
             // {Array.from({ length: currentGames?.length }).map((object, i) => {
-              
-            return (
-              <div key={i} className="pt-8">
-                {/* <Divider /> */}
-                <GameCard
-                  gameSummary={currentGames[i] as GameSummary}
-                // gameSummary=currentGames[i]
-                // deploy={props.deploy}
-                // id={NFTids[i]}
-                // address={props.address}
-                // onClick={(curImage: string | StaticImageData) => {
-                //   handleViewerClick(curImage);
-                // }}
-                />
-              </div>
-            );
+            if (currentGames[i].game !== '0x0000000000000000000000000000000000000000') {
+              return (
+                <div key={i} className="pt-8">
+
+                  {/* <Divider /> */}
+                  <GameCard
+                    gameSummary={currentGames[i] as GameSummary}
+                  // gameSummary=currentGames[i]
+                  // deploy={props.deploy}
+                  // id={NFTids[i]}
+                  // address={props.address}
+                  // onClick={(curImage: string | StaticImageData) => {
+                  //   handleViewerClick(curImage);
+                  // }}
+                  />
+                </div>
+              );
+            }
           })}
         </div>
 
@@ -61,14 +64,35 @@ export default function Discover() {
         <br />
         <br />
         <br />
-        <p> Explore Modules that others have deployed and you can use for your games </p>
+        <p> Explore Modules in the registry that you can use for your games </p>
         <p> There are {moduleCount} </p>
 
-        <ul>
-          {JSON.stringify(currentModules)}
-          {/* {curSupply} */}
 
-        </ul>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
+          {Array.from({ length: currentModules?.length }).map((object, i) => {
+            // {Array.from({ length: currentGames?.length }).map((object, i) => {
+            if (currentModules[i].module !== '0x0000000000000000000000000000000000000000') {
+              return (
+                <div key={i} className="pt-8">
+
+
+                  {/* <Divider /> */}
+                  <ModuleCard
+
+                    moduleSummary={currentModules[i] as ModuleSummary}
+                  // gameSummary=currentGames[i]
+                  // deploy={props.deploy}
+                  // id={NFTids[i]}
+                  // address={props.address}
+                  // onClick={(curImage: string | StaticImageData) => {
+                  //   handleViewerClick(curImage);
+                  // }}
+                  />
+                </div>
+              );
+            }
+          })}
+        </div>
         {/* </section>
       <section id='connect' className='relative -mt-48 items-center'>
     

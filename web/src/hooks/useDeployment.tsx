@@ -6,13 +6,7 @@ import { Deployments } from '../domain/deployments';
 
 const useDeployment = () => {
   const { chain } = useAccount();
-  const [deploy, setDeploy] = useState<Deployment>({
-    gameFactory: '0x0',
-    displayName: 'playmint',
-    currency: 'eth',
-    decoAddress: '0x0',
-    chain: 'none',
-  });
+  const [deploy, setDeploy] = useState<Deployment>(Deployments['playmint']);
 
   useEffect(() => {
     console.log('Network Change detected to: ' + chain?.name);

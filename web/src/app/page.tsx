@@ -22,7 +22,7 @@ export default function Home() {
         <br />
         <p>
           Our mission is to make communities stronger. Everything we do, we try
-          to enable and empower existing communites and their members. We also
+          to enable and empower existing communities and their members. We also
           believe in the power of play.
           <br />
           <br />

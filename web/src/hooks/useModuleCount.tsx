@@ -6,7 +6,7 @@ import { Deployment } from "@/domain/Domain";
 const abi = [
   {
     "type": "function",
-    "name": "getGameCount",
+    "name": "getModuleCount",
     "inputs": [],
     "outputs": [
         {
@@ -19,35 +19,34 @@ const abi = [
 },
 ];
 
-const useGameCount = ({
+const useModuleCount = ({
   deploy,
   
   // enabled,
 }: {
   deploy: Deployment;
-  
   // enabled?: boolean | undefined;
 }) => {
   const {
     data: supply,
-    isError: gameCountError,
+    isError: moduleCountError,
     isLoading: isCurSupplyLoading,
   } = useContractRead({
-    address: deploy.gameFactory,
+    address: deploy.moduleRegistry,
     abi: abi,
-    functionName: "getGameCount"
+    functionName: "getModuleCount"
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [gameCount, setGameCount] = useState<string>();
+  const [moduleCount, setModuleCount] = useState<string>();
 
   useEffect(() => {
     if (supply) {
-      setGameCount(BigInt(supply as string).toString());
+      setModuleCount(BigInt(supply as string).toString());
     }
-  }, [supply, gameCountError, isCurSupplyLoading]);
+  }, [supply]);
 
-  return { gameCount, gameCountError };
+  return { moduleCount, moduleCountError };
 };
 
-export default useGameCount;
+export default useModuleCount;

@@ -5,44 +5,45 @@ import { Deployment } from "@/domain/Domain";
 
 const abi = [
   {
+    "type": "function",
+    "name": "getModules",
     "inputs": [
       {
-        "internalType": "uint8",
         "name": "startAt",
-        "type": "uint8"
+        "type": "uint8",
+        "internalType": "uint8"
       }
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "name": "getGames",
     "outputs": [
       {
-        "internalType": "struct GameFactory.GameSummary[10]",
         "name": "result",
         "type": "tuple[10]",
+        "internalType": "struct ModuleSummary[10]",
         "components": [
           {
-            "internalType": "address",
-            "name": "game",
-            "type": "address"
+            "name": "module",
+            "type": "address",
+            "internalType": "address"
           },
           {
-            "internalType": "address",
-            "name": "gm",
-            "type": "address"
+            "name": "functions",
+            "type": "string[]",
+            "internalType": "string[]"
           },
           {
-            "internalType": "string",
-            "name": "displayName",
-            "type": "string"
+            "name": "required",
+            "type": "string[]",
+            "internalType": "string[]"
           }
         ]
       }
-    ]
+    ],
+    "stateMutability": "view"
   },
 ];
 
-const useCurrentGames = ({
+
+const useCurrentModules = ({
   deploy,
   pageStart,
   // enabled,
@@ -53,27 +54,27 @@ const useCurrentGames = ({
 }) => {
   const {
     data: supply,
-    isError: currentGamesError,
+    isError: currentModulesError,
     isLoading: isCurSupplyLoading,
   } = useContractRead({
-    address: deploy.gameFactory,
+    address: deploy.moduleRegistry,
     abi: abi,
-    functionName: "getGames",
+    functionName: "getModules",
     args: [
       pageStart
     ]
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [currentGames, setCurrentGames] = useState<any>();
+  const [currentModules, setCurrentModules] = useState<any>();
 
   useEffect(() => {
     if (supply) {
-      setCurrentGames(supply);
+      setCurrentModules(supply);
     }
   }, [supply]);
 
-  return { currentGames, currentGamesError };
+  return { currentModules, currentModulesError };
 };
 
-export default useCurrentGames;
+export default useCurrentModules;

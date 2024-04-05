@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build":"forge build",
-    "deploy:sep":"forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv"
+    "deploy:sep":"forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv",
+    "deployd20:sep":"forge script script/deploy/DeployD20.s.sol:DeployD20 --rpc-url sepolia --broadcast --verify -vvvv"
   },
   "repository": {
     "type": "git",

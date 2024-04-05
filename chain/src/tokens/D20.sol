@@ -1,25 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC721A} from "lib/erc721a/contracts/ERC721A.sol";
 
-contract D20 {
-    function initialize(address _gm, string calldata displayName) external;
+contract D20 is ERC721A {
 
-    function getSummary() external view returns (GameSummary memory);
-}
-
-contract GameRoles is AccessControl {
-    // bytes32 public constant DM_ROLE = keccak256("DM_ROLE");
-    // bytes32 public constant PLAYER_ROLE = keccak256("PLAYER_ROLE");
-
-    // constructor() {
-    //     _grantRole(DM_ROLE, msg.sender);
-    // }
-}
-
-  struct GameSummary {
-        address game;
-        address gm;
-        string displayName;
+   constructor() ERC721A("PLAYMINT D20", "D20") {
+        
     }
+
+    function mint() public {
+        _mint(msg.sender, 1);
+    }
+
+}

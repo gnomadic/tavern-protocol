@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import {Initializable} from "solady/utils/Initializable.sol";
+
+import {BasicEntity} from "../BasicEntity.sol";
 import {IEntity} from "../interfaces/IEntity.sol";
 import {IModule, ModuleSummary} from "../interfaces/IModule.sol";
 import {IGame} from "../interfaces/IGame.sol";
 import {Game} from "../Game.sol";
-import {BasicEntity} from "../BasicEntity.sol";
-import {Initializable} from "solady/utils/Initializable.sol";
 
 contract DailyInteractionModule is IModule, Initializable {
     // ok so this contract will

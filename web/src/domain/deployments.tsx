@@ -2,32 +2,36 @@ import { Deployment } from './Domain';
 
 export const Deployments: { [key: string]: Deployment } = {
   ethereum: {
-    gameFactory: '0x3eF20038Cca34663DEb65e6F42065C04385616b9',
-    decoAddress: '0x0',
+    gameFactory: '0xd6f7BEe9Ae01FA1415562375c79D20521FcD8F2C',
+    d20: '0x86a18411F90eD0958088D8Fc398564e101719dF0',
+    moduleRegistry: '0x0',
     displayName: 'playmint',
     currency: 'eth',
     chain: 'ethereum',
   },
   polygon: {
-    gameFactory: '0x3eF20038Cca34663DEb65e6F42065C04385616b9',
-    decoAddress: '0xf7dC791b5219e134B28E4ce10A55E61b6f44b33b',
+    gameFactory: '0xd6f7BEe9Ae01FA1415562375c79D20521FcD8F2C',
+    d20: '0x86a18411F90eD0958088D8Fc398564e101719dF0',
+    moduleRegistry: '0x0',
     displayName: 'playmint',
     currency: 'matic',
     chain: 'polygon',
   },
   sepolia: {
-    gameFactory: '0x3eF20038Cca34663DEb65e6F42065C04385616b9',
-    decoAddress: '0x1CD9235af08caDfefdD7284B745174321CdD5cB9',
+    gameFactory: '0xd6f7BEe9Ae01FA1415562375c79D20521FcD8F2C',
+    d20: '0x86a18411F90eD0958088D8Fc398564e101719dF0',
+    moduleRegistry: '0x6A28A455c2579c80C1C4bd47Eb230554974E42BB',
     displayName: 'playmint',
     currency: 'eth',
     chain: 'sepolia',
   },
   playmint: {
-    gameFactory: '0x3eF20038Cca34663DEb65e6F42065C04385616b9',
-    decoAddress: '0x0',
+    gameFactory: '0xd6f7BEe9Ae01FA1415562375c79D20521FcD8F2C',
+    d20: '0x86a18411F90eD0958088D8Fc398564e101719dF0',
+    moduleRegistry: '0x0',
     displayName: 'playmint',
     currency: 'eth',
-    chain: 'none',
+    chain: 'disconnected',
   },
 };
 

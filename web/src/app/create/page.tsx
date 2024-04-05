@@ -1,6 +1,7 @@
 'use client';
 
 import Header from '@/components/Header';
+import useDeployment from '@/hooks/useDeployment';
 import useCreateGame from '@/mutations/useCreateGame';
 import Image from 'next/image';
 import { Address } from 'viem';
@@ -10,8 +11,9 @@ import { BaseError, useWriteContract, useWaitForTransactionReceipt, useAccount }
 
 export default function Create() {
 
+  const { deploy } = useDeployment();
   const { address } = useAccount()
-  const { hash, error, isPending, writeToChain: createGame } = useCreateGame({ contractAddress: '0x3eF20038Cca34663DEb65e6F42065C04385616b9' });
+  const { hash, error, isPending, writeToChain: createGame } = useCreateGame({ contractAddress: deploy.gameFactory });
 
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -40,7 +42,7 @@ export default function Create() {
         <p className=''>1.  Choose gameplay.</p>
         <p className=''>2.  Choose NFTs.</p>
         <p className=''>3.  Deploy.</p>
-
+        {/* <p>deploy: {JSON.stringify(deploy, null, 2)}</p> */}
         <form onSubmit={handleSubmit} className='pt-8'>
           {/* <input name="tokenId" placeholder="69420" required className='text-slate-900' /> */}
           <p>
@@ -50,7 +52,7 @@ export default function Create() {
           <button className="pl-4"
             disabled={isPending}
             type="submit">
-            {isPending ? 'Confirming...' : 'Mint'}
+            {isPending ? 'Confirming...' : `Deploy on ${deploy.chain}`}
           </button>
           </p>
           {hash && <div>Transaction Hash: {hash}</div>}
@@ -59,6 +61,7 @@ export default function Create() {
           {error && (
             <div>Error: {(error as BaseError).shortMessage || error.message}</div>
           )}
+          
         </form>
 
 

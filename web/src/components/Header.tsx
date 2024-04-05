@@ -37,8 +37,9 @@ export default function Header() {
                   <Fragment key={i}>
                     <li key={i}>
                       <Link href={element.href}>
-                        <div className={"relative cursor-pointer " + (pathname.includes(element.label) ? "underline" : "")}>
-                          {element.label} <span>{pathname.includes(element.label) ? 'together' : ''}</span>
+                        <div className={"relative cursor-pointer " + (pathname.includes(element.label) ? "underline underline-offset-8" : "")}>
+                        {element.label} 
+                          {/* {element.label} <span>{pathname.includes(element.label) ? 'together' : ''}</span> */}
                         </div>
                       </Link>
                     </li>

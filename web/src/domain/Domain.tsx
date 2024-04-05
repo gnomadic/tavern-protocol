@@ -9,4 +9,15 @@ export type Deployment = {
   chain: string;
 };
 
-// export type Address = `0x${string}` | undefined;
+export type GameSummary = {
+  gameAddress: Address;
+  gm: Address;
+  displayName: string;
+}
+
+export type ModuleSummary = {
+  moduleAddress: Address;
+  functions: string[];
+  requiredProperties: string[];
+  displayName: string;
+}

@@ -1,6 +1,8 @@
 'use client';
 
+import GameCard from '@/components/GameCard';
 import Header from '@/components/Header';
+import { GameSummary } from '@/domain/Domain';
 import useCurrentGames from '@/hooks/useCurrentGames';
 import useCurrentSupply from '@/hooks/useCurrentGames';
 import useCurrentModules from '@/hooks/useCurrentModules';
@@ -31,11 +33,34 @@ export default function Discover() {
 
         </ul>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+          {Array.from({ length: currentGames?.length }).map((object, i) => {
+            // {Array.from({ length: currentGames?.length }).map((object, i) => {
+              
+            return (
+              <div key={i} className="pt-8">
+                {/* <Divider /> */}
+                <GameCard
+                  gameSummary={currentGames[i] as GameSummary}
+                // gameSummary=currentGames[i]
+                // deploy={props.deploy}
+                // id={NFTids[i]}
+                // address={props.address}
+                // onClick={(curImage: string | StaticImageData) => {
+                //   handleViewerClick(curImage);
+                // }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <p> Explore Modules that others have deployed and you can use for your games </p>
         <p> There are {moduleCount} </p>
 

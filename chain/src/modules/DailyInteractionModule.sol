@@ -27,7 +27,7 @@ contract DailyInteractionModule is IModule, Initializable {
     }
 
     function getSummary() external view override returns (ModuleSummary memory) {
-        return ModuleSummary(address(this), functions, required);
+        return ModuleSummary(address(this), functions, required, displayName);
     }
 
     function dailyInteraction(Game game, uint256 tokenId) public {

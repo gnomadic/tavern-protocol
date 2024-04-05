@@ -27,4 +27,5 @@ struct ModuleSummary {
     address module;
     string[] functions;
     string[] required;
+    string displayName;
 }

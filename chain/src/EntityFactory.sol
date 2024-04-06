@@ -7,7 +7,7 @@ import {Initializable} from "solady/utils/Initializable.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {IGame, GameSummary} from "./interfaces/IGame.sol";
-import {BasicEntity} from "./BasicEntity.sol";
+import {UnOptNumberEntity721} from "./UnOptNumberEntity721.sol";
 
 contract EntityFactory { //} is UUPSUpgradeable, Roles, Initializable {
     // contract GameFactory {
@@ -27,22 +27,18 @@ contract EntityFactory { //} is UUPSUpgradeable, Roles, Initializable {
         entityContract = _entityContract;
     }
 
+
+    // HOOK
     function createEntity(
         address _game,
         string calldata _displayName,
         address _nft,
-        string[] calldata stringKeys,
         string[] calldata numberKeys
-    ) public returns (address) {
-        // Deploy a minimal proxy clone of the Game contract
-        // address game = LibClone.deployProxy(gameContract, abi.encodeWithSelector(IGame.initialize.selector, nftContract, tokenId));
+    ) external returns (address) {
         address entity = LibClone.clone(entityContract);
-        BasicEntity basicEntity = BasicEntity(entity);
+        UnOptNumberEntity721 basicEntity = UnOptNumberEntity721(entity);
         basicEntity.initialize(_game, _displayName, _nft);
         
-        for (uint8 i = 0; i < stringKeys.length; i++) {
-            basicEntity.createString(stringKeys[i]);
-        }
         for (uint8 i = 0; i < numberKeys.length; i++) {
             basicEntity.createNumber(numberKeys[i]);
         }

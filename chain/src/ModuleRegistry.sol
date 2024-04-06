@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-// import "solady/utils/UUPSUpgradeable.sol";
 import {Initializable} from "solady/utils/Initializable.sol";
-// import "@openzeppelin/contracts/access/AccessControl.sol";
-// import {LibClone} from "solady/utils/LibClone.sol";
-// import {IGame} from "./interfaces/IGame.sol";
+
 import {IModule, ModuleSummary} from "./interfaces/IModule.sol";
 
 contract ModuleRegistry is Initializable {
@@ -26,8 +23,6 @@ contract ModuleRegistry is Initializable {
         for (uint8 i = startAt; i < registryKeys.length && i < (pageSize + startAt); i++) {
             result[i] = registryKeys[i].getSummary();
         }
-   
-
         return result;
     }
 

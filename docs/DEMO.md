@@ -6,12 +6,11 @@ PLAYMINT started as a hackathon project, and it shows.
 
 1. Get [Sepolia testnet eth from a faucet](\(https:/sepolia-faucet.pk910.de/\)/) in your wallet
 2. [mint a free D7 NFT on Sepolia](https://sepolia.etherscan.io/token/0x43b7d111d966e482bff3b908fa1ffe6d2e78f37a?a=0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3#writeContract#F2)
-3. [Visit the Demo Game](https://playmint.app/game/0xaC539051BB9d3889F933E83f37A483d5C364c618)
+3. [Visit the Demo Game](http://localhost:3000/game/0xd362776F706b8E72525e3291e5433A695ECBefA7)
 4. Scroll down to the bottom, and you'll see this information which shows three things.  The Games address is first, beneath that is the module contracts providing game functionality, and lastly is the entity contracts providing game data.\
    ![](<.gitbook/assets/Screenshot 2024-04-06 at 12.19.55 AM.png>)
 5. Open Sepolia etherscan, and you can visit the contract for the module's functionality.  Here, you can call Write functions on the contract.  Note the function name in the screenshot, and call that function passing in your Game's address and the token ID of the D7 NFT you minted in your wallet.
-6. Open Sepolia etherscan, and you can visit the contract for the entity's data storage.  Here, you can call Read  functions on the contract.  Find the `getNumber` function, and pass in the token ID of the D7 NFT you minted as well as the function name from this section.  \
-   \
+6. Open Sepolia etherscan, and you can visit the contract for the entity's data storage.  Here, you can call Read  functions on the contract.  Find the `getNumber` function, and pass in the token ID of the D7 NFT you minted as well as the function name from this section.  
 
 
 ### Create a game

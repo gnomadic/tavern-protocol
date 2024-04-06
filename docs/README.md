@@ -2,7 +2,7 @@
 
 ## Our Mission:
 
-PLAYMINT empowers communities and their members by enabling the creation of codeless Web3 games built around existing NFTs. We believe in the power of play to foster stronger connections and shared experiences.
+We believe in the power of play to foster stronger connections and shared experiences.  PLAYMINT empowers communities and their members by enabling the creation of codeless Web3 games built around existing NFTs. 
 
 ## What is PLAYMINT?
 
@@ -14,15 +14,15 @@ PLAYMINT utilizes a powerful combination of established game engine architecture
 
 ### Entity-Component Architecture:
 
-Every game is built upon entities, which store all the necessary data associated with in-game objects or characters.
+Every game is built upon entities and modules.  
 
-These entities are linked to on-chain NFTs, allowing for true ownership and transparent data storage.
+Entities store all the necessary stateful data associated with in-game objects or characters.  These entities are linked to on-chain NFTs, allowing for true ownership and transparent data storage.
 
-### Modular Design:
+Interchangeable modules handle specific gameplay mechanics (e.g., combat, crafting, resource management).  This modularity allows for customization and the creation of diverse game experiences.  There is an on-chian registry of all available modules, and Solidity developers can use our interfaces to build their own gameplay modules. 
 
-Games are composed of interchangeable modules that handle specific gameplay mechanics (e.g., combat, crafting, resource management).
+### Proxy Clones and Stateless modules
 
-This modularity allows for customization and the creation of diverse game experiences.
+A Game and it's Entities are on-chain contracts deployed as 1167 Proxies through a factory.  This allows anyone to create new games and entities by simply submitting transactions.  Gameplay modules are different, they are deployed once on chain and reused across all Games.  This approach allows us to have an onchain registry of all available modules any game can use.  
 
 ## What are the core features:
 

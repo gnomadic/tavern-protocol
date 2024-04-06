@@ -2,20 +2,19 @@
 pragma solidity ^0.8.24;
 
 import {Test, console} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
-import {BasicEntity} from "../src/BasicEntity.sol";
+import {UnOptNumberEntity721} from "../src/UnOptNumberEntity721.sol";
 import {Game} from "../src/Game.sol";
 import {MockNFT} from "./MockNFT.sol";
 
 contract CounterTest is Test {
     MockNFT public nft;
-    BasicEntity public entity;
+    UnOptNumberEntity721 public entity;
     Game public game;
 
     function setUp() public {
         nft = new MockNFT();
         game = new Game();
-        entity = new BasicEntity();
+        entity = new UnOptNumberEntity721();
         entity.initialize(address(game), "test", address(nft));
 
         nft.mint(address(0xdeadbeef), 1);

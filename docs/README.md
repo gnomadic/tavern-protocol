@@ -1,7 +1,3 @@
----
-layout: landing
----
-
 # PLAYMINT
 
 ## Our Mission:

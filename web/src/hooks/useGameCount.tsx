@@ -39,7 +39,7 @@ const useGameCount = ({
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [gameCount, setGameCount] = useState<string>();
+  const [gameCount, setGameCount] = useState<string>("0");
 
   useEffect(() => {
     if (supply) {

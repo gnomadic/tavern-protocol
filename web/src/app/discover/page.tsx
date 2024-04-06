@@ -25,7 +25,7 @@ export default function Discover() {
     <main className='font-anon flex  items-center pt-40 px-24'>
 
       <section id='hero' className='pt-8'>
-        <p> Explore Games that others have deployed </p>
+        <p> Explore Games that others have deployed on {deploy.chain} </p>
 
         <p> There are {gameCount}  </p>
         <ul>
@@ -66,8 +66,8 @@ export default function Discover() {
         <br />
         <br />
         <br />
-        <p> Explore Modules in the registry that you can use for your games </p>
-        <p> There are {moduleCount} </p>
+        <p> Explore Modules in the registry that you can use for your games on {deploy.chain}</p>
+        <p> There are {moduleCount}  </p>
 
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>

@@ -38,7 +38,7 @@ const useModuleCount = ({
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [moduleCount, setModuleCount] = useState<string>();
+  const [moduleCount, setModuleCount] = useState<string>("0");
 
   useEffect(() => {
     if (supply) {

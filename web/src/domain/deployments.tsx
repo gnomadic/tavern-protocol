@@ -35,7 +35,7 @@ export const Deployments: { [key: string]: Deployment } = {
     moduleRegistry: '0x0',
     displayName: 'playmint',
     currency: 'eth',
-    chain: 'disconnected',
+    chain: '( -disconnected-  Connect your wallet! )',
   },
 };
 

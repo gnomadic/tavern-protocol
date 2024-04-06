@@ -11,7 +11,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build":"forge build",
     "deploy:sep":"forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv",
-    "verify:sep":"forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --verify -vvvv",
     "deploydice:sep":"forge script script/deploy/DeployDice.s.sol:DeployDice --rpc-url sepolia --broadcast --verify -vvvv",
     "abi":"cp out/Game.sol/Game.json ../web/src/domain/abi/raw/Game.json && cp out/GameFactory.sol/GameFactory.json ../web/src/domain/abi/raw/GameFactory.json && cp out/ModuleRegistry.sol/ModuleRegistry.json ../web/src/domain/abi/raw/ModuleRegistry.json && cp out/EntityFactory.sol/EntityFactory.json ../web/src/domain/abi/raw/EntityFactory.json"
   },

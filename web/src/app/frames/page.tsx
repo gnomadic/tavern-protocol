@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     openGraph: {
       title: 'mintit.gg',
       description: 'MINT',
-      images: ['https://farcaster-frame-test-74o6.vercel.app/mint.png'],
+      images: ['https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6'],
     },
     other: {
       ...getFrameMetadata({
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
             label: "say hi",
             target: "url"
           }],
-          image: 'https://farcaster-frame-test-74o6.vercel.app/mint.png',
-          post_url: 'https://farcaster-frame-test-74o6.vercel.app/frame',
+          image: 'https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6',
+          post_url: 'https://playmint.app/frames',
           
       }),
     },

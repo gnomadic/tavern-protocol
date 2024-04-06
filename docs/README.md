@@ -10,11 +10,11 @@ PLAYMINT empowers communities and their members by enabling the creation of code
 
 ## What is PLAYMINT?
 
-PLAYMINT is a revolutionary on-chain game engine designed specifically for breathing life into existing NFTs and their communities. With PLAYMINT, you can easily create and deploy engaging games that leverage your community's NFTs as playable characters or valuable in-game assets.
+PLAYMINT is an on-chain game engine designed specifically for breathing life into existing NFTs and their communities. With PLAYMINT, you can easily create and deploy engaging games that leverage your community's NFTs as playable characters or valuable in-game assets.
 
 ## How does PLAYMINT work?
 
-PLAYMINT utilizes a powerful combination of established game engine architecture and cutting-edge Web3 modularity.
+PLAYMINT utilizes a powerful combination of established game engine architecture and modern Web3 modular protocols.
 
 ### Entity-Component Architecture:
 

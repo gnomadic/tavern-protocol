@@ -11,6 +11,8 @@ contract GameFactory {
     address public gameContract;
     IGame[] public games;
 
+
+//TODO probalby don't need this because of update function
     function initialize(address _gameContract) public {
         gameContract = _gameContract;
     }

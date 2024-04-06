@@ -1,6 +1,7 @@
 import { GameSummary, ModuleSummary } from '@/domain/Domain';
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import { censor, pretty } from '../domain/utils';
+import Link from 'next/link';
 
 
 type ModuleCardProps = {
@@ -9,6 +10,7 @@ type ModuleCardProps = {
 
 export default function ModuleCard(props: ModuleCardProps) {
   return (
+    <Link href={`/module/${props.moduleSummary.moduleAddress}`}>
     <div className='justify-center bg-slate-800'>
       <div className='text-5xl pl-5 pt-3'>
         {censor(props.moduleSummary.displayName)}
@@ -17,5 +19,6 @@ export default function ModuleCard(props: ModuleCardProps) {
         provides: {props.moduleSummary.functions}
       </div>
     </div>
+    </Link>
   );
 }

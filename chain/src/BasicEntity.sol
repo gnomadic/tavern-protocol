@@ -24,24 +24,22 @@ contract BasicEntity {
 
     IERC721 public nft;
     Game public game;
+    string public displayName;
 
-    constructor(address _nft) {
+    // constructor(address _nft) {
+    //     // nft = IERC721(_nft);
+    // }
+
+    function initialize(address _game, string memory _displayName, address _nft) public {
+        game = Game(_game);
+        displayName = _displayName;
         nft = IERC721(_nft);
     }
 
-    function initialize(address _game) public {
-        game = Game(_game);
-
-        // TODO can we define the entity here hmmmmm
-        // no because NFT doesn't exist in the protocol.
-        // BasicEntity entity = BasicEntity(address(this));
-
-    }
-
     mapping(uint256 => mapping(string => string)) private strings;
-    string[] private stringKeys;
+    string[] public stringKeys;
     mapping(uint256 => mapping(string => uint256)) private numbers;
-    string[] private numberKeys;
+    string[] public numberKeys;
 
     function assertOwnership(uint256 tokenId, address player) external view {
         if (nft.ownerOf(tokenId) != player) revert NotTheHolder();
@@ -52,12 +50,12 @@ contract BasicEntity {
     }
 
     function updateString(uint256 tokenId, string memory key, string memory value) external {
-        if (msg.sender != address(game)) revert OnlyGame();
+        // if (msg.sender != address(game)) revert OnlyGame();
         strings[tokenId][key] = value;
     }
 
     function createString(string memory key) external {
-        if (msg.sender != address(game)) revert OnlyGame();
+        // if (msg.sender != address(game)) revert OnlyGame();
         stringKeys.push(key);
     }
 
@@ -66,12 +64,12 @@ contract BasicEntity {
     }
 
     function updateNumber(uint256 tokenId, string memory key, uint256 value) external {
-        if (msg.sender != address(game)) revert OnlyGame();
+        // if (msg.sender != address(game)) revert OnlyGame();
         numbers[tokenId][key] = value;
     }
 
     function createNumber(string memory key) external {
-        if (msg.sender != address(game)) revert OnlyGame();
+        // if (msg.sender != address(game)) revert OnlyGame();
         numberKeys.push(key);
     }
 

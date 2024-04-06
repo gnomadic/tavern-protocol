@@ -3,7 +3,7 @@
 import GameCard from '@/components/GameCard';
 import Header from '@/components/Header';
 import ModuleCard from '@/components/ModuleCard';
-import { GameSummary, ModuleSummary } from '@/domain/Domain';
+import { GameSummary, ModuleSummary, gameSummary } from '@/domain/Domain';
 import useCurrentGames from '@/hooks/useCurrentGames';
 import useCurrentSupply from '@/hooks/useCurrentGames';
 import useCurrentModules from '@/hooks/useCurrentModules';
@@ -40,10 +40,12 @@ export default function Discover() {
             if (currentGames[i].game !== '0x0000000000000000000000000000000000000000') {
               return (
                 <div key={i} className="pt-8">
-
+                  {/* <div>{JSON.stringify(currentGames[i])}</div> */}
                   {/* <Divider /> */}
                   <GameCard
-                    gameSummary={currentGames[i] as GameSummary}
+                    gameSummary={gameSummary(currentGames[i])}
+
+                  // currentGames[i] as GameSummary}
                   // gameSummary=currentGames[i]
                   // deploy={props.deploy}
                   // id={NFTids[i]}
@@ -75,6 +77,7 @@ export default function Discover() {
               return (
                 <div key={i} className="pt-8">
 
+                  <div>{JSON.stringify(currentModules[i])}</div>
 
                   {/* <Divider /> */}
                   <ModuleCard

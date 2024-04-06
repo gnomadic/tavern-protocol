@@ -15,8 +15,8 @@ contract CounterTest is Test {
     function setUp() public {
         nft = new MockNFT();
         game = new Game();
-        entity = new BasicEntity(address(nft));
-        entity.initialize(address(game));
+        entity = new BasicEntity();
+        entity.initialize(address(game), "test", address(nft));
 
         nft.mint(address(0xdeadbeef), 1);
     }

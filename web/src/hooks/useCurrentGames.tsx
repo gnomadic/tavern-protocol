@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 import { Address } from "viem";
 import { Deployment } from "@/domain/Domain";
+import { GameFactoryABI } from "@/domain/abi/GameFactory";
 
-const abi = [
+const abix = [
   {
     "inputs": [
       {
@@ -57,7 +58,7 @@ const useCurrentGames = ({
     isLoading: isCurSupplyLoading,
   } = useContractRead({
     address: deploy.gameFactory,
-    abi: abi,
+    abi: GameFactoryABI,
     functionName: "getGames",
     args: [
       pageStart

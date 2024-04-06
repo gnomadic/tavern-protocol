@@ -9,28 +9,7 @@
 import { useEffect, useState } from "react";
 import { Address, WriteContractErrorType } from "viem";
 import { BaseError, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-
-const abi = [
-  {
-    "type": "function",
-    "name": "createGame",
-    "inputs": [
-      {
-        "name": "_gm",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "displayName",
-        "type": "string",
-        "internalType": "string"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-];
-
+import { GameFactoryABI } from "@/domain/abi/GameFactory";
 
 const useCreateGame = ({
   contractAddress,
@@ -41,32 +20,32 @@ const useCreateGame = ({
 
   // enabled?: boolean | undefined;
 }) => {
-
-  const [hash, setHash] = useState<`0x${string}` | undefined>();
-  const [error, setError] = useState<Error>();
-  const [isPending, setIsPending] = useState<boolean>();
+  const [createGameHash, setCreateGameHash] = useState<`0x${string}` | undefined>();
+  const [createGameError, setCreateGameError] = useState<Error>();
+  const [createGameisPending, setCreateGameisPending] = useState<boolean>();
 
   const { data, error: err, isPending: pending, writeContract } = useWriteContract()
 
 
   useEffect(() => {
     if (data) {
-      setHash(data);
+      setCreateGameHash(data);
     }
     if (err) {
-      setError(err);
+      console.log(err)
+      setCreateGameError(err);
     }
     if (pending) {
-      setIsPending(pending);
+      setCreateGameisPending(pending);
     }
   }, [data, err, pending]);
 
   // const { writeContract } = useWriteContract()
 
-  const writeToChain = async (gm: Address, displayName: string) => {
+  const writeCreateGameToChain = async (gm: Address, displayName: string) => {
 
     writeContract({
-      abi,
+      abi: GameFactoryABI,
       address: contractAddress,
       functionName: 'createGame',
       args: [
@@ -76,7 +55,7 @@ const useCreateGame = ({
     })
   };
 
-  return { hash, error, isPending, writeToChain };
+  return { createGameHash, createGameError, createGameisPending, writeCreateGameToChain };
 
 
 

@@ -7,7 +7,8 @@ import {GameFactory} from "../../src/GameFactory.sol";
 import {Game} from "../../src/Game.sol";
 import {ModuleRegistry} from "../../src/ModuleRegistry.sol";
 import {DailyInteractionModule} from "../../src/modules/DailyInteractionModule.sol";
-
+import {BasicEntity} from "../../src/BasicEntity.sol";
+import {EntityFactory} from "../../src/EntityFactory.sol";
 // # To deploy and verify the PLAYMINT protocol run this command below
 // forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployProtocol is Script {
@@ -22,10 +23,12 @@ contract DeployProtocol is Script {
         factory.initialize(address(game));
 
         ModuleRegistry registry = new ModuleRegistry();
-
         DailyInteractionModule dailyInteraction = new DailyInteractionModule();
-
         registry.register(address(dailyInteraction));
+
+        BasicEntity basicEntity = new BasicEntity();
+        EntityFactory entityFactory = new EntityFactory();
+        entityFactory.updateEntityContract(address(basicEntity));
 
         vm.stopBroadcast();
     }

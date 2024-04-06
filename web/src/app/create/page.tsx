@@ -2,6 +2,7 @@
 
 import Header from '@/components/Header';
 import useDeployment from '@/hooks/useDeployment';
+import useCreateEntity from '@/mutations/useCreateEntity';
 import useCreateGame from '@/mutations/useCreateGame';
 import Image from 'next/image';
 import { Address } from 'viem';
@@ -13,10 +14,13 @@ export default function Create() {
 
   const { deploy } = useDeployment();
   const { address } = useAccount()
-  const { hash, error, isPending, writeToChain: createGame } = useCreateGame({ contractAddress: deploy.gameFactory });
+  // const { hash, error, isPending, writeToChain: createGame } = useCreateGame({ contractAddress: deploy.gameFactory });
+  const { createGameHash, createGameError, createGameisPending, writeCreateGameToChain } = useCreateGame({ contractAddress: deploy.gameFactory });
+  const { createEntityHash, createEntityError, createEntityisPending, writeCreateEntityToChain } = useCreateEntity({ contractAddress: deploy.entityFactory });
+  // const { registerModule, registerModuleGameError, registerModuleisPending, writeRegisterModule } = useRegisterModule({contractAddress: deploy.});
 
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleCreateGame(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     console.log('submit form');
 
@@ -25,15 +29,14 @@ export default function Create() {
     const tokenId = formData.get('tokenId') as string
     const displayName = formData.get('displayName') as string
 
-    createGame(address as Address, displayName);
+    writeCreateGameToChain(address as Address, displayName);
 
   }
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
-      hash,
-    })
-
+      hash: createGameHash
+    });
 
   return (
     <main className='font-anon flex flex-col items-center p-40'>
@@ -43,25 +46,26 @@ export default function Create() {
         <p className=''>2.  Choose NFTs.</p>
         <p className=''>3.  Deploy.</p>
         {/* <p>deploy: {JSON.stringify(deploy, null, 2)}</p> */}
-        <form onSubmit={handleSubmit} className='pt-8'>
+        <form onSubmit={handleCreateGame} className='pt-8'>
+          <div className='text-3xl py-8'>create a Game</div>
           {/* <input name="tokenId" placeholder="69420" required className='text-slate-900' /> */}
           <p>
-          <input name="displayName" placeholder="My New Game" required className='text-slate-900' />
+            <input name="displayName" placeholder="My New Game" required className='text-slate-900' />
           </p>
           <p>
-          <button className="pl-4"
-            disabled={isPending}
-            type="submit">
-            {isPending ? 'Confirming...' : `Deploy on ${deploy.chain}`}
-          </button>
+            <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
+              disabled={createGameisPending}
+              type="submit">
+              {createGameisPending ? 'Confirming...' : `Deploy game on ${deploy.chain}`}
+            </button>
           </p>
-          {hash && <div>Transaction Hash: {hash}</div>}
+          {createGameHash && <div>Transaction Hash: {createGameHash}</div>}
           {isConfirming && <div>Waiting for confirmation...</div>}
           {isConfirmed && <div>Transaction confirmed.</div>}
-          {error && (
-            <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+          {createGameError && (
+            <div>Error: {(createGameError as BaseError).shortMessage || createGameError.message}</div>
           )}
-          
+
         </form>
 
 

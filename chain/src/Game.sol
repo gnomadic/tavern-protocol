@@ -6,7 +6,8 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Initializable} from "solady/utils/Initializable.sol";
 
 import "./EntityFactory.sol";
-import {IGame, GameRoles, GameSummary} from "./interfaces/IGame.sol";
+import {IGame, GameRoles, GameSummary, AddressKey} from "./interfaces/IGame.sol";
+import {EntityFactory} from "./EntityFactory.sol";
 import {BasicEntity} from "./BasicEntity.sol";
 import {IModule} from "./interfaces/IModule.sol";
 import {DailyInteractionModule} from "./modules/DailyInteractionModule.sol";
@@ -20,12 +21,17 @@ contract Game is IGame, GameRoles, Initializable {
     // 4. expose state from the entities
 
     address public gm;
+    // EntityFactory public entityFactory;
     string public displayName;
 
     BasicEntity[] public entities;
     DailyInteractionModule[] public modules;
 
     mapping(string => address) public availableEntityData;
+    AddressKey[] dataKeys;
+
+    mapping(string => address) public availableFunctions;
+    AddressKey[] functionKeys;
 
     function initialize(address _gm, string calldata _displayName) public initializer {
         gm = _gm;
@@ -33,10 +39,10 @@ contract Game is IGame, GameRoles, Initializable {
     }
 
     function getSummary() external view returns (GameSummary memory) {
-        return GameSummary(address(this), gm, displayName);
+        return GameSummary(address(this), gm, displayName, functionKeys, dataKeys);
     }
 
-    function addEntity(address entity) public {
+    function addEntity(address entity) external {
         BasicEntity newEntity = BasicEntity(entity);
         // string[] memory availableStrings = newEntity.getAvailableStrings();
         // string[] memory availableNumbers = newEntity.getAvailableNumbers();
@@ -50,9 +56,30 @@ contract Game is IGame, GameRoles, Initializable {
         //     availableEntityData[availableNumbers[i]] = entity;
         // }
 
-        newEntity.initialize(address(this));
+        string[] memory entityStrings = newEntity.getAvailableStrings();
+        for (uint8 i = 0; i < entityStrings.length; i++) {
+            dataKeys.push(AddressKey(entity, entityStrings[i]));
+            availableEntityData[entityStrings[i]] = entity;
+        }
+        string[] memory entityNumbers = newEntity.getAvailableNumbers();
+        for (uint8 i = 0; i < entityNumbers.length; i++) {
+            dataKeys.push(AddressKey(entity, entityNumbers[i]));
+            availableEntityData[entityNumbers[i]] = entity;
+        }
+
+        // newEntity.initialize(address(this));
         entities.push(newEntity);
     }
+
+
+
+
+
+    // function prepareEntityNumbers(address toPrepare, string[] calldata toAdd) external {
+    //     for (uint8 i = 0; i < toAdd.length; i++) {
+    //         BasicEntity(toPrepare).createNumber(toAdd[i]);
+    //     }
+    // }
 
     error PropertyAlreadyExists();
     error MissingProperty();
@@ -66,6 +93,11 @@ contract Game is IGame, GameRoles, Initializable {
         //     if (availableEntityData[requiredStrings[i]] == address(0)) revert MissingProperty();
         // }
 
+        string[] memory moduleFunctions = newModule.getProvidedFunctions();
+        for (uint8 i = 0; i < moduleFunctions.length; i++) {
+            functionKeys.push(AddressKey(module, moduleFunctions[i]));
+            availableFunctions[moduleFunctions[i]] = module;
+        }
         newModule.initialize();
         modules.push(newModule);
     }
@@ -80,6 +112,10 @@ contract Game is IGame, GameRoles, Initializable {
         BasicEntity targetEntity = BasicEntity(availableEntityData[key]);
         targetEntity.assertOwnership(tokenId, player);
         targetEntity.updateString(tokenId, key, value);
+    }
+
+    function registerEntityData(address entity, string memory key) public {
+        availableEntityData[key] = entity;
     }
 
     function getOwnedNumber(address player, uint256 tokenId, string memory key) public view returns (uint256) {

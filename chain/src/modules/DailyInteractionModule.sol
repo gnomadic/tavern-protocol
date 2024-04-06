@@ -15,7 +15,7 @@ contract DailyInteractionModule is IModule, Initializable {
 
     string public displayName = "Daily Interaction";
     string[] required = ["dailyAction", "lastActionAt"];
-    string[] functions = ["dailyInteraction"];
+    string[] public functions = ["dailyInteraction"];
     // Game public game;
 
     function getRequiredStrings() public view returns (string[] memory) {
@@ -24,6 +24,7 @@ contract DailyInteractionModule is IModule, Initializable {
 
     function initialize() external override {
         // game = Game(_game);
+
     }
 
     function getSummary() external view override returns (ModuleSummary memory) {
@@ -37,6 +38,10 @@ contract DailyInteractionModule is IModule, Initializable {
         uint256 dailyActions = game.getOwnedNumber(msg.sender, tokenId, "dailyActions");
         game.setOwnedNumber(msg.sender, tokenId, "dailyActions", dailyActions + 1);
         game.setOwnedNumber(msg.sender, tokenId, "lastActionAt", block.timestamp);
+    }
+
+    function getProvidedFunctions() external view returns (string[] memory){
+        return functions;
     }
 
     // get lastActionAt from game, whatever entity has it and require ownership

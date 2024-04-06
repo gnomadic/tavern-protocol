@@ -7,6 +7,9 @@ interface IGame {
     function initialize(address _gm, string calldata displayName) external;
 
     function getSummary() external view returns (GameSummary memory);
+
+        function addEntity(address entity) external ;
+
 }
 
 contract GameRoles is AccessControl {
@@ -22,4 +25,11 @@ contract GameRoles is AccessControl {
         address game;
         address gm;
         string displayName;
+        AddressKey[] availableFunctions;
+        AddressKey[] availableData;
+    }
+
+    struct AddressKey {
+        address Address;
+        string Key;
     }

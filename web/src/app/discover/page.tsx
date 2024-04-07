@@ -44,6 +44,7 @@ export default function Discover() {
                   {/* <Divider /> */}
                   <GameCard
                     gameSummary={gameSummary(currentGames[i])}
+                    deployment={deploy}
 
                   // currentGames[i] as GameSummary}
                   // gameSummary=currentGames[i]

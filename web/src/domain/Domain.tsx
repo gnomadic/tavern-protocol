@@ -8,6 +8,7 @@ export type Deployment = {
   displayName: string;
   currency: string;
   chain: string;
+  chainId: string;
 };
 
 export type GameSummary = {
@@ -18,7 +19,6 @@ export type GameSummary = {
 }
 
 // {"game":"0xEACdAb1Cb337892009EE150Cf3F12A94Df8b4DF5","gm":"0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3","displayName":"GM"}
-
 export function gameSummary(gameJson: any): GameSummary{
    return {
     gameAddress: gameJson["game"] as Address,
@@ -32,4 +32,16 @@ export type ModuleSummary = {
   functions: string[];
   requiredProperties: string[];
   displayName: string;
+}
+
+
+// frames
+export const QUERY_ACTION = "action";
+export const QUERY_GAME = "game";
+export const ACTION_HELLO = "hello"
+
+
+export type FrameGameData  = {
+  summary: GameSummary;
+  
 }

@@ -27,6 +27,7 @@ export const Deployments: { [key: string]: Deployment } = {
     displayName: 'playmint',
     currency: 'eth',
     chain: 'sepolia',
+    chainId: "11155111",
   },
   playmint: {
     gameFactory: '0x0',
@@ -36,6 +37,7 @@ export const Deployments: { [key: string]: Deployment } = {
     displayName: 'playmint',
     currency: 'eth',
     chain: '( -disconnected-  Connect your wallet! )',
+    chainId: "1",
   },
 };
 

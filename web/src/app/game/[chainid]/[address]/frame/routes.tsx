@@ -20,12 +20,12 @@ export async function POST(
   { params }: { params: { slug: string } }
 ) {
     const action = request.nextUrl.searchParams.get(QUERY_ACTION);
-    const game = request.nextUrl.searchParams.get(QUERY_GAME);
-    if (!action || !game) {
+    // const game = request.nextUrl.searchParams.get(QUERY_GAME);
+    if (!action) {
       return new NextResponse('action or game query params are invalid!', { status: 400 });
     }
 
-    if (action === ACTION_HELLO){
+    // if (action === ACTION_HELLO){
         return new ImageResponse((
             <div style={{
               display: 'flex',
@@ -42,7 +42,7 @@ export async function POST(
               </div>
             </div>
           ), {width: 600, height: 400});
-    }
+    // }
 }
 
 

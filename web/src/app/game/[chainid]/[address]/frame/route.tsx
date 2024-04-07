@@ -1,5 +1,5 @@
 import { ACTION_HELLO, QUERY_ACTION, QUERY_GAME } from "@/domain/Domain";
-import { getFrameMessage } from "@coinbase/onchainkit";
+import { getFrameHtmlResponse, getFrameMessage } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
 
@@ -27,7 +27,15 @@ export async function POST(
     //   return new NextResponse('action or game query params are invalid!', { status: 400 });
     // }
 
-    return new NextResponse("hi");
+    return new NextResponse(    getFrameHtmlResponse({
+      buttons: [
+        {
+          label: `We love BOAT`,
+        },
+      ],
+      image: 'https://cyan-fiscal-mackerel-412.mypinata.cloud/ipfs/QmbuoqRAJKXrZb2f1yvCxZUmj4YyXqfhC1iTXVpWRPvF1s',
+      postUrl: 'http://localhost:3000/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame?action=hi',
+    }),);
 
     // if (action === ACTION_HELLO){
         // return new ImageResponse((

@@ -15,17 +15,25 @@ export type GameSummary = {
   gameAddress: Address;
   gm: Address;
   displayName: string;
-
+  availableFunctions: AddressKey[];
+  availableData: AddressKey[];
 }
 
-// {"game":"0xEACdAb1Cb337892009EE150Cf3F12A94Df8b4DF5","gm":"0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3","displayName":"GM"}
-export function gameSummary(gameJson: any): GameSummary{
-   return {
-    gameAddress: gameJson["game"] as Address,
-    gm: gameJson["gm"] as Address,
-    displayName: gameJson["displayName"] as string
-   }
+export type AddressKey = {
+  Address: Address;
+  Key: string;
 }
+
+
+
+// // {"game":"0xEACdAb1Cb337892009EE150Cf3F12A94Df8b4DF5","gm":"0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3","displayName":"GM"}
+// export function gameSummary(gameJson: any): GameSummary{
+//    return {
+//     gameAddress: gameJson["game"] as Address,
+//     gm: gameJson["gm"] as Address,
+//     displayName: gameJson["displayName"] as string
+//    }
+// }
 
 export type ModuleSummary = {
   moduleAddress: Address;

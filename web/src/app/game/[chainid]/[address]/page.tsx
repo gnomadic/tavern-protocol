@@ -5,8 +5,8 @@ import StepThree from '@/components/game/StepThree';
 import StepTwo from '@/components/game/StepTwo';
 import { Address } from 'viem';
 import { Metadata, ResolvingMetadata } from 'next';
-import { headers } from "next/headers";
 import { getFrameMetadata } from '@coinbase/onchainkit';
+import { getGameSummary } from '@/services/viem';
 
 interface Params {
   chainid: string;
@@ -26,11 +26,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { chainid, address } = params;
   const { action } = searchParams;
-  const headersList = headers();
 
-  //https://playmint-git-frames-gnomadics-projects.vercel.app/frames/api
-  const postURL = "http://localhost:3000/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame?action=hi";
-  // const postURL = "https://playmint-git-frames-gnomadics-projects.vercel.app/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame?action=hi";
+  const postURL = `${process.env.NEXT_PUBLIC_URL}/game/${chainid}/${address}/frame?action=${action}`;
+  const gameSummary = await getGameSummary(params.chainid, params.address as Address)
+  console.log(gameSummary)
 
   return {
     title: 'PLAYMINT GAME FRAME',
@@ -44,11 +43,12 @@ export async function generateMetadata({
       ...getFrameMetadata({
         buttons: [{
           action: "post",
-          label: "say hi",
-          target: "url"
+          label: `${gameSummary.availableFunctions[0].Key}`,
+          target: `${postURL}`
         }],
         image: 'https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6',
-        post_url: `${postURL}`,
+        // post_url: 'http://localhost:3000/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame?action=hi',
+        // postUrl: 'https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6',
 
       }),
     },

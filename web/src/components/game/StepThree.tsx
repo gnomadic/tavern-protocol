@@ -1,7 +1,6 @@
 "use client"
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import { Address } from 'viem';
-import { BaseError } from 'viem/_types';
 import Divider from '../Divider';
 import useGameSummary from '@/hooks/useGameSummary';
 

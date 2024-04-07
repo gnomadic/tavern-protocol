@@ -99,7 +99,7 @@ export async function generateMetadata({
   const headersList = headers();
 
   //https://playmint-git-frames-gnomadics-projects.vercel.app/frames/api
-  const postURL = "";
+  const postURL = "https://playmint-git-frames-gnomadics-projects.vercel.app/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame?action=hi";
 
   return {
     title: 'PLAYMINT GAME FRAME',

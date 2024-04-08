@@ -26,10 +26,10 @@ export default function StepThree(props: StepThreeProps) {
       <div> Your Game is at: {gameSummary?.game} </div>
       <div className='pt-4'> Your game offers the following functions at the following addresses: </div>
       <ul>
-        {Array.from({ length: gameSummary?.availableFunctions.length }).map((object: any, i) => {
+        {Array.from({ length: gameSummary?.availableFunctions.length ?? 0}).map((object: any, i) => {
           return <li className='pt-2' key={i}>
-            <p>address:  {gameSummary.availableFunctions[i].Address}</p>
-            <p>function Name:  {gameSummary.availableFunctions[i].Key}</p>
+            <p>address:  {gameSummary!.availableFunctions[i].Address}</p>
+            <p>function Name:  {gameSummary!.availableFunctions[i].Key}</p>
           </li>
 
         })}
@@ -37,10 +37,10 @@ export default function StepThree(props: StepThreeProps) {
 
       <div className='pt-4'> Your game offers the following character stats at the following addresses:</div>
       <ul>
-        {Array.from({ length: gameSummary?.availableData.length }).map((object: any, i) => {
+        {Array.from({ length: gameSummary?.availableData.length ?? 0 }).map((object: any, i) => {
           return <li className='pt-2' key={i}>
-            <p>address:  {gameSummary.availableData[i].Address}</p>
-            <p>function Name:  {gameSummary.availableData[i].Key}</p>
+            <p>address:  {gameSummary!.availableData[i].Address}</p>
+            <p>function Name:  {gameSummary!.availableData[i].Key}</p>
           </li>
 
         })}

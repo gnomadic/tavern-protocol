@@ -11,7 +11,6 @@ import useDeployment from '@/hooks/useDeployment';
 import useGameCount from '@/hooks/useGameCount';
 import useModuleCount from '@/hooks/useModuleCount';
 import Image from 'next/image';
-import { cursorTo } from 'readline';
 
 export default function Discover() {
 
@@ -44,7 +43,7 @@ export default function Discover() {
                   {/* <Divider /> */}
                   <GameCard
                     // gameSummary={gameSummary(currentGames[i])}
-                    gameSummary = {currentGames[i]}
+                    gameSummary={currentGames[i]}
                     deployment={deploy}
 
                   // currentGames[i] as GameSummary}

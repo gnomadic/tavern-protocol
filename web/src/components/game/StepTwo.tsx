@@ -20,7 +20,7 @@ export default function StepTwo(props: StepTwoProps) {
     <section>
 
       <div className='pt-36'>
-        Step 2: Next, we create an entity and associate it with an NFT.  This button is uses the D7 NFT but any NFT will work.
+        Step 2: Next, we create an entity and associate it with an NFT.  This button uses the D7 NFT but any NFT will work.
       </div>
       <div>
         <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"

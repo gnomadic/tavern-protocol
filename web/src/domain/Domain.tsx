@@ -12,7 +12,7 @@ export type Deployment = {
 };
 
 export type GameSummary = {
-  gameAddress: Address;
+  game: Address;
   gm: Address;
   displayName: string;
   availableFunctions: AddressKey[];

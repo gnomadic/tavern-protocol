@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 import { Address } from "viem";
-import { Deployment } from "@/domain/Domain";
-import { GameABI } from "@/domain/abi/Game";
+import { Deployment, GameSummary } from "@/domain/Domain";
+import { GameABI } from "@/domain/abi/GameABI";
 
 
 const useGameSummary = ({
@@ -25,11 +25,11 @@ const useGameSummary = ({
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [gameSummary, setGameSummary] = useState<any>();
+  const [gameSummary, setGameSummary] = useState<GameSummary>();
 
   useEffect(() => {
     if (data) {
-      setGameSummary(data);
+      setGameSummary(data as GameSummary);
     }
   }, [data]);
 

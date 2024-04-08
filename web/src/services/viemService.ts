@@ -1,5 +1,5 @@
 import { GameSummary } from '@/domain/Domain';
-import { GameABI } from '@/domain/abi/Game';
+import { GameABI } from '@/domain/abi/GameABI';
 import { Address, Chain, PublicClient, createPublicClient, http } from 'viem'
 import { sepolia } from 'viem/chains'
 
@@ -36,6 +36,17 @@ export async function getGameSummary(chainId: string, gameAddress: Address) : Pr
     })
 
     return data as GameSummary; 
+}
+
+export async function prepareTx(){
+    
+    const client = getClient();
+
+    const data = await client.prepareTransactionRequest({
+        chain: sepolia as Chain,
+
+    })
+    return data;
 }
 
 

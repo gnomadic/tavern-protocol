@@ -6,7 +6,8 @@ import StepTwo from '@/components/game/StepTwo';
 import { Address } from 'viem';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getFrameMetadata } from '@coinbase/onchainkit';
-import { getGameSummary } from '@/services/viem';
+import { getGameSummary } from '@/services/viemService';
+import Play from '@/components/game/Play';
 
 interface Params {
   chainid: string;
@@ -29,7 +30,10 @@ export async function generateMetadata({
 
   const postURL = `${process.env.NEXT_PUBLIC_URL}/game/${chainid}/${address}/frame?action=${action}`;
   const gameSummary = await getGameSummary(params.chainid, params.address as Address)
-  console.log(gameSummary)
+  // console.log(gameSummary)
+
+const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].Key : "no modules!"
+
 
   return {
     title: 'PLAYMINT GAME FRAME',
@@ -43,13 +47,10 @@ export async function generateMetadata({
       ...getFrameMetadata({
         buttons: [{
           action: "post",
-          label: `${gameSummary.availableFunctions[0].Key}`,
+          label: `${buttonLabels}`,
           target: `${postURL}`
         }],
         image: 'https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6',
-        // post_url: 'http://localhost:3000/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame?action=hi',
-        // postUrl: 'https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6',
-
       }),
     },
   };
@@ -101,6 +102,11 @@ export default function Game({ params }: { params: { address: string } }) {
       <StepOne gameAddress={params.address as Address} />
       <StepTwo gameAddress={params.address as Address} />
       <StepThree gameAddress={params.address as Address} />
+
+      <section className='py-20'>
+        <Divider />
+      </section>
+      <Play gameAddress={params.address as Address} />
       {/* <div className='pt-12'>
           Step 1: First, we choose the gameplay modules we want in our game.  There is a public registry, and right now only one available module.
         </div>

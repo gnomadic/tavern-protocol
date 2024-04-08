@@ -9,8 +9,8 @@
 import { useEffect, useState } from "react";
 import { Address, WriteContractErrorType } from "viem";
 import { BaseError, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { GameFactoryABI } from "@/domain/abi/GameFactory";
-import { GameABI } from "@/domain/abi/Game";
+// import { GameFactoryABI } from "@/domain/abi/GameFactory";
+import { GameABI } from "@/domain/abi/GameABI";
 
 
 const useRegisterModule = ({

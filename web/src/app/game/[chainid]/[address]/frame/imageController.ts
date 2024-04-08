@@ -15,5 +15,13 @@
 
 // }
 
+export  function getFrameImage(action: string) {
+
+    
+
+
+}
+
+
 
 

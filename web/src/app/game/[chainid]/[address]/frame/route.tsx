@@ -6,17 +6,6 @@ import { getBlockNumber, getGameSummary } from "@/services/viemService";
 import { Address } from "viem";
 
 
-// export async function POST(request: NextRequest) {
-//     const body = await request.json();
-//     const { isValid, message } = await getFrameMessage(body);
-//     if (!isValid || !message) {
-//       return new NextResponse('Frame Message is invalid!', { status: 400 });
-//     }
-
-//     let ethAddress = message.interactor.verified_addresses;
-// }
-
-
 function prepareTxPayload(chainid: string, gameAddress: string, gameSummary: GameSummary, action: string) {
 
   const gameFunction = gameSummary.availableFunctions.find((e) => { e.Key === action })

@@ -3,7 +3,7 @@
 import GameCard from '@/components/GameCard';
 import Header from '@/components/Header';
 import ModuleCard from '@/components/ModuleCard';
-import { GameSummary, ModuleSummary, gameSummary } from '@/domain/Domain';
+import { GameSummary, ModuleSummary } from '@/domain/Domain';
 import useCurrentGames from '@/hooks/useCurrentGames';
 import useCurrentSupply from '@/hooks/useCurrentGames';
 import useCurrentModules from '@/hooks/useCurrentModules';
@@ -11,7 +11,6 @@ import useDeployment from '@/hooks/useDeployment';
 import useGameCount from '@/hooks/useGameCount';
 import useModuleCount from '@/hooks/useModuleCount';
 import Image from 'next/image';
-import { cursorTo } from 'readline';
 
 export default function Discover() {
 
@@ -43,7 +42,9 @@ export default function Discover() {
                   {/* <div>{JSON.stringify(currentGames[i])}</div> */}
                   {/* <Divider /> */}
                   <GameCard
-                    gameSummary={gameSummary(currentGames[i])}
+                    // gameSummary={gameSummary(currentGames[i])}
+                    gameSummary={currentGames[i]}
+                    deployment={deploy}
 
                   // currentGames[i] as GameSummary}
                   // gameSummary=currentGames[i]

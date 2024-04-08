@@ -1,41 +1,9 @@
 import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 import { Address } from "viem";
-import { Deployment } from "@/domain/Domain";
-import { GameABI } from "@/domain/abi/Game";
+import { Deployment, GameSummary } from "@/domain/Domain";
+import { GameABI } from "@/domain/abi/GameABI";
 
-const abix = [
-  {
-    "type": "function",
-    "name": "getSummary",
-    "inputs": [],
-    "outputs": [
-        {
-            "name": "",
-            "type": "tuple",
-            "internalType": "struct GameSummary",
-            "components": [
-                {
-                    "name": "game",
-                    "type": "address",
-                    "internalType": "address"
-                },
-                {
-                    "name": "gm",
-                    "type": "address",
-                    "internalType": "address"
-                },
-                {
-                    "name": "displayName",
-                    "type": "string",
-                    "internalType": "string"
-                }
-            ]
-        }
-    ],
-    "stateMutability": "view"
-},
-];
 
 const useGameSummary = ({
   address,
@@ -57,11 +25,11 @@ const useGameSummary = ({
     // enabled: enabled != undefined ? enabled : true,
   });
 
-  const [gameSummary, setGameSummary] = useState<any>();
+  const [gameSummary, setGameSummary] = useState<GameSummary>();
 
   useEffect(() => {
     if (data) {
-      setGameSummary(data);
+      setGameSummary(data as GameSummary);
     }
   }, [data]);
 

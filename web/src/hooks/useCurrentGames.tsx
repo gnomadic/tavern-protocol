@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 import { Address } from "viem";
-import { Deployment } from "@/domain/Domain";
-import { GameFactoryABI } from "@/domain/abi/GameFactory";
+import { Deployment, GameSummary } from "@/domain/Domain";
+import { GameFactoryABI } from "@/domain/abi/GameABI";
 
 const abix = [
   {
@@ -70,7 +70,13 @@ const useCurrentGames = ({
 
   useEffect(() => {
     if (supply) {
-      setCurrentGames(supply);
+console.log('-----')
+
+console.log("supply: ", supply);
+console.log("as gs: ", supply as GameSummary[])
+console.log('-----')
+
+      setCurrentGames(supply as GameSummary[]);
     }
   }, [supply]);
 

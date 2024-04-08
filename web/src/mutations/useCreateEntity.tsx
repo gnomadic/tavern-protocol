@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Address } from "viem";
 import { useWriteContract } from 'wagmi'
-import { EntityFactoryABI } from "@/domain/abi/EntityFactory";
+import { EntityFactoryABI } from "@/domain/abi/GameABI";
 
 const useCreateEntity = ({
   contractAddress,

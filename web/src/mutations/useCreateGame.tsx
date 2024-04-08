@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import { Address, WriteContractErrorType } from "viem";
 import { BaseError, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { GameFactoryABI } from "@/domain/abi/GameFactory";
+import { GameFactoryABI } from "@/domain/abi/GameABI";
 
 const useCreateGame = ({
   contractAddress,

@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Initializable} from "solady/utils/Initializable.sol";
 
-import {IModule, ModuleSummary} from "./interfaces/IModule.sol";
+import {IModule, ModuleSummary} from "./modules/interfaces/IModule.sol";
 
 contract ModuleRegistry is Initializable {
     IModule[] registryKeys;

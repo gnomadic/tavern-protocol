@@ -6,12 +6,13 @@ import {Initializable} from 'solady/utils/Initializable.sol';
 import {IModule, ModuleSummary} from './interfaces/IModule.sol';
 import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
+import {HostedRolesEntity} from '../entities/HostedRolesEntity.sol';
 
-contract DailyInteractionModule is IModule, Initializable {
+contract RoleManipulationModule is IModule, Initializable {
   // ok so this contract will
   // 1. basically be a stateless game?
 
-  string public displayName = 'Daily Interaction';
+  string public displayName = 'Multiplayer Hosted Roles';
   string[] public required = ['dailyAction', 'lastActionAt'];
   string[] public functions = ['dailyInteraction'];
 
@@ -25,6 +26,25 @@ contract DailyInteractionModule is IModule, Initializable {
   function getSummary() external view override returns (ModuleSummary memory) {
     return ModuleSummary(address(this), functions, required, displayName);
   }
+
+// players call this to opt in to a game
+  function joinGame(address host) external {
+
+  }
+
+  function manipulate(address host, address target) external returns (uint8){
+  }
+
+
+    // once all players have joined, the host calls this to start the game
+  function assignRoles() external {
+
+
+  }
+
+
+
+
 
   function dailyInteraction(IGame game, uint256 tokenId) public {
     //TODO don't use msg.sender but I don't want other to play on someone else's behalf..

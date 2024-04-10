@@ -6,12 +6,13 @@ import {Initializable} from 'solady/utils/Initializable.sol';
 import {IModule, ModuleSummary} from './interfaces/IModule.sol';
 import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
+import {HostedRolesEntity} from '../entities/HostedRolesEntity.sol';
 
-contract DailyInteractionModule is IModule, Initializable {
+contract HostedRolesModule is IModule, Initializable {
   // ok so this contract will
   // 1. basically be a stateless game?
 
-  string public displayName = 'Daily Interaction';
+  string public displayName = 'Multiplayer Hosted Roles';
   string[] public required = ['dailyAction', 'lastActionAt'];
   string[] public functions = ['dailyInteraction'];
 
@@ -24,6 +25,16 @@ contract DailyInteractionModule is IModule, Initializable {
   }
   function getSummary() external view override returns (ModuleSummary memory) {
     return ModuleSummary(address(this), functions, required, displayName);
+  }
+
+  // players call this to opt in to a game
+  function joinGame(address host) external {}
+
+  // once all players have joined, the host calls this to start the game
+  function assignRoles() external {}
+
+  function getRole(address host, address player) external returns (uint8) {
+    return 0;
   }
 
   function dailyInteraction(IGame game, uint256 tokenId) public {
@@ -41,13 +52,11 @@ contract DailyInteractionModule is IModule, Initializable {
       dailyActions + 1
     );
 
-
     INumberEntity(game.getEntity('lastActionAt')).updateNumber(
       tokenId,
       'lastActionAt',
       block.timestamp
     );
-
   }
 
   // function getProvidedFunctions() external view returns (string[] memory){

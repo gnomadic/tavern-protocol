@@ -10,10 +10,12 @@ import {IGame, GameSummary} from "./interfaces/IGame.sol";
 contract GameFactory {
     address public gameContract;
     IGame[] public games;
+    address public entityFactory;
 
     //TODO probalby don't need this because of update function
-    function initialize(address _gameContract) public {
+    function initialize(address _gameContract, address _entityFactory) public {
         gameContract = _gameContract;
+        entityFactory = _entityFactory;
     }
 
     function updateGameContract(address gameContract_) public {
@@ -23,7 +25,7 @@ contract GameFactory {
 
     function createGame(address _gm, string calldata displayName) public {
         address game = LibClone.clone(gameContract);
-        IGame(game).initialize(_gm, displayName);
+        IGame(game).initialize(_gm, displayName, entityFactory);
         games.push(IGame(game));
 
         // Emit an event for successful game creation
@@ -42,6 +44,9 @@ contract GameFactory {
     function getGameCount() external view returns (uint256) {
         return games.length;
     }
+
+
+
 
     event GameCreated(address gm, address game);
 }

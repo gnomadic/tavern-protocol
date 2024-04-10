@@ -1,10 +1,7 @@
 'use client';
-
-import Header from '@/components/Header';
 import useDeployment from '@/hooks/useDeployment';
 import useCreateEntity from '@/mutations/useCreateEntity';
 import useCreateGame from '@/mutations/useCreateGame';
-import Image from 'next/image';
 import { Address } from 'viem';
 import { BaseError, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi'
 
@@ -47,10 +44,8 @@ export default function Create() {
         <p className=''>3.  Deploy.</p>
 
         <p className='pt-12'> someday lol.  Today, just enter a name, hit deploy, and find your game in discover to get the prototype running.</p>
-        {/* <p>deploy: {JSON.stringify(deploy, null, 2)}</p> */}
         <form onSubmit={handleCreateGame} className='pt-8'>
           <div className='text-3xl py-8'>create a Game</div>
-          {/* <input name="tokenId" placeholder="69420" required className='text-slate-900' /> */}
           <p>
             <input name="displayName" placeholder="My New Game" required className='text-slate-900' />
           </p>

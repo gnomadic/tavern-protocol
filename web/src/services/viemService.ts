@@ -1,7 +1,7 @@
 import { GameSummary } from '@/domain/Domain';
 import { GameABI } from '@/domain/abi/GameABI';
 import { Address, Chain, PublicClient, createPublicClient, http } from 'viem'
-import { sepolia } from 'viem/chains'
+import { localhost, sepolia } from 'viem/chains'
 
 
 
@@ -12,7 +12,7 @@ function getClient() {
         return publicClient;
     }
     publicClient = createPublicClient({
-        chain: sepolia as Chain,
+        chain: localhost as Chain,
         transport: http(),
     })
     return publicClient;

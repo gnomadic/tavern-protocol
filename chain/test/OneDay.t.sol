@@ -18,7 +18,11 @@ import {HostedVoteModule} from '../src/modules/HostedVoteModule.sol';
 import {HostedSessionEntity} from '../src/entities/HostedSessionEntity.sol';
 import {HostedRolesEntity} from '../src/entities/HostedRolesEntity.sol';
 import {HostedPhasesEntity} from '../src/entities/HostedPhasesEntity.sol';
+import {HostedManipulateRoleEntity} from '../src/entities/HostedManipulateRoleEntity.sol';
+import {HostedVoteEntity} from '../src/entities/HostedVoteEntity.sol';
 
+
+import "forge-std/console.sol";
 contract OneDay is Test {
   // ok so in this test.
   // setup will create a game, and assign the modules to the game.
@@ -57,7 +61,7 @@ contract OneDay is Test {
 
     ModuleRegistry registry = new ModuleRegistry();
 
-    
+    console.log("hosted session");
 
     hostedSession = new HostedSessionModule();
     registry.register(address(hostedSession));
@@ -66,7 +70,7 @@ contract OneDay is Test {
       'HostedSessionEntity',
       address(hostedSessionEntity)
     );
-
+console.log("hosted roles");
     hostedRoles = new HostedRolesModule();
     registry.register(address(hostedRoles));
     HostedRolesEntity hostedRolesEntity = new HostedRolesEntity();
@@ -74,7 +78,7 @@ contract OneDay is Test {
       'HostedRolesEntity',
       address(hostedRolesEntity)
     );
-
+console.log("hosted phases");
     hostedPhases = new HostedPhasesModule();
     registry.register(address(hostedPhases));
     HostedPhasesEntity hostedPhasesEntity = new HostedPhasesEntity();
@@ -82,12 +86,23 @@ contract OneDay is Test {
       'HostedPhasesEntity',
       address(hostedPhasesEntity)
     );
-
+console.log("hosted manipulation");
     roleManipulation = new RoleManipulationModule();
     registry.register(address(roleManipulation));
+    HostedManipulateRoleEntity hostedManipulateRoleEntity = new HostedManipulateRoleEntity();
+    entityFactory.registerEntity(
+      'HostedManipulateRoleEntity',
+      address(hostedManipulateRoleEntity)
+    );
 
+console.log("hosted vote");
     hostedVote = new HostedVoteModule();
     registry.register(address(hostedVote));
+    HostedVoteEntity hostedVoteEntity = new HostedVoteEntity();
+    entityFactory.registerEntity(
+      'HostedVoteEntity',
+      address(hostedVoteEntity)
+    );
 
     UnOptNumberEntity721 basicEntity = new UnOptNumberEntity721();
     entityFactory.updateEntityContract(address(basicEntity));
@@ -109,7 +124,7 @@ contract OneDay is Test {
 
     hostedRoles.setGameConfig(liveGame, roleNames);
 
-    hostedPhases.setGameConfig(game, roleNames);
+    hostedPhases.setGameConfig(liveGame, roleNames);
 
     vm.stopPrank();
   }
@@ -151,14 +166,17 @@ contract OneDay is Test {
   function test_startGame() public {
     test_joinSession();
     hostedRoles.assignRoles(liveGame, address(1));
-    uint playerOneRole = hostedRoles.getRole(liveGame, address(1), address(1));
-    uint playerTwoRole = hostedRoles.getRole(liveGame, address(1), address(2));
+    vm.prank(address(1));
+    uint playerOneRole = hostedRoles.getRole(liveGame, address(1)) ;
+    vm.prank(address(2));
+    uint playerTwoRole = hostedRoles.getRole(liveGame, address(1));
+    vm.prank(address(3));
     uint playerThreeRole = hostedRoles.getRole(
       liveGame,
-      address(1),
-      address(3)
+      address(1)
     );
-    uint playerFourRole = hostedRoles.getRole(liveGame, address(1), address(4));
+    vm.prank(address(4));
+    uint playerFourRole = hostedRoles.getRole(liveGame, address(1));
 
     assertNotEq(playerOneRole, playerTwoRole);
     assertNotEq(playerOneRole, playerThreeRole);
@@ -170,38 +188,42 @@ contract OneDay is Test {
     
   }
 
-  // function test_RoleManipulate() public {
-  //   //get characters by role
-  //   uint8 firstRole = hostedRoles.getRole(address(1), address(1));
-  //   uint8 secondRole = hostedRoles.getRole(address(1), address(2));
-  //   uint8 thirdRole = hostedRoles.getRole(address(1), address(3));
-  //   uint8 fourthRole = hostedRoles.getRole(address(1), address(4));
+  function test_RoleManipulate() public {
+    //get characters by role
+    vm.prank(address(1));
+    uint8 firstRole = hostedRoles.getRole(liveGame, address(1));
+    vm.prank(address(2));
+    uint8 secondRole = hostedRoles.getRole(liveGame, address(1));
+    vm.prank(address(3));
+    uint8 thirdRole = hostedRoles.getRole(liveGame, address(1));
+    vm.prank(address(4));
+    uint8 fourthRole = hostedRoles.getRole(liveGame, address(1));
 
-  //   // phase should update every round
-  //   vm.prank(address(4));
-  //   roleManipulation.manipulate(address(1), address(2));
-  //   vm.prank(address(3));
-  //   roleManipulation.manipulate(address(1), address(1));
-  //   vm.prank(address(2));
-  //   roleManipulation.manipulate(address(1), address(4));
-  //   vm.prank(address(1));
-  //   roleManipulation.manipulate(address(1), address(3));
-  // }
+    // phase should update every round
+    vm.prank(address(4));
+    roleManipulation.manipulate(liveGame, address(1), address(2));
+    vm.prank(address(3));
+    roleManipulation.manipulate(liveGame, address(1), address(1));
+    vm.prank(address(2));
+    roleManipulation.manipulate(liveGame, address(1), address(4));
+    vm.prank(address(1));
+    roleManipulation.manipulate(liveGame, address(1), address(3));
+  }
 
-  // function test_vote() public {
-  //   vm.prank(address(1));
-  //   hostedVote.vote(address(1), address(4));
+  function test_vote() public {
+    vm.prank(address(1));
+    hostedVote.vote(liveGame, address(1), address(4));
 
-  //   vm.prank(address(2));
-  //   hostedVote.vote(address(1), address(3));
+    vm.prank(address(2));
+    hostedVote.vote(liveGame, address(1), address(3));
 
-  //   vm.prank(address(3));
-  //   hostedVote.vote(address(1), address(3));
+    vm.prank(address(3));
+    hostedVote.vote(liveGame, address(1), address(3));
 
-  //   vm.prank(address(4));
-  //   hostedVote.vote(address(1), address(1));
+    vm.prank(address(4));
+    hostedVote.vote(liveGame, address(1), address(1));
 
-  //   // on a tie they both get voted out
-  //   //after the last player votes it's game over, maybe admin can short circuit
-  // }
+    // on a tie they both get voted out
+    //after the last player votes it's game over, maybe admin can short circuit
+  }
 }

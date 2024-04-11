@@ -32,7 +32,7 @@ contract RoleManipulationModule is IModule, Initializable {
 
   }
 
-  function manipulate(address host, address target) external returns (uint8){
+  function manipulate(IGame game, address host, address target) external returns (uint8){
   }
 
 

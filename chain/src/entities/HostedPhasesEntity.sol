@@ -8,6 +8,8 @@ import {IEntity} from './interfaces/IEntity.sol';
 import {IStringEntity} from './interfaces/IStringEntity.sol';
 import {INumberEntity} from './interfaces/INumberEntity.sol';
 
+import "forge-std/console.sol";
+
 contract HostedPhasesEntity is IEntity {
   //global per game
 
@@ -19,6 +21,7 @@ contract HostedPhasesEntity is IEntity {
   string[] public keys;
 
   function initialize(address _game) public override {
+    console.log('initializing HostedPhasesEntity');
     keys.push('phaseData');
     keys.push('hostedPhases');
     keys.push('phasesCount');
@@ -30,12 +33,14 @@ contract HostedPhasesEntity is IEntity {
 
   function setupPhases(
     string[] memory _phaseNames
-  ) external // uint8[] memory max,
-  // uint8[] memory min
+  ) external 
   {
+          console.log('okkk');
+
     // TODO require all three arrays to be same size
     phasesCount = uint8(_phaseNames.length);
     for (uint8 i = 0; i < phasesCount; i++) {
+      console.log('setting up phase"%s', _phaseNames[i]);
       phaseData[i] = PhaseData(_phaseNames[i]); //, max[i], min[i]);
     }
   }

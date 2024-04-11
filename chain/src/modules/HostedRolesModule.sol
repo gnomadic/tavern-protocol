@@ -62,18 +62,7 @@ contract HostedRolesModule is IModule, Initializable {
     }
 
 
-    // console.log('roleCount', roleCount);
-    // console.log('sessionSize', sessionSize);
-
-    // for (uint256 i = 0; i < sessionSize; i++) {
-    //   uint8 rand = getRandom(roleCount);
-    //   console.log('rand', rand);
-    //   HostedRolesEntity(game.getEntity('hostedRoles')).setRole(
-    //     host,
-    //     HostedSessionEntity(game.getEntity('hostedSessions')).getSession(host).players[i],
-    //     rand
-    //   );
-    // }
+ 
 
 
   }
@@ -93,8 +82,8 @@ function shuffle(uint8[] memory roleArray) public  returns (uint8[] memory){
 }
 
 
-  function getRole(IGame game, address host, address player) external view returns (uint8) {
-    return HostedRolesEntity(game.getEntity('hostedRoles')).getRole(host, player);
+  function getRole(IGame game, address host) external view returns (uint8) {
+    return HostedRolesEntity(game.getEntity('hostedRoles')).getRole(host, msg.sender);
   }
 
   error NotEnoughTimePassed();

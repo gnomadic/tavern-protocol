@@ -16,21 +16,27 @@ contract HostedRolesEntity is IEntity {
   // unique per session
   mapping(address => HostedRolesData) hostedRoles;
 
-  string[] public keys = ['roles', 'roleNames', 'roleCount', 'hostedRoles'];
+  string[] public keys;
+
+  function initialize(address _game) public override {
+    keys.push('roleData');
+    keys.push('hostedRoles');
+    keys.push('roleCount');
+  }
 
   function getAvailableKeys() external view override returns (string[] memory) {
     return keys;
   }
 
   function setupRoles(
-    string[] memory _roleNames,
-    uint8[] memory max,
-    uint8[] memory min
+    string[] memory _roleNames
+    // uint8[] memory max,
+    // uint8[] memory min
   ) external {
     // TODO require all three arrays to be same size
     roleCount = uint8(_roleNames.length);
     for (uint8 i = 0; i < roleCount; i++) {
-      roleData[i] = RoleData(_roleNames[i], max[i], min[i]);
+      roleData[i] = RoleData(_roleNames[i]);//, max[i], min[i]);
     }
   }
 
@@ -58,8 +64,6 @@ contract HostedRolesEntity is IEntity {
     return hostedRoles[host].players;
   }
 
-  function initialize(address _game) public override {}
-
   struct HostedRolesData {
     mapping(address => uint8) roles;
     address[] players;
@@ -67,7 +71,7 @@ contract HostedRolesEntity is IEntity {
 
   struct RoleData {
     string roleName;
-    uint8 maxPlayersWithRole;
-    uint8 minPlayersWithRole;
+    // uint8 maxPlayersWithRole;
+    // uint8 minPlayersWithRole;
   }
 }

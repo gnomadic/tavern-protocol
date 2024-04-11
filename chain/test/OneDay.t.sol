@@ -16,6 +16,7 @@ import {RoleManipulationModule} from '../src/modules/RoleManipulationModule.sol'
 import {HostedRolesModule} from '../src/modules/HostedRolesModule.sol';
 import {HostedVoteModule} from '../src/modules/HostedVoteModule.sol';
 import {HostedSessionEntity} from '../src/entities/HostedSessionEntity.sol';
+import {HostedRolesEntity} from '../src/entities/HostedRolesEntity.sol';
 
 contract OneDay is Test {
   // ok so in this test.
@@ -41,6 +42,8 @@ contract OneDay is Test {
   HostedRolesModule hostedRoles;
   HostedVoteModule hostedVote;
 
+  string[] roleNames;
+
   function setUp() public {
     // create a game
     vm.startPrank(address(0));
@@ -64,11 +67,16 @@ contract OneDay is Test {
       address(hostedSessionEntity)
     );
 
-    roleManipulation = new RoleManipulationModule();
-    registry.register(address(roleManipulation));
-
     hostedRoles = new HostedRolesModule();
     registry.register(address(hostedRoles));
+    HostedRolesEntity hostedRolesEntity = new HostedRolesEntity();
+    entityFactory.registerEntity(
+      'HostedRolesEntity',
+      address(hostedRolesEntity)
+    );
+
+    roleManipulation = new RoleManipulationModule();
+    registry.register(address(roleManipulation));
 
     hostedVote = new HostedVoteModule();
     registry.register(address(hostedVote));
@@ -86,6 +94,12 @@ contract OneDay is Test {
     liveGame.addModule(address(hostedVote));
 
     hostedSession.setGameConfig(liveGame, 4);
+    roleNames.push('normie');
+    roleNames.push('degen');
+    roleNames.push('trader');
+    roleNames.push('sniperbot');
+
+    hostedRoles.setGameConfig(liveGame, roleNames);
 
     vm.stopPrank();
   }
@@ -105,20 +119,47 @@ contract OneDay is Test {
   }
 
   function test_joinSession() public {
+    vm.prank(address(1));
+    hostedSession.createSession(liveGame);
+
     vm.prank(address(2));
-    hostedSession.joinSession(address(1));
+    hostedSession.joinSession(liveGame, address(1));
 
     vm.prank(address(3));
-    hostedSession.joinSession(address(1));
+    hostedSession.joinSession(liveGame, address(1));
 
     vm.prank(address(4));
-    hostedSession.joinSession(address(1));
+    hostedSession.joinSession(liveGame, address(1));
+
+    uint playerCount = hostedSession
+      .getSessionPlayers(liveGame, address(1))
+      .length;
+
+    assertEq(playerCount, 4);
   }
 
-  // function test_startGame() public {
-  //   hostedRoles.assignRoles();
-  //   hostedPhases.setPhase(1);
-  // }
+  function test_startGame() public {
+    test_joinSession();
+    hostedRoles.assignRoles(liveGame, address(1));
+    uint playerOneRole = hostedRoles.getRole(liveGame, address(1), address(1));
+    uint playerTwoRole = hostedRoles.getRole(liveGame, address(1), address(2));
+    uint playerThreeRole = hostedRoles.getRole(
+      liveGame,
+      address(1),
+      address(3)
+    );
+    uint playerFourRole = hostedRoles.getRole(liveGame, address(1), address(4));
+
+    assertNotEq(playerOneRole, playerTwoRole);
+    assertNotEq(playerOneRole, playerThreeRole);
+    assertNotEq(playerOneRole, playerFourRole);
+    assertNotEq(playerTwoRole, playerThreeRole);
+    assertNotEq(playerTwoRole, playerFourRole);
+    assertNotEq(playerThreeRole, playerFourRole);
+
+    hostedPhases.setPhase(1);
+  }
+
   // function test_RoleManipulate() public {
   //   //get characters by role
   //   uint8 firstRole = hostedRoles.getRole(address(1), address(1));

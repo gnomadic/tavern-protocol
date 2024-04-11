@@ -31,6 +31,8 @@ contract HostedVoteModule is IModule, Initializable {
   }
 
 
+
+
   function createSession(IGame game) external{}
 
   // players call this to opt in to a game

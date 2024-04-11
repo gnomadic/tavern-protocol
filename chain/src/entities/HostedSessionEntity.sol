@@ -45,6 +45,10 @@ contract HostedSessionEntity is IEntity {
     delete hostedSessions[host];
   }
 
+  function getSession(address host) public view returns (HostedSessionData memory) {
+    return hostedSessions[host];
+  }
+
   error SessionFull();
 
   struct HostedSessionData {

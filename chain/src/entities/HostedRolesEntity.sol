@@ -60,9 +60,6 @@ contract HostedRolesEntity is IEntity {
     return hostedRoles[host].roles[_player];
   }
 
-  function getPlayers(address host) external view returns (address[] memory) {
-    return hostedRoles[host].players;
-  }
 
   struct HostedRolesData {
     mapping(address => uint8) roles;

@@ -17,6 +17,7 @@ import {HostedRolesModule} from '../src/modules/HostedRolesModule.sol';
 import {HostedVoteModule} from '../src/modules/HostedVoteModule.sol';
 import {HostedSessionEntity} from '../src/entities/HostedSessionEntity.sol';
 import {HostedRolesEntity} from '../src/entities/HostedRolesEntity.sol';
+import {HostedPhasesEntity} from '../src/entities/HostedPhasesEntity.sol';
 
 contract OneDay is Test {
   // ok so in this test.
@@ -56,8 +57,7 @@ contract OneDay is Test {
 
     ModuleRegistry registry = new ModuleRegistry();
 
-    hostedPhases = new HostedPhasesModule();
-    registry.register(address(hostedPhases));
+    
 
     hostedSession = new HostedSessionModule();
     registry.register(address(hostedSession));
@@ -73,6 +73,14 @@ contract OneDay is Test {
     entityFactory.registerEntity(
       'HostedRolesEntity',
       address(hostedRolesEntity)
+    );
+
+    hostedPhases = new HostedPhasesModule();
+    registry.register(address(hostedPhases));
+    HostedPhasesEntity hostedPhasesEntity = new HostedPhasesEntity();
+    entityFactory.registerEntity(
+      'HostedPhasesEntity',
+      address(hostedPhasesEntity)
     );
 
     roleManipulation = new RoleManipulationModule();
@@ -100,6 +108,8 @@ contract OneDay is Test {
     roleNames.push('sniperbot');
 
     hostedRoles.setGameConfig(liveGame, roleNames);
+
+    hostedPhases.setGameConfig(game, roleNames);
 
     vm.stopPrank();
   }
@@ -157,7 +167,7 @@ contract OneDay is Test {
     assertNotEq(playerTwoRole, playerFourRole);
     assertNotEq(playerThreeRole, playerFourRole);
 
-    hostedPhases.setPhase(1);
+    
   }
 
   // function test_RoleManipulate() public {

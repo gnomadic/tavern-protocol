@@ -6,7 +6,7 @@ import {Initializable} from "solady/utils/Initializable.sol";
 import {INumberEntity} from "./interfaces/INumberEntity.sol";
 
 interface IERC721 {
-    function ownerOf(uint256 tokenId) external view returns (address);
+    function balanceOf(address _owner) external view returns (uint256);
 }
 
 // This is a terribly ineffecient Unoptimized Number Entity for 721s.  It is just a starting point.
@@ -18,37 +18,39 @@ contract UnOptNumberEntity721 is INumberEntity, Initializable {
     // 4. report what state is avaialable
 
     IERC721 public nft;
-    string public displayName;
 
     mapping(uint256 => mapping(string => uint256)) private numbers;
     string[] public numberKeys;
 
-    function initialize(address _game, string memory _displayName, address _nft) public initializer {
-        game = _game;
-        displayName = _displayName;
-        nft = IERC721(_nft);
+    function initialize(address _game) public override initializer {
+        // game = _game;
+        
+        // nft = IERC721(_nft);
     }
 
-    function assertOwnership(uint256 tokenId, address player) external view override {
-        if (nft.ownerOf(tokenId) != player) revert NotTheHolder();
-    }
-
-    function getNumber(uint256 tokenId, string memory key) external view override returns (uint256) {
+    function getNumber(uint256 tokenId, string memory key) external view override owned returns (uint256)  {
         return numbers[tokenId][key];
     }
 
-    function updateNumber(uint256 tokenId, string memory key, uint256 value) external override onlyGame {
+    function updateNumber(uint256 tokenId, string memory key, uint256 value) external override {
         numbers[tokenId][key] = value;
     }
 
     // TODO right now this is created by the gamefactory, not the game but that could be changed
+    // TODO honeslty might not need this because the Game could just call update with 0?
     function createNumber(string memory key) external {
         numberKeys.push(key);
     }
 
-    function getAvailableNumbers() external view override returns (string[] memory) {
+    function getAvailableKeys() external view override returns (string[] memory) {
         return numberKeys;
     }
 
-    error NotTheHolder();
+    error NotHolding();
+
+    modifier owned() {
+        if (nft.balanceOf(msg.sender) < 1) revert NotHolding();
+
+        _;
+    }
 }

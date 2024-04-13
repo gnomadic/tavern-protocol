@@ -40,14 +40,14 @@ export default function MobileNav(props: MobileNavProps) {
 
           <li className='pb-8 '>
             <a
-              href='https://twitter.com/rpg_protocol'
+              href='https://warpcast.com/playmint'
               rel='noopener noreferrer'
               target='_blank'
             >
-              <div className='relative cursor-pointer'>twitter</div>
+              <div className='relative cursor-pointer'>warpcast</div>
             </a>
           </li>
-
+{/* 
           <li className='pb-8'>
             <a
               href='https://discord.gg/pP2G7sY7GY'
@@ -56,7 +56,7 @@ export default function MobileNav(props: MobileNavProps) {
             >
               <div className='relative cursor-pointer'>discord</div>
             </a>
-          </li>
+          </li> */}
 
           <li className=''>
             <a

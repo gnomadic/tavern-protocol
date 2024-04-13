@@ -29,6 +29,17 @@ export const Deployments: { [key: string]: Deployment } = {
     chain: 'sepolia',
     chainId: "11155111",
   },
+
+  localhost: {
+    gameFactory: '0xA15BB66138824a1c7167f5E85b957d04Dd34E468',
+    entityFactory: '0xeD1DB453C3156Ff3155a97AD217b3087D5Dc5f6E',
+    d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
+    moduleRegistry: '0x8ce361602B935680E8DeC218b820ff5056BeB7af',
+    displayName: 'playmint',
+    currency: 'eth',
+    chain: 'local',
+    chainId: "1337",
+  },
   playmint: {
     gameFactory: '0x0',
     entityFactory: '0x0',

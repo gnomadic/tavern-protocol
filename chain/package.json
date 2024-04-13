@@ -9,12 +9,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"forge build",
-    "deploy:sep":"forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv",
-    "deploydice:sep":"forge script script/deploy/DeployDice.s.sol:DeployDice --rpc-url sepolia --broadcast --verify -vvvv",
-    "abi":"sh copyabi.sh",
-    "verify:sep":"forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --verify -vvvv"
-
+    "build": "forge build",
+    "deploy:sep": "forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv",
+    "deploy:local": "forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url anvil --broadcast -vvvv",
+    "deploydice:sep": "forge script script/deploy/DeployDice.s.sol:DeployDice --rpc-url sepolia --broadcast --verify -vvvv",
+    "abi": "sh copyabi.sh",
+    "verify:sep": "forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --verify -vvvv"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,9 @@
     "protocol"
   ],
   "author": "rpg-protocol",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-solidity": "^1.3.1"
+  }
 }

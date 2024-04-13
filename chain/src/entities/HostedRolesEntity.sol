@@ -29,14 +29,15 @@ contract HostedRolesEntity is IEntity {
   }
 
   function setupRoles(
-    string[] memory _roleNames
+    string[] memory _roleNames,
+    string[] memory _roleFunctions
     // uint8[] memory max,
     // uint8[] memory min
   ) external {
-    // TODO require all three arrays to be same size
+    // TODO require  three arrays to be same size
     roleCount = uint8(_roleNames.length);
     for (uint8 i = 0; i < roleCount; i++) {
-      roleData[i] = RoleData(_roleNames[i]);//, max[i], min[i]);
+      roleData[i] = RoleData(_roleNames[i], _roleFunctions[i]);
     }
   }
 
@@ -60,6 +61,10 @@ contract HostedRolesEntity is IEntity {
     return hostedRoles[host].roles[_player];
   }
 
+  function getRoleFunction(uint8 _role) external view returns (string memory) {
+    return roleData[_role].roleFunction;
+  }
+
 
   struct HostedRolesData {
     mapping(address => uint8) roles;
@@ -68,6 +73,7 @@ contract HostedRolesEntity is IEntity {
 
   struct RoleData {
     string roleName;
+    string roleFunction;
     // uint8 maxPlayersWithRole;
     // uint8 minPlayersWithRole;
   }

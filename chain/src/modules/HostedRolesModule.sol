@@ -9,11 +9,11 @@ import {IGame} from '../interfaces/IGame.sol';
 import {HostedRolesEntity} from '../entities/HostedRolesEntity.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {HostedSessionEntity} from '../entities/HostedSessionEntity.sol';
-import "forge-std/console.sol";
+import 'forge-std/console.sol';
 
 contract HostedRolesModule is IModule, Initializable {
   string public displayName = 'Multiplayer Hosted Roles';
-   string[] public required = ['roleData', 'hostedRoles', 'hostedSessions'];
+  string[] public required = ['roleData', 'hostedRoles', 'hostedSessions'];
   string[] public functions = [''];
 
   // function getRequiredStrings() public view returns (string[] memory) {
@@ -32,18 +32,21 @@ contract HostedRolesModule is IModule, Initializable {
 
   function setGameConfig(
     IGame game,
-    string[] memory names
+    string[] memory names,
+    string[] memory funcs
   ) public {
-    HostedRolesEntity(game.getEntity('roleData')).setupRoles(
-      names
-    );
+    HostedRolesEntity(game.getEntity('roleData')).setupRoles(names, funcs);
   }
 
   // once all players have joined, the host calls this to start the game
   function assignRoles(IGame game, address host) external {
     // TODO this requires role count and session size to be the same.
-    uint256 sessionSize = HostedSessionEntity(game.getEntity('hostedSessions')).getSession(host).players.length;
-    uint8 roleCount = HostedRolesEntity(game.getEntity('hostedRoles')).roleCount();
+    uint256 sessionSize = HostedSessionEntity(game.getEntity('hostedSessions'))
+      .getSession(host)
+      .players
+      .length;
+    uint8 roleCount = HostedRolesEntity(game.getEntity('hostedRoles'))
+      .roleCount();
     uint8[] memory availableRoles = new uint8[](sessionSize);
 
     for (uint8 i = 0; i < roleCount; i++) {
@@ -56,34 +59,36 @@ contract HostedRolesModule is IModule, Initializable {
     for (uint256 i = 0; i < sessionSize; i++) {
       HostedRolesEntity(game.getEntity('hostedRoles')).setRole(
         host,
-        HostedSessionEntity(game.getEntity('hostedSessions')).getSession(host).players[i],
+        HostedSessionEntity(game.getEntity('hostedSessions'))
+          .getSession(host)
+          .players[i],
         availableRoles[i]
       );
     }
-
-
- 
-
-
   }
 
   // function getRandom(uint8 max) public view returns (uint8) {
   //   return uint8(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao))) % max);
   // }
 
-function shuffle(uint8[] memory roleArray) public  returns (uint8[] memory){
+  function shuffle(uint8[] memory roleArray) public returns (uint8[] memory) {
     for (uint256 i = 0; i < roleArray.length; i++) {
-        uint256 n = i + uint256(keccak256(abi.encodePacked(block.timestamp))) % (roleArray.length - i);
-        uint256 temp = roleArray[n];
-        roleArray[n] = roleArray[i];
-        roleArray[i] = (uint8)(temp);
+      uint256 n = i +
+        (uint256(keccak256(abi.encodePacked(block.timestamp))) %
+          (roleArray.length - i));
+      uint256 temp = roleArray[n];
+      roleArray[n] = roleArray[i];
+      roleArray[i] = (uint8)(temp);
     }
     return roleArray;
-}
-
+  }
 
   function getRole(IGame game, address host) external view returns (uint8) {
-    return HostedRolesEntity(game.getEntity('hostedRoles')).getRole(host, msg.sender);
+    return
+      HostedRolesEntity(game.getEntity('hostedRoles')).getRole(
+        host,
+        msg.sender
+      );
   }
 
   error NotEnoughTimePassed();

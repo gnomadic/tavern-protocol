@@ -48,6 +48,7 @@ contract OneDay is Test {
   HostedVoteModule hostedVote;
 
   string[] roleNames;
+  string[] funcNames;
 
   function setUp() public {
     // create a game
@@ -118,11 +119,15 @@ console.log("hosted vote");
 
     hostedSession.setGameConfig(liveGame, 4);
     roleNames.push('normie');
+    funcNames.push('doNothing');
     roleNames.push('degen');
+    funcNames.push('broadcastRole');
     roleNames.push('trader');
+    funcNames.push('swapMyCard');
     roleNames.push('sniperbot');
+    funcNames.push('swapCards');
 
-    hostedRoles.setGameConfig(liveGame, roleNames);
+    hostedRoles.setGameConfig(liveGame, roleNames, funcNames);
 
     hostedPhases.setGameConfig(liveGame, roleNames);
 
@@ -201,13 +206,13 @@ console.log("hosted vote");
 
     // phase should update every round
     vm.prank(address(4));
-    roleManipulation.manipulate(liveGame, address(1), address(2));
+    roleManipulation.manipulate(liveGame, address(1), address(2), address(0));
     vm.prank(address(3));
-    roleManipulation.manipulate(liveGame, address(1), address(1));
+    roleManipulation.manipulate(liveGame, address(1), address(1), address(0));
     vm.prank(address(2));
-    roleManipulation.manipulate(liveGame, address(1), address(4));
+    roleManipulation.manipulate(liveGame, address(1), address(4), address(0));
     vm.prank(address(1));
-    roleManipulation.manipulate(liveGame, address(1), address(3));
+    roleManipulation.manipulate(liveGame, address(1), address(3), address(0));
   }
 
   function test_vote() public {

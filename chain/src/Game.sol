@@ -58,7 +58,7 @@ contract Game is IGame, Initializable {
 
     }
     entities.push(newEntity);
-    console.log("added entity", entity);
+    // console.log("added entity", entity);
   }
 
   function addModule(address module) external {
@@ -83,8 +83,8 @@ contract Game is IGame, Initializable {
   // }
 
   function getEntity(string memory key) external view returns (address) {
-    console.log('getting entity', key);
-    console.log('entity is', availableEntityData[key]);
+    // console.log('getting entity', key);
+    // console.log('entity is', availableEntityData[key]);
     return (availableEntityData[key]);
   }
 

@@ -24,7 +24,7 @@ contract HostedPhasesModule is IModule, Initializable {
   function initialize(address game) external override {
     address phaseEntity = IEntityFactory(IGame(game).getEntityFactory())
       .createEntity(game, 'HostedPhasesEntity');
-      console.log('created phase entity %s', phaseEntity);
+      // console.log('created phase entity %s', phaseEntity);
 
     IGame(game).addEntity(phaseEntity);
   }
@@ -36,7 +36,7 @@ contract HostedPhasesModule is IModule, Initializable {
     IGame game,
     string[] memory names
   ) public {
-    console.log('setting up phases');
+    // console.log('setting up phases');
     HostedPhasesEntity(game.getEntity('phaseData')).setupPhases(
       names
     );

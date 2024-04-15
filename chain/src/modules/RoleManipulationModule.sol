@@ -10,8 +10,6 @@ import {HostedRolesEntity} from '../entities/HostedRolesEntity.sol';
 import {HostedPhasesEntity} from '../entities/HostedPhasesEntity.sol';
 
 contract RoleManipulationModule is IModule, Initializable {
-  // ok so this contract will
-  // 1. basically be a stateless game?
 
   string public displayName = 'Multiplayer Hosted Roles';
   string[] public required = ['dailyAction', 'lastActionAt'];

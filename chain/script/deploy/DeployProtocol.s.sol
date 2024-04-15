@@ -9,6 +9,8 @@ import {ModuleRegistry} from '../../src/ModuleRegistry.sol';
 import {DailyInteractionModule} from '../../src/modules/DailyInteractionModule.sol';
 import {UnOptNumberEntity721} from '../../src/entities/UnOptNumberEntity721.sol';
 import {EntityFactory} from '../../src/EntityFactory.sol';
+import "forge-std/console.sol";
+
 // # To deploy and verify the PLAYMINT protocol run this command below
 // forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployProtocol is Script {
@@ -32,5 +34,9 @@ contract DeployProtocol is Script {
     entityFactory.updateEntityContract(address(basicEntity));
 
     vm.stopBroadcast();
+
+    console.log('GameFactory:', address(factory));
+    console.log('ModuleRegistry:', address(registry));
+    console.log('EntityFactory:', address(entityFactory));
   }
 }

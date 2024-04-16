@@ -20,13 +20,15 @@ import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborIntera
 contract DeployCatch is Script {
 
 
- address MODULE_REGISTRY = 0xB184dCc6DA15db92EFb114C3EE10F29D6b8Db43b;
- address ENTITY_FACTORY = 0xB184dCc6DA15db92EFb114C3EE10F29D6b8Db43b;
- address GAME_FACTORY = 0xB184dCc6DA15db92EFb114C3EE10F29D6b8Db43b;
+ address MODULE_REGISTRY = 0x9797d01A7084b101bB0ccCEADDa99138279879d6;
+ address ENTITY_FACTORY = 0x90e8126A0b4e8cA96376B47Eb8361f2D384B4779;
+ address GAME_FACTORY = 0xBC92fb92dD7725dd79e48a7bE5E52F37965cDdE5;
 
 
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');
+
+    address deployPublicKey = vm.addr(deployerPrivateKey);
 
     vm.startBroadcast(deployerPrivateKey);
 
@@ -36,10 +38,10 @@ contract DeployCatch is Script {
 
     ModuleRegistry registry =  ModuleRegistry(MODULE_REGISTRY);
 
-    MMOSessionModule mmoSession = new MMOSessionModule();
-    registry.register(address(mmoSession));
-    MMOSessionEntity mmoSessionEntity = new MMOSessionEntity();
-    entityFactory.registerEntity('MMOSessionEntity', address(mmoSessionEntity));
+    // MMOSessionModule mmoSession = new MMOSessionModule();
+    // registry.register(address(mmoSession));
+    // MMOSessionEntity mmoSessionEntity = new MMOSessionEntity();
+    // entityFactory.registerEntity('MMOSessionEntity', address(mmoSessionEntity));
 
     MMONeighborInteractionModule neighborInteraction = new MMONeighborInteractionModule();
     registry.register(address(neighborInteraction));
@@ -49,10 +51,10 @@ contract DeployCatch is Script {
       address(neighborInteractionEntity)
     );
 
-    factory.createGame(address(1), 'Catch');
+    factory.createGame(deployPublicKey, 'Catch');
     IGame liveGame = factory.games(0);
 
-    liveGame.addModule(address(mmoSession));
+    // liveGame.addModule(address(mmoSession));
     liveGame.addModule(address(neighborInteraction));
 
 

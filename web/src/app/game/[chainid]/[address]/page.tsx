@@ -32,7 +32,7 @@ export async function generateMetadata({
   const gameSummary = await getGameSummary(params.chainid, params.address as Address)
   // console.log(gameSummary)
 
-const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].Key : "no modules!"
+  const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].Key : "no modules!"
 
 
   return {

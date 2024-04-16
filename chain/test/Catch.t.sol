@@ -76,18 +76,6 @@ contract Catch is Test {
     uint ballCount = neighborInteraction.getInteractionCount(liveGame);
     assertEq(ballCount, 2);
 
-    // console.log('can interact', neighborInteraction.canInteract(liveGame, address(1)));
-    // console.log('held interaction', neighborInteraction.getHeldInteraction(liveGame, address(1)));
-
-    // console.log('can interact', neighborInteraction.canInteract(liveGame, address(2)));
-    // console.log('held interaction', neighborInteraction.getHeldInteraction(liveGame, address(2)));
-
-    // console.log('can interact', neighborInteraction.canInteract(liveGame, address(3)));
-    // console.log('held interaction', neighborInteraction.getHeldInteraction(liveGame, address(3)));
-
-    // console.log('can interact', neighborInteraction.canInteract(liveGame, address(4)));
-    // console.log('held interaction', neighborInteraction.getHeldInteraction(liveGame, address(4)));
-
     assertEq(false, neighborInteraction.canInteract(liveGame, address(1)));
     assertEq(true, neighborInteraction.canInteract(liveGame, address(2)));
     assertEq(false, neighborInteraction.canInteract(liveGame, address(3)));
@@ -109,7 +97,7 @@ contract Catch is Test {
     assertEq(false, neighborInteraction.canInteract(liveGame, address(2)));
   }
 
-  function test_Intercept() public {
+  function test_intercept() public {
     neighborInteraction.joinSession(liveGame, address(1));
     neighborInteraction.joinSession(liveGame, address(2));
     neighborInteraction.joinSession(liveGame, address(3));

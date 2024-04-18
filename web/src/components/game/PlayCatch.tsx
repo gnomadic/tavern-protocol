@@ -10,7 +10,7 @@ import { UserCircleIcon as UserCircleIconOutline } from '@heroicons/react/24/out
 
 import { Address } from 'viem';
 import { BaseError, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi'
-import useJoinGame from '@/mutations/useJoingame';
+import useJoinGame from '@/mutations/useJoinGame';
 import useThrowBall from '@/mutations/useThrowBall';
 import useCatchBall from '@/mutations/useCatchBall';
 

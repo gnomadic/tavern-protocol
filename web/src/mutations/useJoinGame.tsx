@@ -60,7 +60,7 @@ const useJoinGame = ({
 
     writeContract({
       abi: abi,
-      address: contractAddress,
+      address: moduleAddress,
       functionName: "joinSession",
       args: [player],
     })

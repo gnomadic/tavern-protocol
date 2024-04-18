@@ -8,7 +8,7 @@ import { BaseError, useWriteContract, useWaitForTransactionReceipt } from 'wagmi
 const abi = [
   {
     "type": "function",
-    "name": "interceptInteraction",
+    "name": "catchBall",
     "inputs": [
       {
         "name": "game",
@@ -58,8 +58,8 @@ const useCatchBall = ({
 
     writeContract({
       abi: abi,
-      address: contractAddress,
-      functionName: "interceptInteraction",
+      address: moduleAddress,
+      functionName: "catchBall",
       args: [player],
     })
   };

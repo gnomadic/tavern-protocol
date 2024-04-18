@@ -18,7 +18,7 @@ export default function Play(props: PlayProps) {
   const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
 
   return (
-    <section id='connect' className='relative pt-48 items-center'>
+    <section id='connect' className='relative pt-8 items-center'>
       <div className='text-xl pb-8'>
 
         <ul>

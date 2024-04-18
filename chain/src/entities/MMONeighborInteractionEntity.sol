@@ -50,7 +50,7 @@ contract MMONeighborInteractionEntity is IEntity {
 
   function initialize(address _game) external override {
     game = _game;
-    keys.push('canInteract');
+    keys.push('canPlayerThrow');
   }
 
   function getAvailableKeys() external view override returns (string[] memory) {

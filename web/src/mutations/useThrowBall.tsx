@@ -9,7 +9,7 @@ import { BaseError, useWriteContract, useWaitForTransactionReceipt } from 'wagmi
 const abi = [
   {
     "type": "function",
-    "name": "createInteraction",
+    "name": "throwBall",
     "inputs": [
         {
             "name": "game",
@@ -66,8 +66,8 @@ const useThrowBall = ({
 
     writeContract({
       abi: abi,
-      address: contractAddress,
-      functionName: "createInteraction",
+      address: moduleAddress,
+      functionName: "throwBall",
       args: [player],
     })
   };

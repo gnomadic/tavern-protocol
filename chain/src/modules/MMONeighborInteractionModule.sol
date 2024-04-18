@@ -11,7 +11,7 @@ import {console} from 'forge-std/console.sol';
 
 contract MMONeighborInteractionModule is IModule {
   string public displayName = 'Daily Interaction';
-  string[] public required = ['players', 'canInteract'];
+  string[] public required = ['players', 'canPlayerThrow'];
   string[] public functions = ['getPlayerCount'];
 
   function initialize(address game) external {
@@ -54,7 +54,7 @@ contract MMONeighborInteractionModule is IModule {
     }
   }
 
-  function createInteraction(
+  function throwBall(
     IGame game,
     address giver,
     uint256 distance
@@ -71,7 +71,7 @@ contract MMONeighborInteractionModule is IModule {
       .throwBall(giver, distance, playerInRange);
   }
 
-  function interceptInteraction(IGame game, address player) public {
+  function catchBall(IGame game, address player) public {
     bool canCatch = CatchEntity(
       game.getEntity('balls')
     ).canICatch(player);
@@ -83,14 +83,14 @@ contract MMONeighborInteractionModule is IModule {
 
   // --------------------------------- PLAYER INFO FUNCTIONS ---------------------------------
 
-  function canIntercept(IGame game, address player) public view returns (bool) {
+  function canPlayerCatch(IGame game, address player) public view returns (bool) {
     return
 CatchEntity(
       game.getEntity('balls')
     ).canICatch(player);
   }
 
-  function canInteract(IGame game, address player) public view returns (bool) {
+  function canPlayerThrow(IGame game, address player) public view returns (bool) {
     return
  CatchEntity(
       game.getEntity('balls')
@@ -103,7 +103,7 @@ CatchEntity(
     return MMOSessionEntity(game.getEntity('players')).getPlayerCount();
   }
 
-  function getInteractionCount(IGame game) public view returns (uint256) {
+  function getBallCount(IGame game) public view returns (uint256) {
     return
       CatchEntity(game.getEntity('balls'))
         .ballCount();

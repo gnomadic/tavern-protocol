@@ -100,11 +100,11 @@ export default function Game({ params }: { params: { address: string } }) {
       <div className='pt-8'>
         PLAYMINT is a no-code onchain game creation platform.  This demo is a simple game of catch.
       </div>
-      <section className='py-8'>
+      <section className='py-4'>
         <Divider />
       </section>
 
-      <section id='connect' className='relative pt-8 items-center'>
+      <section id='connect' className='relative pt-4 items-center'>
 
         <PlayCatch gameAddress={params.address as Address} />
 

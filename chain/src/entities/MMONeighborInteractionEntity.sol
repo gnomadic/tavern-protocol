@@ -5,7 +5,6 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract MMONeighborInteractionEntity is IEntity {
-  address public game;
   string[] public keys;
 
 

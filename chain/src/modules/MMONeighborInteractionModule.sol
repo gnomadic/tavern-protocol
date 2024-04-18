@@ -67,18 +67,6 @@ contract MMONeighborInteractionModule is IModule {
     address[] memory playerInRange = MMOSessionEntity(game.getEntity('players'))
       .getPlayersInRange(giver, distance);
 
-      for(uint i = 0; i < playerInRange.length; i++){
-        console.log("in range", playerInRange[i]);
-      }
-
-    //TODO this is a limitation of multiple entities per module.
-    //the MMOSessionEntity is already iterating over distance, now we have to do it again
-    // as the neighbor interaction entity doesn't have access to the session entity
-    // for (uint i = 0; i < playerInRange.length; i++) {
-    //   CatchEntity(game.getEntity('balls'))
-    //     .addBallCatcher(i);
-    // }
-
     CatchEntity(game.getEntity('balls'))
       .throwBall(giver, distance, playerInRange);
   }
@@ -129,6 +117,12 @@ CatchEntity(
         .getBallHolderPositions();
   }
 
+  function getPlayerIndex(IGame game, address player) public view returns (uint256) {
+    return
+   CatchEntity(game.getEntity('balls'))
+        .getPlayerPosition(player);
+  }
+
   function getCatchableIndexes(
     IGame game
   ) public view returns (CatchEntity.Position[] memory) {
@@ -136,11 +130,6 @@ CatchEntity(
       CatchEntity(game.getEntity('balls'))
         .getBallCatcherPositions();
   }
-
-
-
-
-
 
 
   error CannotInteract();

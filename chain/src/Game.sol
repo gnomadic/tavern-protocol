@@ -29,8 +29,9 @@ contract Game is IGame, Initializable {
   mapping(string => address) public availableEntityData;
   AddressKey[] dataKeys;
 
-  mapping(string => address) public availableFunctions;
+  mapping(string => address) public functionLookup;
   AddressKey[] functionKeys;
+  mapping(address => string[]) public supportedFunctions;
 
   function initialize(
     address _gm,
@@ -66,7 +67,8 @@ contract Game is IGame, Initializable {
     string[] memory moduleFunctions = newModule.getSummary().functions;
     for (uint8 i = 0; i < moduleFunctions.length; i++) {
       functionKeys.push(AddressKey(module, moduleFunctions[i]));
-      availableFunctions[moduleFunctions[i]] = module;
+      functionLookup[moduleFunctions[i]] = module;
+      supportedFunctions[module].push(moduleFunctions[i]);
     }
     newModule.initialize(address(this));
     modules.push(newModule);
@@ -74,6 +76,10 @@ contract Game is IGame, Initializable {
 
   function registerEntityData(address entity, string memory key) public {
     availableEntityData[key] = entity;
+  }
+
+  function getSupportedFunctions(address module) external view returns (string[] memory) {
+    return supportedFunctions[module];
   }
 
   // function getOwnedNumber(address player, uint256 tokenId, string memory key) external view returns (uint256) {

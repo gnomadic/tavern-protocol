@@ -5,7 +5,6 @@ import './interfaces/IEntity.sol';
 import "forge-std/console.sol";
 
 contract MMOSessionEntity is IEntity {
-  address public game;
   string[] public keys;
 
   address[] public players;
@@ -21,7 +20,7 @@ contract MMOSessionEntity is IEntity {
     return keys;
   }
 
-  function addPlayer(address player) external returns (uint256){
+  function addPlayer(address player) external onlyModule() returns (uint256) {
     if (playerIndex[player] != 0) {
       revert PlayerAlreadyInSession();
     }
@@ -30,7 +29,7 @@ contract MMOSessionEntity is IEntity {
     return playerIndex[player];
   }
 
-  function removePlayer(address player) external {
+  function removePlayer(address player) external onlyModule() {
     if (playerIndex[player] == 0) {
       revert PlayerNotInSession();
     }

@@ -5,7 +5,7 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract CatchEntity is IEntity {
-  address public game;
+  
   string[] public keys;
 
   uint256 public ballCount;
@@ -42,7 +42,7 @@ contract CatchEntity is IEntity {
     return keys;
   }
 
-  function addNewThrower(address player, uint256 position) public {
+  function addNewThrower(address player, uint256 position) public onlyModule(){
     ballCount++;
 
     players[player].hasBalls.push(ballCount);
@@ -53,7 +53,7 @@ contract CatchEntity is IEntity {
     players[player].ballHolderIndex = ballHolderPositions.length - 1;
   }
 
-  function addNewPlayer(address player, uint256 position) public {
+  function addNewPlayer(address player, uint256 position) public onlyModule() {
     players[player].position = position;
   }
 
@@ -69,6 +69,9 @@ contract CatchEntity is IEntity {
     return ballHolderPositions;
   }
 
+  function getPlayerPosition(address player) public view returns (uint256) {
+    return players[player].position;
+  }
 
   function getBallCatcherPositions() public view returns (Position[] memory) {
     for (uint256 i = 0; i < ballCatcherPositions.length; i++) {
@@ -81,7 +84,7 @@ contract CatchEntity is IEntity {
     address player,
     uint256 distance,
     address[] memory catchersInRange
-  ) public {
+  ) public onlyModule() {
     // update ball
     uint256 ballIndex = players[player].hasBalls[0];
     balls[ballIndex].distance = distance;
@@ -122,7 +125,7 @@ contract CatchEntity is IEntity {
     }
   }
 
-  function catchBall(address player) public {
+  function catchBall(address player) public onlyModule(){
     uint256 ballIndex = players[player].canCatch[0];
 
     // update player

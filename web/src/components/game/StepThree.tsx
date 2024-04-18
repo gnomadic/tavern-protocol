@@ -17,10 +17,10 @@ export default function StepThree(props: StepThreeProps) {
   return (
     <section>
 
-      <div className='pt-36'>
+      {/* <div className='pt-36'>
         Step 3: All set!  Once those two transactions are done, you can reload the page!
-      </div>
-      <section className='pt-24'>
+      </div> */}
+      <section className='py-18'>
         <Divider />
       </section>
       <div> Your Game is at: {gameSummary?.game} </div>

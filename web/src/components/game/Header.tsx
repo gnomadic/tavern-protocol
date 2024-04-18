@@ -14,7 +14,7 @@ export default function Header(props: HeaderProps) {
 
   return (
     <section id='connect' className='relative pt-48 items-center'>
-      <div className='text-8xl pb-8'>
+      <div className='text-8xl pb-2'>
         {gameSummary ? gameSummary.displayName : "loading"}
       </div>
       <div>

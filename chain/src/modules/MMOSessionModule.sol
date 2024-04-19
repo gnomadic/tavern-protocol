@@ -6,25 +6,28 @@ import {MMOSessionEntity} from '../entities/MMOSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 
-contract MMOSessionModule is IModule{
+contract MMOSessionModule is IModule {
+  string[] public required = ['players'];
+  string[] public functions = ['joinSession'];
 
   function initialize(address game) external {
-        address roleEntity = IEntityFactory(IGame(game).getEntityFactory())
+    address roleEntity = IEntityFactory(IGame(game).getEntityFactory())
       .createEntity(game, 'MMOSessionEntity');
 
     IGame(game).addEntity(roleEntity);
   }
 
   function getSummary() external view returns (ModuleSummary memory) {
-    return ModuleSummary(address(this), new string[](0), new string[](0), 'Catch');
+    return ModuleSummary(address(this), functions, required, 'MMO Session');
   }
 
-  function joinSession(IGame game, address player) external {
-    MMOSessionEntity(game.getEntity('players')).addPlayer(player);
+  function joinSession(IGame game, address player) external returns (uint256){
+    return MMOSessionEntity(game.getEntity('players')).addPlayer(player);
   }
 
   function getPlayerCount(IGame game) external view returns (uint256) {
     return MMOSessionEntity(game.getEntity('players')).getPlayerCount();
   }
+
 
 }

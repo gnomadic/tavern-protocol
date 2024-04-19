@@ -12,7 +12,7 @@ function getClient() {
         return publicClient;
     }
     publicClient = createPublicClient({
-        chain: localhost as Chain,
+        chain: sepolia as Chain,
         transport: http(),
     })
     return publicClient;

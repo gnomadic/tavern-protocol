@@ -5,7 +5,6 @@ import './interfaces/IEntity.sol';
 import "forge-std/console.sol";
 
 contract MMOSessionEntity is IEntity {
-  address public game;
   string[] public keys;
 
   address[] public players;
@@ -21,15 +20,16 @@ contract MMOSessionEntity is IEntity {
     return keys;
   }
 
-  function addPlayer(address player) external {
+  function addPlayer(address player) external onlyModule() returns (uint256) {
     if (playerIndex[player] != 0) {
       revert PlayerAlreadyInSession();
     }
     players.push(player);
-    playerIndex[player] = players.length;
+    playerIndex[player] = players.length - 1;
+    return playerIndex[player];
   }
 
-  function removePlayer(address player) external {
+  function removePlayer(address player) external onlyModule() {
     if (playerIndex[player] == 0) {
       revert PlayerNotInSession();
     }
@@ -44,7 +44,6 @@ contract MMOSessionEntity is IEntity {
     address from,
     uint256 count
   ) external view returns (address[] memory) {
-    address[] memory result = new address[](count * 2);
     uint256 startAt; uint256 endAt;
     if (playerIndex[from] < count) {
       startAt = 0;
@@ -57,12 +56,16 @@ contract MMOSessionEntity is IEntity {
       endAt = playerIndex[from] + count;
     }
 
+        address[] memory result = new address[](endAt - startAt);
 
+
+    console.log('start at', startAt);
+    console.log('end at', endAt);
 
     uint256 cur = 0;
     for (uint256 i = startAt; i < endAt ; i++) {
       result[cur] = players[i];
-      console.log("player", players[i]);
+      // console.log("player", players[i]);
 
       cur++;
     }

@@ -2,12 +2,20 @@
 pragma solidity ^0.8.24;
 
 interface IGame {
-  function initialize(address _gm, string calldata displayName, address entityFactory) external;
+  function initialize(
+    address _gm,
+    string calldata displayName,
+    address entityFactory
+  ) external;
   function getSummary() external view returns (GameSummary memory);
   function addEntity(address entity) external;
   function getEntity(string memory key) external view returns (address);
   function addModule(address module) external;
   function getEntityFactory() external view returns (address);
+  function getSupportedFunctions(
+    address module
+  ) external view returns (string[] memory);
+  function getModule(string memory key) external view returns (address);
 }
 
 struct GameSummary {

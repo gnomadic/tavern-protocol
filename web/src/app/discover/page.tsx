@@ -71,16 +71,17 @@ export default function Discover() {
         <p> There are {moduleCount}  </p>
 
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 pb-12'>
           {Array.from({ length: currentModules?.length }).map((object, i) => {
             // {Array.from({ length: currentGames?.length }).map((object, i) => {
             if (currentModules[i].module !== '0x0000000000000000000000000000000000000000') {
               return (
                 <div key={i} className="pt-8">
 
-                  <div>{JSON.stringify(currentModules[i])}</div>
+                  {/* <div>{JSON.stringify(currentModules[i])}</div> */}
 
                   {/* <Divider /> */}
+                  {/* {console.log('currentModules[i]', currentModules[i])} */}
                   <ModuleCard
 
                     moduleSummary={currentModules[i] as ModuleSummary}

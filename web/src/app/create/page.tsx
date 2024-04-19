@@ -1,4 +1,5 @@
 'use client';
+import Divider from '@/components/Divider';
 import useDeployment from '@/hooks/useDeployment';
 import useCreateEntity from '@/mutations/useCreateEntity';
 import useCreateGame from '@/mutations/useCreateGame';
@@ -36,10 +37,37 @@ export default function Create() {
     });
 
   return (
-    <main className='font-anon flex flex-col items-center p-40'>
+    <main className='font-anon flex min-h-screen flex-col items-center justify-between p-24'>
+     <section id='hero' className='relative min-h-screen items-center pt-48'>
+        <p className=''>Coming in Phase 2</p>
+        <p className='pt-8'>Launch your codeless games for your communities</p>
+        <p className='pt-8'>
+          PLAYMINT provides a set of modules that can be combined and customized to fit your gameplay.
+        </p>
+        <p className='pt-8'>Permissionless, free, and on-chain.</p>
+      </section>
+      {/* <section id='connect' className='relative -mt-48 items-center'>
 
+        <br />
+        <p>
+          
+          Our mission is to make communities stronger. Everything we do, we try
+          to enable and empower existing communities and their members. We also
+          believe in the power of play.
+          <br />
+          <br />
+          PLAYMINT is an on-chain game engine made for existing NFTs and their
+          communities. Plug in your favorite NFT and launch your own game for your own community
+          today.
+        </p>
+      </section> */}
+      <section>
+        <Divider />
+      </section>
+
+{/* 
       <section id='hero' className='relative  items-center pt-8'>
-        <p className=''>1.  Choose gameplay.</p>
+        <p className=''>Creating Games will be Phase 2 of this Prototype.</p>
         <p className=''>2.  Choose NFTs.</p>
         <p className=''>3.  Deploy.</p>
 
@@ -66,7 +94,7 @@ export default function Create() {
         </form>
 
 
-      </section>
+      </section> */}
     </main>
   );
 }

@@ -70,11 +70,11 @@ const useCurrentGames = ({
 
   useEffect(() => {
     if (supply) {
-console.log('-----')
+// console.log('-----')
 
-console.log("supply: ", supply);
-console.log("as gs: ", supply as GameSummary[])
-console.log('-----')
+// console.log("supply: ", supply);
+// console.log("as gs: ", supply as GameSummary[])
+// console.log('-----')
 
       setCurrentGames(supply as GameSummary[]);
     }

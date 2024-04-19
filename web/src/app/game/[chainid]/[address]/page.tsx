@@ -8,6 +8,8 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { getFrameMetadata } from '@coinbase/onchainkit';
 import { getGameSummary } from '@/services/viemService';
 import Play from '@/components/game/Play';
+import Players from '@/components/game/Players';
+import PlayCatch from '@/components/game/PlayCatch';
 
 interface Params {
   chainid: string;
@@ -32,7 +34,7 @@ export async function generateMetadata({
   const gameSummary = await getGameSummary(params.chainid, params.address as Address)
   // console.log(gameSummary)
 
-const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].Key : "no modules!"
+  const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].Key : "no modules!"
 
 
   return {
@@ -57,7 +59,7 @@ const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.ava
 }
 
 
-export default function Game({ params }: { params: { address: string } }) {
+export default function Game({ params }: { params: { address: string, chainid: string } }) {
   // const verbs = ['play', 'create', 'grow', 'build'];
   // const [activeVerb, setActiveVerb] = useState(verbs[0]);
   // const { deploy } = useDeployment();
@@ -83,7 +85,7 @@ export default function Game({ params }: { params: { address: string } }) {
         <Divider />
       </section> */}
       <Header gameAddress={params.address as Address} />
-      <section id='connect' className='relative pt-8 items-center'>
+      {/* <section id='connect' className='relative pt-8 items-center'>
 
         <div className='pt-4'>
           Every Game is a collection of Modules and Entities.  Modules contain gameplay, and Entities contain data.
@@ -94,19 +96,44 @@ export default function Game({ params }: { params: { address: string } }) {
         <div className='pt-4'>
           As a proof of concept, our UX is terrible right now so bear with us, and follow the steps below.
         </div>
-      </section>
+      </section>*/}
+      <div className='pt-8'>
+        PLAYMINT is a no-code onchain game creation platform.  This demo is a simple game of catch.
+      </div>
 
-      <section className='py-20'>
+      <div className='pt-8'>
+        KNOWN ISSUES:
+        <br/>
+        <p>1.  You have to reload the page after every transaction!</p>
+        <p>2.  If you catch your own ball it thinks you can still catch again</p>
+        <p>3.  If you join after a ball is already in the air, you cannot catch it.</p>
+        </div>
+
+      <section className='py-4'>
         <Divider />
       </section>
+
+      <section id='connect' className='relative pt-4 items-center'>
+
+        <PlayCatch gameAddress={params.address as Address} />
+
+        <section className='py-20'>
+          <Divider />
+        </section>
+        
+        <Players gameAddress={params.address as Address} />
+
+
+      </section>
+      {/* 
       <StepOne gameAddress={params.address as Address} />
-      <StepTwo gameAddress={params.address as Address} />
+      <StepTwo gameAddress={params.address as Address} /> */}
       <StepThree gameAddress={params.address as Address} />
 
       <section className='py-20'>
         <Divider />
       </section>
-      <Play gameAddress={params.address as Address} />
+      {/* <Play gameAddress={params.address as Address} /> */}
       {/* <div className='pt-12'>
           Step 1: First, we choose the gameplay modules we want in our game.  There is a public registry, and right now only one available module.
         </div>

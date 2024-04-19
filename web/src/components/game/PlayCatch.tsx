@@ -33,6 +33,15 @@ export default function PlayCatch(props: PlayCatchProps) {
 
     return (
         <section>
+
+
+<div className='pt-8'>
+        HOW TO PLAY THIS DEMO:
+        <br/>
+        <p>1.  Use two wallets, and join the game twice.</p>
+        <p>2.  One of your wallets will start with a ball, which you can throw</p>
+        <p>3.  Once the ball is thrown, switch wallets, and you can catch it</p>
+        </div>
             <div className='flex flex-auto'>
                 <div className='pt-4 mx-auto'>
                     <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"

@@ -103,12 +103,12 @@ export default function Game({ params }: { params: { address: string, chainid: s
 
       <div className='pt-8'>
         KNOWN ISSUES:
-        </div>
         <br/>
         <p>1.  You have to reload the page after every transaction!</p>
         <p>2.  If you catch your own ball it thinks you can still catch again</p>
         <p>3.  If you join after a ball is already in the air, you cannot catch it.</p>
-      
+        </div>
+
       <section className='py-4'>
         <Divider />
       </section>

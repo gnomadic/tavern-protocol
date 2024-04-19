@@ -10,7 +10,7 @@ PLAYMINT is an on-chain game engine designed specifically for breathing life int
 
 ## How does PLAYMINT work?
 
-PLAYMINT utilizes a powerful combination of established game engine architecture and modern Web3 modular protocols.
+PLAYMINT utilizes a powerful combination of established game engine architecture and modern Web3 modular protocols, by relying on an Entity-Module architecture.  Game Logic is modular and resuable, so Modules only need to be written once and can be used across multiple games. Game Data storage is handled by Entities, which are uniquely created for each deployed Game.  This allows for a high degree of customization and flexibility in game design.
 
 ### Entity-Component Architecture:
 
@@ -35,11 +35,11 @@ A Game and it's Entities are on-chain contracts deployed as 1167 Proxies through
 
 ### Do I need to know how to code to use PLAYMINT?
 
-No! PLAYMINT is designed for a no-code experience. You can create engaging games through our intuitive visual interface.
+No! PLAYMINT is designed for a no-code experience. You can create engaging games through our intuitive visual interface.  If you do know how to code, you can add custom modules by using the provided interface.  
 
-### What types of NFTs can I use with PLAYMINT?
+### What types of NFTs and Tokens can I use with PLAYMINT?
 
-PLAYMINT is compatible with a wide range of NFTs. As long as your NFT has publicly accessible metadata, you can potentially integrate it into your game.
+PLAYMINT (can be) compatible with any ERC-20, ERC-721, or ERC-1155 token.  While these modules don't exist yet, with user demand it is very straightforward to use token ownership as a requirement to join a game, as a reward for winning, as a resource ingame, or even as an RPG character.  
 
 ### What are the benefits of using PLAYMINT for my community?
 
@@ -51,4 +51,4 @@ We're still figuring this out! Of course your NFT projects are yours to monetize
 
 ### Where can I learn more about building games with PLAYMINT?
 
-We're just getting started! [Join our discord](https://discord.gg/2rdEHsPZHN) and [reach out on warpcast](https://warpcast.com/playmint)!
+We're just getting started! [Reach out on warpcast](https://warpcast.com/playmint)!

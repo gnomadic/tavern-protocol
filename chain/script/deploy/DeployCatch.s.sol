@@ -19,9 +19,9 @@ import {CatchEntity} from '../../src/entities/CatchEntity.sol';
 // # To deploy and verify Catch on the PLAYMINT protocol run this command below
 // forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployCatch is Script {
-  address GAME_FACTORY = 0xF3842610B762022A01ec8beD285006d8Ec29b947;
-  address MODULE_REGISTRY = 0x5D0b179017160c2EC8F9E7B37a9d37EB1A06d399;
-  address ENTITY_FACTORY = 0x72138E255061326C29E7A60BB8eff9A1ce523445;
+  address GAME_FACTORY = 0x4a87f7A03e9Dd371E2Ccd39F41922B0b68B4AA4E;
+  address MODULE_REGISTRY = 0x65534418c71d41b42DaF1F302E160af91CEf0FA1;
+  address ENTITY_FACTORY = 0x687848b9D5339bA8Acdfb29015a9Eebb21F55D56;
 
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');

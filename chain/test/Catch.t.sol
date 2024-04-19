@@ -150,6 +150,26 @@ contract Catch is Test {
     assertEq(neighborInteraction.getCatchableIndexes(liveGame).length, 4);
   }
 
+  function test_self_throw_and_catch() public {
+    neighborInteraction.joinSession(liveGame, address(1));
+    neighborInteraction.joinSession(liveGame, address(2));
+    neighborInteraction.joinSession(liveGame, address(3));
+    neighborInteraction.joinSession(liveGame, address(4));
+
+    neighborInteraction.throwBall(liveGame, address(2), 4);
+    assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(2)));
+
+    neighborInteraction.catchBall(liveGame, address(2));
+
+
+    CatchEntity.Position[] memory catchables = neighborInteraction
+      .getCatchableIndexes(liveGame);
+
+    assertEq(catchables.length, 0);
+
+
+  }
+
   function test_indexes() public {
     neighborInteraction.joinSession(liveGame, address(1));
     neighborInteraction.joinSession(liveGame, address(2));

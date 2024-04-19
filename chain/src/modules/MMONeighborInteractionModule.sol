@@ -47,7 +47,7 @@ contract MMONeighborInteractionModule is IModule {
     //   player
     // );
 
-    uint256 index = MMOSessionModule(game.getModule('joinSession')).joinSession(game, player);
+    uint256 index = MMOSessionModule(game.getModule('joinGame')).joinSession(game, player);
 
 
     if (getPlayerCount(game) % 2 == 0) {

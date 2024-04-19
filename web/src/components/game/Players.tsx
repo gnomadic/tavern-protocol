@@ -71,7 +71,7 @@ export default function Players(props: PlayersProps) {
                 <div className='pt-8'>
                     HOW TO PLAY THIS DEMO:
                     <br />
-                    <p>1.  Use two wallets, and join the game twice.  You'll have to refresh the page for now after Joining.</p>
+                    <p>1.  Use two wallets, and join the game twice.  You will have to refresh the page for now after Joining.</p>
                     <p>2.  One of your wallets will start with a ball, which you can throw</p>
                     <p>3.  Once the ball is thrown, switch wallets, and you can catch it</p>
                 </div>

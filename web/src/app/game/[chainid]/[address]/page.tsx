@@ -68,7 +68,6 @@ export default function Game({ params }: { params: { address: string, chainid: s
 
   // const { registerEntityHash, registerEntityGameError, registerEntityisPending, writeRegisterEntity } = useRegisterEntity({ contractAddress: params.address as Address });
   // const { isLoading: registerEntityIsConfirming, isSuccess: registerEntityIsConfirmed } = useWaitForTransactionReceipt({ hash: registerModuleHash });
-
   return (
     <main className='font-anon flex flex-col items-center justify-between p-24'>
       {/* <section id='connect' className='relative pt-48 items-center'>
@@ -104,8 +103,8 @@ export default function Game({ params }: { params: { address: string, chainid: s
       <div className='pt-8'>
         KNOWN ISSUES:
         <br/>
-        <p>1.  You have to reload the page after every transaction!</p>
-        <p>2.  If you catch your own ball it thinks you can still catch again</p>
+        <p>1.  If you catch your own ball it thinks you can still catch again</p>
+        <p>2.  The above issue messes up the count of catchers.</p>
         <p>3.  If you join after a ball is already in the air, you cannot catch it.</p>
         </div>
 
@@ -115,13 +114,15 @@ export default function Game({ params }: { params: { address: string, chainid: s
 
       <section id='connect' className='relative pt-4 items-center'>
 
-        <PlayCatch gameAddress={params.address as Address} />
+        {/* <PlayCatch gameAddress={params.address as Address} /> */}
 
-        <section className='py-20'>
+        {/* <section className='py-20'>
           <Divider />
         </section>
-        
-        <Players gameAddress={params.address as Address} />
+         */}
+        <Players 
+        gameAddress={params.address as Address} 
+        refresh={true}/>
 
 
       </section>

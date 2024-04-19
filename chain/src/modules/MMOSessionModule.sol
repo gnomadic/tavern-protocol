@@ -8,7 +8,7 @@ import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 
 contract MMOSessionModule is IModule {
   string[] public required = ['players'];
-  string[] public functions = ['joinSession'];
+  string[] public functions = ['joinGame'];
 
   function initialize(address game) external {
     address roleEntity = IEntityFactory(IGame(game).getEntityFactory())

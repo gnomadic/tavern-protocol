@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useContractRead } from "wagmi";
+import { useContractRead, useReadContract } from "wagmi";
 import { Address } from "viem";
 import { Deployment, Position } from "@/domain/Domain";
 
@@ -48,35 +48,42 @@ const useBallHolderIndexes = ({
 
   // enabled?: boolean | undefined;
 }) => {
-  const {
-    data: ballHolders,
-    isError: ballHoldersError,
-    isLoading: ballHoldersLoading,
-  } = useContractRead({
+  // const {
+  //   data: ballHolders,
+  //   isError: ballHoldersError,
+  //   isLoading: ballHoldersLoading,
+  // } = useContractRead({
+  //   address: moduleAddress,
+  //   abi: abi,
+  //   functionName: "getBallHolderIndexes",
+  //   args: [gameAddress],
+  //   // enabled: enabled != undefined ? enabled : true,
+  // });
+
+  const res = useReadContract({
     address: moduleAddress,
     abi: abi,
     functionName: "getBallHolderIndexes",
     args: [gameAddress],
-    // enabled: enabled != undefined ? enabled : true,
   });
 
   const [holders, setHolders] = useState<BigInt[]>([]);
 
   useEffect(() => {
-    console.log("BH request to: ", moduleAddress, gameAddress)
-    console.log("Ball holders: ", ballHolders, ballHoldersError, ballHoldersLoading)
-    if (ballHolders) {
+    // console.log("BH request to: ", moduleAddress, gameAddress)
+    // console.log("Ball holders: ", ballHolders, ballHoldersError, ballHoldersLoading)
+    if (res.data) {
 
       let found: BigInt[] = [];
 
-      (ballHolders as Position[]).map((holder: Position) => {
+      (res.data as Position[]).map((holder: Position) => {
         found.push(BigInt(holder.x.toString()));
       });
       setHolders(found);
     }
-  }, [ballHolders, ballHoldersError, ballHoldersLoading]);
+  }, [res.data]);
 
-  return { holders, ballHoldersError };
+  return { result: holders, error: res.error, refetch: () => {res.refetch()}};
 };
 
 export default useBallHolderIndexes;

@@ -39,11 +39,16 @@ const useCatchBall = ({
   const [catchHash, setCatchHash] = useState<`0x${string}` | undefined>();
   const [catchError, setCatchError] = useState<Error>();
   const [catchPending, setCatchPending] = useState<boolean>();
+  const [catchSuccess, setCatchSuccess] = useState<boolean>();
 
   const { data, error: err, isPending: pending, writeContract } = useWriteContract()
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash: data });
 
 
   useEffect(() => {
+
+    // console.log("is success: ", isSuccess);
+    // console.log("is loading: ", isLoading);
     if (data) {
       setCatchHash(data);
     }
@@ -53,7 +58,10 @@ const useCatchBall = ({
     if (pending) {
       setCatchPending(pending);
     }
-  }, [data, err, pending]);
+    if (isSuccess) {
+      setCatchSuccess(isSuccess);
+    }
+  }, [data, err, pending, isSuccess]);
 
 
   const writeCatch = async () => {
@@ -66,7 +74,7 @@ const useCatchBall = ({
     })
   };
 
-  return { catchHash, catchError, catchPending, writeCatch };
+  return { catchHash, catchError, catchPending, catchSuccess, writeCatch };
 
 };
 

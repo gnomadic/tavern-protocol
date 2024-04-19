@@ -47,11 +47,15 @@ const useThrowBall = ({
   const [throwHash, setThrowHash] = useState<`0x${string}` | undefined>();
   const [throwError, setThrowError] = useState<Error>();
   const [throwPending, setThrowPending] = useState<boolean>();
+  const [throwSuccess, setThrowSuccess] = useState<boolean>();
 
   const { data, error: err, isPending: pending, writeContract } = useWriteContract()
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash: data });
 
 
   useEffect(() => {
+    // console.log("is success: ", isSuccess);
+    // console.log("is loading: ", isLoading);
     if (data) {
       setThrowHash(data);
     }
@@ -61,7 +65,10 @@ const useThrowBall = ({
     if (pending) {
       setThrowPending(pending);
     }
-  }, [data, err, pending]);
+    if (isSuccess) {
+      setThrowSuccess(isSuccess)
+    }
+  }, [data, err, pending, isSuccess]);
 
 
   const writeThrow = async () => {
@@ -74,7 +81,7 @@ const useThrowBall = ({
     })
   };
 
-  return { throwHash, throwError, throwPending, writeThrow };
+  return { throwHash, throwError, throwPending, throwSuccess,  writeThrow };
 
 };
 

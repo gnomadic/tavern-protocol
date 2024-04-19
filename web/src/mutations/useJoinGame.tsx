@@ -41,8 +41,11 @@ const useJoinGame = ({
   const [joinHash, setJoinHash] = useState<`0x${string}` | undefined>();
   const [joinError, setJoinError] = useState<Error>();
   const [joinPending, setJoinPending] = useState<boolean>();
+  const [joinSuccess, setJoinSuccess] = useState<boolean>();
 
   const { data, error: err, isPending: pending, writeContract } = useWriteContract()
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash: data });
+
 
 
   useEffect(() => {
@@ -55,7 +58,10 @@ const useJoinGame = ({
     if (pending) {
       setJoinPending(pending);
     }
-  }, [data, err, pending]);
+    if (isSuccess) {
+      setJoinSuccess(isSuccess);
+    }
+  }, [data, err, pending, isSuccess]);
 
 
   const writeJoin = async () => {
@@ -68,7 +74,7 @@ const useJoinGame = ({
     })
   };
 
-  return { joinHash, joinError, joinPending, writeJoin };
+  return { joinHash, joinError, joinPending, joinSuccess, writeJoin };
 
 };
 

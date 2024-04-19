@@ -25,7 +25,7 @@ contract MMOSessionEntity is IEntity {
       revert PlayerAlreadyInSession();
     }
     players.push(player);
-    playerIndex[player] = players.length;
+    playerIndex[player] = players.length - 1;
     return playerIndex[player];
   }
 

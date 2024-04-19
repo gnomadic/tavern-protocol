@@ -132,7 +132,6 @@ contract Catch is Test {
     neighborInteraction.throwBall(liveGame, address(4), 4);
   }
 
-
   function test_multiple_indexes() public {
     neighborInteraction.joinSession(liveGame, address(1));
     neighborInteraction.joinSession(liveGame, address(2));
@@ -149,6 +148,39 @@ contract Catch is Test {
     assertEq(neighborInteraction.getBallHolderIndexes(liveGame).length, 0);
     // and all four players can catch it
     assertEq(neighborInteraction.getCatchableIndexes(liveGame).length, 4);
+  }
 
+  function test_indexes() public {
+    neighborInteraction.joinSession(liveGame, address(1));
+    neighborInteraction.joinSession(liveGame, address(2));
+    neighborInteraction.joinSession(liveGame, address(3));
+    neighborInteraction.joinSession(liveGame, address(4));
+
+    uint256 playerIndex = neighborInteraction.getPlayerIndex(
+      liveGame,
+      address(2)
+    );
+    assertEq(playerIndex, 1);
+
+    console.log('testing holders');
+    CatchEntity.Position[] memory holders = neighborInteraction
+      .getBallHolderIndexes(liveGame);
+    assertEq(holders.length, 2);
+    assertEq(holders[0].x, 1);
+    assertEq(holders[1].x, 3);
+
+    neighborInteraction.throwBall(liveGame, address(2), 4);
+    console.log('testing catchers');
+    holders = neighborInteraction.getBallHolderIndexes(liveGame);
+    assertEq(holders.length, 1);
+    assertEq(holders[0].x, 3);
+
+    CatchEntity.Position[] memory catchables = neighborInteraction
+      .getCatchableIndexes(liveGame);
+    assertEq(catchables.length, 4);
+    assertEq(catchables[0].x, 0);
+    assertEq(catchables[1].x, 1);
+    assertEq(catchables[2].x, 2);
+    assertEq(catchables[3].x, 3);
   }
 }

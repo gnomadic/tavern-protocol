@@ -70,7 +70,7 @@ const useThrowBall = ({
       abi: abi,
       address: moduleAddress,
       functionName: "throwBall",
-      args: [game, player],
+      args: [game, player, 4],
     })
   };
 

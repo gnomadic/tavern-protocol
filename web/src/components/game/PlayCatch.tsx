@@ -47,13 +47,13 @@ export default function PlayCatch(props: PlayCatchProps) {
 
 
                     </button>
-                    {/* <div>{JSON.stringify(joinError)}</div> */}
+                    <div>{JSON.stringify(joinError)}</div>
 
 
 
                 </div>
                 <div className='pt-4 mx-auto'>
-                <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
+                    <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
                         disabled={throwPending}
                         onClick={() => {
                             writeThrow()
@@ -65,9 +65,11 @@ export default function PlayCatch(props: PlayCatchProps) {
 
 
                     </button>
+                    <div>{JSON.stringify(throwError)}</div>
+
                 </div>
                 <div className='pt-4 mx-auto'>
-                <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
+                    <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
                         disabled={catchPending}
                         onClick={() => {
                             writeCatch()
@@ -79,10 +81,12 @@ export default function PlayCatch(props: PlayCatchProps) {
 
 
                     </button>
+                    <div>{JSON.stringify(catchError)}</div>
+
                 </div>
             </div>
 
-       
+
 
         </section>
     );

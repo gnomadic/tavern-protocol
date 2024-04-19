@@ -6,7 +6,7 @@ import useGameSummary from '@/hooks/useGameSummary';
 import usePlayerCount from '@/hooks/usePlayerCount';
 import useRegisterModule from '@/mutations/useRegisterModule';
 import { UserCircleIcon, UserIcon, UserPlusIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
-import { UserCircleIcon as UserCircleIconOutline, UserPlusIcon as UserPlusIconOutline } from '@heroicons/react/24/outline';
+import { UserCircleIcon as UserCircleIconOutline, UserPlusIcon as UserPlusIconOutline, UserIcon as UserIconOutline } from '@heroicons/react/24/outline';
 
 
 import { Address } from 'viem';
@@ -45,14 +45,14 @@ export default function Players(props: PlayersProps) {
 
 
 
-        return <UserIcon className={'mx-4 my-1 h-4 w-4 ' + fill} />
+        return <UserIconOutline className={'mx-4 my-1 h-4 w-4 ' + fill} />
     }
 
     return (
         <section>
             <div className='py-8'>
                 <div className='flex mx-auto'>
-                    <UserIcon className='mx-4 my-1 h-4 w-4' />
+                    <UserIconOutline className='mx-4 my-1 h-4 w-4' />
                     {Number(players) > 0 ? (<div>{players} Players</div>) : (<div>No Players</div>)}
                 </div>
                 <div className='flex mx-auto'>
@@ -61,7 +61,7 @@ export default function Players(props: PlayersProps) {
                 </div>
                 <div className='flex mx-auto'>
                     <UserPlusIconOutline className='mx-4 my-1 h-4 w-4' />
-                    {catchers?.length > 0 ? (<div>{holders.length} catchers</div>) : (<div>No balls in the air for people to catch</div>)}
+                    {catchers?.length > 0 ? (<div>{catchers.length} catchers</div>) : (<div>No balls in the air for people to catch</div>)}
                 </div>
                 <div className='flex mx-auto'>
                     {(BigInt(player) == BigInt(0)) ? <UserIcon className='mx-4 my-1 h-4 w-4 fill-red-400' /> : getIcon(BigInt(player))}

@@ -18,8 +18,29 @@ export default function ModuleCard(props: ModuleCardProps) {
           {censor(props.moduleSummary.displayName)}
         </div>
         <div className='pt-12 pl-2 pb-2'>
-          provides: {props.moduleSummary.functions}
+          provides: 
         </div>
+        <ul>
+          {Array.from({ length: props.moduleSummary?.functions.length as number }).map((object, i) => {
+            // {Array.from({ length: currentGames?.length }).map((object, i) => {
+            // if (currentGames[i].game !== '0x0000000000000000000000000000000000000000') {
+            return (
+              <div key={i}>
+                {/* abi: {JSON.stringify(findABI(gameSummary!.availableFunctions[i].Key))} */}
+
+                {/* <div className="flex"> */}
+                  
+                  <div className="px-12">{props.moduleSummary!.functions[i]}</div>
+                  {/* <div className="mx-auto">hi</div> */}
+                {/* </div> */}
+              </div>
+
+            );
+
+          })}
+        </ul>
+
+
       </div>
     </Link>
   );

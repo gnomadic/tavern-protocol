@@ -97,4 +97,8 @@ contract Game is IGame, Initializable {
   function getEntityFactory() external view override returns (address) {
     return entityFactory;
   }
+
+  function getModule(string memory key) external view returns (address){
+    return functionLookup[key];
+  }
 }

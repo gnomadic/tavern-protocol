@@ -78,9 +78,10 @@ export default function Discover() {
               return (
                 <div key={i} className="pt-8">
 
-                  <div>{JSON.stringify(currentModules[i])}</div>
+                  {/* <div>{JSON.stringify(currentModules[i])}</div> */}
 
                   {/* <Divider /> */}
+                  {/* {console.log('currentModules[i]', currentModules[i])} */}
                   <ModuleCard
 
                     moduleSummary={currentModules[i] as ModuleSummary}

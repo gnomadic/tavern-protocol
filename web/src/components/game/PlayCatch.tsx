@@ -13,55 +13,76 @@ import { BaseError, useWriteContract, useWaitForTransactionReceipt, useAccount }
 import useJoinGame from '@/mutations/useJoinGame';
 import useThrowBall from '@/mutations/useThrowBall';
 import useCatchBall from '@/mutations/useCatchBall';
+import { error } from 'console';
 
 type PlayCatchProps = {
     gameAddress: Address
 
 }
 
+
+
 export default function PlayCatch(props: PlayCatchProps) {
     const { deploy } = useDeployment();
     const { address } = useAccount();
 
     const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
-    const { joinHash, joinError, joinPending, writeJoin } = useJoinGame({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
-    const { throwHash, throwError, throwPending, writeThrow } = useThrowBall({moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address,  player: address! });
-    const { catchHash, catchError, catchPending, writeCatch } = useCatchBall({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address,  player: address! });
+    const { joinHash, joinError, joinPending, writeJoin } = useJoinGame({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
+    const { throwHash, throwError, throwPending, writeThrow } = useThrowBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
+    const { catchHash, catchError, catchPending, writeCatch } = useCatchBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
 
     return (
         <section>
             <div className='flex flex-auto'>
                 <div className='pt-4 mx-auto'>
-                    <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4">
-                        Join</button>
+                    <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
+                        disabled={joinPending}
+                        onClick={() => {
+                            writeJoin()
+
+                        }}
+                    >
+                        {joinPending ? 'Confirming...' : joinError ? `Error!` : `Join`}
+
+
+
+                    </button>
+                    {/* <div>{JSON.stringify(joinError)}</div> */}
+
+
+
                 </div>
                 <div className='pt-4 mx-auto'>
-                    <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4">
-                        Throw</button>
+                <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
+                        disabled={throwPending}
+                        onClick={() => {
+                            writeThrow()
+
+                        }}
+                    >
+                        {throwPending ? 'Confirming...' : throwError ? `Error!` : `Throw`}
+
+
+
+                    </button>
                 </div>
                 <div className='pt-4 mx-auto'>
-                    <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4">
-                        Catch</button>
+                <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
+                        disabled={catchPending}
+                        onClick={() => {
+                            writeCatch()
+
+                        }}
+                    >
+                        {catchPending ? 'Confirming...' : catchError ? `Error!` : `Catch`}
+
+
+
+                    </button>
                 </div>
             </div>
 
-            <div className='pt-4'>
-                If youre not in the game, pretty much only show a join button and maybe number of players and balls in the air on your network
-            </div>
-
-
-
-            <div className='pt-4'>
-                if youre in the game, and you have a ball let you throw it.
-            </div>
-
-            <div className='pt-4'>
-                if youre in the game, and you dont have a ball, but can intercept let you intercept it
-            </div>
-
-            <div className='pt-4'>
-                if youre in the game, and you dont have a ball, and cant intercept it, let you watch
-            </div>
+       
 
         </section>
     );

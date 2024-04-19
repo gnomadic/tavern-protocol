@@ -15,6 +15,7 @@ interface IGame {
   function getSupportedFunctions(
     address module
   ) external view returns (string[] memory);
+  function getModule(string memory key) external view returns (address);
 }
 
 struct GameSummary {

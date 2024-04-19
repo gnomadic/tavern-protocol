@@ -30,9 +30,11 @@ const abi = [
 
 const useJoinGame = ({
   moduleAddress,
+  game,
   player,
 }: {
   moduleAddress: Address;
+  game: Address;
   player: Address;
 }) => {
 
@@ -62,7 +64,7 @@ const useJoinGame = ({
       abi: abi,
       address: moduleAddress,
       functionName: "joinSession",
-      args: [player],
+      args: [game, player],
     })
   };
 

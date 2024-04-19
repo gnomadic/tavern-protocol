@@ -13,19 +13,15 @@ import {EntityFactory} from '../../src/EntityFactory.sol';
 import {MMOSessionModule} from '../../src/modules/MMOSessionModule.sol';
 import {MMONeighborInteractionModule} from '../../src/modules/MMONeighborInteractionModule.sol';
 import {MMOSessionEntity} from '../../src/entities/MMOSessionEntity.sol';
-import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborInteractionEntity.sol';
+// import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborInteractionEntity.sol';
 import {CatchEntity} from '../../src/entities/CatchEntity.sol';
 
 // # To deploy and verify Catch on the PLAYMINT protocol run this command below
 // forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployCatch is Script {
-
-
- address GAME_FACTORY = 0x97DB50c4416B3Df2d797144f35fAd7bdF79aC567;
- address MODULE_REGISTRY = 0x1D9136eb63fFAD2EF8a8b908853814ACa7a0F810;
- address ENTITY_FACTORY = 0x6E0BE2b9c9026D9080EEbffBdf423d1B451A227E;
- 
-
+  address GAME_FACTORY = 0x97DB50c4416B3Df2d797144f35fAd7bdF79aC567;
+  address MODULE_REGISTRY = 0x1D9136eb63fFAD2EF8a8b908853814ACa7a0F810;
+  address ENTITY_FACTORY = 0x6E0BE2b9c9026D9080EEbffBdf423d1B451A227E;
 
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');
@@ -34,11 +30,11 @@ contract DeployCatch is Script {
 
     vm.startBroadcast(deployerPrivateKey);
 
-    EntityFactory entityFactory =  EntityFactory(ENTITY_FACTORY);
+    EntityFactory entityFactory = EntityFactory(ENTITY_FACTORY);
 
-    GameFactory factory =  GameFactory(GAME_FACTORY);
+    GameFactory factory = GameFactory(GAME_FACTORY);
 
-    ModuleRegistry registry =  ModuleRegistry(MODULE_REGISTRY);
+    ModuleRegistry registry = ModuleRegistry(MODULE_REGISTRY);
 
     MMOSessionModule mmoSession = new MMOSessionModule();
     registry.register(address(mmoSession));
@@ -47,18 +43,14 @@ contract DeployCatch is Script {
 
     MMONeighborInteractionModule neighborInteraction = new MMONeighborInteractionModule();
     registry.register(address(neighborInteraction));
-    MMONeighborInteractionEntity neighborInteractionEntity = new MMONeighborInteractionEntity();
-    entityFactory.registerEntity(
-      'MMONeighborInteractionEntity',
-      address(neighborInteractionEntity)
-    );
-        CatchEntity catchEntity = new CatchEntity();
+
+    CatchEntity catchEntity = new CatchEntity();
     entityFactory.registerEntity('CatchEntity', address(catchEntity));
 
-    factory.createGame(deployPublicKey, 'Catch');
+    factory.createGame(deployPublicKey, 'Catch Demo');
     IGame liveGame = factory.games(0);
 
-    // liveGame.addModule(address(mmoSession));
+    liveGame.addModule(address(mmoSession));
     liveGame.addModule(address(neighborInteraction));
 
     neighborInteraction.joinSession(liveGame, address(1));
@@ -78,9 +70,6 @@ contract DeployCatch is Script {
     neighborInteraction.joinSession(liveGame, address(15));
     neighborInteraction.joinSession(liveGame, address(16));
     neighborInteraction.joinSession(liveGame, address(17));
-
-
-
 
     vm.stopBroadcast();
   }

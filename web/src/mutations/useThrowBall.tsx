@@ -36,9 +36,11 @@ const abi = [
 
 const useThrowBall = ({
   moduleAddress,
+  game,
   player,
 }: {
   moduleAddress: Address;
+  game: Address;
   player: Address;
 }) => {
 
@@ -68,7 +70,7 @@ const useThrowBall = ({
       abi: abi,
       address: moduleAddress,
       functionName: "throwBall",
-      args: [player],
+      args: [game, player],
     })
   };
 

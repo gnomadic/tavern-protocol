@@ -9,16 +9,18 @@ type ModuleCardProps = {
 }
 
 export default function ModuleCard(props: ModuleCardProps) {
+
+  console.log('moduleSummary', props.moduleSummary)
   return (
-    <Link href={`/module/${props.moduleSummary.moduleAddress}`}>
-    <div className='justify-center bg-slate-800'>
-      <div className='text-5xl pl-5 pt-3'>
-        {censor(props.moduleSummary.displayName)}
+    <Link href={`/module/${props.moduleSummary.module}`}>
+      <div className='justify-center bg-slate-800'>
+        <div className='text-5xl pl-5 pt-3'>
+          {censor(props.moduleSummary.displayName)}
+        </div>
+        <div className='pt-12 pl-2 pb-2'>
+          provides: {props.moduleSummary.functions}
+        </div>
       </div>
-      <div className='pt-12 pl-2 pb-2'>
-        provides: {props.moduleSummary.functions}
-      </div>
-    </div>
     </Link>
   );
 }

@@ -59,7 +59,7 @@ export async function generateMetadata({
 }
 
 
-export default function Game({ params }: { params: { address: string } }) {
+export default function Game({ params }: { params: { address: string, chainid: string } }) {
   // const verbs = ['play', 'create', 'grow', 'build'];
   // const [activeVerb, setActiveVerb] = useState(verbs[0]);
   // const { deploy } = useDeployment();

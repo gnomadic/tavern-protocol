@@ -28,9 +28,11 @@ const abi = [
 
 const useCatchBall = ({
   moduleAddress,
+  game,
   player,
 }: {
   moduleAddress: Address;
+  game: Address;
   player: Address;
 }) => {
 
@@ -60,7 +62,7 @@ const useCatchBall = ({
       abi: abi,
       address: moduleAddress,
       functionName: "catchBall",
-      args: [player],
+      args: [game, player],
     })
   };
 

@@ -12,6 +12,11 @@ const abi = [
             "name": "game",
             "type": "address",
             "internalType": "contract IGame"
+        },
+        {
+            "name": "player",
+            "type": "address",
+            "internalType": "address"
         }
     ],
     "outputs": [

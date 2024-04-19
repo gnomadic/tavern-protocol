@@ -50,7 +50,7 @@ contract Catch is Test {
     factory.createGame(address(1), 'Catch');
     liveGame = factory.games(0);
 
-    // liveGame.addModule(address(mmoSession));
+    liveGame.addModule(address(mmoSession));
     liveGame.addModule(address(neighborInteraction));
 
     vm.stopPrank();

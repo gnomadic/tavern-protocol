@@ -35,7 +35,7 @@ export default function Players(props: PlayersProps) {
 
         const isCatcher = catchers.includes(index);
         const isHolder = holders.includes(index);
-        const isPlayer = index === BigInt(player);
+        const isPlayer = index === BigInt(player) && index !== BigInt(0);
 
         const fill = isPlayer ? 'fill-blue-400' : '';
 
@@ -64,14 +64,13 @@ export default function Players(props: PlayersProps) {
                     {catchers?.length > 0 ? (<div>{holders.length} catchers</div>) : (<div>No balls in the air for people to catch</div>)}
                 </div>
                 <div className='flex mx-auto'>
-                    {/* <UserCircleIcon className='mx-4 my-1 h-4 w-4 fill-blue-400' /> */}
-                    {getIcon(BigInt(player))}
+                    {(BigInt(player) == BigInt(0)) ? <UserIcon className='mx-4 my-1 h-4 w-4 fill-red-400' /> : getIcon(BigInt(player))}
                     <div>you</div>
                 </div>
 
                 <div className="grid grid-cols-[repeat(15,_minmax(0,_1fr))] md:grid-cols-[repeat(25,_minmax(0,_1fr))] lg:grid-cols-[repeat(50,_minmax(0,_1fr))]">
-                    {/* {Array.from({ length: Number(players) }).map((object, i) => { */}
-                    {Array.from({ length: 1000}).map((object, i) => {
+                    {Array.from({ length: Number(players) }).map((object, i) => {
+                    {/* {Array.from({ length: 1000}).map((object, i) => { */}
                         return (
                             <div key={i} className=''>
                                 {getIcon(BigInt(i))}

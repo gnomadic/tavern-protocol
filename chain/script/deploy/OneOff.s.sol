@@ -15,54 +15,68 @@ import {MMONeighborInteractionModule} from '../../src/modules/MMONeighborInterac
 import {MMOSessionEntity} from '../../src/entities/MMOSessionEntity.sol';
 // import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborInteractionEntity.sol';
 import {CatchEntity} from '../../src/entities/CatchEntity.sol';
-import {AddressKey} from '../../src/interfaces/IGame.sol';
+import {AddressKey, GameFuncData, GameFuncAddress} from '../../src/interfaces/IGame.sol';
 
 // # To deploy and verify Catch on the PLAYMINT protocol run this command below
-// forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv
-contract DeployCatch is Script {
+// forge script script/deploy/OneOff.s.sol:OneOff --rpc-url sepolia --broadcast --verify -vvvv
+contract OneOff is Script {
   address GAME_FACTORY = 0x44AAA1DcD6DdE7480ADe1281C4376ce484C8a319;
   address MODULE_REGISTRY = 0x4e3F48C28c28E2Fa3718eFFe3579dc302a3EE7ae;
   address ENTITY_FACTORY = 0xD89B03B60D161661142c2Fe24EA57ea430eC82c4;
 
+  GameFuncData joinParams;
+
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');
 
-    address deployPublicKey = vm.addr(deployerPrivateKey);
 
     vm.startBroadcast(deployerPrivateKey);
 
-    EntityFactory entityFactory = EntityFactory(ENTITY_FACTORY);
 
     GameFactory factory = GameFactory(GAME_FACTORY);
 
-    ModuleRegistry registry = ModuleRegistry(MODULE_REGISTRY);
 
-    MMOSessionModule mmoSession = new MMOSessionModule();
-    registry.register(address(mmoSession));
-    MMOSessionEntity mmoSessionEntity = new MMOSessionEntity();
-    entityFactory.registerEntity('MMOSessionEntity', address(mmoSessionEntity));
 
-    MMONeighborInteractionModule neighborInteraction = new MMONeighborInteractionModule();
-    registry.register(address(neighborInteraction));
 
-    CatchEntity catchEntity = new CatchEntity();
-    entityFactory.registerEntity('CatchEntity', address(catchEntity));
 
-    factory.createGame(deployPublicKey, 'Catch Demo');
     IGame liveGame = factory.games(0);
 
-    liveGame.addModule(address(mmoSession));
-    liveGame.addModule(address(neighborInteraction));
+  
 
-    joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
-    joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));
-    liveGame.createGameFunction('joinCatch', joinKeys);
+    // IGame liveGame = factory.games(0);
 
-    throwKeys.push(AddressKey(address(neighborInteraction), 'throwBall'));
-    liveGame.createGameFunction('throwBall', throwKeys);
+    joinParams.addresses.push(GameFuncAddress('player', address(1)));
+    liveGame.executeGameFunction('joinCatch', joinParams);
 
-    catchKeys.push(AddressKey(address(neighborInteraction), 'catchBall'));
-    liveGame.createGameFunction('catchBall', catchKeys);
+    joinParams.addresses[0] = GameFuncAddress('player', address(2));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(3));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(4));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(5));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(6));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(7));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(8));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(9));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(10));
+    liveGame.executeGameFunction('joinCatch', joinParams);
+
+    joinParams.addresses[0] = GameFuncAddress('player', address(11));
+    liveGame.executeGameFunction('joinCatch', joinParams);
 
     // neighborInteraction.joinSession(liveGame, address(1));
     // neighborInteraction.joinSession(liveGame, address(2));
@@ -85,9 +99,6 @@ contract DeployCatch is Script {
     vm.stopBroadcast();
   }
 
-  AddressKey[] joinKeys;
-  AddressKey[] throwKeys;
-  AddressKey[] catchKeys;
 
-  function createFunctions() public {}
+
 }

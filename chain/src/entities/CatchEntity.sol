@@ -134,10 +134,6 @@ contract CatchEntity is IEntity {
 
     // update player
     players[player].hasBalls.push(ballIndex);
-    // players[player].canCatch[0] = players[player].canCatch[
-    //   players[player].canCatch.length - 1
-    // ];
-    // players[player].canCatch.pop();
 
     //update holder index
     if (players[player].hasBalls.length == 1) {

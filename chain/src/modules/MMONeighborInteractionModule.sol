@@ -128,9 +128,7 @@ contract MMONeighborInteractionModule is IModule {
   }
 
   function catchBall(IGame game, GameFuncData calldata params) internal {
-
-
-        address player;
+    address player;
 
     for (uint256 i = 0; i < params.addresses.length; i++) {
       if (

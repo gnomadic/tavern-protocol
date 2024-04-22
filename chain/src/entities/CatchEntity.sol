@@ -5,7 +5,6 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract CatchEntity is IEntity {
-  
   string[] public keys;
 
   uint256 public ballCount;
@@ -42,7 +41,7 @@ contract CatchEntity is IEntity {
     return keys;
   }
 
-  function addNewThrower(address player, uint256 position) public onlyModule(){
+  function addNewThrower(address player, uint256 position) public onlyModule {
     ballCount++;
 
     players[player].hasBalls.push(ballCount);
@@ -53,7 +52,7 @@ contract CatchEntity is IEntity {
     players[player].ballHolderIndex = ballHolderPositions.length - 1;
   }
 
-  function addNewPlayer(address player, uint256 position) public onlyModule() {
+  function addNewPlayer(address player, uint256 position) public onlyModule {
     players[player].position = position;
   }
 
@@ -84,7 +83,7 @@ contract CatchEntity is IEntity {
     address player,
     uint256 distance,
     address[] memory catchersInRange
-  ) public onlyModule() {
+  ) public onlyModule {
     // update ball
     uint256 ballIndex = players[player].hasBalls[0];
     balls[ballIndex].distance = distance;
@@ -96,8 +95,12 @@ contract CatchEntity is IEntity {
       players[catchersInRange[i]].canCatch.push(ballIndex);
       balls[ballIndex].catchers.push(catchersInRange[i]);
       if (players[catchersInRange[i]].canCatch.length == 1) {
-        ballCatcherPositions.push(Position(players[catchersInRange[i]].position, catchersInRange[i]));
-        players[catchersInRange[i]].ballCatcherIndex = ballCatcherPositions.length - 1;
+        ballCatcherPositions.push(
+          Position(players[catchersInRange[i]].position, catchersInRange[i])
+        );
+        players[catchersInRange[i]].ballCatcherIndex =
+          ballCatcherPositions.length -
+          1;
       }
     }
 
@@ -125,15 +128,16 @@ contract CatchEntity is IEntity {
     }
   }
 
-  function catchBall(address player) public onlyModule(){
+  function catchBall(address player) public onlyModule {
+    console.log('can catch count: ', players[player].canCatch.length);
     uint256 ballIndex = players[player].canCatch[0];
 
     // update player
     players[player].hasBalls.push(ballIndex);
-    players[player].canCatch[0] = players[player].canCatch[
-      players[player].canCatch.length - 1
-    ];
-    players[player].canCatch.pop();
+    // players[player].canCatch[0] = players[player].canCatch[
+    //   players[player].canCatch.length - 1
+    // ];
+    // players[player].canCatch.pop();
 
     //update holder index
     if (players[player].hasBalls.length == 1) {
@@ -176,5 +180,4 @@ contract CatchEntity is IEntity {
     balls[ballIndex].distance = 0;
     balls[ballIndex].thrower = player;
   }
-
 }

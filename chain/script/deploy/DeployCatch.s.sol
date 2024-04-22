@@ -15,6 +15,7 @@ import {MMONeighborInteractionModule} from '../../src/modules/MMONeighborInterac
 import {MMOSessionEntity} from '../../src/entities/MMOSessionEntity.sol';
 // import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborInteractionEntity.sol';
 import {CatchEntity} from '../../src/entities/CatchEntity.sol';
+import {AddressKey} from '../../src/interfaces/IGame.sol';
 
 // # To deploy and verify Catch on the PLAYMINT protocol run this command below
 // forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv
@@ -53,6 +54,16 @@ contract DeployCatch is Script {
     liveGame.addModule(address(mmoSession));
     liveGame.addModule(address(neighborInteraction));
 
+    joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
+    joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));
+    liveGame.createGameFunction('joinCatch', joinKeys);
+
+    throwKeys.push(AddressKey(address(neighborInteraction), 'throwBall'));
+    liveGame.createGameFunction('throwBall', throwKeys);
+
+    catchKeys.push(AddressKey(address(neighborInteraction), 'catchBall'));
+    liveGame.createGameFunction('catchBall', catchKeys);
+
     // neighborInteraction.joinSession(liveGame, address(1));
     // neighborInteraction.joinSession(liveGame, address(2));
     // neighborInteraction.joinSession(liveGame, address(3));
@@ -73,4 +84,10 @@ contract DeployCatch is Script {
 
     vm.stopBroadcast();
   }
+
+  AddressKey[] joinKeys;
+  AddressKey[] throwKeys;
+  AddressKey[] catchKeys;
+
+  function createFunctions() public {}
 }

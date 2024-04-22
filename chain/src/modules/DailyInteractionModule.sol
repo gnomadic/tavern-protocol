@@ -6,6 +6,7 @@ import {Initializable} from 'solady/utils/Initializable.sol';
 import {IModule, ModuleSummary} from './interfaces/IModule.sol';
 import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
+import {GameFuncData} from '../interfaces/IGame.sol';
 
 contract DailyInteractionModule is IModule, Initializable {
   // ok so this contract will
@@ -26,8 +27,34 @@ contract DailyInteractionModule is IModule, Initializable {
     return ModuleSummary(address(this), functions, required, displayName);
   }
 
-  function dailyInteraction(IGame game, uint256 tokenId) public {
-    //TODO don't use msg.sender but I don't want other to play on someone else's behalf..
+    function executeFunction(
+    address game,
+    string calldata func,
+    GameFuncData calldata params
+  ) external {
+    if (
+      keccak256(abi.encodePacked(func)) ==
+      keccak256(abi.encodePacked('dailyInteraction'))
+    ) {
+      dailyInteraction(IGame(game), params);
+    }
+  }
+
+
+function dailyInteraction(IGame game, GameFuncData calldata params) internal {
+
+      uint256 tokenId;
+
+          for (uint256 i = 0; i < params.uints.length; i++) {
+      if (
+        keccak256(abi.encodePacked(params.uints[i].name)) ==
+        keccak256(abi.encodePacked('tokenId'))
+      ) {
+        tokenId = params.uints[i].value;
+      }
+    }
+
+  // function dailyInteraction(IGame game, uint256 tokenId) public {
     uint256 lastActionAt = INumberEntity(game.getEntity('lastActionAt'))
       .getNumber(tokenId, 'lastActionAt');
     // uint256 lastActionAt = game.getOwnedNumber(msg.sender, tokenId, "lastActionAt");

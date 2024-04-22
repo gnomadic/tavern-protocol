@@ -9,30 +9,28 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {console} from 'forge-std/console.sol';
 import {MMOSessionModule} from './MMOSessionModule.sol';
+import {GameFuncData} from '../interfaces/IGame.sol';
 
 contract MMONeighborInteractionModule is IModule {
   string public displayName = 'Daily Interaction';
   string[] public required = ['players', 'canPlayerThrow'];
-  string[] public functions = ['throwBall', 'catchBall', 'canPlayerCatch', 'canPlayerThrow', 'getPlayerCount', 'getBallCount', 'getBallHolderIndexes', 'getPlayerIndex', 'getCatchableIndexes'];
+  string[] public functions = [
+    'throwBall',
+    'catchBall',
+    'canPlayerCatch',
+    'canPlayerThrow',
+    'getPlayerCount',
+    'getBallCount',
+    'getBallHolderIndexes',
+    'getPlayerIndex',
+    'getCatchableIndexes'
+  ];
 
   function initialize(address game) external {
     address catchEntity = IEntityFactory(IGame(game).getEntityFactory())
       .createEntity(game, 'CatchEntity');
 
     IGame(game).addEntity(catchEntity);
-
-    // TODO this sets a precendence I'm not sure we want to set
-    // multiple entities created by one module..
-    // so is it one entity per module, or composition?  How can we be confident
-    // that a given entity does exist for any module that needs it?
-    //  the easiest way to have that confidence is to have the module create the entity it needs
-    // and if that is the case, then there should be just one entity per module
-    // which doesn't really encourage composability.
-    // so anyways, let's see how this plays out.
-    // address mmoEntity = IEntityFactory(IGame(game).getEntityFactory())
-    //   .createEntity(game, 'MMOSessionEntity');
-
-    // IGame(game).addEntity(mmoEntity);
   }
 
   function getSummary() external view returns (ModuleSummary memory) {
@@ -40,15 +38,48 @@ contract MMONeighborInteractionModule is IModule {
       ModuleSummary(address(this), functions, required, 'Neighbor Interaction');
   }
 
+  function executeFunction(
+    address game,
+    string calldata func,
+    GameFuncData calldata params
+  ) external {
+    if (
+      keccak256(abi.encodePacked(func)) ==
+      keccak256(abi.encodePacked('joinSession'))
+    ) {
+      joinSession(IGame(game), params);
+    } else if (
+      keccak256(abi.encodePacked(func)) ==
+      keccak256(abi.encodePacked('throwBall'))
+    ) {
+      throwBall(IGame(game), params);
+    } else if (
+      keccak256(abi.encodePacked(func)) ==
+      keccak256(abi.encodePacked('catchBall'))
+    ) {
+      catchBall(IGame(game), params);
+    }
+  }
+
   // --------------------------------- ACTION FUNCTIONS ---------------------------------
 
-  function joinSession(IGame game, address player) public {
-    // uint256 index = MMOSessionEntity(game.getEntity('players')).addPlayer(
-    //   player
-    // );
+  function joinSession(IGame game, GameFuncData calldata params) internal {
+    // function joinSession(IGame game, address player) public {
+    // uint256 index = MMOSessionModule(game.getModule('joinGame')).joinSession(game, player);
 
-    uint256 index = MMOSessionModule(game.getModule('joinGame')).joinSession(game, player);
+    address player;
 
+    for (uint256 i = 0; i < params.addresses.length; i++) {
+      if (
+        keccak256(abi.encodePacked(params.addresses[i].name)) ==
+        keccak256(abi.encodePacked('player'))
+      ) {
+        player = params.addresses[i].value;
+      }
+    }
+
+    uint256 index = MMOSessionEntity(game.getEntity('playerIndex'))
+      .getPlayerIndex(player);
 
     if (getPlayerCount(game) % 2 == 0) {
       CatchEntity(game.getEntity('balls')).addNewThrower(player, index);
@@ -57,7 +88,30 @@ contract MMONeighborInteractionModule is IModule {
     }
   }
 
-  function throwBall(IGame game, address giver, uint256 distance) public {
+  function throwBall(IGame game, GameFuncData calldata params) internal {
+    // function throwBall(IGame game, address giver, uint256 distance) public {
+
+    address giver;
+    uint256 distance;
+
+    for (uint256 i = 0; i < params.addresses.length; i++) {
+      if (
+        keccak256(abi.encodePacked(params.addresses[i].name)) ==
+        keccak256(abi.encodePacked('giver'))
+      ) {
+        giver = params.addresses[i].value;
+      }
+    }
+
+    for (uint256 i = 0; i < params.uints.length; i++) {
+      if (
+        keccak256(abi.encodePacked(params.uints[i].name)) ==
+        keccak256(abi.encodePacked('distance'))
+      ) {
+        distance = params.uints[i].value;
+      }
+    }
+
     bool canPlayerInteract = CatchEntity(game.getEntity('balls')).canIThrow(
       giver
     );
@@ -73,7 +127,19 @@ contract MMONeighborInteractionModule is IModule {
     );
   }
 
-  function catchBall(IGame game, address player) public {
+  function catchBall(IGame game, GameFuncData calldata params) internal {
+
+
+        address player;
+
+    for (uint256 i = 0; i < params.addresses.length; i++) {
+      if (
+        keccak256(abi.encodePacked(params.addresses[i].name)) ==
+        keccak256(abi.encodePacked('player'))
+      ) {
+        player = params.addresses[i].value;
+      }
+    }
     bool canCatch = CatchEntity(game.getEntity('balls')).canICatch(player);
     if (!canCatch) revert CannotIntercept();
 

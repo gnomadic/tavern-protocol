@@ -4,7 +4,7 @@ pragma solidity ^0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
-import {IGame, GameSummary, AddressKey} from './interfaces/IGame.sol';
+import {IGame, GameSummary, AddressKey, GameFuncData} from './interfaces/IGame.sol';
 import {INumberEntity} from './entities/interfaces/INumberEntity.sol';
 import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IModule} from './modules/interfaces/IModule.sol';
@@ -82,12 +82,6 @@ contract Game is IGame, Initializable {
     return supportedFunctions[module];
   }
 
-  // function getOwnedNumber(address player, uint256 tokenId, string memory key) external view returns (uint256) {
-  //     INumberEntity targetEntity = INumberEntity(availableEntityData[key]);
-  //     targetEntity.assertOwnership(tokenId, player);
-  //     return targetEntity.getNumber(tokenId, key);
-  // }
-
   function getEntity(string memory key) external view returns (address) {
     // console.log('getting entity', key);
     // console.log('entity is', availableEntityData[key]);
@@ -101,4 +95,34 @@ contract Game is IGame, Initializable {
   function getModule(string memory key) external view returns (address){
     return functionLookup[key];
   }
+
+  mapping (string => AddressKey[]) public gameFunctions;
+
+
+//TODO only GM can create game functions
+  function createGameFunction(string memory name, AddressKey[] memory funcs ) external {
+    if (gameFunctions[name].length > 0) {
+      revert GameFunctionAlreadyExists();
+    }
+    for (uint8 i = 0; i < funcs.length; i++) {
+      gameFunctions[name].push(funcs[i]);
+    }
+  }
+
+  error GameFunctionAlreadyExists();
+  error GameFunctionDoesNotExist();
+
+
+  function executeGameFunction(string memory name, GameFuncData memory params) external {
+    AddressKey[] storage funcs = gameFunctions[name];
+    if (funcs.length == 0) {
+      revert GameFunctionDoesNotExist();
+    }
+
+    for (uint8 i = 0; i < funcs.length; i++) {
+      IModule(funcs[i].Address).executeFunction(address(this), funcs[i].Key, params);
+    }
+  }
+
+  
 }

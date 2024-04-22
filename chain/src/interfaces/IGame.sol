@@ -16,6 +16,10 @@ interface IGame {
     address module
   ) external view returns (string[] memory);
   function getModule(string memory key) external view returns (address);
+
+    function createGameFunction(string memory name, AddressKey[] memory funcs ) external ;
+      function executeGameFunction(string memory name, GameFuncData memory params) external ;
+
 }
 
 struct GameSummary {
@@ -29,4 +33,44 @@ struct GameSummary {
 struct AddressKey {
   address Address;
   string Key;
+}
+
+// struct GameFuncRawParam{
+//   string name;
+//   bytes value;
+//   ParamType paramType;
+// }
+
+struct GameFuncAddress {
+  string name;
+  address value;
+}
+
+struct GameFuncUint {
+  string name;
+  uint256 value;
+}
+
+struct GameFuncString {
+  string name;
+  string value;
+}
+
+struct GameFuncData {
+  GameFuncAddress[] addresses;
+  GameFuncUint[] uints;
+  GameFuncString[] strings;
+}
+
+
+// struct GameFuncParam {
+//   mapping(string => address) addresses;
+//   mapping(string => uint256) uints;
+//   mapping(string => string) strings;
+// }
+
+enum ParamType {
+  STRING,
+  UINT,
+  ADDRESS
 }

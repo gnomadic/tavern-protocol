@@ -76,6 +76,10 @@ contract MMOSessionEntity is IEntity {
     return players.length;
   }
 
+  function getPlayerIndex(address player) external view returns (uint256) {
+    return playerIndex[player];
+  }
+
   error PlayerAlreadyInSession();
   error PlayerNotInSession();
 }

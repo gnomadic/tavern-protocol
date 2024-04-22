@@ -32,7 +32,7 @@ contract EntityFactory {
   function registerEntity(string memory name, address entityAt) external {
     entities[name] = entityAt;
 
-    string[] memory keys = IEntity(entityAt).getAvailableKeys();
+    // string[] memory keys = IEntity(entityAt).getAvailableKeys();
     // console.log('registering keys: %s', keys.length);
   }
 

@@ -97,7 +97,7 @@ contract MMONeighborInteractionModule is IModule {
     for (uint256 i = 0; i < params.addresses.length; i++) {
       if (
         keccak256(abi.encodePacked(params.addresses[i].name)) ==
-        keccak256(abi.encodePacked('giver'))
+        keccak256(abi.encodePacked('player'))
       ) {
         giver = params.addresses[i].value;
       }

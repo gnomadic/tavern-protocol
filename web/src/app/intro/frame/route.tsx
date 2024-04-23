@@ -20,10 +20,10 @@ type Frame = {
 
 const frames: Frame[] = [
   { page: 'one', nextPage: "two", input: undefined, prevPage: undefined, btn: "next" },
-  { page: 'two', nextPage: "three", input: undefined, prevPage: 'one' , btn: "next" },
-  { page: 'three', nextPage: "four", input: undefined, prevPage: 'two' , btn: "next" },
+  { page: 'two', nextPage: "three", input: undefined, prevPage: 'one', btn: "next" },
+  { page: 'three', nextPage: "four", input: undefined, prevPage: 'two', btn: "next" },
   { page: 'four', nextPage: "five", input: "Vote for a name!", prevPage: 'three', btn: "vote" },
-  { page: 'five', nextPage: "one", input: undefined, prevPage: 'four' , btn: "start over" },
+  { page: 'five', nextPage: "one", input: undefined, prevPage: 'four', btn: "start over" },
 
 
 ]
@@ -37,13 +37,15 @@ export async function POST(
   const curFrame = frames.find(f => f.page === page);
 
   let newPage = '';
-  if (page === 'two') {
+  if (page === 'one') {
+    newPage = 'two';
+  } else if (page === 'two') {
     newPage = 'three';
   } else if (page === 'three') {
     newPage = 'one';
   } else if (page === 'four') {
     newPage = 'five';
-  }else if (page == "five") {
+  } else if (page == "five") {
     newPage = "one"
   }
 
@@ -66,13 +68,15 @@ export async function POST(
 
 
 
-  
+
 
 
   const secondButton = [];
-  // if (page !== 'one') {
+  if (page !== 'one') {
     secondButton.push(nextButton)
-  // }
+  } else {
+    prevButton = nextButton;
+  }
 
 
 
@@ -80,14 +84,23 @@ export async function POST(
 
 
 
+  if (curFrame?.input != undefined) {
+    return new NextResponse(getFrameHtmlResponse({
+      buttons: [prevButton, ...secondButton],
+      image: `${imageURL}${curFrame?.page}`,
+      input: { text: `${curFrame?.input}` }
+    }));
 
-  return new NextResponse(getFrameHtmlResponse({
-    buttons: [prevButton, ...secondButton],
-    image: `${imageURL}${curFrame?.page}`,
-    input: { text: `${curFrame?.input}` },
+  } else {
+    return new NextResponse(getFrameHtmlResponse({
+      buttons: [prevButton, ...secondButton],
+      image: `${imageURL}${curFrame?.page}`
+    }))
+  }
 
-    // postUrl: `${process.env.NEXT_PUBLIC_URL}/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame`,
-  }),);
+  // postUrl: `${process.env.NEXT_PUBLIC_URL}/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame`,
+}
+
 
   // if (action === ACTION_HELLO){
   // return new ImageResponse((
@@ -107,7 +120,7 @@ export async function POST(
   //     </div>
   //   ), {width: 600, height: 400});
   // }
-}
+
 
 
 

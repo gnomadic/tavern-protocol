@@ -1,4 +1,4 @@
-export default function PageTwo() {
+export default function SecondImage() {
 
   return (
 

@@ -1,4 +1,4 @@
-export default function PageOne() {
+export default function FirstImage() {
 
   return (
 

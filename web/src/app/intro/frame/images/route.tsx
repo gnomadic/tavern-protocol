@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { ImageResponse } from 'next/og';
-import PageOne from '../PageOne';
-import PageTwo from '../PageTwo';
-import PageThree from '../PageThree';
+import PageOne from '../FirstImage';
+import PageTwo from '../SecondImage';
+import PageThree from '../ThirdImage';
 
 export async function GET(request: NextRequest) {
   const currentPage = request.nextUrl.searchParams.get('page');

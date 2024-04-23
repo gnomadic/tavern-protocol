@@ -13,11 +13,6 @@ import 'forge-std/console.sol';
 
 // Roles for access control
 contract Game is IGame, Initializable {
-  // ok so this contract will
-  // 1. have a gm
-  // 2. have a list of entities
-  // 3. have a list of modules
-  // 4. expose state from the entities
 
   address public gm;
   string public displayName;
@@ -97,6 +92,7 @@ contract Game is IGame, Initializable {
   }
 
   mapping (string => AddressKey[]) public gameFunctions;
+  string[] public gameFunctionNames;
 
 
 //TODO only GM can create game functions
@@ -107,10 +103,15 @@ contract Game is IGame, Initializable {
     for (uint8 i = 0; i < funcs.length; i++) {
       gameFunctions[name].push(funcs[i]);
     }
+    gameFunctionNames.push(name);
   }
 
   error GameFunctionAlreadyExists();
   error GameFunctionDoesNotExist();
+
+  function getGameFunctions() external view returns (string[] memory) {
+    return gameFunctionNames;
+  }
 
 
   function executeGameFunction(string memory name, GameFuncData memory params) external {

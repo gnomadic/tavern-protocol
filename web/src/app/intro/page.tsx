@@ -3,7 +3,10 @@
 import Stats from '@/components/module/Stats';
 import Image from 'next/image';
 
-import full from '@/images/intro/full.png';
+import landingimage from '@/images/intro/landingimage.svg';
+import moduleImage from '@/images/intro/moduleImage.svg';
+import stepsImage from '@/images/intro/stepsImage.svg';
+
 import Divider from '@/components/Divider';
 import Header from '@/components/game/Header';
 import StepOne from '@/components/game/StepOne';
@@ -72,13 +75,13 @@ export default function Intro({ params }: { params: { address: string } }) {
 
 
   return (
-    <main className='font-anon flex flex-col items-center justify-between p-24'>
+    <main className='font-anon flex flex-col items-center justify-between p-24 mt-40'>
 
       <Image
-        src={full}
+        src={landingimage}
         alt='Hero'
         width={1200}
-        height={400}
+        height={630}
       />
 
 
@@ -86,14 +89,26 @@ export default function Intro({ params }: { params: { address: string } }) {
         <Divider />
       </section>
 
-      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-        <Image
-          alt='Mountains'
-          src={full}
-          layout='fill'
-          objectFit='contain'
-        />
-      </div>
+      <Image
+        src={moduleImage}
+        alt='Hero'
+        width={1200}
+        height={630}
+      />
+
+      <section>
+        <Divider />
+      </section>
+
+      <Image
+        src={stepsImage}
+        alt='Hero'
+        width={1200}
+        height={630}
+      />
+
+
+
     </main>
   );
 }

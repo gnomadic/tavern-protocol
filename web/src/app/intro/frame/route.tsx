@@ -1,5 +1,5 @@
 import { ACTION_HELLO, GameSummary, QUERY_ACTION, QUERY_GAME } from "@/domain/Domain";
-import { FrameButtonMetadata, getFrameHtmlResponse, getFrameMessage, FrameInputMetadata } from "@coinbase/onchainkit";
+import { FrameButtonMetadata, getFrameHtmlResponse, getFrameMessage, FrameInputMetadata, FrameRequest } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
 import { getBlockNumber, getGameSummary } from "@/services/viemService";
@@ -24,14 +24,20 @@ const frames: Frame[] = [
   { page: 'three', nextPage: "four", input: undefined, prevPage: 'two', btn: "next" },
   { page: 'four', nextPage: "five", input: "Vote for a name!", prevPage: 'three', btn: "vote" },
   { page: 'five', nextPage: "one", input: undefined, prevPage: 'four', btn: "start over" },
-
-
 ]
 
 
 export async function POST(
   request: NextRequest,
 ) {
+
+
+  const frameRequest: FrameRequest = await request.json();
+  const { isValid, message } = await getFrameMessage(frameRequest); 
+
+  console.log(message);
+ 
+
 
   const page = request.nextUrl.searchParams.get('page');
   const curFrame = frames.find(f => f.page === page);

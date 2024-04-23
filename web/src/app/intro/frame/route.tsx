@@ -1,67 +1,88 @@
 import { ACTION_HELLO, GameSummary, QUERY_ACTION, QUERY_GAME } from "@/domain/Domain";
-import { getFrameHtmlResponse, getFrameMessage } from "@coinbase/onchainkit";
+import { FrameButtonMetadata, getFrameHtmlResponse, getFrameMessage, FrameInputMetadata } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
 import { getBlockNumber, getGameSummary } from "@/services/viemService";
 import { Address } from "viem";
 
-
-function prepareTxPayload(chainid: string, gameAddress: string, gameSummary: GameSummary, action: string) {
-
-  const gameFunction = gameSummary.availableFunctions.find((e) => { e.Key === action })
-
-
-  return {
-    chainId: `eip155:${chainid}`,
-    method: "eth_sendTransaction",
-    params: {
-      abi: [],
-      to: `${gameFunction?.Address}`,
-      data: "",
-      value: "0"
-    }
-  }
-  //   {
-  //   chainId: "eip155:10",
-  //   method: "eth_sendTransaction",
-  //   params: {
-  //     abi: [...], // JSON ABI of the function selector and any errors
-  //     to: "0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D",
-  //     data: "0x783a112b0000000000000000000000000000000000000000000000000000000000000e250000000000000000000000000000000000000000000000000000000000000001",
-  //     value: "984316556204476",
-  //   },
-}
+const postURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame?page=`;
+  const imageURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame/images?page=`;
 
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { chainid: string, address: string } }
 ) {
-  // const action = request.nextUrl.searchParams.get(QUERY_ACTION);
-  // // const game = request.nextUrl.searchParams.get(QUERY_GAME);
-  // if (!action) {
-  //   return new NextResponse('action or game query params are invalid!', { status: 400 });
-  // }
+
+  const page = request.nextUrl.searchParams.get('page');
+
+  let newPage = '';
+  if (page === 'one') {
+    newPage = 'two';
+  }else if (page === 'two') {
+    newPage = 'three';
+  }else if (page === 'three') {
+    newPage = 'one';
+  }
+
+  let lastPage = '';
+   if (newPage === 'two') {
+    lastPage = 'one';
+  } else if (newPage === 'three') {
+    lastPage = 'two';
+  }
+
+  let nextButton : FrameButtonMetadata = 
+    {
+      action: "post",
+      label: "next",
+      target: `${postURL}${newPage}`,
+    }
+
+    let lastButton : FrameButtonMetadata =
+    {
+      action: "post",
+      label: "previous",
+      target: `${postURL}${lastPage}`,
+    }
+
+    
+
+    let firstButton;
+    //first button is next on page one
+    // and back on page two and three
+
+    if (page === 'one') {
+      firstButton = nextButton;
+    }else{
+      firstButton = lastButton;
+    }
+    const secondButton = [];
+    // second button doesn't exist on page one
+    // and is next on page two and three
+    if (page !== 'one') {
+      secondButton.push(nextButton)
+    }
 
 
 
-  console.log(params.chainid);
-  console.log(params.address);
-  const action = request.nextUrl.searchParams.get('action');
+    const previous = []
+
+    if (lastPage !== '')  {
+      previous.push(lastButton)
+    }
 
 
-  const blocknumber = await getBlockNumber();
-  const gameSummary = await getGameSummary(params.chainid, params.address as Address)
-  console.log(gameSummary)
+    let input : FrameInputMetadata = {text: "hello"};
+
+
+
 
   return new NextResponse(getFrameHtmlResponse({
-    buttons: [
-      {
-        label: `blocknumber: ${blocknumber}`,
-      },
-    ],
-    image: 'https://cyan-fiscal-mackerel-412.mypinata.cloud/ipfs/QmbuoqRAJKXrZb2f1yvCxZUmj4YyXqfhC1iTXVpWRPvF1s',
-    postUrl: `${process.env.NEXT_PUBLIC_URL}/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame`,
+    buttons:[firstButton, ...secondButton],
+    image: `${imageURL}${page}`,
+    input: {text:"hello"},
+    
+    // postUrl: `${process.env.NEXT_PUBLIC_URL}/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame`,
   }),);
 
   // if (action === ACTION_HELLO){
@@ -86,16 +107,16 @@ export async function POST(
 
 
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { chainid: string, address: string } }
-) {
-  const action = request.nextUrl.searchParams.get('action');
-  if (!action) {
-    return new NextResponse("error: Action required to generate image!", { status: 400 });
-  }
+// export async function GET(
+//   request: NextRequest,
+//   { params }: { params: { chainid: string, address: string } }
+// ) {
+//   const action = request.nextUrl.searchParams.get('action');
+//   if (!action) {
+//     return new NextResponse("error: Action required to generate image!", { status: 400 });
+//   }
 
 
-}
+// }
 
 

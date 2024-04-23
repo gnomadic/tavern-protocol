@@ -37,7 +37,9 @@ export async function generateMetadata({
   const { chainid, address } = params;
   const { page } = searchParams;
 
-  const postURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame?page=${page}`;
+  const postURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame?page=two`;
+  const imageUrl = `${process.env.NEXT_PUBLIC_URL}/intro/frame/images?page=one`;
+
   // const gameSummary = await getGameSummary(params.chainid, params.address as Address)
   // // console.log(gameSummary)
 
@@ -50,16 +52,16 @@ export async function generateMetadata({
     openGraph: {
       title: 'playmint.app',
       description: 'nocode onchain game creation',
-      images: ['https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6'],
+      images: [`${imageUrl}`],
     },
     other: {
       ...getFrameMetadata({
         buttons: [{
           action: "post",
-          label: `hi`,
+          label: `next`,
           target: `${postURL}`
         }],
-        image: 'https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6',
+        image: `${imageUrl}`,
       }),
     },
   };

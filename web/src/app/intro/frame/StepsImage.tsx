@@ -1,4 +1,4 @@
-export default function ThirdImage() {
+export default function StepsImage() {
 
   return (
 

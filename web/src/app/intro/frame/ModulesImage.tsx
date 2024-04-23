@@ -1,4 +1,4 @@
-export default function SecondImage() {
+export default function ModulesImage() {
 
   return (
 

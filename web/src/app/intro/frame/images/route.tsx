@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { ImageResponse } from 'next/og';
-import PageOne from '../FirstImage';
-import PageTwo from '../SecondImage';
-import PageThree from '../ThirdImage';
+import LandingImage from '../LandingImage';
+import ModulesImage from '../ModulesImage';
+import StepsImage from '../StepsImage';
+import CTAImage from '../CTAImage';
+import NameImage from '../NameImage';
 
 export async function GET(request: NextRequest) {
   const currentPage = request.nextUrl.searchParams.get('page');
@@ -13,14 +15,19 @@ export async function GET(request: NextRequest) {
 
   if (currentPage === "one") {
     return new ImageResponse((
-      <PageOne />), { width: 1200, height: 630 });
+      <LandingImage />), { width: 1200, height: 630 });
   } else if (currentPage === "two") {
     return new ImageResponse((
-      <PageTwo />), { width: 1200, height: 630 });
+      <ModulesImage />), { width: 1200, height: 630 });
   } else if (currentPage === "three") {
     return new ImageResponse((
-      <PageThree />), { width: 1200, height: 630 });
-
+      <StepsImage />), { width: 1200, height: 630 });
+  } else if (currentPage === "four") {
+    return new ImageResponse((
+      <NameImage />), { width: 1200, height: 630 });
+  } else if (currentPage === "five") {
+    return new ImageResponse((
+      <CTAImage />), { width: 1200, height: 630 });
   }
   return new NextResponse(null, { status: 204, statusText: 'Page does not exist' });
 }

@@ -1,4 +1,4 @@
-export default function FirstImage() {
+export default function LandingImage() {
 
   return (
 

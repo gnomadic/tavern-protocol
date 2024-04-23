@@ -6,7 +6,27 @@ import { getBlockNumber, getGameSummary } from "@/services/viemService";
 import { Address } from "viem";
 
 const postURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame?page=`;
-  const imageURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame/images?page=`;
+const imageURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame/images?page=`;
+
+
+type Frame = {
+  page: string;
+  nextPage: string | undefined;
+  prevPage: string | undefined;
+  input: string | undefined;
+  btn: string;
+
+}
+
+const frames: Frame[] = [
+  { page: 'one', nextPage: "two", input: undefined, prevPage: undefined, btn: "next" },
+  { page: 'two', nextPage: "three", input: undefined, prevPage: 'one' , btn: "next" },
+  { page: 'three', nextPage: "four", input: undefined, prevPage: 'two' , btn: "next" },
+  { page: 'four', nextPage: "five", input: "Vote for a name!", prevPage: 'three', btn: "vote" },
+  { page: 'five', nextPage: "one", input: undefined, prevPage: 'four' , btn: "start over" },
+
+
+]
 
 
 export async function POST(
@@ -14,74 +34,58 @@ export async function POST(
 ) {
 
   const page = request.nextUrl.searchParams.get('page');
+  const curFrame = frames.find(f => f.page === page);
 
   let newPage = '';
-  if (page === 'one') {
-    newPage = 'two';
-  }else if (page === 'two') {
+  if (page === 'two') {
     newPage = 'three';
-  }else if (page === 'three') {
+  } else if (page === 'three') {
     newPage = 'one';
+  } else if (page === 'four') {
+    newPage = 'five';
+  }else if (page == "five") {
+    newPage = "one"
   }
 
-  let lastPage = '';
-   if (newPage === 'two') {
-    lastPage = 'one';
-  } else if (newPage === 'three') {
-    lastPage = 'two';
+
+
+
+  let nextButton: FrameButtonMetadata =
+  {
+    action: "post",
+    label: `${curFrame?.btn}`,
+    target: `${postURL}${curFrame?.nextPage}`,
   }
 
-  let nextButton : FrameButtonMetadata = 
-    {
-      action: "post",
-      label: "next",
-      target: `${postURL}${newPage}`,
-    }
-
-    let lastButton : FrameButtonMetadata =
-    {
-      action: "post",
-      label: "previous",
-      target: `${postURL}${lastPage}`,
-    }
-
-    
-
-    let firstButton;
-    //first button is next on page one
-    // and back on page two and three
-
-    if (page === 'one') {
-      firstButton = nextButton;
-    }else{
-      firstButton = lastButton;
-    }
-    const secondButton = [];
-    // second button doesn't exist on page one
-    // and is next on page two and three
-    if (page !== 'one') {
-      secondButton.push(nextButton)
-    }
+  let prevButton: FrameButtonMetadata =
+  {
+    action: "post",
+    label: "previous",
+    target: `${postURL}${curFrame?.prevPage}`,
+  }
 
 
 
-    const previous = []
-
-    if (lastPage !== '')  {
-      previous.push(lastButton)
-    }
+  
 
 
-    let input : FrameInputMetadata = {text: "hello"};
+  const secondButton = [];
+  // if (page !== 'one') {
+    secondButton.push(nextButton)
+  // }
+
+
+
+
 
 
 
 
   return new NextResponse(getFrameHtmlResponse({
-    buttons:[firstButton, ...secondButton],
-    image: `${imageURL}${page}`,
-    input: {text:"hello"},
-    
+    buttons: [prevButton, ...secondButton],
+    image: `${imageURL}${curFrame?.page}`,
+    input: { text: `${curFrame?.input}` },
+
     // postUrl: `${process.env.NEXT_PUBLIC_URL}/game/11155111/0xd362776F706b8E72525e3291e5433A695ECBefA7/frame`,
   }),);
 

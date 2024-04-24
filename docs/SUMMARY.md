@@ -1,4 +1,5 @@
 # Table of contents
 
 * [PLAYMINT](README.md)
-* [DEMO](DEMO.md)
+* [FAQ](FAQ.md)
+* [ROADMAP](ROADMAP.md)

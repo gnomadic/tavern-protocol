@@ -38,10 +38,10 @@ export async function generateMetadata({
 
 
   return {
-    title: 'PLAYMINT GAME FRAME',
-    description: `A Farcaster Frame generated for a PLAYMINT game`,
+    title: 'Tavern Game',
+    description: `A Tavern game`,
     openGraph: {
-      title: 'playmint.app',
+      title: 'playtavern.com',
       description: 'nocode onchain game creation',
       images: ['https://ipfs.io/ipfs/QmSxZqKhHjEUM1iemXrMJsmwwMy8jZ8yx2zSajE3D7ReY6'],
     },
@@ -97,7 +97,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
         </div>
       </section>*/}
       <div className='pt-8'>
-        PLAYMINT is a no-code onchain game creation platform.  This demo is a simple game of catch.
+        Tavern is a no-code onchain game creation platform.  This demo is a simple game of catch.
       </div>
 
       <div className='pt-8'>

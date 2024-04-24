@@ -4,7 +4,7 @@ pragma solidity ^0.8.24;
 import {ERC721A} from "lib/erc721a/contracts/ERC721A.sol";
 
 contract D7 is ERC721A {
-    constructor() ERC721A("PLAYMINT D7", "D7") {
+    constructor() ERC721A("Tavern D7", "D7") {
     }
 
     function mint() public {

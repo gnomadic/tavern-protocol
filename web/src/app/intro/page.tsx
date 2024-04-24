@@ -50,10 +50,10 @@ export async function generateMetadata({
 
 
   return {
-    title: 'PLAYMINT GAME FRAME',
-    description: `A Farcaster Frame generated for a PLAYMINT game`,
+    title: 'Tavern Game Frame',
+    description: `A Tavern game`,
     openGraph: {
-      title: 'playmint.app',
+      title: 'playtavern.com',
       description: 'nocode onchain game creation',
       images: [`${imageUrl}`],
     },

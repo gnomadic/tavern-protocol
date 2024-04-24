@@ -42,25 +42,11 @@ export default function Create() {
         <p className=''>Coming in Phase 2</p>
         <p className='pt-8'>Launch your codeless games for your communities</p>
         <p className='pt-8'>
-          PLAYMINT provides a set of modules that can be combined and customized to fit your gameplay.
+          Tavern provides a set of modules that can be combined and customized to fit your gameplay.
         </p>
         <p className='pt-8'>Permissionless, free, and on-chain.</p>
       </section>
-      {/* <section id='connect' className='relative -mt-48 items-center'>
-
-        <br />
-        <p>
-          
-          Our mission is to make communities stronger. Everything we do, we try
-          to enable and empower existing communities and their members. We also
-          believe in the power of play.
-          <br />
-          <br />
-          PLAYMINT is an on-chain game engine made for existing NFTs and their
-          communities. Plug in your favorite NFT and launch your own game for your own community
-          today.
-        </p>
-      </section> */}
+  
       <section>
         <Divider />
       </section>

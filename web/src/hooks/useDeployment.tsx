@@ -6,7 +6,7 @@ import { Deployments } from '../domain/deployments';
 
 const useDeployment = () => {
   const { chain } = useAccount();
-  const [deploy, setDeploy] = useState<Deployment>(Deployments['playmint']);
+  const [deploy, setDeploy] = useState<Deployment>(Deployments['tavern']);
 
   useEffect(() => {
     console.log('Network Change detected to: ' + chain?.name);
@@ -14,7 +14,7 @@ const useDeployment = () => {
       chain.name.toLowerCase() != deploy.gameFactory &&
       Deployments.hasOwnProperty(chain.name.toLowerCase())
       ? setDeploy(Deployments[chain.name.toLowerCase()])
-      : setDeploy(Deployments['playmint']);
+      : setDeploy(Deployments['tavern']);
   }, [chain, deploy?.gameFactory]);
 
   return { deploy };

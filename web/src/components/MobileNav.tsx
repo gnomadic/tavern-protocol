@@ -40,7 +40,7 @@ export default function MobileNav(props: MobileNavProps) {
 
           <li className='pb-8 '>
             <a
-              href='https://warpcast.com/playmint'
+              href='https://warpcast.com/gn0madic'
               rel='noopener noreferrer'
               target='_blank'
             >
@@ -62,7 +62,7 @@ export default function MobileNav(props: MobileNavProps) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://docs.playmint.app"
+              href="https://docs.playtavern.com"
             >
               <div className="relative text-white before:absolute before:inset-0 before:origin-bottom before:scale-y-[.03] before:bg-white/60 before:transition before:duration-300 hover:before:scale-y-100 hover:before:scale-x-125 hover:before:bg-white/10">
                 docs

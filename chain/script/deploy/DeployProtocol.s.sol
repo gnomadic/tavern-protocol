@@ -11,7 +11,7 @@ import {UnOptNumberEntity721} from '../../src/entities/UnOptNumberEntity721.sol'
 import {EntityFactory} from '../../src/EntityFactory.sol';
 import "forge-std/console.sol";
 
-// # To deploy and verify the PLAYMINT protocol run this command below
+// # To deploy and verify the Tavern protocol run this command below
 // forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployProtocol is Script {
   function run() external {

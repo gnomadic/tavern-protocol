@@ -1,6 +1,6 @@
 # ROADMAP
 
-PLAYMINT started as a hackathon project, and it shows.
+Taverh started as a hackathon project, and it shows.
 
 
 ## Phase 1:  Hackathon

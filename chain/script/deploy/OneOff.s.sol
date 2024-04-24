@@ -17,7 +17,7 @@ import {MMOSessionEntity} from '../../src/entities/MMOSessionEntity.sol';
 import {CatchEntity} from '../../src/entities/CatchEntity.sol';
 import {AddressKey, GameFuncData, GameFuncAddress} from '../../src/interfaces/IGame.sol';
 
-// # To deploy and verify Catch on the PLAYMINT protocol run this command below
+// # To deploy and verify Catch on the Tavern protocol run this command below
 // forge script script/deploy/OneOff.s.sol:OneOff --rpc-url sepolia --broadcast --verify -vvvv
 contract OneOff is Script {
   address GAME_FACTORY = 0x44AAA1DcD6DdE7480ADe1281C4376ce484C8a319;

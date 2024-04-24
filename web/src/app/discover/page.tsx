@@ -108,7 +108,7 @@ export default function Discover() {
           believe in the power of play.
           <br />
           <br />
-          PLAYMINT is an on-chain game engine made for existing NFTs and their
+          Tavern is an on-chain game engine made for existing NFTs and their
           communities. Plug in your favorite NFT and launch your own game for your own community
           today.
         </p>

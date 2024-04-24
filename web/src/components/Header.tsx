@@ -54,7 +54,7 @@ export default function Header() {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://docs.playmint.app"
+                  href="https://docs.tavern.com"
                 >
                   <div className="relative cursor-pointer">
                     docs

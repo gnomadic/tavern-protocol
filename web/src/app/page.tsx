@@ -11,7 +11,7 @@ export default function Home() {
         <p className='pt-8'>Bring Games to your web3 Communities.</p>
         <p className='pt-8'>
           Launch codeless games onchain for your favorite NFT communities with
-          PLAYMINT.
+          Tavern.
         </p>
         <p className='pt-8'>We believe in the power of play to foster stronger connections and shared experiences.</p>
       </section>
@@ -25,7 +25,7 @@ export default function Home() {
           believe in the power of play.
           <br />
           <br />
-          PLAYMINT is an on-chain game engine made for existing NFTs and their
+          Tavern is an on-chain game engine made for existing NFTs and their
           communities. Plug in your favorite NFT and launch your own game for your own community
           today.
         </p>

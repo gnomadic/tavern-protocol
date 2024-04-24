@@ -2,9 +2,8 @@
 pragma solidity ^0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
-
+import {DailyInteractionEntity} from '../entities/DailyInteractionEntity.sol';
 import {IModule, ModuleSummary} from './interfaces/IModule.sol';
-import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {GameFuncData} from '../interfaces/IGame.sol';
 
@@ -55,21 +54,21 @@ function dailyInteraction(IGame game, GameFuncData calldata params) internal {
     }
 
   // function dailyInteraction(IGame game, uint256 tokenId) public {
-    uint256 lastActionAt = INumberEntity(game.getEntity('lastActionAt'))
+    uint256 lastActionAt = DailyInteractionEntity(game.getEntity('lastActionAt'))
       .getNumber(tokenId, 'lastActionAt');
     // uint256 lastActionAt = game.getOwnedNumber(msg.sender, tokenId, "lastActionAt");
     if (block.timestamp - lastActionAt < 14 hours) revert NotEnoughTimePassed();
-    uint256 dailyActions = INumberEntity(game.getEntity('dailyActions'))
+    uint256 dailyActions = DailyInteractionEntity(game.getEntity('dailyActions'))
       .getNumber(tokenId, 'dailyActions');
 
-    INumberEntity(game.getEntity('dailyActions')).updateNumber(
+    DailyInteractionEntity(game.getEntity('dailyActions')).updateNumber(
       tokenId,
       'dailyActions',
       dailyActions + 1
     );
 
 
-    INumberEntity(game.getEntity('lastActionAt')).updateNumber(
+    DailyInteractionEntity(game.getEntity('lastActionAt')).updateNumber(
       tokenId,
       'lastActionAt',
       block.timestamp

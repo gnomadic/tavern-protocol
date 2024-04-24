@@ -2,7 +2,6 @@
 pragma solidity ^0.8.24;
 
 import {Test, console} from "forge-std/Test.sol";
-import {UnOptNumberEntity721} from "../src/entities/UnOptNumberEntity721.sol";
 import {Game} from "../src/Game.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 

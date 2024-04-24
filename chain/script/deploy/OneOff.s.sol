@@ -8,7 +8,6 @@ import {Game} from '../../src/Game.sol';
 import {IGame} from '../../src/interfaces/IGame.sol';
 import {ModuleRegistry} from '../../src/ModuleRegistry.sol';
 import {DailyInteractionModule} from '../../src/modules/DailyInteractionModule.sol';
-import {UnOptNumberEntity721} from '../../src/entities/UnOptNumberEntity721.sol';
 import {EntityFactory} from '../../src/EntityFactory.sol';
 import {MMOSessionModule} from '../../src/modules/MMOSessionModule.sol';
 import {MMONeighborInteractionModule} from '../../src/modules/MMONeighborInteractionModule.sol';

@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
-// Imports
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
 import {IGame, GameSummary, AddressKey, GameFuncData} from './interfaces/IGame.sol';
-import {INumberEntity} from './entities/interfaces/INumberEntity.sol';
 import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IModule} from './modules/interfaces/IModule.sol';
 

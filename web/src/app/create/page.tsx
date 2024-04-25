@@ -42,7 +42,7 @@ export default function Create() {
         <p className=''>Coming in Phase 2</p>
         <p className='pt-8'>Launch your codeless games for your communities</p>
         <p className='pt-8'>
-          Tavern provides a set of modules that can be combined and customized to fit your gameplay.
+          Tavern provides a set of Components that can be combined and customized to fit your gameplay.
         </p>
         <p className='pt-8'>Permissionless, free, and on-chain.</p>
       </section>

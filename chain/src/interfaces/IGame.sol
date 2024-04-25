@@ -2,23 +2,25 @@
 pragma solidity ^0.8.24;
 
 interface IGame {
+
   function initialize(
     address _gm,
     string calldata displayName,
     address entityFactory
   ) external;
-  function getSummary() external view returns (GameSummary memory);
-  function addEntity(address entity) external;
-  function getEntity(string memory key) external view returns (address);
-  function addModule(address module) external;
-  function getEntityFactory() external view returns (address);
-  function getSupportedFunctions(
-    address module
-  ) external view returns (string[] memory);
-  function getModule(string memory key) external view returns (address);
 
-    function createGameFunction(string memory name, AddressKey[] memory funcs ) external ;
-      function executeGameFunction(string memory name, GameFuncData memory params) external ;
+
+  function createEntity(string memory name) external returns (address);
+  function createGameFunction(
+    string memory name,
+    AddressKey[] memory funcs
+  ) external;
+
+  function validateIsModule(address module) external view returns (bool);
+
+  
+  function getEntity(string memory key) external view returns (address);
+  
 
 }
 
@@ -35,11 +37,7 @@ struct AddressKey {
   string Key;
 }
 
-// struct GameFuncRawParam{
-//   string name;
-//   bytes value;
-//   ParamType paramType;
-// }
+
 
 struct GameFuncAddress {
   string name;
@@ -56,18 +54,12 @@ struct GameFuncString {
   string value;
 }
 
-struct GameFuncData {
+struct GameFuncParams {
   GameFuncAddress[] addresses;
   GameFuncUint[] uints;
   GameFuncString[] strings;
 }
 
-
-// struct GameFuncParam {
-//   mapping(string => address) addresses;
-//   mapping(string => uint256) uints;
-//   mapping(string => string) strings;
-// }
 
 enum ParamType {
   STRING,

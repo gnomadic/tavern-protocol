@@ -5,7 +5,7 @@ Taverh started as a hackathon project, and it shows.
 
 ## Phase 1:  Hackathon
 
-This is where we are today.  It works!  There are three modules, and you can create a game with them.  You can define Game Functions and play your game.  It's not pretty.
+This is where we are today.  It works!  There are three components, and you can create a game with them.  You can define Game Functions and play your game.  It's not pretty.
 
 
 ## Phase 2: Alpha
@@ -24,7 +24,7 @@ Let's fix that.
 
 ## Phase 3: Beta
 
-We need more Modules.  Things like:
+We need more components.  Things like:
 1.  combat
 2.  crafting
 3.  resource management

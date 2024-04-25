@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {IModule, ModuleSummary} from './interfaces/IModule.sol';
-// import {MMONeighborInteractionEntity} from '../entities/MMONeighborInteractionEntity.sol';
+import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {CatchEntity} from '../entities/CatchEntity.sol';
 import {MMOSessionEntity} from '../entities/MMOSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {console} from 'forge-std/console.sol';
 import {MMOSessionModule} from './MMOSessionModule.sol';
-import {GameFuncData} from '../interfaces/IGame.sol';
+import {GameFuncParams} from '../interfaces/IGame.sol';
 
-contract MMONeighborInteractionModule is IModule {
+contract MMONeighborInteractionModule is IComponent {
   string public displayName = 'Daily Interaction';
   string[] public required = ['players', 'canPlayerThrow'];
   string[] public functions = [
@@ -27,21 +26,18 @@ contract MMONeighborInteractionModule is IModule {
   ];
 
   function initialize(address game) external {
-    address catchEntity = IEntityFactory(IGame(game).getEntityFactory())
-      .createEntity(game, 'CatchEntity');
-
-    IGame(game).addEntity(catchEntity);
+    IGame(game).createEntity("CatchEntity");
   }
 
-  function getSummary() external view returns (ModuleSummary memory) {
+  function getSummary() external view returns (ComponentSummary memory) {
     return
-      ModuleSummary(address(this), functions, required, 'Neighbor Interaction');
+      ComponentSummary(address(this), functions, required, 'Neighbor Interaction');
   }
 
   function executeFunction(
     address game,
     string calldata func,
-    GameFuncData calldata params
+    GameFuncParams calldata params
   ) external {
     if (
       keccak256(abi.encodePacked(func)) ==
@@ -63,9 +59,7 @@ contract MMONeighborInteractionModule is IModule {
 
   // --------------------------------- ACTION FUNCTIONS ---------------------------------
 
-  function joinSession(IGame game, GameFuncData calldata params) internal {
-    // function joinSession(IGame game, address player) public {
-    // uint256 index = MMOSessionModule(game.getModule('joinGame')).joinSession(game, player);
+  function joinSession(IGame game, GameFuncParams calldata params) internal {
 
     address player;
 
@@ -88,7 +82,7 @@ contract MMONeighborInteractionModule is IModule {
     }
   }
 
-  function throwBall(IGame game, GameFuncData calldata params) internal {
+  function throwBall(IGame game, GameFuncParams calldata params) internal {
     // function throwBall(IGame game, address giver, uint256 distance) public {
 
     address giver;
@@ -127,7 +121,7 @@ contract MMONeighborInteractionModule is IModule {
     );
   }
 
-  function catchBall(IGame game, GameFuncData calldata params) internal {
+  function catchBall(IGame game, GameFuncParams calldata params) internal {
     address player;
 
     for (uint256 i = 0; i < params.addresses.length; i++) {

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {IModule, ModuleSummary} from './modules/interfaces/IModule.sol';
+import {IComponent, ComponentSummary} from './components/interfaces/IComponent.sol';
 
-contract ModuleRegistry {
-  IModule[] registryKeys;
+contract ComponentRegistry {
+  IComponent[] registryKeys;
 
   function register(address module) public {
-    registryKeys.push(IModule(module));
+    registryKeys.push(IComponent(module));
 
     emit ModuleRegistered(module);
   }
@@ -15,7 +15,7 @@ contract ModuleRegistry {
   //returns an array of size 10 always, but some items will be empty when returning a page without 10 items.
   function getModules(
     uint8 startAt
-  ) external view returns (ModuleSummary[10] memory result) {
+  ) external view returns (ComponentSummary[10] memory result) {
     uint8 pageSize = 10;
 
     for (

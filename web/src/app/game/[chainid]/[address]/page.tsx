@@ -1,15 +1,13 @@
 import Divider from '@/components/Divider';
 import Header from '@/components/game/Header';
-import StepOne from '@/components/game/StepOne';
 import StepThree from '@/components/game/StepThree';
-import StepTwo from '@/components/game/StepTwo';
+
 import { Address } from 'viem';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getFrameMetadata } from '@coinbase/onchainkit';
 import { getGameSummary } from '@/services/viemService';
-import Play from '@/components/game/Play';
 import Players from '@/components/game/Players';
-import PlayCatch from '@/components/game/PlayCatch';
+
 
 interface Params {
   chainid: string;

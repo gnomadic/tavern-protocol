@@ -13,6 +13,11 @@ const matcher = new RegExpMatcher({
 	...englishRecommendedTransformers,
 });
 
+export function safeBigInt(value : BigInt | undefined) : string {
+	return value ? value.toString() : "0";
+
+}
+
 
 
 export function pretty(address :Address){

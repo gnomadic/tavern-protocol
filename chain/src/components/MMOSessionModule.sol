@@ -1,31 +1,28 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {IModule, ModuleSummary} from './interfaces/IModule.sol';
+import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {MMOSessionEntity} from '../entities/MMOSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
-import {GameFuncData, GameFuncUint} from '../interfaces/IGame.sol';
+import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
 
-contract MMOSessionModule is IModule {
+contract MMOSessionModule is IComponent {
   string[] public required = ['players'];
   string[] public functions = ['joinGame'];
 
   function initialize(address game) external {
-    address roleEntity = IEntityFactory(IGame(game).getEntityFactory())
-      .createEntity(game, 'MMOSessionEntity');
-
-    IGame(game).addEntity(roleEntity);
+    IGame(game).createEntity('MMOSessionEntity');
   }
 
-  function getSummary() external view returns (ModuleSummary memory) {
-    return ModuleSummary(address(this), functions, required, 'MMO Session');
+  function getSummary() external view returns (ComponentSummary memory) {
+    return ComponentSummary(address(this), functions, required, 'MMO Session');
   }
 
   function executeFunction(
     address game,
     string calldata func,
-    GameFuncData calldata params
+    GameFuncParams calldata params
   ) external {
     if (
       keccak256(abi.encodePacked(func)) ==
@@ -35,7 +32,7 @@ contract MMOSessionModule is IModule {
     }
   }
 
-  function joinGame(IGame game, GameFuncData calldata params) internal {
+  function joinGame(IGame game, GameFuncParams calldata params) internal {
     address player;
     for (uint256 i = 0; i < params.addresses.length; i++) {
       if (

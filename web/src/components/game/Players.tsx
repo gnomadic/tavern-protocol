@@ -1,13 +1,10 @@
 "use client"
 import useBallHolderIndexes from '@/hooks/useBallHolderIndexes';
-import useCurrentModules from '@/hooks/useCurrentModules';
 import useDeployment from '@/hooks/useDeployment';
 import useGameSummary from '@/hooks/useGameSummary';
 import usePlayerCount from '@/hooks/usePlayerCount';
-import useRegisterModule from '@/mutations/useRegisterModule';
 import { UserCircleIcon, UserIcon, UserPlusIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
 import { UserCircleIcon as UserCircleIconOutline, UserPlusIcon as UserPlusIconOutline, UserIcon as UserIconOutline } from '@heroicons/react/24/outline';
-import useJoinGame from '@/mutations/useJoinGame';
 import useThrowBall from '@/mutations/useThrowBall';
 import useCatchBall from '@/mutations/useCatchBall';
 
@@ -17,6 +14,9 @@ import useBallCatcherIndexes from '@/hooks/useBallCatcherIndexes';
 import usePlayerIndex from '@/hooks/usePlayerIndex';
 import { useEffect } from 'react';
 import Divider from '../Divider';
+import { useReadMmoNeighborInteractionModuleGetBallHolderIndexes, useReadMmoNeighborInteractionModuleGetCatchableIndexes, useReadMmoNeighborInteractionModuleGetPlayerCount, useWriteGameExecuteGameFunction } from '@/generated';
+import { safeBigInt } from '@/domain/utils';
+import { GameFuncParams } from '@/domain/Domain';
 
 type PlayersProps = {
     gameAddress: Address
@@ -33,18 +33,26 @@ export default function Players(props: PlayersProps) {
     const { address } = useAccount();
     const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
 
-    const { joinHash, joinError, joinPending, joinSuccess, writeJoin } = useJoinGame({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
     const { throwHash, throwError, throwPending, throwSuccess, writeThrow } = useThrowBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
     const { catchHash, catchError, catchPending, catchSuccess, writeCatch } = useCatchBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
-
-    const { result: players, error: playerCountError, refetch: playerCountRefetch } = usePlayerCount({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
-    // TODO this lookup is rough and hardcoded
-    const { result: holders, error: holderError, refetch: holderRefresh } = useBallHolderIndexes({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
-    const { result: catchers, error: catcherError, refetch: catcherRefresh } = useBallCatcherIndexes({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
+    // const { result: holders, error: holderError, refetch: holderRefresh } = useBallHolderIndexes({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
+    // const { result: catchers, error: catcherError, refetch: catcherRefresh } = useBallCatcherIndexes({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
     const { player, playerIndexError } = usePlayerIndex({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerIndex") return element })?.Address as Address, gameAddress: props.gameAddress, playerAddress: address! });
+
+    // TODO this lookup is rough and hardcoded
+    const { data: players, refetch: playerCountRefetch } = useReadMmoNeighborInteractionModuleGetPlayerCount({ address: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, args: [props.gameAddress] })
+    const { data: holders, refetch: holderRefetch } = useReadMmoNeighborInteractionModuleGetBallHolderIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, args: [props.gameAddress] })
+    const { data: catchers, refetch: catcherRefetch } = useReadMmoNeighborInteractionModuleGetCatchableIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, args: [props.gameAddress] })
+
+
+
+    const { data: joinhash, writeContract: joinWrite, error: joinError } = useWriteGameExecuteGameFunction();
+    const { isLoading: joinLoading, isSuccess: joinSuccess } = useWaitForTransactionReceipt({ hash: joinhash });
+
+
     const getIcon = (index: BigInt) => {
-        const isCatcher = catchers.includes(index);
-        const isHolder = holders.includes(index);
+        const isCatcher = catchers!.findIndex((element) => { element.x === index }) >= 0
+        const isHolder = holders!.findIndex((element) => { element.x === index }) >= 0
         const isPlayer = index === BigInt(player) && index !== BigInt(0);
         const fill = isPlayer ? 'fill-blue-400' : '';
 
@@ -56,12 +64,12 @@ export default function Players(props: PlayersProps) {
 
     useEffect(() => {
         if (catchSuccess || throwSuccess || joinSuccess) {
-            catcherRefresh()
-            holderRefresh()
+            catcherRefetch()
+            holderRefetch()
             playerCountRefetch()
         }
 
-    }, [props.refresh, playerCountRefetch, holderRefresh, catcherRefresh, catchSuccess, throwSuccess, joinSuccess])
+    }, [props.refresh, playerCountRefetch, holderRefetch, catcherRefetch, catchSuccess, throwSuccess, joinSuccess])
 
 
 
@@ -79,14 +87,26 @@ export default function Players(props: PlayersProps) {
                     {BigInt(player) == BigInt(0) ?
                         <div className='pt-4 mx-auto'>
                             <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
-                                disabled={joinPending}
+                                disabled={joinLoading}
                                 onClick={() => {
-                                    writeJoin()
+                                    // writeJoin()
+
+                                    const params: GameFuncParams = {
+                                        addresses: [{ name: "player", value: address! }],
+                                        uints: [],
+                                        strings: []
+                                    }
+                                    joinWrite({
+                                        address: props.gameAddress,
+                                        args: ["joinCatch", params]
+
+                                    });
+
+
                                 }}
                             >
-                                {joinSuccess ? `Joined` : joinPending ? 'Confirming...' : joinError ? `Error!` : `Join`}
+                                {joinSuccess ? `Joined` : joinLoading ? 'Confirming...' : joinError ? `Error!` : `Join`}
                             </button>
-                            <div>{JSON.stringify(joinError)}</div>
                         </div>
                         : <></>}
 
@@ -125,24 +145,18 @@ export default function Players(props: PlayersProps) {
                 <Divider />
             </section>
 
-            <button onClick={() => {
-                playerCountRefetch()
-                holderRefresh()
-                catcherRefresh()
-
-            }}>refetch</button>
             <div className='py-8'>
                 <div className='flex mx-auto'>
                     <UserIconOutline className='mx-4 my-1 h-4 w-4' />
-                    {Number(players) > 0 ? (<div>{players} Players</div>) : (<div>No Players</div>)}
+                    {Number(players) > 0 ? (<div>{safeBigInt(players)} Players</div>) : (<div>No Players</div>)}
                 </div>
                 <div className='flex mx-auto'>
                     <UserCircleIcon className='mx-4 my-1 h-4 w-4' />
-                    {holders?.length > 0 ? (<div>{holders.length} holders</div>) : (<div>No holders</div>)}
+                    {holders && holders.length > 0 ? (<div>{holders.length} holders</div>) : (<div>No holders</div>)}
                 </div>
                 <div className='flex mx-auto'>
                     <UserPlusIconOutline className='mx-4 my-1 h-4 w-4' />
-                    {catchers?.length > 0 ? (<div>{catchers.length} catchers</div>) : (<div>No balls in the air for people to catch</div>)}
+                    {catchers && catchers.length > 0 ? (<div>{catchers.length} catchers</div>) : (<div>No balls in the air for people to catch</div>)}
                 </div>
                 <div className='flex mx-auto'>
                     {(BigInt(player) == BigInt(0)) ? <UserIcon className='mx-4 my-1 h-4 w-4 fill-red-400' /> : getIcon(BigInt(player))}
@@ -151,13 +165,10 @@ export default function Players(props: PlayersProps) {
 
                 <div className="grid grid-cols-[repeat(15,_minmax(0,_1fr))] md:grid-cols-[repeat(25,_minmax(0,_1fr))] lg:grid-cols-[repeat(50,_minmax(0,_1fr))]">
                     {Array.from({ length: Number(players) }).map((object, i) => {
-                        {/* {Array.from({ length: 1000}).map((object, i) => { */ }
                         return (
                             <div key={i} className=''>
                                 {getIcon(BigInt(i))}
-                                {/* {(holders.includes(BigInt(i)))
-                                    ? <UserCircleIcon className='mx-4 my-4 h-4 w-4' />
-                                    : <UserCircleIconOutline className='mx-4 my-4 h-4 w-4' />} */}
+
                             </div>
                         );
                     })}

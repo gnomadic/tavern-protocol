@@ -5,8 +5,8 @@ import {Script} from 'forge-std/Script.sol';
 
 import {GameFactory} from '../../src/GameFactory.sol';
 import {Game} from '../../src/Game.sol';
-import {ModuleRegistry} from '../../src/ModuleRegistry.sol';
-import {DailyInteractionModule} from '../../src/modules/DailyInteractionModule.sol';
+import {ComponentRegistry} from '../../src/ComponentRegistry.sol';
+import {DailyInteractionModule} from '../../src/components/DailyInteractionModule.sol';
 import {EntityFactory} from '../../src/EntityFactory.sol';
 import "forge-std/console.sol";
 
@@ -24,7 +24,7 @@ contract DeployProtocol is Script {
     GameFactory factory = new GameFactory();
     factory.initialize(address(game), address(entityFactory));
 
-    ModuleRegistry registry = new ModuleRegistry();
+    ComponentRegistry registry = new ComponentRegistry();
     DailyInteractionModule dailyInteraction = new DailyInteractionModule();
     registry.register(address(dailyInteraction));
 

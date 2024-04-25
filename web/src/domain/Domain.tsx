@@ -15,8 +15,8 @@ export type GameSummary = {
   game: Address;
   gm: Address;
   displayName: string;
-  availableFunctions: AddressKey[];
-  availableData: AddressKey[];
+  availableFunctions: readonly AddressKey[];
+  availableData: readonly AddressKey[];
 }
 
 export type AddressKey = {
@@ -24,15 +24,15 @@ export type AddressKey = {
   Key: string;
 }
 
-export type Position ={
+export type Position = {
   x: number;
   player: Address;
 
 }
-export type ModuleSummary = {
-  module: Address;
-  functions: string[];
-  required: string[];
+export type ComponentSummary = {
+  component: Address;
+  functions: readonly string[];
+  required: readonly string[];
   displayName: string;
 }
 
@@ -43,7 +43,28 @@ export const QUERY_GAME = "game";
 export const ACTION_HELLO = "hello"
 
 
-export type FrameGameData  = {
+export type FrameGameData = {
   summary: GameSummary;
-  
+
+}
+
+export type GameFuncAddress = {
+  name: string;
+  value: Address;
+}
+
+export type GameFuncUint = {
+  name: string;
+  value: bigint;
+}
+
+export type GameFuncString = {
+  name: string;
+  value: string;
+}
+
+export type GameFuncParams = {
+  addresses: readonly GameFuncAddress[];
+  uints: readonly GameFuncUint[];
+  strings: readonly GameFuncString[];
 }

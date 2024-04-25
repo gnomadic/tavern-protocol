@@ -3,11 +3,11 @@ pragma solidity ^0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 import {DailyInteractionEntity} from '../entities/DailyInteractionEntity.sol';
-import {IModule, ModuleSummary} from './interfaces/IModule.sol';
+import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {IGame} from '../interfaces/IGame.sol';
-import {GameFuncData} from '../interfaces/IGame.sol';
+import {GameFuncParams} from '../interfaces/IGame.sol';
 
-contract DailyInteractionModule is IModule, Initializable {
+contract DailyInteractionModule is IComponent, Initializable {
   // ok so this contract will
   // 1. basically be a stateless game?
 
@@ -22,14 +22,14 @@ contract DailyInteractionModule is IModule, Initializable {
   function initialize(address game) external override {
     
   }
-  function getSummary() external view override returns (ModuleSummary memory) {
-    return ModuleSummary(address(this), functions, required, displayName);
+  function getSummary() external view override returns (ComponentSummary memory) {
+    return ComponentSummary(address(this), functions, required, displayName);
   }
 
     function executeFunction(
     address game,
     string calldata func,
-    GameFuncData calldata params
+    GameFuncParams calldata params
   ) external {
     if (
       keccak256(abi.encodePacked(func)) ==
@@ -40,7 +40,7 @@ contract DailyInteractionModule is IModule, Initializable {
   }
 
 
-function dailyInteraction(IGame game, GameFuncData calldata params) internal {
+function dailyInteraction(IGame game, GameFuncParams calldata params) internal {
 
       uint256 tokenId;
 

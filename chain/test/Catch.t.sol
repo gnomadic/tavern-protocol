@@ -5,18 +5,18 @@ import {Test, console} from 'forge-std/Test.sol';
 import {GameFactory} from '../src/GameFactory.sol';
 import {IGame} from '../src/interfaces/IGame.sol';
 import {Game} from '../src/Game.sol';
-import {MMOSessionModule} from '../src/modules/MMOSessionModule.sol';
-import {MMONeighborInteractionModule} from '../src/modules/MMONeighborInteractionModule.sol';
+import {MMOSessionModule} from '../src/components/MMOSessionModule.sol';
+import {MMONeighborInteractionModule} from '../src/components/MMONeighborInteractionModule.sol';
 import {MMOSessionEntity} from '../src/entities/MMOSessionEntity.sol';
 import {MMONeighborInteractionEntity} from '../src/entities/MMONeighborInteractionEntity.sol';
 import {EntityFactory} from '../src/EntityFactory.sol';
-import {ModuleRegistry} from '../src/ModuleRegistry.sol';
+import {ComponentRegistry} from '../src/ComponentRegistry.sol';
 import {CatchEntity} from '../src/entities/CatchEntity.sol';
-import {AddressKey, GameFuncData, GameFuncAddress, GameFuncString, GameFuncUint} from '../src/interfaces/IGame.sol';
+import {AddressKey, GameFuncParams, GameFuncAddress, GameFuncString, GameFuncUint} from '../src/interfaces/IGame.sol';
 
 contract Catch is Test {
   GameFactory factory;
-  IGame liveGame;
+  Game liveGame;
 
   MMOSessionModule mmoSession;
   MMONeighborInteractionModule neighborInteraction;
@@ -31,7 +31,7 @@ contract Catch is Test {
     factory = new GameFactory();
     factory.initialize(address(game), address(entityFactory));
 
-    ModuleRegistry registry = new ModuleRegistry();
+    ComponentRegistry registry = new ComponentRegistry();
 
     mmoSession = new MMOSessionModule();
     registry.register(address(mmoSession));
@@ -51,8 +51,8 @@ contract Catch is Test {
     factory.createGame(address(1), 'Catch');
     liveGame = factory.games(0);
 
-    liveGame.addModule(address(mmoSession));
-    liveGame.addModule(address(neighborInteraction));
+    liveGame.addComponent(address(mmoSession));
+    liveGame.addComponent(address(neighborInteraction));
 
     createFunctions();
 
@@ -60,13 +60,13 @@ contract Catch is Test {
   }
 
   AddressKey[] joinKeys;
-  GameFuncData joinParams;
+  GameFuncParams joinParams;
 
   AddressKey[] throwKeys;
-  GameFuncData throwParams;
+  GameFuncParams throwParams;
 
   AddressKey[] catchKeys;
-  GameFuncData catchParams;
+  GameFuncParams catchParams;
 
   function createFunctions() public {
     joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));

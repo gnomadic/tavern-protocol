@@ -1,7 +1,8 @@
 "use client"
-import { ModuleSummary } from "@/domain/Domain";
+import { ComponentSummary } from "@/domain/Domain";
 import { pretty } from "@/domain/utils";
-import useCurrentModules from "@/hooks/useCurrentModules";
+import { useReadComponentRegistryGetModules } from "@/generated";
+// import useCurrentModules from "@/hooks/useCurrentModules";
 import useDeployment from "@/hooks/useDeployment";
 import useGameSummary from "@/hooks/useGameSummary";
 import { useEffect, useState } from "react";
@@ -16,12 +17,14 @@ export default function Stats(props: StatsProps) {
 
     const { deploy } = useDeployment();
 
-    const { currentModules, currentModulesError } = useCurrentModules({ deploy: deploy, pageStart: 0 })
-    const [curMod, setCurMod] = useState<ModuleSummary>();
+    // const { currentModules, currentModulesError } = useCurrentModules({ deploy: deploy, pageStart: 0 })
+    const [curMod, setCurMod] = useState<ComponentSummary>();
+    const { data: currentModules } = useReadComponentRegistryGetModules({ address: deploy.moduleRegistry, args: [0] })
+
 
     useEffect(() => {
         if (currentModules) {
-            setCurMod(currentModules.find((module) => module.module === props.moduleAddress)!);
+            setCurMod(currentModules.find((component) => component.component === props.moduleAddress)!);
         }
     }
         , [currentModules, props.moduleAddress]);

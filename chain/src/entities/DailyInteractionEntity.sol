@@ -7,7 +7,6 @@ interface IERC721 {
   function balanceOf(address _owner) external view returns (uint256);
 }
 
-// This is a terribly ineffecient Unoptimized Number Entity for 721s.  It is just a starting point.
 contract DailyInteractionEntity {
   // ok so this contract will
   // 1. have an nft contract

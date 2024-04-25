@@ -6,11 +6,11 @@ import {Script} from 'forge-std/Script.sol';
 import {GameFactory} from '../../src/GameFactory.sol';
 import {Game} from '../../src/Game.sol';
 import {IGame} from '../../src/interfaces/IGame.sol';
-import {ModuleRegistry} from '../../src/ModuleRegistry.sol';
-import {DailyInteractionModule} from '../../src/modules/DailyInteractionModule.sol';
+import {ComponentRegistry} from '../../src/ComponentRegistry.sol';
+import {DailyInteractionModule} from '../../src/components/DailyInteractionModule.sol';
 import {EntityFactory} from '../../src/EntityFactory.sol';
-import {MMOSessionModule} from '../../src/modules/MMOSessionModule.sol';
-import {MMONeighborInteractionModule} from '../../src/modules/MMONeighborInteractionModule.sol';
+import {MMOSessionModule} from '../../src/components/MMOSessionModule.sol';
+import {MMONeighborInteractionModule} from '../../src/components/MMONeighborInteractionModule.sol';
 import {MMOSessionEntity} from '../../src/entities/MMOSessionEntity.sol';
 // import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborInteractionEntity.sol';
 import {CatchEntity} from '../../src/entities/CatchEntity.sol';
@@ -19,9 +19,9 @@ import {AddressKey} from '../../src/interfaces/IGame.sol';
 // # To deploy and verify Catch on the Tavern protocol run this command below
 // forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployCatch is Script {
-  address GAME_FACTORY = 0x44AAA1DcD6DdE7480ADe1281C4376ce484C8a319;
-  address MODULE_REGISTRY = 0x4e3F48C28c28E2Fa3718eFFe3579dc302a3EE7ae;
-  address ENTITY_FACTORY = 0xD89B03B60D161661142c2Fe24EA57ea430eC82c4;
+  address GAME_FACTORY = 0x52c6Af5c11ABd9F999ECB89fA750FED6D5fC6Fe1;
+  address MODULE_REGISTRY = 0xe1d875dDFDd2bc09454e41154cf427E07ab14028;
+  address ENTITY_FACTORY = 0x939f5adfC98652f245c0a8d6a6D2C8688c5f284e;
 
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');
@@ -34,7 +34,7 @@ contract DeployCatch is Script {
 
     GameFactory factory = GameFactory(GAME_FACTORY);
 
-    ModuleRegistry registry = ModuleRegistry(MODULE_REGISTRY);
+    ComponentRegistry registry = ComponentRegistry(MODULE_REGISTRY);
 
     MMOSessionModule mmoSession = new MMOSessionModule();
     registry.register(address(mmoSession));
@@ -48,10 +48,10 @@ contract DeployCatch is Script {
     entityFactory.registerEntity('CatchEntity', address(catchEntity));
 
     factory.createGame(deployPublicKey, 'Catch Demo');
-    IGame liveGame = factory.games(0);
+    Game liveGame = factory.games(0);
 
-    liveGame.addModule(address(mmoSession));
-    liveGame.addModule(address(neighborInteraction));
+    liveGame.addComponent(address(mmoSession));
+    liveGame.addComponent(address(neighborInteraction));
 
     joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
     joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));

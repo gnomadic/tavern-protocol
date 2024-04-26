@@ -60,6 +60,14 @@ struct GameFuncParams {
   GameFuncString[] strings;
 }
 
+struct GameFuncResponse {
+  GameFuncAddress[] addresses;
+  GameFuncUint[] uints;
+  GameFuncString[] strings;
+}
+
+
+
 
 enum ParamType {
   STRING,

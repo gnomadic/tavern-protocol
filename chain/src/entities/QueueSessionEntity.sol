@@ -2,63 +2,42 @@
 pragma solidity ^0.8.24;
 
 import './interfaces/IEntity.sol';
-import "forge-std/console.sol";
+import 'forge-std/console.sol';
 
 contract QueueSessionEntity is IEntity {
-  string[] public keys;
-
   address[] public players;
   mapping(address => uint256) playerIndex;
 
-  function initialize(address _game) external override {
-    game = _game;
+  function setAvailableKeys(string[] storage keys) internal override {
     keys.push('nextPlayer');
     keys.push('queueSize');
   }
 
-  function getAvailableKeys() external view override returns (string[] memory) {
-    return keys;
+  mapping(uint256 => address) queue;
+  uint256 first = 0;
+  uint256 last = 0;
+
+  function enqueue(address data) public {
+    last += 1;
+    queue[last] = data;
   }
 
+  function nextPlayer() public returns (address data) {
+    require(last >= first); // non-empty queue
 
-    mapping(uint256 => address) queue;
-    uint256 first = 0;
-    uint256 last = 0;
+    data = queue[first];
 
-    function enqueue(address data) public {
-        last += 1;
-        queue[last] = data;
-    }
+    delete queue[first];
+    first += 1;
+  }
 
-    function nextPlayer() public returns (address data) {
-        require(last >= first);  // non-empty queue
+  function getQueueSize() public view returns (uint256) {
+    return last - first;
+  }
 
-        data = queue[first];
+  // ----------------------------
 
-        delete queue[first];
-        first += 1;
-    }
-
-    function getQueueSize() public view returns (uint256) {
-        return last - first;
-    }
-
-
-
-
-
-
-
-
-
-
-
-// ----------------------------
-
-
-
-
-  function addPlayer(address player) external onlyModule() returns (uint256) {
+  function addPlayer(address player) external onlyModule returns (uint256) {
     if (playerIndex[player] != 0) {
       revert PlayerAlreadyInSession();
     }
@@ -67,7 +46,7 @@ contract QueueSessionEntity is IEntity {
     return playerIndex[player];
   }
 
-  function removePlayer(address player) external onlyModule() {
+  function removePlayer(address player) external onlyModule {
     if (playerIndex[player] == 0) {
       revert PlayerNotInSession();
     }
@@ -82,7 +61,8 @@ contract QueueSessionEntity is IEntity {
     address from,
     uint256 count
   ) external view returns (address[] memory) {
-    uint256 startAt; uint256 endAt;
+    uint256 startAt;
+    uint256 endAt;
     if (playerIndex[from] < count) {
       startAt = 0;
     } else {
@@ -94,14 +74,13 @@ contract QueueSessionEntity is IEntity {
       endAt = playerIndex[from] + count;
     }
 
-        address[] memory result = new address[](endAt - startAt);
-
+    address[] memory result = new address[](endAt - startAt);
 
     console.log('start at', startAt);
     console.log('end at', endAt);
 
     uint256 cur = 0;
-    for (uint256 i = startAt; i < endAt ; i++) {
+    for (uint256 i = startAt; i < endAt; i++) {
       result[cur] = players[i];
       // console.log("player", players[i]);
 

@@ -6,7 +6,6 @@ import {GameFuncParams} from '../../interfaces/IGame.sol';
 interface IComponent {
     function initialize(address game) external;
     function getSummary() external view returns (ComponentSummary memory);
-    // function executeFunction(address executor, address game, string calldata func, GameFuncParams memory params) external;
 }
 
 struct ComponentSummary {

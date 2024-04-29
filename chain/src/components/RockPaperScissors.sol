@@ -15,7 +15,7 @@ import {console} from 'forge-std/console.sol';
 contract RockPaperScissors is IComponent {
   string[] public required = ['nextPlayer'];
   string[] public functions = ['joinGame'];
-  string[] public abis = ['dailyInteraction(address,address)'];
+  string[] public abis = ['oneOnOne(address,address)'];
 
   function initialize(address game) external {
     IGame(game).createEntity('RockPaperScissorEntity');
@@ -31,23 +31,6 @@ contract RockPaperScissors is IComponent {
         'Rock Paper Scissors'
       );
   }
-
-  // function executeFunction(
-  //   address executor,
-  //   address game,
-  //   string calldata func,
-  //   GameFuncParams calldata params
-  // ) external {
-  //   if (
-  //     keccak256(abi.encodePacked(func)) ==
-  //     keccak256(abi.encodePacked('joinGame'))
-  //   ) {
-  //     // joinGame(IGame(game), params);
-  //     (bool success, ) = address(this).call(
-  //       abi.encodeWithSignature('joinGame(address,address)', executor, game)
-  //     );
-  //   }
-  // }
 
   function oneOnOne(address executor, address gameAddress) internal {
     address player;
@@ -124,17 +107,4 @@ contract RockPaperScissors is IComponent {
     }
   }
 
-  function joinGame(IGame game, GameFuncParams calldata params) internal {
-    address player;
-    for (uint256 i = 0; i < params.addresses.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.addresses[i].name)) ==
-        keccak256(abi.encodePacked('player'))
-      ) {
-        player = params.addresses[i].value;
-      }
-    }
-
-    // RockPaperScissorEntity(game.getEntity('players')).enqueue(player);
-  }
 }

@@ -13,7 +13,7 @@ import {GameEntity} from '../entities/GameEntity.sol';
 contract Reward1155 is IComponent {
   string[] public required = ['players'];
   string[] public functions = ['reward'];
-    string[] public abis = ['dailyInteraction(address,address)'];
+    string[] public abis = ['reward(address,address)'];
 
   function initialize(address game) external {
     IGame(game).createEntity('Reward1155Entity');
@@ -23,25 +23,6 @@ contract Reward1155 is IComponent {
     return ComponentSummary(address(this), functions,abis, required, 'Reward 1155');
   }
 
-  // function executeFunction(
-  //   address executor,
-  //   address game,
-  //   string calldata func,
-  //   GameFuncParams calldata params
-  // ) external {
-  //   if (
-  //     keccak256(abi.encodePacked(func)) == keccak256(abi.encodePacked('reward'))
-  //   ) {
-  //     // reward(IGame(game), params);
-  //                 (bool success, ) = address(this).call(
-  //       abi.encodeWithSignature(
-  //         'reward(address,address)',
-  //         executor,
-  //         game
-  //       )
-  //     );
-  //   }
-  // }
 
   function setReward(IGame game, address _reward) external {
     Reward1155Entity(game.getEntity('rewardAddress')).setReward(_reward);

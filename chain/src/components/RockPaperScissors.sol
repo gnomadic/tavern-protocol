@@ -32,61 +32,77 @@ contract RockPaperScissors is IComponent {
       );
   }
 
-  function oneOnOne(address executor, address gameAddress) internal {
+  function oneOnOne(address executor, address gameAddress) public {
     address player;
     uint256 action;
 
     IGame game = IGame(gameAddress);
     GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
+      game.getEntity('actions')
+    );
 
     player = gameEntity.getPlayerAddress(executor, 'player');
     action = gameEntity.getPlayerUint(executor, 'action');
 
-    RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
-      player,
-      action
-    );
-    QueueSessionEntity queue = QueueSessionEntity(game.getEntity('players'));
+    rpsEntity.setPlayerAction(player, action);
 
-    if (queue.getQueueSize() == 0) {
-      RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
-        player,
-        action
-      );
-      queue.enqueue(player);
-    } else {
-      address player2 = QueueSessionEntity(game.getEntity('nextPlayer'))
-        .nextPlayer();
-
-      uint256 player2Action = RockPaperScissorEntity(game.getEntity('actions'))
-        .getPlayerAction(player2);
-
-      address winner = play(Hand(player, action), Hand(player2, player2Action));
-      if (winner == address(0)) {
-        console.log('It is a tie');
-      } else {
-        console.log('The winner is: ', winner);
-      }
-
-      RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
-        player,
-        0
-      );
-      RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
-        player2,
-        0
-      );
+    address player2 = gameEntity.getPlayerAddress(executor, 'player2');
+    if (player2 == address(0)) {
+      console.log('Player 2 not found');
+      return;
     }
+    uint256 player2Action = rpsEntity.getPlayerAction(player2);
+    if (player2Action == 0) {
+      console.log('Player 2 has not played yet');
+      revert NoActionYet();
+    }
+
+    address winner = play(Hand(player, action), Hand(player2, player2Action));
+    if (winner == address(0)) {
+      console.log('It is a tie');
+      gameEntity.addPlayerAddress(executor, 'tie1', player);
+      gameEntity.addPlayerAddress(executor, 'tie2', player2);
+    } else {
+      console.log('The winner is: ', winner);
+      gameEntity.addPlayerAddress(executor, 'winner', winner);
+    }
+
+    // QueueSessionEntity queue = QueueSessionEntity(game.getEntity('players'));
+
+    // if (queue.getQueueSize() == 0) {
+    //   RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
+    //     player,
+    //     action
+    //   );
+    //   queue.enqueue(player);
+    // } else {
+    //   address player2 = QueueSessionEntity(game.getEntity('nextPlayer'))
+    //     .nextPlayer();
+
+    //   uint256 player2Action = RockPaperScissorEntity(game.getEntity('actions'))
+    //     .getPlayerAction(player2);
+
+    //   address winner = play(Hand(player, action), Hand(player2, player2Action));
+    //   if (winner == address(0)) {
+    //     console.log('It is a tie');
+    //   } else {
+    //     console.log('The winner is: ', winner);
+    //   }
+
+    rpsEntity.setPlayerAction(player, 0);
+    rpsEntity.setPlayerAction(player2, 0);
   }
   struct Hand {
     address player;
     uint256 actionIndex;
   }
+  error NoActionYet();
 
   function play(
     Hand memory player1,
     Hand memory player2
-  ) public view returns (address winner) {
+  ) internal view returns (address winner) {
     //TODO require both players to have a nonzero index
     uint256 player1Action = player1.actionIndex; //playerAction[player1];
     uint256 player2Action = player2.actionIndex; //playerAction[player2];
@@ -106,5 +122,4 @@ contract RockPaperScissors is IComponent {
       console.log('Player 2 wins');
     }
   }
-
 }

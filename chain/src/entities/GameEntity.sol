@@ -27,13 +27,13 @@ contract GameEntity is IEntity {
     }
     for (uint i = 0; i < params.addresses.length; i++) {
       addresses[player][params.addresses[i].name] = params.addresses[i].value;
-      console.log('Setting address data for: ', player);
-      console.log(
-        'Setting address data of: ',
-        params.addresses[i].name,
-        'with: ',
-        params.addresses[i].value
-      );
+      // console.log('Setting address data for: ', player);
+      // console.log(
+      //   'Setting address data of: ',
+      //   params.addresses[i].name,
+      //   'with: ',
+      //   params.addresses[i].value
+      // );
     }
   }
 
@@ -55,8 +55,18 @@ contract GameEntity is IEntity {
     address player,
     string memory key
   ) external view returns (address) {
-    console.log('Getting address data for key: ', key, ' of player ', player);
-    console.log('which is: ', addresses[player][key]);
+    // console.log('Getting address data for key: ', key, ' of player ', player);
+    // console.log('which is: ', addresses[player][key]);
     return addresses[player][key];
   }
+
+  function addPlayerAddress(
+    address player,
+    string memory key,
+    address value
+  ) external {
+    addresses[player][key] = value;
+  
+  }
+
 }

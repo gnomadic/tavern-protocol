@@ -141,6 +141,8 @@ contract Game is IGame, Initializable {
       (bool success, ) = funcs[i].Address.call(
         abi.encodeWithSignature(funcs[i].Key, msg.sender, address(this))
       );
+      if (!success) revert GameFunctionExecutionFailure(funcs[i].Address, funcs[i].Key);
     }
   }
+  error GameFunctionExecutionFailure(address component, string functionKey);
 }

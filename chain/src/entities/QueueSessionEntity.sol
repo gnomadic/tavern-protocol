@@ -11,20 +11,33 @@ contract QueueSessionEntity is IEntity {
   function setAvailableKeys(string[] storage keys) internal override {
     keys.push('nextPlayer');
     keys.push('queueSize');
+    first = 1;
+    last = 0;
   }
 
   mapping(uint256 => address) queue;
-  uint256 first = 0;
-  uint256 last = 0;
+  uint256 first;
+  uint256 last;
 
   function enqueue(address data) public {
+// console.log("enqieue last", last);
+// console.log("enqieue first", first);
+
     last += 1;
     queue[last] = data;
+    //     console.log('0', queue[0]);
+    // console.log('1', queue[1]);
+    // console.log('2', queue[2]);
   }
 
   function nextPlayer() public returns (address data) {
     require(last >= first); // non-empty queue
 
+    // console.log('last', last);
+    // console.log('first', first);
+    // console.log('0', queue[0]);
+    // console.log('1', queue[1]);
+    // console.log('2', queue[2]);
     data = queue[first];
 
     delete queue[first];
@@ -32,71 +45,8 @@ contract QueueSessionEntity is IEntity {
   }
 
   function getQueueSize() public view returns (uint256) {
-    return last - first;
+    if (last < first) return 0;
+    // if (last == first) return 1;
+    return last + 1 - first;
   }
-
-  // ----------------------------
-
-  function addPlayer(address player) external onlyModule returns (uint256) {
-    if (playerIndex[player] != 0) {
-      revert PlayerAlreadyInSession();
-    }
-    players.push(player);
-    playerIndex[player] = players.length - 1;
-    return playerIndex[player];
-  }
-
-  function removePlayer(address player) external onlyModule {
-    if (playerIndex[player] == 0) {
-      revert PlayerNotInSession();
-    }
-    uint256 index = playerIndex[player] - 1;
-    players[index] = players[players.length - 1];
-    playerIndex[players[index]] = index + 1;
-    players.pop();
-    delete playerIndex[player];
-  }
-
-  function getPlayersInRange(
-    address from,
-    uint256 count
-  ) external view returns (address[] memory) {
-    uint256 startAt;
-    uint256 endAt;
-    if (playerIndex[from] < count) {
-      startAt = 0;
-    } else {
-      startAt = playerIndex[from] - count;
-    }
-    if (playerIndex[from] + count > players.length) {
-      endAt = players.length;
-    } else {
-      endAt = playerIndex[from] + count;
-    }
-
-    address[] memory result = new address[](endAt - startAt);
-
-    console.log('start at', startAt);
-    console.log('end at', endAt);
-
-    uint256 cur = 0;
-    for (uint256 i = startAt; i < endAt; i++) {
-      result[cur] = players[i];
-      // console.log("player", players[i]);
-
-      cur++;
-    }
-    return result;
-  }
-
-  function getPlayerCount() external view returns (uint256) {
-    return players.length;
-  }
-
-  function getPlayerIndex(address player) external view returns (uint256) {
-    return playerIndex[player];
-  }
-
-  error PlayerAlreadyInSession();
-  error PlayerNotInSession();
 }

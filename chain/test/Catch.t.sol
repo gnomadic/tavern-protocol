@@ -69,8 +69,6 @@ contract Catch is Test {
   GameFuncParams catchParams;
 
   function createFunctions() public {
-    // joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
-    // joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));
     joinKeys.push(AddressKey(address(mmoSession), 'joinGame(address,address)'));
     joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession(address,address)'));
     

@@ -7,11 +7,15 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
 import {GameEntity} from '../entities/GameEntity.sol';
+import {console} from 'forge-std/Console.sol';
 
 contract QueueSession is IComponent {
-  string[] public required = ['players'];
-  string[] public functions = ['joinGame'];
-  string[] public abis = ['dailyInteraction(address,address)'];
+  string[] public required = ['playerParams', 'nextPlayer'];
+  string[] public functions = ['joinGame', 'setMatchOrWait'];
+  string[] public abis = [
+    'joinGame(address,address)',
+    'setMatchOrWait(address,address)'
+  ];
 
   function initialize(address game) external {
     IGame(game).createEntity('QueueSessionEntity');
@@ -28,17 +32,36 @@ contract QueueSession is IComponent {
       );
   }
 
-  function joinGame(address executor, address gameAddress) internal {
+  function joinGame(address executor, address gameAddress) public {
     address player;
     IGame game = IGame(gameAddress);
 
     GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
     player = gameEntity.getPlayerAddress(executor, 'player');
 
-    QueueSessionEntity(game.getEntity('players')).enqueue(player);
+    QueueSessionEntity(game.getEntity('nextPlayer')).enqueue(player);
+  }
+
+  function setMatchOrWait(address executor, address gameAddress) public {
+    IGame game = IGame(gameAddress);
+    QueueSessionEntity queue = QueueSessionEntity(game.getEntity('nextPlayer'));
+
+    if (queue.getQueueSize() == 0) {
+      joinGame(executor, gameAddress);
+      return;
+    }
+    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    address player1 = gameEntity.getPlayerAddress(executor, 'player');
+    address player2 = queue.nextPlayer();
+
+    // console.log('Matched players: ', player1, player2);
+    // console.log("with execu", executor);
+
+    gameEntity.addPlayerAddress(executor, 'player1', player1);
+    gameEntity.addPlayerAddress(executor, 'player2', player2);
   }
 
   function getPlayerCount(IGame game) external view returns (uint256) {
-    return QueueSessionEntity(game.getEntity('players')).getQueueSize();
+    return QueueSessionEntity(game.getEntity('nextPlayer')).getQueueSize();
   }
 }

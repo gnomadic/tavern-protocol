@@ -9,6 +9,7 @@ import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {console} from 'forge-std/console.sol';
 import {MMOSessionModule} from './MMOSessionModule.sol';
 import {GameFuncParams} from '../interfaces/IGame.sol';
+import {GameEntity} from '../entities/GameEntity.sol';
 
 contract MMONeighborInteractionModule is IComponent {
   string public displayName = 'Daily Interaction';
@@ -24,87 +25,104 @@ contract MMONeighborInteractionModule is IComponent {
     'getPlayerIndex',
     'getCatchableIndexes'
   ];
+  string[] public abis = ['joinSession(address,address), throwBall(address,address), catchBall(address,address)'];
 
   function initialize(address game) external {
-    IGame(game).createEntity("CatchEntity");
+    IGame(game).createEntity('CatchEntity');
   }
 
   function getSummary() external view returns (ComponentSummary memory) {
     return
-      ComponentSummary(address(this), functions, required, 'Neighbor Interaction');
+      ComponentSummary(
+        address(this),
+        functions,
+        abis,
+        required,
+        'Neighbor Interaction'
+      );
   }
 
-  function executeFunction(
-    address game,
-    string calldata func,
-    GameFuncParams calldata params
-  ) external {
-    if (
-      keccak256(abi.encodePacked(func)) ==
-      keccak256(abi.encodePacked('joinSession'))
-    ) {
-      joinSession(IGame(game), params);
-    } else if (
-      keccak256(abi.encodePacked(func)) ==
-      keccak256(abi.encodePacked('throwBall'))
-    ) {
-      throwBall(IGame(game), params);
-    } else if (
-      keccak256(abi.encodePacked(func)) ==
-      keccak256(abi.encodePacked('catchBall'))
-    ) {
-      catchBall(IGame(game), params);
-    }
-  }
+  // function executeFunction(
+  //   address executor,
+  //   address game,
+  //   string calldata func,
+  //   GameFuncParams calldata params
+  // ) external {
+  //   if (
+  //     keccak256(abi.encodePacked(func)) ==
+  //     keccak256(abi.encodePacked('joinSession'))
+  //   ) {
+  //     // joinSession(executor, game);
+  //     (bool success, ) = address(this).call(
+  //       abi.encodeWithSignature('joinSession(address,address)', executor, game)
+  //     );
+  //   } else if (
+  //     keccak256(abi.encodePacked(func)) ==
+  //     keccak256(abi.encodePacked('throwBall'))
+  //   ) {
+  //     (bool success, ) = address(this).call(
+  //       abi.encodeWithSignature('throwBall(address,address)', executor, game)
+  //     );
+  //     // throwBall(IGame(game), params);
+  //   } else if (
+  //     keccak256(abi.encodePacked(func)) ==
+  //     keccak256(abi.encodePacked('catchBall'))
+  //   ) {
+  //     // catchBall(IGame(game), params);
+  //     (bool success, ) = address(this).call(
+  //       abi.encodeWithSignature('catchBall(address,address)', executor, game)
+  //     );
+  //   }
+  // }
 
   // --------------------------------- ACTION FUNCTIONS ---------------------------------
 
-  function joinSession(IGame game, GameFuncParams calldata params) internal {
-
+  function joinSession(address executor, address gameAddress) public {
+    IGame game = IGame(gameAddress);
     address player;
 
-    for (uint256 i = 0; i < params.addresses.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.addresses[i].name)) ==
-        keccak256(abi.encodePacked('player'))
-      ) {
-        player = params.addresses[i].value;
-      }
-    }
+    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    player = gameEntity.getPlayerAddress(executor, 'player');
 
     uint256 index = MMOSessionEntity(game.getEntity('playerIndex'))
       .getPlayerIndex(player);
 
     if (getPlayerCount(game) % 2 == 0) {
+      console.log("adding thrower: " , player);
       CatchEntity(game.getEntity('balls')).addNewThrower(player, index);
     } else {
+      console.log("adding player: ", player);
       CatchEntity(game.getEntity('balls')).addNewPlayer(player, index);
     }
   }
 
-  function throwBall(IGame game, GameFuncParams calldata params) internal {
+  function throwBall(address executor, address gameAddress) public {
     // function throwBall(IGame game, address giver, uint256 distance) public {
-
+    IGame game = IGame(gameAddress);
     address giver;
     uint256 distance;
 
-    for (uint256 i = 0; i < params.addresses.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.addresses[i].name)) ==
-        keccak256(abi.encodePacked('player'))
-      ) {
-        giver = params.addresses[i].value;
-      }
-    }
+    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    giver = gameEntity.getPlayerAddress(executor, 'player');
+    distance = gameEntity.getPlayerUint(executor, 'distance');
 
-    for (uint256 i = 0; i < params.uints.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.uints[i].name)) ==
-        keccak256(abi.encodePacked('distance'))
-      ) {
-        distance = params.uints[i].value;
-      }
-    }
+    // for (uint256 i = 0; i < params.addresses.length; i++) {
+    //   if (
+    //     keccak256(abi.encodePacked(params.addresses[i].name)) ==
+    //     keccak256(abi.encodePacked('player'))
+    //   ) {
+    //     giver = params.addresses[i].value;
+    //   }
+    // }
+
+    // for (uint256 i = 0; i < params.uints.length; i++) {
+    //   if (
+    //     keccak256(abi.encodePacked(params.uints[i].name)) ==
+    //     keccak256(abi.encodePacked('distance'))
+    //   ) {
+    //     distance = params.uints[i].value;
+    //   }
+    // }
 
     bool canPlayerInteract = CatchEntity(game.getEntity('balls')).canIThrow(
       giver
@@ -121,17 +139,21 @@ contract MMONeighborInteractionModule is IComponent {
     );
   }
 
-  function catchBall(IGame game, GameFuncParams calldata params) internal {
-    address player;
+  function catchBall(address executor, address gameAddress) public {
+    IGame game = IGame(gameAddress);
 
-    for (uint256 i = 0; i < params.addresses.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.addresses[i].name)) ==
-        keccak256(abi.encodePacked('player'))
-      ) {
-        player = params.addresses[i].value;
-      }
-    }
+    address player;
+    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    player = gameEntity.getPlayerAddress(executor, 'player');
+
+    // for (uint256 i = 0; i < params.addresses.length; i++) {
+    //   if (
+    //     keccak256(abi.encodePacked(params.addresses[i].name)) ==
+    //     keccak256(abi.encodePacked('player'))
+    //   ) {
+    //     player = params.addresses[i].value;
+    //   }
+    // }
     bool canCatch = CatchEntity(game.getEntity('balls')).canICatch(player);
     if (!canCatch) revert CannotIntercept();
 

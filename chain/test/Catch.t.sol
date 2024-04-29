@@ -69,14 +69,17 @@ contract Catch is Test {
   GameFuncParams catchParams;
 
   function createFunctions() public {
-    joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
-    joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));
+    // joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
+    // joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));
+    joinKeys.push(AddressKey(address(mmoSession), 'joinGame(address,address)'));
+    joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession(address,address)'));
+    
     liveGame.createGameFunction('joinCatch', joinKeys);
 
-    throwKeys.push(AddressKey(address(neighborInteraction), 'throwBall'));
+    throwKeys.push(AddressKey(address(neighborInteraction), 'throwBall(address,address)'));
     liveGame.createGameFunction('throwBall', throwKeys);
 
-    catchKeys.push(AddressKey(address(neighborInteraction), 'catchBall'));
+    catchKeys.push(AddressKey(address(neighborInteraction), 'catchBall(address,address)'));
     liveGame.createGameFunction('catchBall', catchKeys);
   }
 
@@ -94,17 +97,22 @@ contract Catch is Test {
 
   function test_joinMMO() public {
     clearParams();
+    // vm.prank(address(1));
 
     joinParams.addresses.push(GameFuncAddress('player', address(1)));
+    // vm.prank(address(1));
     liveGame.executeGameFunction('joinCatch', joinParams);
 
     joinParams.addresses[0] = GameFuncAddress('player', address(2));
+    // vm.prank(address(2));
     liveGame.executeGameFunction('joinCatch', joinParams);
 
     joinParams.addresses[0] = GameFuncAddress('player', address(3));
+    // vm.prank(address(3));
     liveGame.executeGameFunction('joinCatch', joinParams);
 
     joinParams.addresses[0] = GameFuncAddress('player', address(4));
+    // vm.prank(address(4));
     liveGame.executeGameFunction('joinCatch', joinParams);
 
     uint playerCount = neighborInteraction.getPlayerCount(liveGame);
@@ -133,9 +141,13 @@ contract Catch is Test {
     uint ballCount = neighborInteraction.getBallCount(liveGame);
     assertEq(ballCount, 2);
 
+    console.log('testing holders 1');
     assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(1)));
+    console.log('testing holders 2');
     assertEq(true, neighborInteraction.canPlayerThrow(liveGame, address(2)));
+    console.log('testing holders 3');
     assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(3)));
+    console.log('testing holders 4');
     assertEq(true, neighborInteraction.canPlayerThrow(liveGame, address(4)));
   }
 
@@ -244,15 +256,13 @@ contract Catch is Test {
     throwParams.uints.push(GameFuncUint('distance', 4));
     liveGame.executeGameFunction('throwBall', throwParams);
 
-    
     assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(2)));
-    
+
     // neighborInteraction.catchBall(liveGame, address(2));
 
     catchParams.addresses.push(GameFuncAddress('player', address(2)));
     liveGame.executeGameFunction('catchBall', catchParams);
-    
-    
+
     CatchEntity.Position[] memory catchables = neighborInteraction
       .getCatchableIndexes(liveGame);
     assertEq(catchables.length, 0);

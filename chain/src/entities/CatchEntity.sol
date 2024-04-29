@@ -5,7 +5,6 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract CatchEntity is IEntity {
-  string[] public keys;
 
   uint256 public ballCount;
   Position[] public ballHolderPositions;
@@ -32,14 +31,11 @@ contract CatchEntity is IEntity {
     address player;
   }
 
-  function initialize(address _game) external override {
-    game = _game;
+  function setAvailableKeys(string[] storage keys) internal override {
     keys.push('balls');
   }
 
-  function getAvailableKeys() external view override returns (string[] memory) {
-    return keys;
-  }
+
 
   function addNewThrower(address player, uint256 position) public onlyModule {
     ballCount++;

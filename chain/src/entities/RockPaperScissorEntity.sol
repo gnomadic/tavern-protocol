@@ -5,23 +5,16 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract RockPaperScissorEntity is IEntity {
-  string[] public keys;
-
   string[4] public actions;
   mapping(address => uint256) private playerAction; // this maps to the index of the actions array
 
-  function initialize(address _game) external override {
-    game = _game;
+  function setAvailableKeys(string[] storage keys) internal override {
     keys.push('actions');
 
     actions[0] = 'none';
     actions[1] = 'rock';
     actions[2] = 'paper';
     actions[3] = 'scissors';
-  }
-
-  function getAvailableKeys() external view override returns (string[] memory) {
-    return keys;
   }
 
   function getAvailableActions() external view returns (string[4] memory) {
@@ -42,8 +35,4 @@ contract RockPaperScissorEntity is IEntity {
   function getPlayerAction(address player) external view returns (uint256) {
     return playerAction[player];
   }
-
-
-
-
 }

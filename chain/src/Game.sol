@@ -7,6 +7,7 @@ import {IGame, GameSummary, AddressKey, GameFuncParams} from './interfaces/IGame
 import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IComponent} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
+import {GameEntity} from './entities/GameEntity.sol';
 
 import 'forge-std/console.sol';
 
@@ -26,6 +27,16 @@ contract Game is IGame, Initializable {
   AddressKey[] functionKeys;
   mapping(address => string[]) public supportedFunctions;
 
+  function createEntity(string memory entityName) public returns (address) {
+    address newEntity = entityFactory.createEntity(entityName);
+
+    IEntity(newEntity).initialize(address(this));
+
+    addEntity(newEntity);
+
+    return newEntity;
+  }
+
   function initialize(
     address _gm,
     string calldata _displayName,
@@ -34,6 +45,11 @@ contract Game is IGame, Initializable {
     gm = _gm;
     displayName = _displayName;
     entityFactory = IEntityFactory(_entityFactory);
+
+    GameEntity gameEntity = new GameEntity();
+    entityFactory.registerEntity('GameEntity', address(gameEntity));
+
+    createEntity('GameEntity');
   }
 
   function getSummary() external view returns (GameSummary memory) {
@@ -76,29 +92,11 @@ contract Game is IGame, Initializable {
     return supportedFunctions[module];
   }
 
-  function getEntity(string memory key) external view returns (address) {
+  function getEntity(string memory key) public view returns (address) {
     // console.log('getting entity', key);
     // console.log('entity is', availableEntityData[key]);
     return (availableEntityData[key]);
   }
-
-  // function getEntityFactory() external view override returns (address) {
-  //   return entityFactory;
-  // }
-
-  function createEntity(string memory entityName) external returns (address) {
-    address newEntity = entityFactory.createEntity(entityName);
-
-    IEntity(newEntity).initialize(address(this));
-
-    addEntity(newEntity);
-
-    return newEntity;
-  }
-
-  // function getModule(string memory key) external view returns (address) {
-  //   return functionLookup[key];
-  // }
 
   function validateIsModule(address module) external view returns (bool) {
     return (supportedFunctions[module].length > 0);
@@ -137,12 +135,19 @@ contract Game is IGame, Initializable {
       revert GameFunctionDoesNotExist();
     }
 
+    GameEntity(getEntity('playerParams')).setPlayerParams(msg.sender, params);
+
     for (uint8 i = 0; i < funcs.length; i++) {
-      IComponent(funcs[i].Address).executeFunction(
-        address(this),
-        funcs[i].Key,
-        params
+      (bool success, ) = funcs[i].Address.call(
+        abi.encodeWithSignature(funcs[i].Key, msg.sender, address(this))
       );
+
+      // IComponent(funcs[i].Address).executeFunction(
+      //   msg.sender,
+      //   address(this),
+      //   funcs[i].Key,
+      //   params
+      // );
     }
   }
 }

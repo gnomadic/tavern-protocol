@@ -5,18 +5,14 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract Reward1155Entity is IEntity {
-  string[] public keys;
 
   address nft;
 
-  function initialize(address _game) external override {
-    game = _game;
+  function setAvailableKeys(string[] storage keys) internal override {
     keys.push('rewardAddress');
   }
 
-  function getAvailableKeys() external view override returns (string[] memory) {
-    return keys;
-  }
+
 
   function setReward(address _nft) external onlyModule {
     nft = _nft;

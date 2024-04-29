@@ -39,6 +39,7 @@ contract DailyInteractionEntity {
   function createNumber(string memory key) external {
     numberKeys.push(key);
   }
+  
 
   function getAvailableKeys() external view returns (string[] memory) {
     return numberKeys;

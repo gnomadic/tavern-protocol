@@ -8,12 +8,14 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
 import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
+import {GameEntity} from '../entities/GameEntity.sol';
 
 import {console} from 'forge-std/console.sol';
 
 contract RockPaperScissors is IComponent {
   string[] public required = ['nextPlayer'];
   string[] public functions = ['joinGame'];
+  string[] public abis = ['dailyInteraction(address,address)'];
 
   function initialize(address game) external {
     IGame(game).createEntity('RockPaperScissorEntity');
@@ -24,44 +26,38 @@ contract RockPaperScissors is IComponent {
       ComponentSummary(
         address(this),
         functions,
+        abis,
         required,
         'Rock Paper Scissors'
       );
   }
 
-  function executeFunction(
-    address game,
-    string calldata func,
-    GameFuncParams calldata params
-  ) external {
-    if (
-      keccak256(abi.encodePacked(func)) ==
-      keccak256(abi.encodePacked('joinGame'))
-    ) {
-      joinGame(IGame(game), params);
-    }
-  }
+  // function executeFunction(
+  //   address executor,
+  //   address game,
+  //   string calldata func,
+  //   GameFuncParams calldata params
+  // ) external {
+  //   if (
+  //     keccak256(abi.encodePacked(func)) ==
+  //     keccak256(abi.encodePacked('joinGame'))
+  //   ) {
+  //     // joinGame(IGame(game), params);
+  //     (bool success, ) = address(this).call(
+  //       abi.encodeWithSignature('joinGame(address,address)', executor, game)
+  //     );
+  //   }
+  // }
 
-  function oneOnOne(IGame game, GameFuncParams calldata params) internal {
+  function oneOnOne(address executor, address gameAddress) internal {
     address player;
     uint256 action;
-    for (uint256 i = 0; i < params.addresses.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.addresses[i].name)) ==
-        keccak256(abi.encodePacked('player'))
-      ) {
-        player = params.addresses[i].value;
-      }
-    }
 
-    for (uint256 i = 0; i < params.uints.length; i++) {
-      if (
-        keccak256(abi.encodePacked(params.uints[i].name)) ==
-        keccak256(abi.encodePacked('action'))
-      ) {
-        action = params.uints[i].value;
-      }
-    }
+    IGame game = IGame(gameAddress);
+    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+
+    player = gameEntity.getPlayerAddress(executor, 'player');
+    action = gameEntity.getPlayerUint(executor, 'action');
 
     RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
       player,

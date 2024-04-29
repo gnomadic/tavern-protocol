@@ -5,19 +5,13 @@ import './interfaces/IEntity.sol';
 import "forge-std/console.sol";
 
 contract MMOSessionEntity is IEntity {
-  string[] public keys;
 
   address[] public players;
   mapping(address => uint256) playerIndex;
 
-  function initialize(address _game) external override {
-    game = _game;
+  function setAvailableKeys(string[] storage keys) internal override {
     keys.push('players');
     keys.push('playerIndex');
-  }
-
-  function getAvailableKeys() external view override returns (string[] memory) {
-    return keys;
   }
 
   function addPlayer(address player) external onlyModule() returns (uint256) {

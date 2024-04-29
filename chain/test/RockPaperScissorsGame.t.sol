@@ -11,10 +11,15 @@ import {RockPaperScissors} from '../src/components/RockPaperScissors.sol';
 import {RockPaperScissorEntity} from '../src/entities/RockPaperScissorEntity.sol';
 import {AddressKey, GameFuncParams, GameFuncAddress, GameFuncUint} from '../src/interfaces/IGame.sol';
 import {GameEntity} from '../src/entities/GameEntity.sol';
+import {RewardERC20} from '../src/components/RewardERC20.sol';
+import {Reward20Entity} from '../src/entities/Reward20Entity.sol';
+import {Mock20} from './mocks/Mock20.sol';
 
 contract RockPaperScissorsGame is TavernTest {
   QueueSession queue;
   RockPaperScissors rps;
+  RewardERC20 reward;
+  Mock20 token;
 
   function setUp() public {
     deployTavern();
@@ -31,17 +36,28 @@ contract RockPaperScissorsGame is TavernTest {
     RockPaperScissorEntity rpsEntity = new RockPaperScissorEntity();
     entityFactory.registerEntity('RockPaperScissorEntity', address(rpsEntity));
 
+    reward = new RewardERC20();
+    registry.register(address(reward));
+    Reward20Entity rewardEntity = new Reward20Entity();
+    entityFactory.registerEntity('Reward20Entity', address(rewardEntity));
+
     liveGame.addComponent(address(queue));
     liveGame.addComponent(address(rps));
+    liveGame.addComponent(address(reward));
   }
   AddressKey[] joinKeys;
   GameFuncParams joinParams;
 
   function createFunctions() public override {
+    token = new Mock20();
+
+    reward.setReward(liveGame, address(token));
+
     joinKeys.push(
       AddressKey(address(queue), 'setMatchOrWait(address,address)')
     );
     joinKeys.push(AddressKey(address(rps), 'oneOnOne(address,address)'));
+    joinKeys.push(AddressKey(address(reward), 'reward(address,address)'));
 
     liveGame.createGameFunction('playRPS', joinKeys);
   }
@@ -67,6 +83,11 @@ contract RockPaperScissorsGame is TavernTest {
   function test_second_win() public {
     clearParams(joinParams);
 
+    uint256 balance = token.balanceOf(address(1));
+    assertEq(balance, 0);
+    balance = token.balanceOf(address(2));
+    assertEq(balance, 0);
+
     //player 1 joins with a rock
     joinParams.addresses.push(GameFuncAddress('player', address(1)));
     joinParams.uints.push(GameFuncUint('action', 1));
@@ -87,10 +108,18 @@ contract RockPaperScissorsGame is TavernTest {
     GameEntity game = GameEntity(liveGame.getEntity('playerParams'));
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(2));
+
+    balance = token.balanceOf(address(2));
+    assertEq(balance, 3);
   }
 
   function test_second_lose() public {
     clearParams(joinParams);
+
+    uint256 balance = token.balanceOf(address(1));
+    assertEq(balance, 0);
+    balance = token.balanceOf(address(2));
+    assertEq(balance, 0);
 
     //player 1 joins with a rock
     joinParams.addresses.push(GameFuncAddress('player', address(1)));
@@ -112,6 +141,11 @@ contract RockPaperScissorsGame is TavernTest {
     GameEntity game = GameEntity(liveGame.getEntity('playerParams'));
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(1));
+
+    balance = token.balanceOf(address(2));
+    assertEq(balance, 0);
+    balance = token.balanceOf(address(1));
+    assertEq(balance, 3);
   }
 
   function test_second_tie() public {
@@ -143,5 +177,10 @@ contract RockPaperScissorsGame is TavernTest {
 
     assertEq(tie1, address(2));
     assertEq(tie2, address(1));
+
+    uint256 balance = token.balanceOf(address(2));
+    assertEq(balance, 1);
+    balance = token.balanceOf(address(1));
+    assertEq(balance, 1);
   }
 }

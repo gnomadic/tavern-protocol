@@ -63,9 +63,11 @@ contract RockPaperScissors is IComponent {
       console.log('It is a tie');
       gameEntity.addPlayerAddress(executor, 'tie1', player);
       gameEntity.addPlayerAddress(executor, 'tie2', player2);
+      gameEntity.addPlayerUint(executor, 'amount', 1);
     } else {
       console.log('The winner is: ', winner);
       gameEntity.addPlayerAddress(executor, 'winner', winner);
+      gameEntity.addPlayerUint(executor, 'amount', 3);
     }
 
     // QueueSessionEntity queue = QueueSessionEntity(game.getEntity('players'));

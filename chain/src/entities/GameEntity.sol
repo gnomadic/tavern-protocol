@@ -51,6 +51,14 @@ contract GameEntity is IEntity {
     return uints[player][key];
   }
 
+  function addPlayerUint(
+    address player,
+    string memory key,
+    uint256 value
+  ) external {
+    uints[player][key] = value;
+  }
+
   function getPlayerAddress(
     address player,
     string memory key

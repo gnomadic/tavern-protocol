@@ -35,20 +35,29 @@ contract RewardERC20 is IComponent {
 
   function reward(address executor, address gameAddress) public {
     IGame game = IGame(gameAddress);
-    
+
     GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
     uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
 
     address player = gameEntity.getPlayerAddress(executor, 'winner');
     if (player != address(0)) {
-      Reward20Entity(game.getEntity('rewardAddress')).sendReward(player, amount);
+      Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+        player,
+        amount
+      );
       return;
     }
 
     address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
     address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
 
-    Reward20Entity(game.getEntity('rewardAddress')).sendReward(tiePlayer1, amount);
-    Reward20Entity(game.getEntity('rewardAddress')).sendReward(tiePlayer2, amount);
+    Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+      tiePlayer1,
+      amount
+    );
+    Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+      tiePlayer2,
+      amount
+    );
   }
 }

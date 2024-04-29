@@ -16,48 +16,48 @@ import {Reward20Entity} from '../src/entities/Reward20Entity.sol';
 import {Mock20} from './mocks/Mock20.sol';
 
 contract RockPaperScissorsGame is TavernTest {
-  QueueSession queue;
-  RockPaperScissors rps;
-  RewardERC20 reward;
-  Mock20 token;
+  QueueSession queueComponent;
+  RockPaperScissors rpsComponent;
+  RewardERC20 rewardComponent;
+  Mock20 rewardToken;
 
   function setUp() public {
     deployTavern();
   }
 
   function loadModules() public override {
-    queue = new QueueSession();
-    registry.register(address(queue));
+    queueComponent = new QueueSession();
+    registry.register(address(queueComponent));
     QueueSessionEntity queueEntity = new QueueSessionEntity();
     entityFactory.registerEntity('QueueSessionEntity', address(queueEntity));
 
-    rps = new RockPaperScissors();
-    registry.register(address(rps));
+    rpsComponent = new RockPaperScissors();
+    registry.register(address(rpsComponent));
     RockPaperScissorEntity rpsEntity = new RockPaperScissorEntity();
     entityFactory.registerEntity('RockPaperScissorEntity', address(rpsEntity));
 
-    reward = new RewardERC20();
-    registry.register(address(reward));
+    rewardComponent = new RewardERC20();
+    registry.register(address(rewardComponent));
     Reward20Entity rewardEntity = new Reward20Entity();
     entityFactory.registerEntity('Reward20Entity', address(rewardEntity));
 
-    liveGame.addComponent(address(queue));
-    liveGame.addComponent(address(rps));
-    liveGame.addComponent(address(reward));
+    liveGame.addComponent(address(queueComponent));
+    liveGame.addComponent(address(rpsComponent));
+    liveGame.addComponent(address(rewardComponent));
   }
   AddressKey[] joinKeys;
   GameFuncParams joinParams;
 
   function createFunctions() public override {
-    token = new Mock20();
+    rewardToken = new Mock20();
 
-    reward.setReward(liveGame, address(token));
+    rewardComponent.setReward(liveGame, address(rewardToken));
 
     joinKeys.push(
-      AddressKey(address(queue), 'setMatchOrWait(address,address)')
+      AddressKey(address(queueComponent), 'setMatchOrWait(address,address)')
     );
-    joinKeys.push(AddressKey(address(rps), 'oneOnOne(address,address)'));
-    joinKeys.push(AddressKey(address(reward), 'reward(address,address)'));
+    joinKeys.push(AddressKey(address(rpsComponent), 'oneOnOne(address,address)'));
+    joinKeys.push(AddressKey(address(rewardToken), 'reward(address,address)'));
 
     liveGame.createGameFunction('playRPS', joinKeys);
   }
@@ -69,7 +69,7 @@ contract RockPaperScissorsGame is TavernTest {
     joinParams.uints.push(GameFuncUint('action', 1));
     liveGame.executeGameFunction('playRPS', joinParams);
 
-    uint256 playerCount = queue.getPlayerCount(liveGame);
+    uint256 playerCount = queueComponent.getPlayerCount(liveGame);
     assertEq(playerCount, 1);
 
     RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
@@ -83,9 +83,9 @@ contract RockPaperScissorsGame is TavernTest {
   function test_second_win() public {
     clearParams(joinParams);
 
-    uint256 balance = token.balanceOf(address(1));
+    uint256 balance = rewardToken.balanceOf(address(1));
     assertEq(balance, 0);
-    balance = token.balanceOf(address(2));
+    balance = rewardToken.balanceOf(address(2));
     assertEq(balance, 0);
 
     //player 1 joins with a rock
@@ -101,7 +101,7 @@ contract RockPaperScissorsGame is TavernTest {
     liveGame.executeGameFunction('playRPS', joinParams);
 
     // queue should be empty because they should have matched
-    uint256 playerCount = queue.getPlayerCount(liveGame);
+    uint256 playerCount = queueComponent.getPlayerCount(liveGame);
     assertEq(playerCount, 0);
 
     // paper beats rocks
@@ -109,16 +109,16 @@ contract RockPaperScissorsGame is TavernTest {
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(2));
 
-    balance = token.balanceOf(address(2));
+    balance = rewardToken.balanceOf(address(2));
     assertEq(balance, 3);
   }
 
   function test_second_lose() public {
     clearParams(joinParams);
 
-    uint256 balance = token.balanceOf(address(1));
+    uint256 balance = rewardToken.balanceOf(address(1));
     assertEq(balance, 0);
-    balance = token.balanceOf(address(2));
+    balance = rewardToken.balanceOf(address(2));
     assertEq(balance, 0);
 
     //player 1 joins with a rock
@@ -134,7 +134,7 @@ contract RockPaperScissorsGame is TavernTest {
     liveGame.executeGameFunction('playRPS', joinParams);
 
     // queue should be empty because they should have matched
-    uint256 playerCount = queue.getPlayerCount(liveGame);
+    uint256 playerCount = queueComponent.getPlayerCount(liveGame);
     assertEq(playerCount, 0);
 
     // paper beats rocks
@@ -142,9 +142,9 @@ contract RockPaperScissorsGame is TavernTest {
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(1));
 
-    balance = token.balanceOf(address(2));
+    balance = rewardToken.balanceOf(address(2));
     assertEq(balance, 0);
-    balance = token.balanceOf(address(1));
+    balance = rewardToken.balanceOf(address(1));
     assertEq(balance, 3);
   }
 
@@ -164,7 +164,7 @@ contract RockPaperScissorsGame is TavernTest {
     liveGame.executeGameFunction('playRPS', joinParams);
 
     // queue should be empty because they should have matched
-    uint256 playerCount = queue.getPlayerCount(liveGame);
+    uint256 playerCount = queueComponent.getPlayerCount(liveGame);
     assertEq(playerCount, 0);
 
     // paper beats rocks
@@ -178,9 +178,25 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(tie1, address(2));
     assertEq(tie2, address(1));
 
-    uint256 balance = token.balanceOf(address(2));
+    uint256 balance = rewardToken.balanceOf(address(2));
     assertEq(balance, 1);
-    balance = token.balanceOf(address(1));
+    balance = rewardToken.balanceOf(address(1));
     assertEq(balance, 1);
+  }
+
+  function deployGame() public {
+    liveGame.addComponent(address(queueComponent));
+    liveGame.addComponent(address(rpsComponent));
+    liveGame.addComponent(address(rewardComponent));
+
+    rewardComponent.setReward(liveGame, address(rewardToken));
+
+    joinKeys.push(
+      AddressKey(address(queueComponent), 'setMatchOrWait(address,address)')
+    );
+    joinKeys.push(AddressKey(address(rpsComponent), 'oneOnOne(address,address)'));
+    joinKeys.push(AddressKey(address(rewardComponent), 'reward(address,address)'));
+
+    liveGame.createGameFunction('playRPS', joinKeys);
   }
 }

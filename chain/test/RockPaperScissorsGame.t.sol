@@ -57,7 +57,7 @@ contract RockPaperScissorsGame is TavernTest {
       AddressKey(address(queueComponent), 'setMatchOrWait(address,address)')
     );
     joinKeys.push(AddressKey(address(rpsComponent), 'oneOnOne(address,address)'));
-    joinKeys.push(AddressKey(address(rewardToken), 'reward(address,address)'));
+    joinKeys.push(AddressKey(address(rewardComponent), 'reward(address,address)'));
 
     liveGame.createGameFunction('playRPS', joinKeys);
   }

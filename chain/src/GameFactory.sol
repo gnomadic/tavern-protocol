@@ -16,12 +16,14 @@ contract GameFactory {
         entityFactory = _entityFactory;
     }
 
-    function createGame(address _gm, string calldata displayName) public {
+    function createGame(address _gm, string calldata displayName) public returns (address) {
         address game = LibClone.clone(gameContract);
         IGame(game).initialize(_gm, displayName, entityFactory);
         games.push(Game(game));
 
         emit GameCreated(_gm, game);
+
+        return game;
     }
 
     //returns an array of size 10 always, but some items will be empty when returning a page without 10 items.

@@ -20,10 +20,10 @@ export const Deployments: { [key: string]: Deployment } = {
   //   chain: 'polygon',
   // },
   sepolia: {
-    gameFactory: '0x52c6Af5c11ABd9F999ECB89fA750FED6D5fC6Fe1',
-    entityFactory: '0x939f5adfC98652f245c0a8d6a6D2C8688c5f284e',
+    gameFactory: '0x8c8A01c135004b392eF742cf40088355f5B74fb3',
+    entityFactory: '0x5b74d2a71618efed7fC2519D554082008DCbe95A',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    moduleRegistry: '0xe1d875dDFDd2bc09454e41154cf427E07ab14028',
+    moduleRegistry: '0xfaA8c35840B62EEED38Dc625290352663D18f3A1',
     displayName: 'Tavern',
     currency: 'eth',
     chain: 'sepolia',

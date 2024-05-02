@@ -1,25 +1,33 @@
-# Tavern
+# 🏞️ Tavern
 
-## Our Mission:
-We believe in the power of play to foster stronger connections and shared experiences.  Tavern empowers communities and their members by enabling the creation of codeless Web3 games built around existing NFTs. 
+Welcome to the Tavern Protocol, a web3 framework revolutionizing blockchain gaming!  Any game can be created by submitting transactions, and doesn't require a single line of code. &#x20;
 
-## What is Tavern?
-Tavern is an on-chain game engine protocol designed to make it easy to create games using web3 technologies and communities.  Tavern's modular architecture allows for the creation of diverse and engaging games that leverage the unique properties of NFTs and any other on-chain primitive.  
+We believe in the power of play to foster stronger connections and shared experiences. Tavern empowers communities and their members by enabling the creation of  unique Web3 games built for existing communities. &#x20;
 
-## How does Tavern work?
-Tavern takes inspiration from familiar game engines like Unity and Unreal, but injects the power of Web3.  The idea is that a game's rules and a game's data are treated completely separately.  The rules are defined in "Components" and the data is stored in "Entities."  Game designers can then create "Game Functions" that define the flow of the game by calling the components and interacting with the entities.  This separation of concerns allows for the creation of complex games without writing complex code.
+## What is the Tavern Protocol?
 
-### Building Blocks: Components 
-Imagine a toolbox filled with pre-built components like "combat," "crafting," or "resource management." These are Tavern components – smart contracts deployed once on the blockchain. Any game can leverage them, making them the reusable building blocks of everyone's game world.  Solidity developers can even build their own components and contribute to the on-chain registry, keeping the toolbox ever-expanding.  There are no restrictions on components, so if you can code it in Solidity, you can make it a components.  
+The Tavern Protocol serves as a robust foundation for the development and management of blockchain-based games. At its core, the protocol provides a set of tools, standards, and best practices designed to empower developers, game creators, and players alike.
 
-### Data Containers: Entities
-Components are like functions with no memory – they don't store data. That's where Entities come in. These are on-chain data containers that hold everything about your game objects and the overall game state – like the ultimate backpack for your game's stuff!  Imagine a deck of cards, where the cards themselves are defined in an Entity, as well as the cards in every player's hand. Entities are unique to each game and deployed as special "proxy contracts" for efficiency.
+## Blockchain Gaming for all
 
-### The Orchestrator: Game Functions
-Now for the real fun! Game Functions are the masterminds created by YOU, the game designer. These functions act like recipes, stringing together different components functions (think combat followed by looting) and interacting with the data stored in Entities.  This allows you to craft unique gameplay experiences without writing complex code from scratch.  You can create Game Functions by submitting transactions and not writing a line of code.
+### Enabling Game Creators
 
-### Proxy Clones and Stateless components
-The beauty lies in the separation of concerns. Components are reusable across games, while Entities hold game-specific data. This allows anyone to easily create new games by registering the components they need (which automatically deploys the entities they need) and creating Game Functions. It's like having a universal component library at your fingertips!
+Game creators play a pivotal role in the ecosystem, shaping the landscape of blockchain gaming with their creativity and vision. The Tavern Protocol provides game creators with a versatile toolkit for bringing their ideas to life, offering pre-built and customizable components to streamline the game development process.
 
-### Play and Create!
-Tavern empowers anyone to build engaging games without getting bogged down in code.  So, unleash your creativity, explore the ever-growing component library, and start crafting the next generation of on-chain gaming experiences!
+### Empowering Players
+
+At the heart of every game are the players, whose engagement and enjoyment are paramount. With the Tavern Protocol, players can immerse themselves in a world of decentralized gaming, where ownership of in-game assets and digital identities is secured by the blockchain. Through player-driven economies and transparent gameplay mechanics, the protocol empowers players to take control of their gaming experience like never before.
+
+### Unlocking Developers
+
+For developers, the Tavern Protocol opens new doors of opportunity by offering a comprehensive framework for building decentralized games components.  Developers can create immersive and unique gaming experiences to share with the community of Game Creators. &#x20;
+
+## Game Creation and Management
+
+The Tavern Protocol facilitates the creation and management of blockchain-based games through its core components:
+
+* **Entities:** Store and manage game data securely on the blockchain, including player details, item attributes, and game state information.
+* **Modules (Components):** Pre-built components that handle specific actions within games, such as player movement, combat mechanics, and inventory management.
+* **Flows:** Customizable sequences of modules that define gameplay logic, allowing for dynamic and engaging gaming experiences.
+
+By providing developers, game creators, and players with the tools and infrastructure they need, the Tavern Protocol paves the way for a new era of decentralized gaming.

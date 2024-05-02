@@ -19,10 +19,10 @@ contract Reward20Entity is IEntity {
     address player,
     uint256 amount
   ) external onlyModule {
-    SimpleMintable(token).mint(player, amount);
+    SimpleMintableERC20(token).mint(player, amount);
   }
 }
 
-interface SimpleMintable {
+interface SimpleMintableERC20 {
   function mint(address to, uint256 amount) external;
 }

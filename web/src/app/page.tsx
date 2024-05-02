@@ -5,22 +5,22 @@ export default function Home() {
   // const [activeVerb, setActiveVerb] = useState(verbs[0]);
 
   return (
-    <main className='font-anon flex min-h-screen flex-col items-center justify-between p-24'>
-      <section id='hero' className='relative min-h-screen items-center pt-48'>
+    <main className='flex flex-col items-center justify-between min-h-screen p-24 font-anon'>
+      <section id='hero' className='relative items-center min-h-screen pt-48'>
         <p className=''>Play together.</p>
         <p className='pt-8'>Bring Games to your web3 Communities.</p>
         <p className='pt-8'>
           Launch codeless games onchain for your favorite NFT communities with
           Tavern.
         </p>
-        <p className='pt-8'>We believe in the power of play to foster stronger connections and shared experiences.</p>
+        <p className='pt-8'></p>
       </section>
-      <section id='connect' className='relative -mt-48 items-center'>
+      <section id='connect' className='relative items-center -mt-48'>
 
         <br />
         <p>
-          
-          Our mission is to make communities stronger. Everything we do, we try
+        We believe in the power of play to foster stronger connections and shared experiences.
+           Everything we do, we try
           to enable and empower existing communities and their members. We also
           believe in the power of play.
           <br />

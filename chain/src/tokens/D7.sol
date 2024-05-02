@@ -11,6 +11,7 @@ contract D7 is ERC721A {
         _mint(msg.sender, 1);
     }
 
+
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         return "https://ipfs.io/ipfs/QmUsr6muQSFXoprVpXWBzjmwQsnqeurd5NXKM6N1KKyWKd";
     }

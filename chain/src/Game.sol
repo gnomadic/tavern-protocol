@@ -76,11 +76,11 @@ contract Game is IGame, Initializable {
   function addComponent(address component) external {
     // TODO verify the module exists in the registry for user safety
     IComponent newComponent = IComponent(component);
-    string[] memory moduleFunctions = newComponent.getSummary().functions;
-    for (uint8 i = 0; i < moduleFunctions.length; i++) {
-      functionKeys.push(AddressKey(component, moduleFunctions[i]));
-      functionLookup[moduleFunctions[i]] = component;
-      supportedFunctions[component].push(moduleFunctions[i]);
+    string[] memory componentFunctions = newComponent.getSummary().functions;
+    for (uint8 i = 0; i < componentFunctions.length; i++) {
+      functionKeys.push(AddressKey(component, componentFunctions[i]));
+      functionLookup[componentFunctions[i]] = component;
+      supportedFunctions[component].push(componentFunctions[i]);
     }
     newComponent.initialize(address(this));
     components.push(newComponent);

@@ -8,6 +8,7 @@ import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
 import {Reward1155Entity} from '../entities/Reward1155Entity.sol';
 import {GameEntity} from '../entities/GameEntity.sol';
+import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 
 
 contract Reward1155 is IComponent {
@@ -50,6 +51,21 @@ contract Reward1155 is IComponent {
       amount
     );
   }
+
+      function dealDamage(address executor, address gameAddress) external {
+        
+
+    IGame game = IGame(gameAddress);
+        GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+
+ 
+
+        // get damage dealt
+        uint256 damage = (game.getEntity('playerStats')).getNumber(executor, 'damage');
+        // Retrieve player health from entity
+        uint256 playerHealth = INumberEntity(game.getEntity('playerStats')).getNumber(player, 'health');
+        INumberEntity(game.getEntity('playerStats')).setNumber(player, 'health', playerHealth - amount);
+    }
 
   function sendReward(address player, uint256 token, uint256 amount) external {
     Reward1155Entity(msg.sender).sendReward(player, token, amount);

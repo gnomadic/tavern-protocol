@@ -67,9 +67,9 @@ export default function Game({ params }: { params: { address: string, chainid: s
   // const { registerEntityHash, registerEntityGameError, registerEntityisPending, writeRegisterEntity } = useRegisterEntity({ contractAddress: params.address as Address });
   // const { isLoading: registerEntityIsConfirming, isSuccess: registerEntityIsConfirmed } = useWaitForTransactionReceipt({ hash: registerModuleHash });
   return (
-    <main className='font-anon flex flex-col items-center justify-between p-24'>
-      {/* <section id='connect' className='relative pt-48 items-center'>
-        <div className='text-8xl pb-8'>
+    <main className='flex flex-col items-center justify-between p-24 font-anon'>
+      {/* <section id='connect' className='relative items-center pt-48'>
+        <div className='pb-8 text-8xl'>
           {gameSummary ? gameSummary.displayName : "loading"}
         </div>
         <div>
@@ -82,7 +82,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
         <Divider />
       </section> */}
       <Header gameAddress={params.address as Address} />
-      {/* <section id='connect' className='relative pt-8 items-center'>
+      {/* <section id='connect' className='relative items-center pt-8'>
 
         <div className='pt-4'>
           Every Game is a collection of Modules and Entities.  Modules contain gameplay, and Entities contain data.
@@ -110,7 +110,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
         <Divider />
       </section>
 
-      <section id='connect' className='relative pt-4 items-center'>
+      <section id='connect' className='relative items-center pt-4'>
 
         {/* <PlayCatch gameAddress={params.address as Address} /> */}
 

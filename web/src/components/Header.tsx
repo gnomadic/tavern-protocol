@@ -20,18 +20,18 @@ export default function Header() {
 
   return (
     <header className='absolute top-0 z-50 w-full font-anon '>
-      <nav className='mx-auto px-6 pb-12 pt-4 md:pt-8 lg:px-12 xl:px-6'>
-        <div className='text-offwhite flex items-center justify-between'>
-          <div className='flex-shrink-0 items-center gap-3 p-2 '>
+      <nav className='px-6 pt-4 pb-12 mx-auto md:pt-8 lg:px-12 xl:px-6'>
+        <div className='flex items-center justify-between text-offwhite'>
+          <div className='items-center flex-shrink-0 gap-3 p-2 '>
             <Link href='/'>
-              <div className='cursor-pointer text-3xl font-bold uppercase leading-loose text-white'>
+              <div className='text-3xl font-bold leading-loose text-white uppercase cursor-pointer'>
                 {deploy.displayName}
               </div>
             </Link>
           </div>
 
           <nav>
-            <ul className='text-sm text-offwhite hidden uppercase tracking-wider lg:flex lg:flex-wrap lg:gap-8'>
+            <ul className='hidden text-sm tracking-wider uppercase text-offwhite lg:flex lg:flex-wrap lg:gap-8'>
               {NavItems.map((element, i) => {
                 return (
                   <Fragment key={i}>
@@ -54,7 +54,7 @@ export default function Header() {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://docs.tavern.com"
+                  href="https://docs.playtavern.com"
                 >
                   <div className="relative cursor-pointer">
                     docs

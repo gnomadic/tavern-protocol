@@ -26,26 +26,12 @@ abstract contract TavernTest is Test {
 
     registry = new ComponentRegistry();
 
-    // mmoSession = new MMOSessionModule();
-    // registry.register(address(mmoSession));
-    // MMOSessionEntity mmoSessionEntity = new MMOSessionEntity();
-    // entityFactory.registerEntity('MMOSessionEntity', address(mmoSessionEntity));
-
-    // neighborInteraction = new MMONeighborInteractionModule();
-    // registry.register(address(neighborInteraction));
-    // MMONeighborInteractionEntity neighborInteractionEntity = new MMONeighborInteractionEntity();
-    // entityFactory.registerEntity(
-    //   'MMONeighborInteractionEntity',
-    //   address(neighborInteractionEntity)
-    // );
-    // CatchEntity catchEntity = new CatchEntity();
-    // entityFactory.registerEntity('CatchEntity', address(catchEntity));
+  
 
     factory.createGame(address(0), 'testGame');
     liveGame = factory.games(0);
 
-    // liveGame.addComponent(address(mmoSession));
-    // liveGame.addComponent(address(neighborInteraction));
+
 
     loadModules();
 

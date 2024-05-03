@@ -5,7 +5,7 @@ Components are pre-built tools and functionalities within the Tavern Protocol th
 ## Key Features
 
 * **Modularity:** Components are designed to be modular, allowing developers to mix and match them to create custom gameplay experiences.
-* **Reusability:** Components do store any data themselves, and are designed to be reused across different games.
+* **Reusability:** Components do not store any data themselves, and are designed to be reused across different games.
 * **Customizability:** Developers can customize components to suit their game's specific requirements by adjusting parameters and configurations (which is stored in an Entity).
 
 ## Component Types

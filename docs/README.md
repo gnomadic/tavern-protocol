@@ -1,6 +1,6 @@
 # 🏞️ Tavern
 
-Welcome to the Tavern Protocol, a web3 framework revolutionizing blockchain gaming!  Any game can be created by submitting transactions, and doesn't require a single line of code. &#x20;
+Welcome to the Tavern Protocol, a web3 framework to cultivate blockchain gaming!  Any game can be created by submitting transactions, and doesn't require a single line of code. &#x20;
 
 We believe in the power of play to foster stronger connections and shared experiences. Tavern empowers communities and their members by enabling the creation of  unique Web3 games built for existing communities. &#x20;
 

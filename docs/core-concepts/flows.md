@@ -76,7 +76,7 @@ Note that this example can be submitted as multiple transactions, it is only scr
 2. `oneOnOne` on the Rock Paper Scissors Component (RPS)
 3. `reward` on the Reward Component
 
-This works because the `setMatchOrWait` function will update the `currentMatchPlayers` property on the [Game Entity](entities/gameentity.md), which is loaded by the RPS component.  RPS will then set the `winner` on the Game Entity, which the Reward component can load. &#x20;
+This works because the `setMatchOrWait` function will update the `currentMatchPlayers` property on the [Game Entity](entities/flowentity.md), which is loaded by the RPS component.  RPS will then set the `winner` on the Game Entity, which the Reward component can load. &#x20;
 
 ### Conclusion
 

@@ -7,7 +7,7 @@ import {IGame, GameSummary, AddressKey, GameFuncParams} from './interfaces/IGame
 import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IComponent} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
-import {GameEntity} from './entities/GameEntity.sol';
+import {FlowEntity} from './entities/FlowEntity.sol';
 
 import 'forge-std/console.sol';
 
@@ -46,10 +46,10 @@ contract Game is IGame, Initializable {
     displayName = _displayName;
     entityFactory = IEntityFactory(_entityFactory);
 
-    GameEntity gameEntity = new GameEntity();
-    entityFactory.registerEntity('GameEntity', address(gameEntity));
+    FlowEntity flowEntity = new FlowEntity();
+    entityFactory.registerEntity('FlowEntity', address(flowEntity));
 
-    createEntity('GameEntity');
+    createEntity('FlowEntity');
   }
 
   function getSummary() external view returns (GameSummary memory) {
@@ -135,7 +135,7 @@ contract Game is IGame, Initializable {
       revert GameFunctionDoesNotExist();
     }
 
-    GameEntity(getEntity('playerParams')).setPlayerParams(msg.sender, params);
+    FlowEntity(getEntity('playerParams')).setPlayerParams(msg.sender, params);
 
     for (uint8 i = 0; i < funcs.length; i++) {
       (bool success, ) = funcs[i].Address.call(

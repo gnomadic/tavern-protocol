@@ -6,9 +6,9 @@ import {Test, console} from 'forge-std/Test.sol';
 import {TavernTest} from './TavernTest.t.sol';
 import {QueueSession} from '../src/components/QueueSession.sol';
 import {QueueSessionEntity} from '../src/entities/QueueSessionEntity.sol';
+import {FlowEntity} from '../src/entities/FlowEntity.sol';
 
 import {AddressKey, GameFuncParams, GameFuncAddress} from '../src/interfaces/IGame.sol';
-import {GameEntity} from '../src/entities/GameEntity.sol';
 
 contract QueueSessionTest is TavernTest {
   QueueSession queue;
@@ -61,7 +61,7 @@ contract QueueSessionTest is TavernTest {
     uint256 playerCount = queue.getPlayerCount(liveGame);    
     assertEq(playerCount, 0);
 
-    GameEntity game = GameEntity(liveGame.getEntity("playerParams"));
+    FlowEntity game = FlowEntity(liveGame.getEntity("playerParams"));
     address player1 = game.getPlayerAddress(address(2), 'player1');
     
     address player2 = game.getPlayerAddress(address(2), 'player2');

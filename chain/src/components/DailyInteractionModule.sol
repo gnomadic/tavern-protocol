@@ -5,7 +5,7 @@ import {Initializable} from 'solady/utils/Initializable.sol';
 import {DailyInteractionEntity} from '../entities/DailyInteractionEntity.sol';
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {IGame} from '../interfaces/IGame.sol';
-import {GameEntity} from '../entities/GameEntity.sol';
+import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract DailyInteractionModule is IComponent, Initializable {
 
@@ -32,7 +32,7 @@ contract DailyInteractionModule is IComponent, Initializable {
 
     uint256 tokenId;
 
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     tokenId = gameEntity.getPlayerUint(executor, 'tokenId');
 
     uint256 lastActionAt = DailyInteractionEntity(

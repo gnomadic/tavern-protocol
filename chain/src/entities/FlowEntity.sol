@@ -6,7 +6,7 @@ import {GameFuncParams, GameFuncAddress, GameFuncString, GameFuncUint, ParamType
 
 import 'forge-std/console.sol';
 
-contract GameEntity is IEntity {
+contract FlowEntity is IEntity {
   mapping(address => mapping(string => string)) private strings;
   mapping(address => mapping(string => uint256)) private uints;
   mapping(address => mapping(string => address)) private addresses;

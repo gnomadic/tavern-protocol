@@ -6,11 +6,10 @@ import {Test, console} from 'forge-std/Test.sol';
 import {TavernTest} from './TavernTest.t.sol';
 import {QueueSession} from '../src/components/QueueSession.sol';
 import {QueueSessionEntity} from '../src/entities/QueueSessionEntity.sol';
-
+import {FlowEntity} from '../src/entities/FlowEntity.sol';
 import {RockPaperScissors} from '../src/components/RockPaperScissors.sol';
 import {RockPaperScissorEntity} from '../src/entities/RockPaperScissorEntity.sol';
 import {AddressKey, GameFuncParams, GameFuncAddress, GameFuncUint} from '../src/interfaces/IGame.sol';
-import {GameEntity} from '../src/entities/GameEntity.sol';
 import {RewardERC20} from '../src/components/RewardERC20.sol';
 import {Reward20Entity} from '../src/entities/Reward20Entity.sol';
 import {Mock20} from './mocks/Mock20.sol';
@@ -105,7 +104,7 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(playerCount, 0);
 
     // paper beats rocks
-    GameEntity game = GameEntity(liveGame.getEntity('playerParams'));
+    FlowEntity game = FlowEntity(liveGame.getEntity('playerParams'));
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(2));
 
@@ -138,7 +137,7 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(playerCount, 0);
 
     // paper beats rocks
-    GameEntity game = GameEntity(liveGame.getEntity('playerParams'));
+    FlowEntity game = FlowEntity(liveGame.getEntity('playerParams'));
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(1));
 
@@ -168,7 +167,7 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(playerCount, 0);
 
     // paper beats rocks
-    GameEntity game = GameEntity(liveGame.getEntity('playerParams'));
+    FlowEntity game = FlowEntity(liveGame.getEntity('playerParams'));
     address winner = game.getPlayerAddress(address(2), 'winner');
     assertEq(winner, address(0));
 

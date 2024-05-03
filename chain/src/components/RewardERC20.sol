@@ -7,7 +7,7 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
 import {Reward20Entity} from '../entities/Reward20Entity.sol';
-import {GameEntity} from '../entities/GameEntity.sol';
+import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract RewardERC20 is IComponent {
   string[] public required = ['winner', 'amount', 'tiePlayer1', 'tiePlayer2'];
@@ -36,7 +36,7 @@ contract RewardERC20 is IComponent {
   function reward(address executor, address gameAddress) public {
     IGame game = IGame(gameAddress);
 
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
 
     address player = gameEntity.getPlayerAddress(executor, 'winner');

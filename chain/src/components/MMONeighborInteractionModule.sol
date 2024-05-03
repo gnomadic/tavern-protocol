@@ -9,7 +9,7 @@ import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {console} from 'forge-std/console.sol';
 import {MMOSessionModule} from './MMOSessionModule.sol';
 import {GameFuncParams} from '../interfaces/IGame.sol';
-import {GameEntity} from '../entities/GameEntity.sol';
+import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract MMONeighborInteractionModule is IComponent {
   string public displayName = 'Daily Interaction';
@@ -50,7 +50,7 @@ contract MMONeighborInteractionModule is IComponent {
     IGame game = IGame(gameAddress);
     address player;
 
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     player = gameEntity.getPlayerAddress(executor, 'player');
 
     uint256 index = MMOSessionEntity(game.getEntity('playerIndex'))
@@ -71,7 +71,7 @@ contract MMONeighborInteractionModule is IComponent {
     address giver;
     uint256 distance;
 
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     giver = gameEntity.getPlayerAddress(executor, 'player');
     distance = gameEntity.getPlayerUint(executor, 'distance');
 
@@ -94,7 +94,7 @@ contract MMONeighborInteractionModule is IComponent {
     IGame game = IGame(gameAddress);
 
     address player;
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     player = gameEntity.getPlayerAddress(executor, 'player');
 
     bool canCatch = CatchEntity(game.getEntity('balls')).canICatch(player);

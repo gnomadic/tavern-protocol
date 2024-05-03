@@ -6,7 +6,7 @@ import {MMOSessionEntity} from '../entities/MMOSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
-import {GameEntity} from '../entities/GameEntity.sol';
+import {FlowEntity} from '../entities/FlowEntity.sol';
 
 import {console} from 'forge-std/console.sol';
 
@@ -29,7 +29,7 @@ contract MMOSessionModule is IComponent {
     console.log('joining game');
     IGame game = IGame(gameAddress);
 
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     player = gameEntity.getPlayerAddress(executor, 'player');
     // console.log('test', test);
 

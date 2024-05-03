@@ -8,7 +8,7 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
 import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
-import {GameEntity} from '../entities/GameEntity.sol';
+import {FlowEntity} from '../entities/FlowEntity.sol';
 
 import {console} from 'forge-std/console.sol';
 
@@ -37,7 +37,7 @@ contract RockPaperScissors is IComponent {
     uint256 action;
 
     IGame game = IGame(gameAddress);
-    GameEntity gameEntity = GameEntity(game.getEntity('playerParams'));
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
       game.getEntity('actions')
     );

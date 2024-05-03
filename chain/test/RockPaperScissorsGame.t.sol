@@ -9,7 +9,7 @@ import {QueueSessionEntity} from '../src/entities/QueueSessionEntity.sol';
 import {FlowEntity} from '../src/entities/FlowEntity.sol';
 import {RockPaperScissors} from '../src/components/RockPaperScissors.sol';
 import {RockPaperScissorEntity} from '../src/entities/RockPaperScissorEntity.sol';
-import {AddressKey, GameFuncParams, GameFuncAddress, GameFuncUint} from '../src/interfaces/IGame.sol';
+import {AddressKey, FlowParams, UintKey} from '../src/interfaces/IGame.sol';
 import {RewardERC20} from '../src/components/RewardERC20.sol';
 import {Reward20Entity} from '../src/entities/Reward20Entity.sol';
 import {Mock20} from './mocks/Mock20.sol';
@@ -45,7 +45,7 @@ contract RockPaperScissorsGame is TavernTest {
     liveGame.addComponent(address(rewardComponent));
   }
   AddressKey[] joinKeys;
-  GameFuncParams joinParams;
+  FlowParams joinParams;
 
   function createFunctions() public override {
     rewardToken = new Mock20();
@@ -53,20 +53,24 @@ contract RockPaperScissorsGame is TavernTest {
     rewardComponent.setReward(liveGame, address(rewardToken));
 
     joinKeys.push(
-      AddressKey(address(queueComponent), 'setMatchOrWait(address,address)')
+      AddressKey('setMatchOrWait(address,address)', address(queueComponent))
     );
-    joinKeys.push(AddressKey(address(rpsComponent), 'oneOnOne(address,address)'));
-    joinKeys.push(AddressKey(address(rewardComponent), 'reward(address,address)'));
+    joinKeys.push(
+      AddressKey('oneOnOne(address,address)', address(rpsComponent))
+    );
+    joinKeys.push(
+      AddressKey('reward(address,address)', address(rewardComponent))
+    );
 
-    liveGame.createGameFunction('playRPS', joinKeys);
+    liveGame.createFlow('playRPS', joinKeys);
   }
 
   function test_first_join() public {
     clearParams(joinParams);
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    joinParams.uints.push(GameFuncUint('action', 1));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    joinParams.uints.push(UintKey('action', 1));
+    liveGame.executeFlow('playRPS', joinParams);
 
     uint256 playerCount = queueComponent.getPlayerCount(liveGame);
     assertEq(playerCount, 1);
@@ -88,16 +92,16 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(balance, 0);
 
     //player 1 joins with a rock
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    joinParams.uints.push(GameFuncUint('action', 1));
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    joinParams.uints.push(UintKey('action', 1));
     vm.prank(address(1));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    liveGame.executeFlow('playRPS', joinParams);
 
     //player 2 joins with a paper
-    joinParams.addresses.push(GameFuncAddress('player', address(2)));
-    joinParams.uints.push(GameFuncUint('action', 2));
+    joinParams.addresses.push(AddressKey('player', address(2)));
+    joinParams.uints.push(UintKey('action', 2));
     vm.prank(address(2));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    liveGame.executeFlow('playRPS', joinParams);
 
     // queue should be empty because they should have matched
     uint256 playerCount = queueComponent.getPlayerCount(liveGame);
@@ -121,16 +125,16 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(balance, 0);
 
     //player 1 joins with a rock
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    joinParams.uints.push(GameFuncUint('action', 2));
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    joinParams.uints.push(UintKey('action', 2));
     vm.prank(address(1));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    liveGame.executeFlow('playRPS', joinParams);
 
     //player 2 joins with a paper
-    joinParams.addresses.push(GameFuncAddress('player', address(2)));
-    joinParams.uints.push(GameFuncUint('action', 1));
+    joinParams.addresses.push(AddressKey('player', address(2)));
+    joinParams.uints.push(UintKey('action', 1));
     vm.prank(address(2));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    liveGame.executeFlow('playRPS', joinParams);
 
     // queue should be empty because they should have matched
     uint256 playerCount = queueComponent.getPlayerCount(liveGame);
@@ -151,16 +155,16 @@ contract RockPaperScissorsGame is TavernTest {
     clearParams(joinParams);
 
     //player 1 joins with a rock
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    joinParams.uints.push(GameFuncUint('action', 2));
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    joinParams.uints.push(UintKey('action', 2));
     vm.prank(address(1));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    liveGame.executeFlow('playRPS', joinParams);
 
     //player 2 joins with a paper
-    joinParams.addresses.push(GameFuncAddress('player', address(2)));
-    joinParams.uints.push(GameFuncUint('action', 2));
+    joinParams.addresses.push(AddressKey('player', address(2)));
+    joinParams.uints.push(UintKey('action', 2));
     vm.prank(address(2));
-    liveGame.executeGameFunction('playRPS', joinParams);
+    liveGame.executeFlow('playRPS', joinParams);
 
     // queue should be empty because they should have matched
     uint256 playerCount = queueComponent.getPlayerCount(liveGame);
@@ -191,11 +195,15 @@ contract RockPaperScissorsGame is TavernTest {
     rewardComponent.setReward(liveGame, address(rewardToken));
 
     joinKeys.push(
-      AddressKey(address(queueComponent), 'setMatchOrWait(address,address)')
+      AddressKey('setMatchOrWait(address,address)', address(queueComponent))
     );
-    joinKeys.push(AddressKey(address(rpsComponent), 'oneOnOne(address,address)'));
-    joinKeys.push(AddressKey(address(rewardComponent), 'reward(address,address)'));
+    joinKeys.push(
+      AddressKey('oneOnOne(address,address)', address(rpsComponent))
+    );
+    joinKeys.push(
+      AddressKey('reward(address,address)', address(rewardComponent))
+    );
 
-    liveGame.createGameFunction('playRPS', joinKeys);
+    liveGame.createFlow('playRPS', joinKeys);
   }
 }

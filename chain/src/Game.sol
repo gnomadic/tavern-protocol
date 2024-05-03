@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
-import {IGame, GameSummary, AddressKey, GameFuncParams} from './interfaces/IGame.sol';
+import {IGame, GameSummary, AddressKey, FlowParams} from './interfaces/IGame.sol';
 import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IComponent} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
@@ -62,7 +62,7 @@ contract Game is IGame, Initializable {
     string[] memory entityKey = newEntity.getAvailableKeys();
 
     for (uint8 i = 0; i < entityKey.length; i++) {
-      dataKeys.push(AddressKey(entity, entityKey[i]));
+      dataKeys.push(AddressKey(entityKey[i], entity));
       availableEntityData[entityKey[i]] = entity;
     }
     entities.push(newEntity);
@@ -78,7 +78,7 @@ contract Game is IGame, Initializable {
     IComponent newComponent = IComponent(component);
     string[] memory componentFunctions = newComponent.getSummary().functions;
     for (uint8 i = 0; i < componentFunctions.length; i++) {
-      functionKeys.push(AddressKey(component, componentFunctions[i]));
+      functionKeys.push(AddressKey(componentFunctions[i], component));
       functionLookup[componentFunctions[i]] = component;
       supportedFunctions[component].push(componentFunctions[i]);
     }
@@ -102,47 +102,47 @@ contract Game is IGame, Initializable {
     return (supportedFunctions[module].length > 0);
   }
 
-  mapping(string => AddressKey[]) public gameFunctions;
-  string[] public gameFunctionNames;
+  mapping(string => AddressKey[]) public flows;
+  string[] public flowNames;
 
   //TODO only GM can create game functions
-  function createGameFunction(
+  function createFlow(
     string memory name,
     AddressKey[] memory funcs
   ) external {
-    if (gameFunctions[name].length > 0) {
-      revert GameFunctionAlreadyExists();
+    if (flows[name].length > 0) {
+      revert FlowAlreadyExists();
     }
     for (uint8 i = 0; i < funcs.length; i++) {
-      gameFunctions[name].push(funcs[i]);
+      flows[name].push(funcs[i]);
     }
-    gameFunctionNames.push(name);
+    flowNames.push(name);
   }
 
-  error GameFunctionAlreadyExists();
-  error GameFunctionDoesNotExist();
+  error FlowAlreadyExists();
+  error FlowDoesNotExist();
 
-  function getGameFunctions() external view returns (string[] memory) {
-    return gameFunctionNames;
+  function getFlows() external view returns (string[] memory) {
+    return flowNames;
   }
 
-  function executeGameFunction(
+  function executeFlow(
     string memory name,
-    GameFuncParams memory params
+    FlowParams memory params
   ) external {
-    AddressKey[] storage funcs = gameFunctions[name];
+    AddressKey[] storage funcs = flows[name];
     if (funcs.length == 0) {
-      revert GameFunctionDoesNotExist();
+      revert FlowDoesNotExist();
     }
 
     FlowEntity(getEntity('playerParams')).setPlayerParams(msg.sender, params);
 
     for (uint8 i = 0; i < funcs.length; i++) {
-      (bool success, ) = funcs[i].Address.call(
-        abi.encodeWithSignature(funcs[i].Key, msg.sender, address(this))
+      (bool success, ) = funcs[i].value.call(
+        abi.encodeWithSignature(funcs[i].name, msg.sender, address(this))
       );
-      if (!success) revert GameFunctionExecutionFailure(funcs[i].Address, funcs[i].Key);
+      if (!success) revert FlowExecutionError(funcs[i].value, funcs[i].name);
     }
   }
-  error GameFunctionExecutionFailure(address component, string functionKey);
+  error FlowExecutionError(address component, string functionKey);
 }

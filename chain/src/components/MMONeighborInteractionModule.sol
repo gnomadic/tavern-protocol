@@ -8,7 +8,7 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {console} from 'forge-std/console.sol';
 import {MMOSessionModule} from './MMOSessionModule.sol';
-import {GameFuncParams} from '../interfaces/IGame.sol';
+import {FlowParams} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract MMONeighborInteractionModule is IComponent {

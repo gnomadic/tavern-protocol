@@ -12,7 +12,7 @@ import {MMONeighborInteractionEntity} from '../src/entities/MMONeighborInteracti
 import {EntityFactory} from '../src/EntityFactory.sol';
 import {ComponentRegistry} from '../src/ComponentRegistry.sol';
 import {CatchEntity} from '../src/entities/CatchEntity.sol';
-import {AddressKey, GameFuncParams, GameFuncAddress, GameFuncString, GameFuncUint} from '../src/interfaces/IGame.sol';
+import {AddressKey, FlowParams, StringKey, UintKey} from '../src/interfaces/IGame.sol';
 
 contract Catch is Test {
   GameFactory factory;
@@ -60,25 +60,25 @@ contract Catch is Test {
   }
 
   AddressKey[] joinKeys;
-  GameFuncParams joinParams;
+  FlowParams joinParams;
 
   AddressKey[] throwKeys;
-  GameFuncParams throwParams;
+  FlowParams throwParams;
 
   AddressKey[] catchKeys;
-  GameFuncParams catchParams;
+  FlowParams catchParams;
 
   function createFunctions() public {
-    joinKeys.push(AddressKey(address(mmoSession), 'joinGame(address,address)'));
-    joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession(address,address)'));
+    joinKeys.push(AddressKey( 'joinGame(address,address)', address(mmoSession)));
+    joinKeys.push(AddressKey( 'joinSession(address,address)', address(neighborInteraction)));
     
-    liveGame.createGameFunction('joinCatch', joinKeys);
+    liveGame.createFlow('joinCatch', joinKeys);
 
-    throwKeys.push(AddressKey(address(neighborInteraction), 'throwBall(address,address)'));
-    liveGame.createGameFunction('throwBall', throwKeys);
+    throwKeys.push(AddressKey( 'throwBall(address,address)', address(neighborInteraction)));
+    liveGame.createFlow('throwBall', throwKeys);
 
-    catchKeys.push(AddressKey(address(neighborInteraction), 'catchBall(address,address)'));
-    liveGame.createGameFunction('catchBall', catchKeys);
+    catchKeys.push(AddressKey( 'catchBall(address,address)', address(neighborInteraction)));
+    liveGame.createFlow('catchBall', catchKeys);
   }
 
   function clearParams() public {
@@ -97,21 +97,21 @@ contract Catch is Test {
     clearParams();
     // vm.prank(address(1));
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
+    joinParams.addresses.push(AddressKey('player', address(1)));
     // vm.prank(address(1));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
+    joinParams.addresses[0] = AddressKey('player', address(2));
     // vm.prank(address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
+    joinParams.addresses[0] = AddressKey('player', address(3));
     // vm.prank(address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
+    joinParams.addresses[0] = AddressKey('player', address(4));
     // vm.prank(address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    liveGame.executeFlow('joinCatch', joinParams);
 
     uint playerCount = neighborInteraction.getPlayerCount(liveGame);
 
@@ -121,17 +121,17 @@ contract Catch is Test {
   function test_interaction_starts() public {
     clearParams();
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
     uint playerCount = neighborInteraction.getPlayerCount(liveGame);
     assertEq(playerCount, 4);
@@ -151,21 +151,21 @@ contract Catch is Test {
 
   function test_throw() public {
     clearParams();
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    catchParams.addresses.push(GameFuncAddress('player', address(2)));
-    catchParams.uints.push(GameFuncUint('distance', 4));
-    liveGame.executeGameFunction('throwBall', catchParams);
+    catchParams.addresses.push(AddressKey('player', address(2)));
+    catchParams.uints.push(UintKey('distance', 4));
+    liveGame.executeFlow('throwBall', catchParams);
 
     assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(2)));
     assertEq(true, neighborInteraction.canPlayerCatch(liveGame, address(1)));
@@ -178,24 +178,24 @@ contract Catch is Test {
   function test_intercept() public {
     clearParams();
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    catchParams.addresses.push(GameFuncAddress('player', address(2)));
-    catchParams.uints.push(GameFuncUint('distance', 4));
-    liveGame.executeGameFunction('throwBall', catchParams);
+    catchParams.addresses.push(AddressKey('player', address(2)));
+    catchParams.uints.push(UintKey('distance', 4));
+    liveGame.executeFlow('throwBall', catchParams);
 
-    catchParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('catchBall', catchParams);
+    catchParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('catchBall', catchParams);
 
     assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(2)));
     assertEq(false, neighborInteraction.canPlayerCatch(liveGame, address(1)));
@@ -208,27 +208,27 @@ contract Catch is Test {
   function test_multiple_indexes() public {
     clearParams();
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
     // // 2 people are holding balls (every other player gets one)
     assertEq(neighborInteraction.getBallHolderIndexes(liveGame).length, 2);
     // // player 2 and 4 throws a ball
-    catchParams.addresses.push(GameFuncAddress('player', address(2)));
-    catchParams.uints.push(GameFuncUint('distance', 4));
-    liveGame.executeGameFunction('throwBall', catchParams);
+    catchParams.addresses.push(AddressKey('player', address(2)));
+    catchParams.uints.push(UintKey('distance', 4));
+    liveGame.executeFlow('throwBall', catchParams);
 
-    catchParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('throwBall', catchParams);
+    catchParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('throwBall', catchParams);
 
     assertEq(neighborInteraction.getBallHolderIndexes(liveGame).length, 0);
     // // and all four players can catch it
@@ -238,28 +238,28 @@ contract Catch is Test {
   function test_self_throw_and_catch() public {
     clearParams();
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    throwParams.addresses.push(GameFuncAddress('player', address(2)));
-    throwParams.uints.push(GameFuncUint('distance', 4));
-    liveGame.executeGameFunction('throwBall', throwParams);
+    throwParams.addresses.push(AddressKey('player', address(2)));
+    throwParams.uints.push(UintKey('distance', 4));
+    liveGame.executeFlow('throwBall', throwParams);
 
     assertEq(false, neighborInteraction.canPlayerThrow(liveGame, address(2)));
 
     // neighborInteraction.catchBall(liveGame, address(2));
 
-    catchParams.addresses.push(GameFuncAddress('player', address(2)));
-    liveGame.executeGameFunction('catchBall', catchParams);
+    catchParams.addresses.push(AddressKey('player', address(2)));
+    liveGame.executeFlow('catchBall', catchParams);
 
     CatchEntity.Position[] memory catchables = neighborInteraction
       .getCatchableIndexes(liveGame);
@@ -269,17 +269,17 @@ contract Catch is Test {
   function test_indexes() public {
     clearParams();
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
     uint256 playerIndex = neighborInteraction.getPlayerIndex(
       liveGame,
@@ -293,9 +293,9 @@ contract Catch is Test {
     assertEq(holders[0].x, 1);
     assertEq(holders[1].x, 3);
 
-    throwParams.addresses.push(GameFuncAddress('player', address(2)));
-    throwParams.uints.push(GameFuncUint('distance', 4));
-    liveGame.executeGameFunction('throwBall', throwParams);
+    throwParams.addresses.push(AddressKey('player', address(2)));
+    throwParams.uints.push(UintKey('distance', 4));
+    liveGame.executeFlow('throwBall', throwParams);
 
     console.log('testing catchers');
     holders = neighborInteraction.getBallHolderIndexes(liveGame);

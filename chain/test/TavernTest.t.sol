@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from 'forge-std/Test.sol';
 import {GameFactory} from '../src/GameFactory.sol';
-import {IGame, GameFuncParams} from '../src/interfaces/IGame.sol';
+import {IGame, FlowParams} from '../src/interfaces/IGame.sol';
 import {Game} from '../src/Game.sol';
 import {EntityFactory} from '../src/EntityFactory.sol';
 import {ComponentRegistry} from '../src/ComponentRegistry.sol';
@@ -46,7 +46,7 @@ abstract contract TavernTest is Test {
   function createFunctions() public virtual;
 
 
-  function clearParams(GameFuncParams memory toClear) public {
+  function clearParams(FlowParams memory toClear) public {
     delete toClear.addresses;
     delete toClear.strings;
     delete toClear.uints;

@@ -5,7 +5,7 @@ import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
-import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
+
 import {Reward20Entity} from '../entities/Reward20Entity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 

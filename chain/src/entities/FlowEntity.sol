@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {IEntity} from './interfaces/IEntity.sol';
-import {GameFuncParams, GameFuncAddress, GameFuncString, GameFuncUint, ParamType} from '../interfaces/IGame.sol';
+import {FlowParams, AddressKey, StringKey, UintKey} from '../interfaces/IGame.sol';
 
 import 'forge-std/console.sol';
 
@@ -17,7 +17,7 @@ contract FlowEntity is IEntity {
 
   function setPlayerParams(
     address player,
-    GameFuncParams memory params
+    FlowParams memory params
   ) external {
     for (uint i = 0; i < params.strings.length; i++) {
       strings[player][params.strings[i].name] = params.strings[i].value;

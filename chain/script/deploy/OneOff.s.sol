@@ -14,7 +14,7 @@ import {MMONeighborInteractionModule} from '../../src/components/MMONeighborInte
 import {MMOSessionEntity} from '../../src/entities/MMOSessionEntity.sol';
 // import {MMONeighborInteractionEntity} from '../../src/entities/MMONeighborInteractionEntity.sol';
 import {CatchEntity} from '../../src/entities/CatchEntity.sol';
-import {AddressKey, GameFuncParams, GameFuncAddress} from '../../src/interfaces/IGame.sol';
+import {AddressKey, FlowParams} from '../../src/interfaces/IGame.sol';
 
 // # To deploy and verify Catch on the Tavern protocol run this command below
 // forge script script/deploy/OneOff.s.sol:OneOff --rpc-url sepolia --broadcast --verify -vvvv
@@ -23,7 +23,7 @@ contract OneOff is Script {
   address MODULE_REGISTRY = 0x4e3F48C28c28E2Fa3718eFFe3579dc302a3EE7ae;
   address ENTITY_FACTORY = 0xD89B03B60D161661142c2Fe24EA57ea430eC82c4;
 
-  GameFuncParams joinParams;
+  FlowParams joinParams;
 
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');
@@ -44,38 +44,38 @@ contract OneOff is Script {
 
     // IGame liveGame = factory.games(0);
 
-    joinParams.addresses.push(GameFuncAddress('player', address(1)));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(2));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(2));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(3));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(3));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(4));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(4));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(5));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(5));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(6));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(6));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(7));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(7));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(8));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(8));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(9));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(9));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(10));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(10));
+    liveGame.executeFlow('joinCatch', joinParams);
 
-    joinParams.addresses[0] = GameFuncAddress('player', address(11));
-    liveGame.executeGameFunction('joinCatch', joinParams);
+    joinParams.addresses[0] = AddressKey('player', address(11));
+    liveGame.executeFlow('joinCatch', joinParams);
 
     // neighborInteraction.joinSession(liveGame, address(1));
     // neighborInteraction.joinSession(liveGame, address(2));

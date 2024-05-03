@@ -11,7 +11,7 @@ interface IGame {
 
 
   function createEntity(string memory name) external returns (address);
-  function createGameFunction(
+  function createFlow(
     string memory name,
     AddressKey[] memory funcs
   ) external;
@@ -33,44 +33,23 @@ struct GameSummary {
 }
 
 struct AddressKey {
-  address Address;
-  string Key;
-}
-
-
-
-struct GameFuncAddress {
   string name;
   address value;
 }
 
-struct GameFuncUint {
+struct UintKey {
   string name;
   uint256 value;
 }
 
-struct GameFuncString {
+struct StringKey {
   string name;
   string value;
 }
 
-struct GameFuncParams {
-  GameFuncAddress[] addresses;
-  GameFuncUint[] uints;
-  GameFuncString[] strings;
+struct FlowParams {
+  AddressKey[] addresses;
+  UintKey[] uints;
+  StringKey[] strings;
 }
 
-struct GameFuncResponse {
-  GameFuncAddress[] addresses;
-  GameFuncUint[] uints;
-  GameFuncString[] strings;
-}
-
-
-
-
-enum ParamType {
-  STRING,
-  UINT,
-  ADDRESS
-}

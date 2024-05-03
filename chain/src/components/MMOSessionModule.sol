@@ -5,7 +5,7 @@ import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {MMOSessionEntity} from '../entities/MMOSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
-import {GameFuncParams, GameFuncUint} from '../interfaces/IGame.sol';
+import {FlowParams, UintKey} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 import {console} from 'forge-std/console.sol';

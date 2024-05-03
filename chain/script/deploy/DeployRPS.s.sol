@@ -75,17 +75,18 @@ contract DeployRPS is Script {
     // rewardComponent.setReward(liveGame, address(rewardToken));
 
     joinKeys.push(
-      AddressKey(address(queueComponent), 'setMatchOrWait(address,address)')
+      AddressKey('setMatchOrWait(address,address)', address(queueComponent))
     );
     joinKeys.push(
-      AddressKey(address(rpsComponent), 'oneOnOne(address,address)')
+      AddressKey('oneOnOne(address,address)', address(rpsComponent))
     );
-    joinKeys.push(AddressKey(address(rewardComponent), 'reward(address,address)'));
+    joinKeys.push(
+      AddressKey('reward(address,address)', address(rewardComponent))
+    );
 
-    liveGame.createGameFunction('playRPS', joinKeys);
+    liveGame.createFlow('playRPS', joinKeys);
 
     // ----------------
-    
 
     vm.stopBroadcast();
   }

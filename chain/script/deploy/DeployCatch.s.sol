@@ -53,15 +53,15 @@ contract DeployCatch is Script {
     liveGame.addComponent(address(mmoSession));
     liveGame.addComponent(address(neighborInteraction));
 
-    joinKeys.push(AddressKey(address(mmoSession), 'joinGame'));
-    joinKeys.push(AddressKey(address(neighborInteraction), 'joinSession'));
-    liveGame.createGameFunction('joinCatch', joinKeys);
+    joinKeys.push(AddressKey('joinGame', address(mmoSession)));
+    joinKeys.push(AddressKey('joinSession', address(neighborInteraction)));
+    liveGame.createFlow('joinCatch', joinKeys);
 
-    throwKeys.push(AddressKey(address(neighborInteraction), 'throwBall'));
-    liveGame.createGameFunction('throwBall', throwKeys);
+    throwKeys.push(AddressKey('throwBall', address(neighborInteraction)));
+    liveGame.createFlow('throwBall', throwKeys);
 
-    catchKeys.push(AddressKey(address(neighborInteraction), 'catchBall'));
-    liveGame.createGameFunction('catchBall', catchKeys);
+    catchKeys.push(AddressKey('catchBall', address(neighborInteraction)));
+    liveGame.createFlow('catchBall', catchKeys);
 
     // neighborInteraction.joinSession(liveGame, address(1));
     // neighborInteraction.joinSession(liveGame, address(2));

@@ -34,7 +34,8 @@
     "react-tabs": "^6.0.2",
     "sharp": "^0.33.3",
     "viem": "^2.9.9",
-    "wagmi": "^2.5.18"
+    "wagmi": "^2.5.18",
+    
   },
   "devDependencies": {
     "@types/node": "^20",

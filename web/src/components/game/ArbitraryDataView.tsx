@@ -26,12 +26,12 @@ export default function ArbitraryDataView(props: ActionProps) {
 
 
   //todo don't hardcode token id here
-  const { data, isDataError } = useArbitraryData({ contractAddress: props.addresskey.Address, tokenid: 0, key: props.addresskey.Key })
+  const { data, isDataError } = useArbitraryData({ contractAddress: props.addresskey.value, tokenid: 0, key: props.addresskey.name })
 
   return (
 
-    <div className="pt-4 flex">
-      <div className="mx-auto">{props.addresskey.Key}</div>
+    <div className="flex pt-4">
+      <div className="mx-auto">{props.addresskey.name}</div>
       <div className="mx-auto">{data ? data.toString() : "loading..."}</div>
 
 

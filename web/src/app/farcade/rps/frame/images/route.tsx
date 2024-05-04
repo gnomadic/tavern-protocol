@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { ImageResponse } from 'next/og';
-import LandingImage from '../LandingImage';
+import WelcomeRPS from '../WelcomeRPS';
 import ModulesImage from '../ModulesImage';
 import StepsImage from '../StepsImage';
 import CTAImage from '../CTAImage';
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
   if (currentPage === "one") {
     return new ImageResponse((
-      <LandingImage />), { width: 1200, height: 630 });
+      <WelcomeRPS />), { width: 1200, height: 630 });
   } else if (currentPage === "two") {
     return new ImageResponse((
       <ModulesImage />), { width: 1200, height: 630 });

@@ -569,6 +569,343 @@ export const erc20Abi = [
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FarcadeTicket
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const farcadeTicketAbi = [
+  { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'DOMAIN_SEPARATOR',
+    outputs: [{ name: 'result', internalType: 'bytes32', type: 'bytes32' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'admin',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'minter',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'pure',
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'nonces',
+    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
+      { name: 'v', internalType: 'uint8', type: 'uint8' },
+      { name: 'r', internalType: 'bytes32', type: 'bytes32' },
+      { name: 's', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'permit',
+    outputs: [],
+  },
+  {
+    stateMutability: 'pure',
+    type: 'function',
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'newMinter', internalType: 'address', type: 'address' }],
+    name: 'updateMinter',
+    outputs: [],
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  { type: 'error', inputs: [], name: 'AllowanceOverflow' },
+  { type: 'error', inputs: [], name: 'AllowanceUnderflow' },
+  { type: 'error', inputs: [], name: 'InsufficientAllowance' },
+  { type: 'error', inputs: [], name: 'InsufficientBalance' },
+  { type: 'error', inputs: [], name: 'InvalidPermit' },
+  { type: 'error', inputs: [], name: 'NoPermission' },
+  { type: 'error', inputs: [], name: 'PermitExpired' },
+  { type: 'error', inputs: [], name: 'TotalSupplyOverflow' },
+] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FlowEntity
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const flowEntityAbi = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'key', internalType: 'string', type: 'string' },
+      { name: 'value', internalType: 'address', type: 'address' },
+    ],
+    name: 'addPlayerAddress',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'key', internalType: 'string', type: 'string' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addPlayerUint',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'game',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getAvailableKeys',
+    outputs: [{ name: '', internalType: 'string[]', type: 'string[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'key', internalType: 'string', type: 'string' },
+    ],
+    name: 'getPlayerAddress',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'key', internalType: 'string', type: 'string' },
+    ],
+    name: 'getPlayerString',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'key', internalType: 'string', type: 'string' },
+    ],
+    name: 'getPlayerUint',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: '_game', internalType: 'address', type: 'address' }],
+    name: 'initialize',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'keys',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      {
+        name: 'params',
+        internalType: 'struct FlowParams',
+        type: 'tuple',
+        components: [
+          {
+            name: 'addresses',
+            internalType: 'struct AddressKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
+            ],
+          },
+          {
+            name: 'uints',
+            internalType: 'struct UintKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'strings',
+            internalType: 'struct StringKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'string', type: 'string' },
+            ],
+          },
+        ],
+      },
+    ],
+    name: 'setPlayerParams',
+    outputs: [],
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'version',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+    ],
+    name: 'Initialized',
+  },
+  { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  { type: 'error', inputs: [], name: 'NotInitializing' },
+] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Game
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -613,12 +950,12 @@ export const gameAbi = [
         internalType: 'struct AddressKey[]',
         type: 'tuple[]',
         components: [
-          { name: 'Address', internalType: 'address', type: 'address' },
-          { name: 'Key', internalType: 'string', type: 'string' },
+          { name: 'name', internalType: 'string', type: 'string' },
+          { name: 'value', internalType: 'address', type: 'address' },
         ],
       },
     ],
-    name: 'createGameFunction',
+    name: 'createFlow',
     outputs: [],
   },
   {
@@ -651,12 +988,12 @@ export const gameAbi = [
       { name: 'name', internalType: 'string', type: 'string' },
       {
         name: 'params',
-        internalType: 'struct GameFuncParams',
+        internalType: 'struct FlowParams',
         type: 'tuple',
         components: [
           {
             name: 'addresses',
-            internalType: 'struct GameFuncAddress[]',
+            internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -665,7 +1002,7 @@ export const gameAbi = [
           },
           {
             name: 'uints',
-            internalType: 'struct GameFuncUint[]',
+            internalType: 'struct UintKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -674,7 +1011,7 @@ export const gameAbi = [
           },
           {
             name: 'strings',
-            internalType: 'struct GameFuncString[]',
+            internalType: 'struct StringKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -684,21 +1021,14 @@ export const gameAbi = [
         ],
       },
     ],
-    name: 'executeGameFunction',
+    name: 'executeFlow',
     outputs: [],
   },
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: '', internalType: 'string', type: 'string' }],
-    name: 'functionLookup',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'gameFunctionNames',
+    name: 'flowNames',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
   {
@@ -708,11 +1038,18 @@ export const gameAbi = [
       { name: '', internalType: 'string', type: 'string' },
       { name: '', internalType: 'uint256', type: 'uint256' },
     ],
-    name: 'gameFunctions',
+    name: 'flows',
     outputs: [
-      { name: 'Address', internalType: 'address', type: 'address' },
-      { name: 'Key', internalType: 'string', type: 'string' },
+      { name: 'name', internalType: 'string', type: 'string' },
+      { name: 'value', internalType: 'address', type: 'address' },
     ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'string', type: 'string' }],
+    name: 'functionLookup',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
     stateMutability: 'view',
@@ -725,7 +1062,7 @@ export const gameAbi = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'getGameFunctions',
+    name: 'getFlows',
     outputs: [{ name: '', internalType: 'string[]', type: 'string[]' }],
   },
   {
@@ -747,8 +1084,8 @@ export const gameAbi = [
             internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
-              { name: 'Address', internalType: 'address', type: 'address' },
-              { name: 'Key', internalType: 'string', type: 'string' },
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
             ],
           },
           {
@@ -756,8 +1093,8 @@ export const gameAbi = [
             internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
-              { name: 'Address', internalType: 'address', type: 'address' },
-              { name: 'Key', internalType: 'string', type: 'string' },
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
             ],
           },
         ],
@@ -819,15 +1156,15 @@ export const gameAbi = [
     ],
     name: 'Initialized',
   },
-  { type: 'error', inputs: [], name: 'GameFunctionAlreadyExists' },
-  { type: 'error', inputs: [], name: 'GameFunctionDoesNotExist' },
+  { type: 'error', inputs: [], name: 'FlowAlreadyExists' },
+  { type: 'error', inputs: [], name: 'FlowDoesNotExist' },
   {
     type: 'error',
     inputs: [
       { name: 'component', internalType: 'address', type: 'address' },
       { name: 'functionKey', internalType: 'string', type: 'string' },
     ],
-    name: 'GameFunctionExecutionFailure',
+    name: 'FlowExecutionError',
   },
   { type: 'error', inputs: [], name: 'InvalidInitialization' },
   { type: 'error', inputs: [], name: 'NotInitializing' },
@@ -1040,8 +1377,8 @@ export const gameFactoryAbi = [
             internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
-              { name: 'Address', internalType: 'address', type: 'address' },
-              { name: 'Key', internalType: 'string', type: 'string' },
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
             ],
           },
           {
@@ -1049,8 +1386,8 @@ export const gameFactoryAbi = [
             internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
-              { name: 'Address', internalType: 'address', type: 'address' },
-              { name: 'Key', internalType: 'string', type: 'string' },
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
             ],
           },
         ],
@@ -1105,7 +1442,10 @@ export const iNumberEntityAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'key', internalType: 'string', type: 'string' }],
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'key', internalType: 'string', type: 'string' },
+    ],
     name: 'getNumber',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
@@ -1702,12 +2042,12 @@ export const queueSessionTestAbi = [
     inputs: [
       {
         name: 'toClear',
-        internalType: 'struct GameFuncParams',
+        internalType: 'struct FlowParams',
         type: 'tuple',
         components: [
           {
             name: 'addresses',
-            internalType: 'struct GameFuncAddress[]',
+            internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -1716,7 +2056,7 @@ export const queueSessionTestAbi = [
           },
           {
             name: 'uints',
-            internalType: 'struct GameFuncUint[]',
+            internalType: 'struct UintKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -1725,7 +2065,7 @@ export const queueSessionTestAbi = [
           },
           {
             name: 'strings',
-            internalType: 'struct GameFuncString[]',
+            internalType: 'struct StringKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -2641,12 +2981,12 @@ export const rockPaperScissorsGameAbi = [
     inputs: [
       {
         name: 'toClear',
-        internalType: 'struct GameFuncParams',
+        internalType: 'struct FlowParams',
         type: 'tuple',
         components: [
           {
             name: 'addresses',
-            internalType: 'struct GameFuncAddress[]',
+            internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -2655,7 +2995,7 @@ export const rockPaperScissorsGameAbi = [
           },
           {
             name: 'uints',
-            internalType: 'struct GameFuncUint[]',
+            internalType: 'struct UintKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -2664,7 +3004,7 @@ export const rockPaperScissorsGameAbi = [
           },
           {
             name: 'strings',
-            internalType: 'struct GameFuncString[]',
+            internalType: 'struct StringKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -3194,12 +3534,12 @@ export const tavernTestAbi = [
     inputs: [
       {
         name: 'toClear',
-        internalType: 'struct GameFuncParams',
+        internalType: 'struct FlowParams',
         type: 'tuple',
         components: [
           {
             name: 'addresses',
-            internalType: 'struct GameFuncAddress[]',
+            internalType: 'struct AddressKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -3208,7 +3548,7 @@ export const tavernTestAbi = [
           },
           {
             name: 'uints',
-            internalType: 'struct GameFuncUint[]',
+            internalType: 'struct UintKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -3217,7 +3557,7 @@ export const tavernTestAbi = [
           },
           {
             name: 'strings',
-            internalType: 'struct GameFuncString[]',
+            internalType: 'struct StringKey[]',
             type: 'tuple[]',
             components: [
               { name: 'name', internalType: 'string', type: 'string' },
@@ -4293,6 +4633,399 @@ export const useWatchErc20TransferEvent =
   });
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__
+ */
+export const useReadFarcadeTicket = /*#__PURE__*/ createUseReadContract({
+  abi: farcadeTicketAbi,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"DOMAIN_SEPARATOR"`
+ */
+export const useReadFarcadeTicketDomainSeparator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: farcadeTicketAbi,
+    functionName: 'DOMAIN_SEPARATOR',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"admin"`
+ */
+export const useReadFarcadeTicketAdmin = /*#__PURE__*/ createUseReadContract({
+  abi: farcadeTicketAbi,
+  functionName: 'admin',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadFarcadeTicketAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: farcadeTicketAbi,
+    functionName: 'allowance',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadFarcadeTicketBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: farcadeTicketAbi,
+    functionName: 'balanceOf',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadFarcadeTicketDecimals = /*#__PURE__*/ createUseReadContract(
+  { abi: farcadeTicketAbi, functionName: 'decimals' }
+);
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"minter"`
+ */
+export const useReadFarcadeTicketMinter = /*#__PURE__*/ createUseReadContract({
+  abi: farcadeTicketAbi,
+  functionName: 'minter',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadFarcadeTicketName = /*#__PURE__*/ createUseReadContract({
+  abi: farcadeTicketAbi,
+  functionName: 'name',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"nonces"`
+ */
+export const useReadFarcadeTicketNonces = /*#__PURE__*/ createUseReadContract({
+  abi: farcadeTicketAbi,
+  functionName: 'nonces',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadFarcadeTicketSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: farcadeTicketAbi,
+  functionName: 'symbol',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadFarcadeTicketTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: farcadeTicketAbi,
+    functionName: 'totalSupply',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__
+ */
+export const useWriteFarcadeTicket = /*#__PURE__*/ createUseWriteContract({
+  abi: farcadeTicketAbi,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteFarcadeTicketApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: farcadeTicketAbi,
+    functionName: 'approve',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteFarcadeTicketMint = /*#__PURE__*/ createUseWriteContract({
+  abi: farcadeTicketAbi,
+  functionName: 'mint',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"permit"`
+ */
+export const useWriteFarcadeTicketPermit = /*#__PURE__*/ createUseWriteContract(
+  { abi: farcadeTicketAbi, functionName: 'permit' }
+);
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteFarcadeTicketTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: farcadeTicketAbi,
+    functionName: 'transfer',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteFarcadeTicketTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: farcadeTicketAbi,
+    functionName: 'transferFrom',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"updateMinter"`
+ */
+export const useWriteFarcadeTicketUpdateMinter =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: farcadeTicketAbi,
+    functionName: 'updateMinter',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__
+ */
+export const useSimulateFarcadeTicket = /*#__PURE__*/ createUseSimulateContract(
+  { abi: farcadeTicketAbi }
+);
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateFarcadeTicketApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: farcadeTicketAbi,
+    functionName: 'approve',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateFarcadeTicketMint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: farcadeTicketAbi,
+    functionName: 'mint',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"permit"`
+ */
+export const useSimulateFarcadeTicketPermit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: farcadeTicketAbi,
+    functionName: 'permit',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateFarcadeTicketTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: farcadeTicketAbi,
+    functionName: 'transfer',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateFarcadeTicketTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: farcadeTicketAbi,
+    functionName: 'transferFrom',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link farcadeTicketAbi}__ and `functionName` set to `"updateMinter"`
+ */
+export const useSimulateFarcadeTicketUpdateMinter =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: farcadeTicketAbi,
+    functionName: 'updateMinter',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link farcadeTicketAbi}__
+ */
+export const useWatchFarcadeTicketEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: farcadeTicketAbi });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link farcadeTicketAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchFarcadeTicketApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: farcadeTicketAbi,
+    eventName: 'Approval',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link farcadeTicketAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchFarcadeTicketTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: farcadeTicketAbi,
+    eventName: 'Transfer',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__
+ */
+export const useReadFlowEntity = /*#__PURE__*/ createUseReadContract({
+  abi: flowEntityAbi,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"game"`
+ */
+export const useReadFlowEntityGame = /*#__PURE__*/ createUseReadContract({
+  abi: flowEntityAbi,
+  functionName: 'game',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"getAvailableKeys"`
+ */
+export const useReadFlowEntityGetAvailableKeys =
+  /*#__PURE__*/ createUseReadContract({
+    abi: flowEntityAbi,
+    functionName: 'getAvailableKeys',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"getPlayerAddress"`
+ */
+export const useReadFlowEntityGetPlayerAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: flowEntityAbi,
+    functionName: 'getPlayerAddress',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"getPlayerString"`
+ */
+export const useReadFlowEntityGetPlayerString =
+  /*#__PURE__*/ createUseReadContract({
+    abi: flowEntityAbi,
+    functionName: 'getPlayerString',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"getPlayerUint"`
+ */
+export const useReadFlowEntityGetPlayerUint =
+  /*#__PURE__*/ createUseReadContract({
+    abi: flowEntityAbi,
+    functionName: 'getPlayerUint',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"keys"`
+ */
+export const useReadFlowEntityKeys = /*#__PURE__*/ createUseReadContract({
+  abi: flowEntityAbi,
+  functionName: 'keys',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link flowEntityAbi}__
+ */
+export const useWriteFlowEntity = /*#__PURE__*/ createUseWriteContract({
+  abi: flowEntityAbi,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"addPlayerAddress"`
+ */
+export const useWriteFlowEntityAddPlayerAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: flowEntityAbi,
+    functionName: 'addPlayerAddress',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"addPlayerUint"`
+ */
+export const useWriteFlowEntityAddPlayerUint =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: flowEntityAbi,
+    functionName: 'addPlayerUint',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteFlowEntityInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: flowEntityAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"setPlayerParams"`
+ */
+export const useWriteFlowEntitySetPlayerParams =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: flowEntityAbi,
+    functionName: 'setPlayerParams',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link flowEntityAbi}__
+ */
+export const useSimulateFlowEntity = /*#__PURE__*/ createUseSimulateContract({
+  abi: flowEntityAbi,
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"addPlayerAddress"`
+ */
+export const useSimulateFlowEntityAddPlayerAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: flowEntityAbi,
+    functionName: 'addPlayerAddress',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"addPlayerUint"`
+ */
+export const useSimulateFlowEntityAddPlayerUint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: flowEntityAbi,
+    functionName: 'addPlayerUint',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateFlowEntityInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: flowEntityAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link flowEntityAbi}__ and `functionName` set to `"setPlayerParams"`
+ */
+export const useSimulateFlowEntitySetPlayerParams =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: flowEntityAbi,
+    functionName: 'setPlayerParams',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link flowEntityAbi}__
+ */
+export const useWatchFlowEntityEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: flowEntityAbi });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link flowEntityAbi}__ and `eventName` set to `"Initialized"`
+ */
+export const useWatchFlowEntityInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: flowEntityAbi,
+    eventName: 'Initialized',
+  });
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__
  */
 export const useReadGame = /*#__PURE__*/ createUseReadContract({
@@ -4341,26 +5074,27 @@ export const useReadGameEntityFactory = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"flowNames"`
+ */
+export const useReadGameFlowNames = /*#__PURE__*/ createUseReadContract({
+  abi: gameAbi,
+  functionName: 'flowNames',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"flows"`
+ */
+export const useReadGameFlows = /*#__PURE__*/ createUseReadContract({
+  abi: gameAbi,
+  functionName: 'flows',
+});
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"functionLookup"`
  */
 export const useReadGameFunctionLookup = /*#__PURE__*/ createUseReadContract({
   abi: gameAbi,
   functionName: 'functionLookup',
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameFunctionNames"`
- */
-export const useReadGameGameFunctionNames = /*#__PURE__*/ createUseReadContract(
-  { abi: gameAbi, functionName: 'gameFunctionNames' }
-);
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameFunctions"`
- */
-export const useReadGameGameFunctions = /*#__PURE__*/ createUseReadContract({
-  abi: gameAbi,
-  functionName: 'gameFunctions',
 });
 
 /**
@@ -4372,11 +5106,11 @@ export const useReadGameGetEntity = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getGameFunctions"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getFlows"`
  */
-export const useReadGameGetGameFunctions = /*#__PURE__*/ createUseReadContract({
+export const useReadGameGetFlows = /*#__PURE__*/ createUseReadContract({
   abi: gameAbi,
-  functionName: 'getGameFunctions',
+  functionName: 'getFlows',
 });
 
 /**
@@ -4445,22 +5179,20 @@ export const useWriteGameCreateEntity = /*#__PURE__*/ createUseWriteContract({
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createGameFunction"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createFlow"`
  */
-export const useWriteGameCreateGameFunction =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: gameAbi,
-    functionName: 'createGameFunction',
-  });
+export const useWriteGameCreateFlow = /*#__PURE__*/ createUseWriteContract({
+  abi: gameAbi,
+  functionName: 'createFlow',
+});
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeGameFunction"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
-export const useWriteGameExecuteGameFunction =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: gameAbi,
-    functionName: 'executeGameFunction',
-  });
+export const useWriteGameExecuteFlow = /*#__PURE__*/ createUseWriteContract({
+  abi: gameAbi,
+  functionName: 'executeFlow',
+});
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"initialize"`
@@ -4496,21 +5228,21 @@ export const useSimulateGameCreateEntity =
   });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createGameFunction"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createFlow"`
  */
-export const useSimulateGameCreateGameFunction =
+export const useSimulateGameCreateFlow =
   /*#__PURE__*/ createUseSimulateContract({
     abi: gameAbi,
-    functionName: 'createGameFunction',
+    functionName: 'createFlow',
   });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeGameFunction"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
-export const useSimulateGameExecuteGameFunction =
+export const useSimulateGameExecuteFlow =
   /*#__PURE__*/ createUseSimulateContract({
     abi: gameAbi,
-    functionName: 'executeGameFunction',
+    functionName: 'executeFlow',
   });
 
 /**

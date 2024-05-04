@@ -25,6 +25,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 
   const postURL = `${process.env.NEXT_PUBLIC_URL}/farcade/rps/frame?action=`;
+  const imageURL = `${process.env.NEXT_PUBLIC_URL}/farcade/rps/frame/images?page=one`;
 
 
   let rockButton: FrameButtonMetadata =
@@ -52,7 +53,7 @@ export async function generateMetadata({
     {
         action: "link",
         label: "TAVERN",
-        target: `https://www.playtavern.com`,
+        target: `https://docs.playtavern.com`,
     }
 //   const gameSummary = await getGameSummary(params.chainid, params.address as Address)
   // console.log(gameSummary)
@@ -65,12 +66,12 @@ const buttonLabels = "ROCK";
     openGraph: {
       title: 'playtavern.com',
       description: 'nocode onchain game creation',
-      images: ['https://ipfs.io/ipfs/QmZqAwvDS9doyECcS5QdMvdStknd9vhmFGAttGkemjc7rr'],
+      images: [`${imageURL}`],
     },
     other: {
       ...getFrameMetadata({
         buttons: [rockButton, paperButton, scissorsButton, tavernButton],
-        image: 'https://ipfs.io/ipfs/QmZqAwvDS9doyECcS5QdMvdStknd9vhmFGAttGkemjc7rr',
+        image: `${imageURL}`,
       }),
     },
   };

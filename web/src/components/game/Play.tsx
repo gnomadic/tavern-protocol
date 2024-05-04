@@ -18,8 +18,8 @@ export default function Play(props: PlayProps) {
   const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
 
   return (
-    <section id='connect' className='relative pt-8 items-center'>
-      <div className='text-xl pb-8'>
+    <section id='connect' className='relative items-center pt-8'>
+      <div className='pb-8 text-xl'>
 
         <ul>
           {Array.from({ length: gameSummary?.availableData.length as number }).map((object, i) => {
@@ -57,10 +57,10 @@ export default function Play(props: PlayProps) {
 
                 <ArbitraryActionButton
 
-                  abi={findABI(gameSummary!.availableFunctions[i].Key)!}
-                  functionName={gameSummary!.availableFunctions[i].Key}
+                  abi={findABI(gameSummary!.availableFunctions[i].name)!}
+                  functionName={gameSummary!.availableFunctions[i].name}
                   args={[gameSummary!.game, 0]}
-                  contractAddress={gameSummary!.availableFunctions[i].Address}
+                  contractAddress={gameSummary!.availableFunctions[i].value}
 
                 />
               </div>

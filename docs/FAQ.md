@@ -18,4 +18,4 @@ We're still figuring this out! Of course your NFT projects are yours to monetize
 
 ## Where can I learn more about building games with Tavern?
 
-We're just getting started! [Reach out on warpcast](https://warpcast.com/gn0madic)!
+We're just getting started! [Reach out on warpcast](https://warpcast.com/~/channel/playtavern)!

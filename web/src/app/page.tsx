@@ -1,4 +1,5 @@
 import Divider from '@/components/Divider';
+import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 
 export default function Home() {
   const verbs = ['play', 'create', 'grow', 'build'];
@@ -10,7 +11,7 @@ export default function Home() {
         <p className=''>Play together.</p>
         <p className='pt-8'>Bring Games to your web3 Communities.</p>
         <p className='pt-8'>
-          Launch codeless games onchain for your favorite NFT communities with
+          Launch codeless games onchain for your communities with
           Tavern.
         </p>
         <p className='pt-8'></p>
@@ -19,15 +20,26 @@ export default function Home() {
 
         <br />
         <p>
-        We believe in the power of play to foster stronger connections and shared experiences.
-           Everything we do, we try
+          We believe in the power of play to foster stronger connections and shared experiences.
+          Everything we do, we try
           to enable and empower existing communities and their members. We also
           believe in the power of play.
           <br />
           <br />
-          Tavern is an on-chain game engine made for existing NFTs and their
-          communities. Plug in your favorite NFT and launch your own game for your own community
-          today.
+          Tavern is an on-chain game engine made for existing web3
+          communities. Launch your own game for your own community
+          today.  Join us on {' '}
+          <a target="_blank"
+            rel="noopener noreferrer"
+            href="https://warpcast.com/~/channel/playtavern">
+            Farcaster
+            <span>
+              <ArrowUpRightIcon
+                className="w-4 h-4 mb-1 -ml-1"
+                style={{ display: "inline" }} />
+            </span>
+          </a>
+           {' '}to learn more
         </p>
       </section>
       <section>

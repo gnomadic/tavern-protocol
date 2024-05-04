@@ -9,7 +9,8 @@ export type Deployment = {
   currency: string;
   chain: string;
   chainId: string;
-};
+  scan: string;
+}
 
 export type GameSummary = {
   game: Address;
@@ -20,8 +21,18 @@ export type GameSummary = {
 }
 
 export type AddressKey = {
-  Address: Address;
-  Key: string;
+  name: string;
+  value: Address;
+}
+
+export type UintKey = {
+  name: string;
+  value: bigint;
+}
+
+export type StringKey = {
+  name: string;
+  value: string;
 }
 
 export type Position = {
@@ -48,23 +59,8 @@ export type FrameGameData = {
 
 }
 
-export type GameFuncAddress = {
-  name: string;
-  value: Address;
-}
-
-export type GameFuncUint = {
-  name: string;
-  value: bigint;
-}
-
-export type GameFuncString = {
-  name: string;
-  value: string;
-}
-
 export type GameFuncParams = {
-  addresses: readonly GameFuncAddress[];
-  uints: readonly GameFuncUint[];
-  strings: readonly GameFuncString[];
+  addresses: readonly AddressKey[];
+  uints: readonly UintKey[];
+  strings: readonly StringKey[];
 }

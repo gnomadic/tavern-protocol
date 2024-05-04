@@ -28,6 +28,7 @@ export const Deployments: { [key: string]: Deployment } = {
     currency: 'eth',
     chain: 'sepolia',
     chainId: "11155111",
+    scan:"https://sepolia.etherscan.io/address/"
   },
 
   localhost: {
@@ -39,6 +40,7 @@ export const Deployments: { [key: string]: Deployment } = {
     currency: 'eth',
     chain: 'local',
     chainId: "1337",
+    scan:""
   },
   tavern: {
     gameFactory: '0x0',
@@ -49,6 +51,7 @@ export const Deployments: { [key: string]: Deployment } = {
     currency: 'eth',
     chain: '( -disconnected-  Connect your wallet! )',
     chainId: "1",
+    scan:""
   },
 };
 

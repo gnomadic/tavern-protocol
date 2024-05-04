@@ -28,8 +28,8 @@ export default function StepThree(props: StepThreeProps) {
       <ul>
         {Array.from({ length: gameSummary?.availableFunctions.length ?? 0}).map((object: any, i) => {
           return <li className='pt-2' key={i}>
-            <p>address:  {gameSummary!.availableFunctions[i].Address}</p>
-            <p>function Name:  {gameSummary!.availableFunctions[i].Key}</p>
+            <p>address:  {gameSummary!.availableFunctions[i].value}</p>
+            <p>function Name:  {gameSummary!.availableFunctions[i].name}</p>
           </li>
 
         })}
@@ -39,8 +39,8 @@ export default function StepThree(props: StepThreeProps) {
       <ul>
         {Array.from({ length: gameSummary?.availableData.length ?? 0 }).map((object: any, i) => {
           return <li className='pt-2' key={i}>
-            <p>address:  {gameSummary!.availableData[i].Address}</p>
-            <p>function Name:  {gameSummary!.availableData[i].Key}</p>
+            <p>address:  {gameSummary!.availableData[i].value}</p>
+            <p>function Name:  {gameSummary!.availableData[i].name}</p>
           </li>
 
         })}

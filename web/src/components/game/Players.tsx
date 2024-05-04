@@ -9,12 +9,12 @@ import useThrowBall from '@/mutations/useThrowBall';
 import useCatchBall from '@/mutations/useCatchBall';
 
 import { Address } from 'viem';
-import { BaseError, useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi'
+import { BaseError, useWaitForTransactionReceipt, useAccount } from 'wagmi'
 import useBallCatcherIndexes from '@/hooks/useBallCatcherIndexes';
 import usePlayerIndex from '@/hooks/usePlayerIndex';
 import { useEffect } from 'react';
 import Divider from '../Divider';
-import { useReadMmoNeighborInteractionModuleGetBallHolderIndexes, useReadMmoNeighborInteractionModuleGetCatchableIndexes, useReadMmoNeighborInteractionModuleGetPlayerCount, useWriteGameExecuteGameFunction } from '@/generated';
+import { useReadMmoNeighborInteractionModuleGetBallHolderIndexes, useReadMmoNeighborInteractionModuleGetCatchableIndexes, useReadMmoNeighborInteractionModuleGetPlayerCount, useWriteGameExecuteFlow } from '@/generated';
 import { safeBigInt } from '@/domain/utils';
 import { GameFuncParams } from '@/domain/Domain';
 
@@ -33,20 +33,20 @@ export default function Players(props: PlayersProps) {
     const { address } = useAccount();
     const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
 
-    const { throwHash, throwError, throwPending, throwSuccess, writeThrow } = useThrowBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
-    const { catchHash, catchError, catchPending, catchSuccess, writeCatch } = useCatchBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, player: address! });
+    const { throwHash, throwError, throwPending, throwSuccess, writeThrow } = useThrowBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, player: address! });
+    const { catchHash, catchError, catchPending, catchSuccess, writeCatch } = useCatchBall({ game: props.gameAddress, moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, player: address! });
     // const { result: holders, error: holderError, refetch: holderRefresh } = useBallHolderIndexes({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
     // const { result: catchers, error: catcherError, refetch: catcherRefresh } = useBallCatcherIndexes({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, gameAddress: props.gameAddress });
-    const { player, playerIndexError } = usePlayerIndex({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerIndex") return element })?.Address as Address, gameAddress: props.gameAddress, playerAddress: address! });
+    const { player, playerIndexError } = usePlayerIndex({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerIndex") return element })?.value as Address, gameAddress: props.gameAddress, playerAddress: address! });
 
     // TODO this lookup is rough and hardcoded
-    const { data: players, refetch: playerCountRefetch } = useReadMmoNeighborInteractionModuleGetPlayerCount({ address: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, args: [props.gameAddress] })
-    const { data: holders, refetch: holderRefetch } = useReadMmoNeighborInteractionModuleGetBallHolderIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, args: [props.gameAddress] })
-    const { data: catchers, refetch: catcherRefetch } = useReadMmoNeighborInteractionModuleGetCatchableIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.Key == "getPlayerCount") return element })?.Address as Address, args: [props.gameAddress] })
+    const { data: players, refetch: playerCountRefetch } = useReadMmoNeighborInteractionModuleGetPlayerCount({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
+    const { data: holders, refetch: holderRefetch } = useReadMmoNeighborInteractionModuleGetBallHolderIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
+    const { data: catchers, refetch: catcherRefetch } = useReadMmoNeighborInteractionModuleGetCatchableIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
 
 
 
-    const { data: joinhash, writeContract: joinWrite, error: joinError } = useWriteGameExecuteGameFunction();
+    const { data: joinhash, writeContract: joinWrite, error: joinError } = useWriteGameExecuteFlow();
     const { isLoading: joinLoading, isSuccess: joinSuccess } = useWaitForTransactionReceipt({ hash: joinhash });
 
 
@@ -147,19 +147,19 @@ export default function Players(props: PlayersProps) {
 
             <div className='py-8'>
                 <div className='flex mx-auto'>
-                    <UserIconOutline className='mx-4 my-1 h-4 w-4' />
+                    <UserIconOutline className='w-4 h-4 mx-4 my-1' />
                     {Number(players) > 0 ? (<div>{safeBigInt(players)} Players</div>) : (<div>No Players</div>)}
                 </div>
                 <div className='flex mx-auto'>
-                    <UserCircleIcon className='mx-4 my-1 h-4 w-4' />
+                    <UserCircleIcon className='w-4 h-4 mx-4 my-1' />
                     {holders && holders.length > 0 ? (<div>{holders.length} holders</div>) : (<div>No holders</div>)}
                 </div>
                 <div className='flex mx-auto'>
-                    <UserPlusIconOutline className='mx-4 my-1 h-4 w-4' />
+                    <UserPlusIconOutline className='w-4 h-4 mx-4 my-1' />
                     {catchers && catchers.length > 0 ? (<div>{catchers.length} catchers</div>) : (<div>No balls in the air for people to catch</div>)}
                 </div>
                 <div className='flex mx-auto'>
-                    {(BigInt(player) == BigInt(0)) ? <UserIcon className='mx-4 my-1 h-4 w-4 fill-red-400' /> : getIcon(BigInt(player))}
+                    {(BigInt(player) == BigInt(0)) ? <UserIcon className='w-4 h-4 mx-4 my-1 fill-red-400' /> : getIcon(BigInt(player))}
                     <div>you</div>
                 </div>
 

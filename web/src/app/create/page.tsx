@@ -37,29 +37,42 @@ export default function Create() {
     });
 
   return (
-    <main className='font-anon flex min-h-screen flex-col items-center justify-between p-24'>
-     <section id='hero' className='relative min-h-screen items-center pt-48'>
-        <p className=''>Coming in Phase 2</p>
-        <p className='pt-8'>Launch your codeless games for your communities</p>
+    <main className='flex flex-col items-center justify-between min-h-screen p-24 font-anon'>
+      <section id='hero' className='relative items-center pt-48'>
+        <p className=''>Games can be created by submitting transactions.  You do not have to write any code.</p>
         <p className='pt-8'>
           Tavern provides a set of Components that can be combined and customized to fit your gameplay.
         </p>
         <p className='pt-8'>Permissionless, free, and on-chain.</p>
       </section>
-  
-      <section>
+
+      <section className='pt-12'>
         <Divider />
       </section>
 
-{/* 
-      <section id='hero' className='relative  items-center pt-8'>
+      <section id='hero' className='relative items-center pt-12'>
+        <p className=''>A Form to create your game is coming soon </p>
+        {/* <p className='pt-8'>
+          You can launch a game by executing the following functions on the following contracts
+        </p>
+        <p className='pt-8'>Launch a game on {deploy.chain}</p>
+        <ul className='pt-8'>
+          <li>1.  Use the Game Factory to Deploy your Game contract.</li>
+          <li>2.  Call the `addComponent` function on your Game contract to add the components you want.</li>
+          <li>3.  Create Flows by chaining together component functions and give them a name</li>
+          <li>4.  Execute Flows to play! </li>
+        </ul> */}
+      </section>
+
+      {/* 
+      <section id='hero' className='relative items-center pt-8'>
         <p className=''>Creating Games will be Phase 2 of this Prototype.</p>
         <p className=''>2.  Choose NFTs.</p>
         <p className=''>3.  Deploy.</p>
 
         <p className='pt-12'> someday lol.  Today, just enter a name, hit deploy, and find your game in discover to get the prototype running.</p>
         <form onSubmit={handleCreateGame} className='pt-8'>
-          <div className='text-3xl py-8'>create a Game</div>
+          <div className='py-8 text-3xl'>create a Game</div>
           <p>
             <input name="displayName" placeholder="My New Game" required className='text-slate-900' />
           </p>

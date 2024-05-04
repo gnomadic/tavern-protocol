@@ -23,6 +23,7 @@
     "encoding": "^0.1.13",
     "eslint-config-prettier": "^9.1.0",
     "framer-motion": "^11.0.24",
+    "frames.js": "^0.15.1",
     "jotai": "^2.7.2",
     "next": "14.1.4",
     "obscenity": "^0.2.1",
@@ -35,7 +36,6 @@
     "sharp": "^0.33.3",
     "viem": "^2.9.9",
     "wagmi": "^2.5.18"
-
   },
   "devDependencies": {
     "@types/node": "^20",

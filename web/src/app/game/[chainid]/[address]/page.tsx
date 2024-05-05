@@ -30,11 +30,11 @@ export async function generateMetadata({
   const { action } = searchParams;
 
   const postURL = `${process.env.NEXT_PUBLIC_URL}/game/${chainid}/${address}/frame?action=${action}`;
-  const gameSummary = await getGameSummary(params.chainid, params.address as Address)
+  // const gameSummary = await getGameSummary(params.chainid, params.address as Address)
   // console.log(gameSummary)
 
-  const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].name : "no modules!"
-
+  // const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].name : "no modules!"
+const buttonLabels = 'nope';
 
   return {
     title: 'Tavern Game',

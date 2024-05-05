@@ -4,7 +4,7 @@ import ModuleCard from '@/components/ModuleCard';
 import { useReadComponentRegistryGetModuleCount, useReadComponentRegistryGetModules, useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
 
-export default function DiscoverComponents() {
+export default function ExploreComponents() {
 
   const { deploy } = useDeployment();
   const { data: moduleCount } = useReadComponentRegistryGetModuleCount({ address: deploy.moduleRegistry })
@@ -25,7 +25,7 @@ export default function DiscoverComponents() {
                   displayName={currentModules![i].displayName}
                   address={currentModules![i].component}
                   functions={currentModules![i].functions}
-                  description='this is a test description'
+                  description={currentModules![i].description}
                 />
               </li>
             );

@@ -11,7 +11,7 @@ type HeaderProps = {
   moduleAddress: Address
 }
 
-export default function Header(props: HeaderProps) {
+export default function ComponentHeader(props: HeaderProps) {
 
   const { deploy } = useDeployment();
 

@@ -5,7 +5,6 @@ import StepThree from '@/components/game/StepThree';
 import { Address } from 'viem';
 import { Metadata, ResolvingMetadata } from 'next';
 import { FrameButtonMetadata, getFrameMetadata } from '@coinbase/onchainkit';
-import { getGameSummary } from '@/services/viemService';
 import Players from '@/components/game/Players';
 
 

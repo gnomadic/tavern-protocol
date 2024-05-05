@@ -2,7 +2,6 @@ import { ACTION_HELLO, GameSummary, QUERY_ACTION, QUERY_GAME } from "@/domain/Do
 import { FrameButtonMetadata, getFrameHtmlResponse, getFrameMessage, FrameInputMetadata, FrameRequest } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
-import { getBlockNumber, getGameSummary } from "@/services/viemService";
 import { Address } from "viem";
 
 const postURL = `${process.env.NEXT_PUBLIC_URL}/intro/frame?page=`;

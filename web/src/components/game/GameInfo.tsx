@@ -3,7 +3,7 @@ import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import { Address } from 'viem';
 import Divider from '../Divider';
 import useGameSummary from '@/hooks/useGameSummary';
-import {  useReadGameGetFlows } from '@/generated';
+import {  useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
 
 
 type StepThreeProps = {
@@ -11,7 +11,14 @@ type StepThreeProps = {
 }
 
 export default function GameInfo(props: StepThreeProps) {
-    const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
+
+    // const { data: gameSummary } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
+    const {data: gameSummary } = useReadGameGetSummary({address: props.gameAddress});
+
+
+
+
+    // const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
 
     const { data: allFlows } = useReadGameGetFlows();
 

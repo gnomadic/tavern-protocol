@@ -3,26 +3,17 @@
 import GameCard from '@/components/GameCard';
 import Header from '@/components/Header';
 import ModuleCard from '@/components/ModuleCard';
-import DiscoverModules from '@/components/discover/DiscoverComponents';
+import DiscoverModules from '@/components/explore/ExploreComponents';
 import { GameSummary, ComponentSummary } from '@/domain/Domain';
 import { useReadComponentRegistryGetModuleCount, useReadComponentRegistryGetModules, useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
 
-export default function DiscoverGames() {
+export default function ExploreGames() {
     const { deploy } = useDeployment();
-    const { data: currentGames, error } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
+    const { data: currentGames } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
     const { data: gameCount } = useReadGameFactoryGetGameCount({ address: deploy.gameFactory })
-
-
-    useEffect(() => {
-        console.log('currentGames', currentGames)
-        console.log('currentGames', error)
-    }
-        , [currentGames, error])
         
     return (
         <div className="pt-12">

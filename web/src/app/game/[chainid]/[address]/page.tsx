@@ -120,16 +120,16 @@ export default function Game({ params }: { params: { address: string, chainid: s
           <Divider />
         </section>
          */}
-        <Players 
+        {/* <Players 
         gameAddress={params.address as Address} 
-        refresh={true}/>
+        refresh={true}/> */}
 
 
       </section>
       {/* 
       <StepOne gameAddress={params.address as Address} />
       <StepTwo gameAddress={params.address as Address} /> */}
-      <StepThree gameAddress={params.address as Address} />
+      {/* <StepThree gameAddress={params.address as Address} /> */}
 
       <section className='py-20'>
         <Divider />

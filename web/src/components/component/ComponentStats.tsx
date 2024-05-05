@@ -1,7 +1,7 @@
 "use client"
 import { ComponentSummary } from "@/domain/Domain";
 import { pretty } from "@/domain/utils";
-import { useReadComponentRegistryGetModules } from "@/generated";
+import { useReadComponentRegistryGetModules, useReadIComponentGetSummary } from "@/generated";
 // import useCurrentModules from "@/hooks/useCurrentModules";
 import useDeployment from "@/hooks/useDeployment";
 import useGameSummary from "@/hooks/useGameSummary";
@@ -16,66 +16,49 @@ type StatsProps = {
 export default function ComponentStats(props: StatsProps) {
 
     const { deploy } = useDeployment();
-
-    // const { currentModules, currentModulesError } = useCurrentModules({ deploy: deploy, pageStart: 0 })
-    const [curMod, setCurMod] = useState<ComponentSummary>();
-    const { data: currentModules } = useReadComponentRegistryGetModules({ address: deploy.moduleRegistry, args: [0] })
-
-
-    useEffect(() => {
-        if (currentModules) {
-            setCurMod(currentModules.find((component) => component.component === props.moduleAddress)!);
-        }
-    }
-        , [currentModules, props.moduleAddress]);
-
-    // const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
-
+    const { data: summary } = useReadIComponentGetSummary({ address: props.moduleAddress })
 
     return (
         <section id='connect' className='relative items-center pt-36'>
-            <div className="pb-8 text-xl">Available Functions</div>
-            <ul>
-                {Array.from({ length: curMod?.functions.length as number }).map((object, i) => {
-                    // {Array.from({ length: currentGames?.length }).map((object, i) => {
-                    // if (currentGames[i].game !== '0x0000000000000000000000000000000000000000') {
-                    return (
-                        <div key={i}>
-                            {/* abi: {JSON.stringify(findABI(gameSummary!.availableFunctions[i].Key))} */}
-
-                            <div className="flex">
-                            <div className="mx-auto">{i + 1}. </div>
-                                <div className="mx-auto">{curMod!.functions[i]}</div>
-                                {/* <div className="mx-auto">hi</div> */}
-                            </div>
-                        </div>
-
-                    );
-
-                })}
-            </ul>
-            <div className="pt-16 pb-8 text-xl">Required Data</div>
-            <ul>
-                {Array.from({ length: curMod?.required.length as number }).map((object, i) => {
-                    // {Array.from({ length: currentGames?.length }).map((object, i) => {
-                    // if (currentGames[i].game !== '0x0000000000000000000000000000000000000000') {
-                    return (
-                        <div key={i}>
-                            {/* abi: {JSON.stringify(findABI(gameSummary!.availableFunctions[i].Key))} */}
-
-                            <div className="flex">
-                                {/* <div className="mx-auto">hi</div> */}
-                                <div className="mx-auto">{i + 1}. </div>
-
-                                <div className="mx-auto">{curMod!.required[i]}</div>
-                            </div>
-                        </div>
-
-                    );
-
-                })}
-            </ul>
-
+            {summary ?
+                <div>
+                    <div className="pb-8 text-xl">This Component provides {summary?.functions.length} Function{summary.functions.length > 1 ? "s" : ""}</div>
+                    <ul>
+                        {Array.from({ length: summary?.functions.length as number }).map((object, i) => {
+                            return (
+                                <div key={i} className='justify-center border-2 border-gray-300 rounded-md bg-slate-800'>
+                                    <div className='pt-5 pl-8 text-xl'>{summary!.functions[i]}</div>
+                                    <div className="flex">
+                                        <div className="mx-auto">
+                                            requires
+                                            {Array.from({ length: summary?.required.length as number }).map((object, i) => {
+                                                return (
+                                                    <div key={i}>
+                                                        <div >{summary!.required[i]}</div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        <div className="mx-auto">
+                                            creates
+                                            {Array.from({ length: summary?.required.length as number }).map((object, i) => {
+                                                return (
+                                                    <div key={i}>
+                                                        <div className="mx-auto">{summary!.required[i]}</div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </ul>
+                </div>
+                :
+                <></>}
         </section>
+
     );
+
 }

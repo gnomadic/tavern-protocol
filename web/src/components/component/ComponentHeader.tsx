@@ -4,7 +4,7 @@ import { pretty } from "@/domain/utils";
 import useDeployment from "@/hooks/useDeployment";
 import { useEffect, useState } from "react";
 import { Address } from "viem";
-import { useReadComponentRegistryGetModules } from '@/generated';
+import { useReadComponentRegistryGetModules, useReadIComponentGetSummary } from '@/generated';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 
 type HeaderProps = {
@@ -14,31 +14,18 @@ type HeaderProps = {
 export default function ComponentHeader(props: HeaderProps) {
 
   const { deploy } = useDeployment();
-
-  const [curMod, setCurMod] = useState<ComponentSummary>();
-  const { data: currentModules } = useReadComponentRegistryGetModules({ address: deploy.moduleRegistry, args: [0] })
-
-
-  useEffect(() => {
-    if (currentModules) {
-      setCurMod(currentModules.find((component) => component.component === props.moduleAddress)!);
-    }
-  }
-    , [currentModules, props.moduleAddress]);
-
-  // const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
-
+  const {data: summary} = useReadIComponentGetSummary({address: props.moduleAddress})
 
   return (
     <section id='connect' className='relative items-start pt-48 min-w-screen'>
       <div className='pb-2 text-4xl lg:text-8xl'>
-        {!curMod ? "loading" :
+        {!summary ? "loading" :
           <div>
             <div className="text-xl">
               the
             </div>
             <div>
-              {curMod.displayName}
+              {summary.displayName}
             </div>
             <div className="text-xl">
               component

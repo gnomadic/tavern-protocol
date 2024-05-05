@@ -5,7 +5,7 @@ import useDeployment from "@/hooks/useDeployment";
 import { useEffect, useState } from "react";
 import { Address } from "viem";
 import { useReadComponentRegistryGetModules } from '@/generated';
-
+import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 
 type HeaderProps = {
   moduleAddress: Address
@@ -30,9 +30,34 @@ export default function ComponentHeader(props: HeaderProps) {
 
 
   return (
-    <section id='connect' className='relative items-center pt-48'>
-      <div className='pb-2 text-8xl'>
-        {curMod ? curMod.displayName : "loading"}
+    <section id='connect' className='relative items-start pt-48 min-w-screen'>
+      <div className='pb-2 text-4xl lg:text-8xl'>
+        {!curMod ? "loading" :
+          <div>
+            <div className="text-xl">
+              the
+            </div>
+            <div>
+              {curMod.displayName}
+            </div>
+            <div className="text-xl">
+              component
+            </div>
+            <div className="pt-12 text-sm">
+              is deployed at: {' '}
+              <a target="_blank"
+                rel="noopener noreferrer"
+                href={deploy.scan + props.moduleAddress} >
+                {pretty(props.moduleAddress)}
+                <span>
+              <ArrowUpRightIcon
+                className="w-4 h-4 mb-1"
+                style={{ display: "inline" }} />
+            </span>
+              </a>
+            </div>
+          </div>
+        }
       </div>
 
       {/* <div className='pt-4'>

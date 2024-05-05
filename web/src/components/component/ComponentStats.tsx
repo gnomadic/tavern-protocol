@@ -13,7 +13,7 @@ type StatsProps = {
     moduleAddress: Address
 }
 
-export default function Stats(props: StatsProps) {
+export default function ComponentStats(props: StatsProps) {
 
     const { deploy } = useDeployment();
 
@@ -33,8 +33,8 @@ export default function Stats(props: StatsProps) {
 
 
     return (
-        <section id='connect' className='relative pt-36 items-center'>
-            <div className="text-xl pb-8">Available Functions</div>
+        <section id='connect' className='relative items-center pt-36'>
+            <div className="pb-8 text-xl">Available Functions</div>
             <ul>
                 {Array.from({ length: curMod?.functions.length as number }).map((object, i) => {
                     // {Array.from({ length: currentGames?.length }).map((object, i) => {
@@ -54,7 +54,7 @@ export default function Stats(props: StatsProps) {
 
                 })}
             </ul>
-            <div className="pt-16 text-xl pb-8">Required Data</div>
+            <div className="pt-16 pb-8 text-xl">Required Data</div>
             <ul>
                 {Array.from({ length: curMod?.required.length as number }).map((object, i) => {
                     // {Array.from({ length: currentGames?.length }).map((object, i) => {

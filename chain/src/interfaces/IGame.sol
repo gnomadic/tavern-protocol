@@ -2,25 +2,17 @@
 pragma solidity ^0.8.24;
 
 interface IGame {
-
   function initialize(
     address _gm,
     string calldata displayName,
     address entityFactory
   ) external;
 
-
   function createEntity(string memory name) external returns (address);
-  function createFlow(
-    string memory name,
-    AddressKey[] memory funcs
-  ) external;
+  function createFlow(string memory name, AddressKey[] memory funcs) external;
 
   function validateIsModule(address module) external view returns (bool);
-
-  
   function getEntity(string memory key) external view returns (address);
-  
 
 }
 
@@ -28,6 +20,8 @@ struct GameSummary {
   address game;
   address gm;
   string displayName;
+  string description;
+  string gameUrl;
   AddressKey[] availableFunctions;
   AddressKey[] availableData;
   string[] flows;
@@ -53,4 +47,3 @@ struct FlowParams {
   UintKey[] uints;
   StringKey[] strings;
 }
-

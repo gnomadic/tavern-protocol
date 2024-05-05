@@ -14,7 +14,7 @@ import useBallCatcherIndexes from '@/hooks/useBallCatcherIndexes';
 import usePlayerIndex from '@/hooks/usePlayerIndex';
 import { useEffect } from 'react';
 import Divider from '../Divider';
-import { useReadMmoNeighborInteractionModuleGetBallHolderIndexes, useReadMmoNeighborInteractionModuleGetCatchableIndexes, useReadMmoNeighborInteractionModuleGetPlayerCount, useWriteGameExecuteFlow } from '@/generated';
+// import { useReadMmoNeighborInteractionModuleGetBallHolderIndexes, useReadMmoNeighborInteractionModuleGetCatchableIndexes, useReadMmoNeighborInteractionModuleGetPlayerCount, useWriteGameExecuteFlow } from '@/generated';
 import { safeBigInt } from '@/domain/utils';
 import { GameFuncParams } from '@/domain/Domain';
 
@@ -40,36 +40,36 @@ export default function Players(props: PlayersProps) {
     const { player, playerIndexError } = usePlayerIndex({ moduleAddress: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerIndex") return element })?.value as Address, gameAddress: props.gameAddress, playerAddress: address! });
 
     // TODO this lookup is rough and hardcoded
-    const { data: players, refetch: playerCountRefetch } = useReadMmoNeighborInteractionModuleGetPlayerCount({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
-    const { data: holders, refetch: holderRefetch } = useReadMmoNeighborInteractionModuleGetBallHolderIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
-    const { data: catchers, refetch: catcherRefetch } = useReadMmoNeighborInteractionModuleGetCatchableIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
+    // const { data: players, refetch: playerCountRefetch } = useReadMmoNeighborInteractionModuleGetPlayerCount({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
+    // const { data: holders, refetch: holderRefetch } = useReadMmoNeighborInteractionModuleGetBallHolderIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
+    // const { data: catchers, refetch: catcherRefetch } = useReadMmoNeighborInteractionModuleGetCatchableIndexes({ address: gameSummary?.availableFunctions.find((element) => { if (element.name == "getPlayerCount") return element })?.value as Address, args: [props.gameAddress] })
 
 
 
-    const { data: joinhash, writeContract: joinWrite, error: joinError } = useWriteGameExecuteFlow();
-    const { isLoading: joinLoading, isSuccess: joinSuccess } = useWaitForTransactionReceipt({ hash: joinhash });
+    // // const { data: joinhash, writeContract: joinWrite, error: joinError } = useWriteGameExecuteFlow();
+    // const { isLoading: joinLoading, isSuccess: joinSuccess } = useWaitForTransactionReceipt({ hash: joinhash });
 
 
-    const getIcon = (index: BigInt) => {
-        const isCatcher = catchers!.findIndex((element) => { element.x === index }) >= 0
-        const isHolder = holders!.findIndex((element) => { element.x === index }) >= 0
-        const isPlayer = index === BigInt(player) && index !== BigInt(0);
-        const fill = isPlayer ? 'fill-blue-400' : '';
+    // const getIcon = (index: BigInt) => {
+    //     const isCatcher = catchers!.findIndex((element) => { element.x === index }) >= 0
+    //     const isHolder = holders!.findIndex((element) => { element.x === index }) >= 0
+    //     const isPlayer = index === BigInt(player) && index !== BigInt(0);
+    //     const fill = isPlayer ? 'fill-blue-400' : '';
 
-        if (isCatcher && isHolder) return <UserPlusIcon className={'mx-4 my-1 h-4 w-4 ' + fill} />
-        if (isCatcher) return <UserPlusIconOutline className={'mx-4 my-1 h-4 w-4 ' + fill} />
-        if (isHolder) return <UserCircleIcon className={'mx-4 my-1 h-4 w-4 ' + fill} />
-        return <UserIconOutline className={'mx-4 my-1 h-4 w-4 ' + fill} />
-    }
+    //     if (isCatcher && isHolder) return <UserPlusIcon className={'mx-4 my-1 h-4 w-4 ' + fill} />
+    //     if (isCatcher) return <UserPlusIconOutline className={'mx-4 my-1 h-4 w-4 ' + fill} />
+    //     if (isHolder) return <UserCircleIcon className={'mx-4 my-1 h-4 w-4 ' + fill} />
+    //     return <UserIconOutline className={'mx-4 my-1 h-4 w-4 ' + fill} />
+    // }
 
-    useEffect(() => {
-        if (catchSuccess || throwSuccess || joinSuccess) {
-            catcherRefetch()
-            holderRefetch()
-            playerCountRefetch()
-        }
+    // useEffect(() => {
+    //     if (catchSuccess || throwSuccess || joinSuccess) {
+    //         catcherRefetch()
+    //         holderRefetch()
+    //         playerCountRefetch()
+    //     }
 
-    }, [props.refresh, playerCountRefetch, holderRefetch, catcherRefetch, catchSuccess, throwSuccess, joinSuccess])
+    // }, [props.refresh, playerCountRefetch, holderRefetch, catcherRefetch, catchSuccess, throwSuccess, joinSuccess])
 
 
 
@@ -84,7 +84,7 @@ export default function Players(props: PlayersProps) {
                     <p>3.  Once the ball is thrown, switch wallets, and you can catch it</p>
                 </div>
                 <div className='flex flex-auto'>
-                    {BigInt(player) == BigInt(0) ?
+                    {/* {BigInt(player) == BigInt(0) ?
                         <div className='pt-4 mx-auto'>
                             <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
                                 disabled={joinLoading}
@@ -108,7 +108,7 @@ export default function Players(props: PlayersProps) {
                                 {joinSuccess ? `Joined` : joinLoading ? 'Confirming...' : joinError ? `Error!` : `Join`}
                             </button>
                         </div>
-                        : <></>}
+                        : <></>} */}
 
                     {BigInt(player) != BigInt(0) ?
 
@@ -145,7 +145,7 @@ export default function Players(props: PlayersProps) {
                 <Divider />
             </section>
 
-            <div className='py-8'>
+            {/* <div className='py-8'>
                 <div className='flex mx-auto'>
                     <UserIconOutline className='w-4 h-4 mx-4 my-1' />
                     {Number(players) > 0 ? (<div>{safeBigInt(players)} Players</div>) : (<div>No Players</div>)}
@@ -174,7 +174,7 @@ export default function Players(props: PlayersProps) {
                     })}
                 </div>
 
-            </div>
+            </div> */}
 
         </section>
     );

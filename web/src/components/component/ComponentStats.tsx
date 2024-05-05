@@ -19,7 +19,7 @@ export default function ComponentStats(props: StatsProps) {
     const { data: summary } = useReadIComponentGetSummary({ address: props.moduleAddress })
 
     return (
-        <section id='connect' className='relative items-center pt-36'>
+        <section id='connect' className='relative items-center pt-12'>
             {summary ?
                 <div>
                     <div className="pb-8 text-xl">This Component provides {summary?.functions.length} Function{summary.functions.length > 1 ? "s" : ""}</div>

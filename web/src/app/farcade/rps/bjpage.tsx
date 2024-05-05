@@ -1,5 +1,5 @@
 import Divider from '@/components/Divider';
-import Header from '@/components/game/Header';
+import GameHeader from '@/components/game/GameHeader';
 import StepThree from '@/components/game/StepThree';
 
 import { Address } from 'viem';
@@ -101,7 +101,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
       {/* <section className='pt-24'>
         <Divider />
       </section> */}
-      <Header gameAddress={params.address as Address} />
+      <GameHeader gameAddress={params.address as Address} />
       {/* <section id='connect' className='relative items-center pt-8'>
 
         <div className='pt-4'>

@@ -1,9 +1,7 @@
 "use client"
-import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import { Address } from 'viem';
 import Divider from '../Divider';
-import useGameSummary from '@/hooks/useGameSummary';
-import {  useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
+import { useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
 
 
 type StepThreeProps = {
@@ -12,23 +10,13 @@ type StepThreeProps = {
 
 export default function GameInfo(props: StepThreeProps) {
 
-    // const { data: gameSummary } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const {data: gameSummary } = useReadGameGetSummary({address: props.gameAddress});
-
-
-
-
-    // const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
-
+    const { data: gameSummary } = useReadGameGetSummary({ address: props.gameAddress });
     const { data: allFlows } = useReadGameGetFlows();
-
 
     return (
         <section>
 
-            <section className='py-18'>
-                <Divider />
-            </section>
+            
             {/* <div> Your Game is at: {gameSummary?.game} </div> */}
             <div className='pt-4'> This game offers the following Flows:</div>
             <ul>

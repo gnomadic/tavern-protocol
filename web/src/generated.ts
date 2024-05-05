@@ -792,6 +792,45 @@ export const iGameAbi = [
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSummary',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct GameSummary',
+        type: 'tuple',
+        components: [
+          { name: 'game', internalType: 'address', type: 'address' },
+          { name: 'gm', internalType: 'address', type: 'address' },
+          { name: 'displayName', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'gameUrl', internalType: 'string', type: 'string' },
+          {
+            name: 'availableFunctions',
+            internalType: 'struct AddressKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
+            ],
+          },
+          {
+            name: 'availableData',
+            internalType: 'struct AddressKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
+            ],
+          },
+          { name: 'flows', internalType: 'string[]', type: 'string[]' },
+        ],
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -1598,6 +1637,14 @@ export const useReadIGame = /*#__PURE__*/ createUseReadContract({
 export const useReadIGameGetEntity = /*#__PURE__*/ createUseReadContract({
   abi: iGameAbi,
   functionName: 'getEntity',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const useReadIGameGetSummary = /*#__PURE__*/ createUseReadContract({
+  abi: iGameAbi,
+  functionName: 'getSummary',
 });
 
 /**

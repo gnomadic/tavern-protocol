@@ -17,7 +17,7 @@ export default function ComponentHeader(props: HeaderProps) {
   const {data: summary} = useReadIComponentGetSummary({address: props.moduleAddress})
 
   return (
-    <section id='connect' className='relative items-start pt-48 min-w-screen'>
+    <section id='connect' className='relative items-start pt-48 pb-12 min-w-screen'>
       <div className='pb-2 text-4xl lg:text-8xl'>
         {!summary ? "loading" :
           <div>
@@ -43,13 +43,12 @@ export default function ComponentHeader(props: HeaderProps) {
             </span>
               </a>
             </div>
+            <div className="pt-12 text-sm">
+               {summary.description}
+            </div>
           </div>
         }
       </div>
-
-      {/* <div className='pt-4'>
-      Every Game is composed of Modules and Entities.  Modules contain gameplay, and Entities contain data.
-    </div> */}
     </section>
   );
 }

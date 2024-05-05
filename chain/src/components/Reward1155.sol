@@ -20,7 +20,8 @@ contract Reward1155 is IComponent {
 
   function getSummary() external view returns (ComponentSummary memory) {
     return
-      ComponentSummary(address(this), functions, abis, required, 'Reward 1155');
+      ComponentSummary(address(this), functions, abis, required, 'Reward 1155',
+      "Allow players to receive rewards in the form of ERC1155 tokens");
   }
 
   function setReward(IGame game, address _reward) external {

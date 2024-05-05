@@ -26,9 +26,9 @@ import {Reward20Entity} from '../../src/entities/Reward20Entity.sol';
 // # To deploy and verify Catch on the Tavern protocol run this command below
 // forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv
 contract DeployRPS is Script {
-  address GAME_FACTORY = 0x8c8A01c135004b392eF742cf40088355f5B74fb3;
-  address MODULE_REGISTRY = 0xfaA8c35840B62EEED38Dc625290352663D18f3A1;
-  address ENTITY_FACTORY = 0x5b74d2a71618efed7fC2519D554082008DCbe95A;
+  address GAME_FACTORY = 0xF1498bD8E4ce417863F554262e47e95FB10C36B5;
+  address MODULE_REGISTRY = 0x53F0c6e6dC4eaDb79436d66666B323a00a3c5D97;
+  address ENTITY_FACTORY = 0x14f3D011e4482db72547fb8EA2513Ae90052223c;
 
   function run() external {
     uint256 deployerPrivateKey = vm.envUint('MAINNET_PRIVATE_KEY');

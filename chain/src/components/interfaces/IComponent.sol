@@ -12,5 +12,6 @@ struct ComponentSummary {
     string[] abis;
     string[] required; // TODO might want to make a distinction between depedencies and used or something
     string displayName;
+    string description;
     
 }

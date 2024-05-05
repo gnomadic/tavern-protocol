@@ -21,7 +21,7 @@ contract MMOSessionModule is IComponent {
 
   function getSummary() external view returns (ComponentSummary memory) {
     return
-      ComponentSummary(address(this), functions, abis, required, 'MMO Session');
+      ComponentSummary(address(this), functions, abis, required, 'MMO Session', "Allow players to join an MMO game");
   }
 
   function joinGame(address executor, address gameAddress) public {

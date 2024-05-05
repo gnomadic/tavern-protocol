@@ -28,7 +28,8 @@ contract RockPaperScissors is IComponent {
         functions,
         abis,
         required,
-        'Rock Paper Scissors'
+        'Rock Paper Scissors',
+        'Allow players to submit a move out of three options, which will be compared to another player to determine the winner.  This follows the rules of rock paper scissors.'
       );
   }
 

@@ -30,6 +30,7 @@ struct GameSummary {
   string displayName;
   AddressKey[] availableFunctions;
   AddressKey[] availableData;
+  string[] flows;
 }
 
 struct AddressKey {

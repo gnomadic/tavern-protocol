@@ -24,7 +24,7 @@ contract DailyInteractionModule is IComponent, Initializable {
     returns (ComponentSummary memory)
   {
     return
-      ComponentSummary(address(this), functions, abis, required, displayName);
+      ComponentSummary(address(this), functions, abis, required, displayName, "Allow players to interact with the game once per day");
   }
 
   function dailyInteraction(address executor, address gameAddress) public {

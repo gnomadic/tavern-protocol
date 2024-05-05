@@ -40,7 +40,8 @@ contract MMONeighborInteractionModule is IComponent {
         functions,
         abis,
         required,
-        'Neighbor Interaction'
+        'Neighbor Interaction',
+        "Allow players to interact with each other based on their position"
       );
   }
 

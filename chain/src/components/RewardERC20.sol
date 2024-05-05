@@ -25,7 +25,8 @@ contract RewardERC20 is IComponent {
         functions,
         abis,
         required,
-        'Reward ERC20'
+        'Reward ERC20',
+        'Allow players to receive rewards in the form of ERC20 tokens'
       );
   }
 

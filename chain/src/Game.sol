@@ -27,6 +27,9 @@ contract Game is IGame, Initializable {
   AddressKey[] functionKeys;
   mapping(address => string[]) public supportedFunctions;
 
+  mapping(string => AddressKey[]) public flows;
+  string[] public flowNames;
+
   function createEntity(string memory entityName) public returns (address) {
     address newEntity = entityFactory.createEntity(entityName);
 
@@ -53,7 +56,7 @@ contract Game is IGame, Initializable {
   }
 
   function getSummary() external view returns (GameSummary memory) {
-    return GameSummary(address(this), gm, displayName, functionKeys, dataKeys);
+    return GameSummary(address(this), gm, displayName, functionKeys, dataKeys, flowNames);
   }
 
   function addEntity(address entity) internal {
@@ -102,8 +105,6 @@ contract Game is IGame, Initializable {
     return (supportedFunctions[module].length > 0);
   }
 
-  mapping(string => AddressKey[]) public flows;
-  string[] public flowNames;
 
   //TODO only GM can create game functions
   function createFlow(

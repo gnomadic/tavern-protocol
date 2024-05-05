@@ -28,7 +28,8 @@ contract QueueSession is IComponent {
         functions,
         abis,
         required,
-        'Queue Session'
+        'Queue Session',
+        "Allow players to join a queue and match with other players"
       );
   }
 

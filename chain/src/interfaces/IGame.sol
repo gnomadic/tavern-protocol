@@ -13,7 +13,6 @@ interface IGame {
 
   function validateIsModule(address module) external view returns (bool);
   function getEntity(string memory key) external view returns (address);
-
 }
 
 struct GameSummary {

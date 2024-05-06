@@ -48,12 +48,11 @@ contract Catch is Test {
     CatchEntity catchEntity = new CatchEntity();
     entityFactory.registerEntity('CatchEntity', address(catchEntity));
 
-    factory.createGame(address(1), 'Catch');
+    factory.createGame(address(0), 'Catch');
     liveGame = factory.games(0);
 
     liveGame.addComponent(address(mmoSession));
     liveGame.addComponent(address(neighborInteraction));
-
     createFunctions();
 
     vm.stopPrank();
@@ -69,15 +68,22 @@ contract Catch is Test {
   FlowParams catchParams;
 
   function createFunctions() public {
-    joinKeys.push(AddressKey( 'joinGame(address,address)', address(mmoSession)));
-    joinKeys.push(AddressKey( 'joinSession(address,address)', address(neighborInteraction)));
-    
+
+    joinKeys.push(AddressKey('joinGame(address,address)', address(mmoSession)));
+    joinKeys.push(
+      AddressKey('joinSession(address,address)', address(neighborInteraction))
+    );
+
     liveGame.createFlow('joinCatch', joinKeys);
 
-    throwKeys.push(AddressKey( 'throwBall(address,address)', address(neighborInteraction)));
+    throwKeys.push(
+      AddressKey('throwBall(address,address)', address(neighborInteraction))
+    );
     liveGame.createFlow('throwBall', throwKeys);
 
-    catchKeys.push(AddressKey( 'catchBall(address,address)', address(neighborInteraction)));
+    catchKeys.push(
+      AddressKey('catchBall(address,address)', address(neighborInteraction))
+    );
     liveGame.createFlow('catchBall', catchKeys);
   }
 

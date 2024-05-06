@@ -2,25 +2,34 @@ import { Deployment, GameSummary } from '@/domain/Domain';
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import { censor, pretty } from '../domain/utils';
 import Link from 'next/link';
+import { Address } from 'viem';
 
 
 type GameCardProps = {
-  gameSummary: GameSummary;
+  // gameSummary: GameSummary;
   deployment: Deployment;
+  displayName: string;
+  gm: Address;
+  description: string;
+  address: Address;
 }
 
 export default function GameCard(props: GameCardProps) {
   return (
-    <Link href={`/game/${props.deployment.chainId}/${props.gameSummary.game}`}>
-
-    <div className='justify-center bg-slate-800'>
-      <div className='text-5xl pl-5 pt-3'>
-        {censor(props.gameSummary.displayName)}
+    <Link href={`/game/${props.deployment.chainId}/${props.address}`}>
+      <div className='justify-center border-2 border-gray-300 rounded-md bg-slate-800'>
+        <div className='justify-center bg-slate-800'>
+          <div className='pt-5 pl-8 text-3xl'>
+            {censor(props.displayName)}
+          </div>
+          <div className='pt-6 pb-2 pl-4'>
+            created by: {pretty(props.gm)}
+          </div>
+          <div className='pt-5 pb-2 pl-4 text-lg'>
+            {props.description.length > 0 ? censor(props.description) : "No description available"}
+        </div>
+        </div>
       </div>
-      <div className='pt-12 pl-2 pb-2'>
-        created by: {pretty(props.gameSummary.gm)}
-      </div>
-    </div>
     </Link>
   );
 }

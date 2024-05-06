@@ -43,7 +43,7 @@ export default function ComponentHeader(props: HeaderProps) {
             </span>
               </a>
             </div>
-            <div className="pt-12 text-sm">
+            <div className="pt-12 text-xl">
                {summary.description}
             </div>
           </div>

@@ -58,7 +58,7 @@ export async function generateMetadata({
 
 export default function Game({ params }: { params: { address: string, chainid: string } }) {
   return (
-    <main className='flex flex-col items-center justify-between p-24 font-anon'>
+    <main className='flex flex-col px-24 pt-8 font-anon'>
 
       <GameHeader gameAddress={params.address as Address} />
 

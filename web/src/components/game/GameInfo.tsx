@@ -1,7 +1,7 @@
 "use client"
 import { Address } from 'viem';
 import Divider from '../Divider';
-import { useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
+import { useReadGameFlows, useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
 
 
 type StepThreeProps = {
@@ -10,36 +10,74 @@ type StepThreeProps = {
 
 export default function GameInfo(props: StepThreeProps) {
 
-    const { data: gameSummary } = useReadGameGetSummary({ address: props.gameAddress });
-    const { data: allFlows } = useReadGameGetFlows();
+    const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
+    const {data: flows} = useReadGameFlows({address: props.gameAddress, args: ["playRPS", BigInt(0)]});
+
 
     return (
-        <section>
+        <section id='connect' className='relative items-center pt-12 pb-12'>
 
-            
-            {/* <div> Your Game is at: {gameSummary?.game} </div> */}
-            <div className='pt-4'> This game offers the following Flows:</div>
-            <ul>
-                {Array.from({ length: allFlows?.length ?? 0 }).map((object: any, i) => {
-                    return <li className='pt-2' key={i}>
-                        <p>name:  {allFlows![i]}</p>
-                        {/* <p>address:  {gameSummary!.availableFunctions[i].Address}</p> */}
-                        {/* <p>function Name:  {gameSummary!.availableFunctions[i].Key}</p> */}
-                    </li>
+            {summary ?
+                <div>
+                    <div className="pb-8 text-xl">This Component provides {summary?.flows.length} Flow{summary.flows.length > 1 ? "s" : ""}</div>
+                    <ul>
+                        {Array.from({ length: summary?.flows.length as number }).map((object, i) => {
+                            return (
+                                <div key={i} className='justify-center border-t-2 border-b-2 border-gray-300 '>
+                                    <div className='pt-5 pl-8 text-xl'>{summary!.flows[i]}</div>
+                                    <div className="flex">
+                                        <div className="mx-auto">
+                                            requires
+                                            {Array.from({ length: summary?.availableFunctions.length as number }).map((object, i) => {
+                                                return (
+                                                    <div key={i}>
+                                                        <div >{summary!.availableFunctions[i].name}</div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        <div className="pb-5 mx-auto">
+                                            creates
+                                            {Array.from({ length: summary?.availableData.length as number }).map((object, i) => {
+                                                return (
+                                                    <div key={i}>
+                                                        <div className="mx-auto">{summary!.availableData[i].name}</div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </ul>
+                </div>
+                :
+                <></>}
+        </section>
 
-                })}
-            </ul>
 
-            <div className='pt-4'> Your game offers the following character stats at the following addresses:</div>
-            <ul>
-                {Array.from({ length: gameSummary?.availableData.length ?? 0 }).map((object: any, i) => {
-                    return <li className='pt-2' key={i}>
-                        <p>address:  {gameSummary!.availableData[i].value}</p>
-                        <p>function Name:  {gameSummary!.availableData[i].name}</p>
-                    </li>
+        //     <div className='pt-4'> This game offers the following Flows:</div>
+        //     <ul>
+        //         {Array.from({ length: gameSummary?.flows?.length ?? 0 }).map((object: any, i) => {
+        //             return <li className='pt-2' key={i}>
+        //                 <p>name:  {gameSummary!.flows![i]}</p>
 
-                })}
-            </ul>
-        </section >
+        //             </li>
+
+        //         })}
+        //     </ul>
+
+        //     <div className='pt-4'> Your game offers the following character stats at the following addresses:</div>
+        //     <ul>
+        //         {Array.from({ length: gameSummary?.availableData.length ?? 0 }).map((object: any, i) => {
+        //             return <li className='pt-2' key={i}>
+        //                 <p>address:  {gameSummary!.availableData[i].value}</p>
+        //                 <p>function Name:  {gameSummary!.availableData[i].name}</p>
+        //             </li>
+
+        //         })}
+        //     </ul>
+        // </section >
     );
 }

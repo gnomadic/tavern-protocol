@@ -5,6 +5,13 @@ import {
   createUseWatchContractEvent,
 } from 'wagmi/codegen';
 
+import {
+  createReadContract,
+  createWriteContract,
+  createSimulateContract,
+  createWatchContractEvent,
+} from 'wagmi/codegen';
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ComponentRegistry
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -790,45 +797,6 @@ export const iGameAbi = [
     inputs: [{ name: 'key', internalType: 'string', type: 'string' }],
     name: 'getEntity',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'getSummary',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct GameSummary',
-        type: 'tuple',
-        components: [
-          { name: 'game', internalType: 'address', type: 'address' },
-          { name: 'gm', internalType: 'address', type: 'address' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
-          { name: 'gameUrl', internalType: 'string', type: 'string' },
-          {
-            name: 'availableFunctions',
-            internalType: 'struct AddressKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'address', type: 'address' },
-            ],
-          },
-          {
-            name: 'availableData',
-            internalType: 'struct AddressKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'address', type: 'address' },
-            ],
-          },
-          { name: 'flows', internalType: 'string[]', type: 'string[]' },
-        ],
-      },
-    ],
   },
   {
     stateMutability: 'nonpayable',
@@ -1640,14 +1608,6 @@ export const useReadIGameGetEntity = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"getSummary"`
- */
-export const useReadIGameGetSummary = /*#__PURE__*/ createUseReadContract({
-  abi: iGameAbi,
-  functionName: 'getSummary',
-});
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"validateIsModule"`
  */
 export const useReadIGameValidateIsModule = /*#__PURE__*/ createUseReadContract(
@@ -1718,3 +1678,828 @@ export const useSimulateIGameInitialize =
     abi: iGameAbi,
     functionName: 'initialize',
   });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Action
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__
+ */
+export const readComponentRegistry = /*#__PURE__*/ createReadContract({
+  abi: componentRegistryAbi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getModuleCount"`
+ */
+export const readComponentRegistryGetModuleCount =
+  /*#__PURE__*/ createReadContract({
+    abi: componentRegistryAbi,
+    functionName: 'getModuleCount',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getModules"`
+ */
+export const readComponentRegistryGetModules = /*#__PURE__*/ createReadContract(
+  { abi: componentRegistryAbi, functionName: 'getModules' }
+);
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link componentRegistryAbi}__
+ */
+export const writeComponentRegistry = /*#__PURE__*/ createWriteContract({
+  abi: componentRegistryAbi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"register"`
+ */
+export const writeComponentRegistryRegister = /*#__PURE__*/ createWriteContract(
+  { abi: componentRegistryAbi, functionName: 'register' }
+);
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"unRegister"`
+ */
+export const writeComponentRegistryUnRegister =
+  /*#__PURE__*/ createWriteContract({
+    abi: componentRegistryAbi,
+    functionName: 'unRegister',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link componentRegistryAbi}__
+ */
+export const simulateComponentRegistry = /*#__PURE__*/ createSimulateContract({
+  abi: componentRegistryAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"register"`
+ */
+export const simulateComponentRegistryRegister =
+  /*#__PURE__*/ createSimulateContract({
+    abi: componentRegistryAbi,
+    functionName: 'register',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"unRegister"`
+ */
+export const simulateComponentRegistryUnRegister =
+  /*#__PURE__*/ createSimulateContract({
+    abi: componentRegistryAbi,
+    functionName: 'unRegister',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link componentRegistryAbi}__
+ */
+export const watchComponentRegistryEvent =
+  /*#__PURE__*/ createWatchContractEvent({ abi: componentRegistryAbi });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link componentRegistryAbi}__ and `eventName` set to `"ModeleUnregistered"`
+ */
+export const watchComponentRegistryModeleUnregisteredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: componentRegistryAbi,
+    eventName: 'ModeleUnregistered',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link componentRegistryAbi}__ and `eventName` set to `"ModuleRegistered"`
+ */
+export const watchComponentRegistryModuleRegisteredEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: componentRegistryAbi,
+    eventName: 'ModuleRegistered',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__
+ */
+export const readD7 = /*#__PURE__*/ createReadContract({ abi: d7Abi });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const readD7BalanceOf = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'balanceOf',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"getApproved"`
+ */
+export const readD7GetApproved = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'getApproved',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"isApprovedForAll"`
+ */
+export const readD7IsApprovedForAll = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'isApprovedForAll',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"name"`
+ */
+export const readD7Name = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'name',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"ownerOf"`
+ */
+export const readD7OwnerOf = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'ownerOf',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const readD7SupportsInterface = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'supportsInterface',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"symbol"`
+ */
+export const readD7Symbol = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'symbol',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"tokenURI"`
+ */
+export const readD7TokenUri = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'tokenURI',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"totalSupply"`
+ */
+export const readD7TotalSupply = /*#__PURE__*/ createReadContract({
+  abi: d7Abi,
+  functionName: 'totalSupply',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link d7Abi}__
+ */
+export const writeD7 = /*#__PURE__*/ createWriteContract({ abi: d7Abi });
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"approve"`
+ */
+export const writeD7Approve = /*#__PURE__*/ createWriteContract({
+  abi: d7Abi,
+  functionName: 'approve',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"mint"`
+ */
+export const writeD7Mint = /*#__PURE__*/ createWriteContract({
+  abi: d7Abi,
+  functionName: 'mint',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const writeD7SafeTransferFrom = /*#__PURE__*/ createWriteContract({
+  abi: d7Abi,
+  functionName: 'safeTransferFrom',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const writeD7SetApprovalForAll = /*#__PURE__*/ createWriteContract({
+  abi: d7Abi,
+  functionName: 'setApprovalForAll',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const writeD7TransferFrom = /*#__PURE__*/ createWriteContract({
+  abi: d7Abi,
+  functionName: 'transferFrom',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link d7Abi}__
+ */
+export const simulateD7 = /*#__PURE__*/ createSimulateContract({ abi: d7Abi });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"approve"`
+ */
+export const simulateD7Approve = /*#__PURE__*/ createSimulateContract({
+  abi: d7Abi,
+  functionName: 'approve',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"mint"`
+ */
+export const simulateD7Mint = /*#__PURE__*/ createSimulateContract({
+  abi: d7Abi,
+  functionName: 'mint',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const simulateD7SafeTransferFrom = /*#__PURE__*/ createSimulateContract({
+  abi: d7Abi,
+  functionName: 'safeTransferFrom',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const simulateD7SetApprovalForAll = /*#__PURE__*/ createSimulateContract(
+  { abi: d7Abi, functionName: 'setApprovalForAll' }
+);
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link d7Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const simulateD7TransferFrom = /*#__PURE__*/ createSimulateContract({
+  abi: d7Abi,
+  functionName: 'transferFrom',
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link d7Abi}__
+ */
+export const watchD7Event = /*#__PURE__*/ createWatchContractEvent({
+  abi: d7Abi,
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link d7Abi}__ and `eventName` set to `"Approval"`
+ */
+export const watchD7ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: d7Abi,
+  eventName: 'Approval',
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link d7Abi}__ and `eventName` set to `"ApprovalForAll"`
+ */
+export const watchD7ApprovalForAllEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: d7Abi,
+    eventName: 'ApprovalForAll',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link d7Abi}__ and `eventName` set to `"ConsecutiveTransfer"`
+ */
+export const watchD7ConsecutiveTransferEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: d7Abi,
+    eventName: 'ConsecutiveTransfer',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link d7Abi}__ and `eventName` set to `"Transfer"`
+ */
+export const watchD7TransferEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: d7Abi,
+  eventName: 'Transfer',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__
+ */
+export const readGame = /*#__PURE__*/ createReadContract({ abi: gameAbi });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"availableEntityData"`
+ */
+export const readGameAvailableEntityData = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'availableEntityData',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"components"`
+ */
+export const readGameComponents = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'components',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"description"`
+ */
+export const readGameDescription = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'description',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"displayName"`
+ */
+export const readGameDisplayName = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'displayName',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"entities"`
+ */
+export const readGameEntities = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'entities',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"entityFactory"`
+ */
+export const readGameEntityFactory = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'entityFactory',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"flowNames"`
+ */
+export const readGameFlowNames = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'flowNames',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"flows"`
+ */
+export const readGameFlows = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'flows',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"functionLookup"`
+ */
+export const readGameFunctionLookup = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'functionLookup',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameUrl"`
+ */
+export const readGameGameUrl = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'gameUrl',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getEntity"`
+ */
+export const readGameGetEntity = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'getEntity',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getFlows"`
+ */
+export const readGameGetFlows = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'getFlows',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const readGameGetSummary = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'getSummary',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getSupportedFunctions"`
+ */
+export const readGameGetSupportedFunctions = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'getSupportedFunctions',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gm"`
+ */
+export const readGameGm = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'gm',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"supportedFunctions"`
+ */
+export const readGameSupportedFunctions = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'supportedFunctions',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"validateIsModule"`
+ */
+export const readGameValidateIsModule = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'validateIsModule',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__
+ */
+export const writeGame = /*#__PURE__*/ createWriteContract({ abi: gameAbi });
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"addComponent"`
+ */
+export const writeGameAddComponent = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'addComponent',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createEntity"`
+ */
+export const writeGameCreateEntity = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'createEntity',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createFlow"`
+ */
+export const writeGameCreateFlow = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'createFlow',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
+ */
+export const writeGameExecuteFlow = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'executeFlow',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeGameInitialize = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateDescription"`
+ */
+export const writeGameUpdateDescription = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'updateDescription',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateGameUrl"`
+ */
+export const writeGameUpdateGameUrl = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'updateGameUrl',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__
+ */
+export const simulateGame = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"addComponent"`
+ */
+export const simulateGameAddComponent = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'addComponent',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createEntity"`
+ */
+export const simulateGameCreateEntity = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'createEntity',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"createFlow"`
+ */
+export const simulateGameCreateFlow = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'createFlow',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
+ */
+export const simulateGameExecuteFlow = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'executeFlow',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateGameInitialize = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateDescription"`
+ */
+export const simulateGameUpdateDescription =
+  /*#__PURE__*/ createSimulateContract({
+    abi: gameAbi,
+    functionName: 'updateDescription',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateGameUrl"`
+ */
+export const simulateGameUpdateGameUrl = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'updateGameUrl',
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link gameAbi}__
+ */
+export const watchGameEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: gameAbi,
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link gameAbi}__ and `eventName` set to `"Initialized"`
+ */
+export const watchGameInitializedEvent = /*#__PURE__*/ createWatchContractEvent(
+  { abi: gameAbi, eventName: 'Initialized' }
+);
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__
+ */
+export const readGameFactory = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"entityFactory"`
+ */
+export const readGameFactoryEntityFactory = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'entityFactory',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"gameContract"`
+ */
+export const readGameFactoryGameContract = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'gameContract',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"games"`
+ */
+export const readGameFactoryGames = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'games',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"getGameCount"`
+ */
+export const readGameFactoryGetGameCount = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'getGameCount',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"getGames"`
+ */
+export const readGameFactoryGetGames = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'getGames',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__
+ */
+export const writeGameFactory = /*#__PURE__*/ createWriteContract({
+  abi: gameFactoryAbi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"createGame"`
+ */
+export const writeGameFactoryCreateGame = /*#__PURE__*/ createWriteContract({
+  abi: gameFactoryAbi,
+  functionName: 'createGame',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeGameFactoryInitialize = /*#__PURE__*/ createWriteContract({
+  abi: gameFactoryAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__
+ */
+export const simulateGameFactory = /*#__PURE__*/ createSimulateContract({
+  abi: gameFactoryAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"createGame"`
+ */
+export const simulateGameFactoryCreateGame =
+  /*#__PURE__*/ createSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'createGame',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateGameFactoryInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link gameFactoryAbi}__
+ */
+export const watchGameFactoryEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: gameFactoryAbi,
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link gameFactoryAbi}__ and `eventName` set to `"GameCreated"`
+ */
+export const watchGameFactoryGameCreatedEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: gameFactoryAbi,
+    eventName: 'GameCreated',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iComponentAbi}__
+ */
+export const readIComponent = /*#__PURE__*/ createReadContract({
+  abi: iComponentAbi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iComponentAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const readIComponentGetSummary = /*#__PURE__*/ createReadContract({
+  abi: iComponentAbi,
+  functionName: 'getSummary',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iComponentAbi}__
+ */
+export const writeIComponent = /*#__PURE__*/ createWriteContract({
+  abi: iComponentAbi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iComponentAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeIComponentInitialize = /*#__PURE__*/ createWriteContract({
+  abi: iComponentAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iComponentAbi}__
+ */
+export const simulateIComponent = /*#__PURE__*/ createSimulateContract({
+  abi: iComponentAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iComponentAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateIComponentInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: iComponentAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iGameAbi}__
+ */
+export const readIGame = /*#__PURE__*/ createReadContract({ abi: iGameAbi });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"getEntity"`
+ */
+export const readIGameGetEntity = /*#__PURE__*/ createReadContract({
+  abi: iGameAbi,
+  functionName: 'getEntity',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"validateIsModule"`
+ */
+export const readIGameValidateIsModule = /*#__PURE__*/ createReadContract({
+  abi: iGameAbi,
+  functionName: 'validateIsModule',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iGameAbi}__
+ */
+export const writeIGame = /*#__PURE__*/ createWriteContract({ abi: iGameAbi });
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createEntity"`
+ */
+export const writeIGameCreateEntity = /*#__PURE__*/ createWriteContract({
+  abi: iGameAbi,
+  functionName: 'createEntity',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createFlow"`
+ */
+export const writeIGameCreateFlow = /*#__PURE__*/ createWriteContract({
+  abi: iGameAbi,
+  functionName: 'createFlow',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeIGameInitialize = /*#__PURE__*/ createWriteContract({
+  abi: iGameAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iGameAbi}__
+ */
+export const simulateIGame = /*#__PURE__*/ createSimulateContract({
+  abi: iGameAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createEntity"`
+ */
+export const simulateIGameCreateEntity = /*#__PURE__*/ createSimulateContract({
+  abi: iGameAbi,
+  functionName: 'createEntity',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createFlow"`
+ */
+export const simulateIGameCreateFlow = /*#__PURE__*/ createSimulateContract({
+  abi: iGameAbi,
+  functionName: 'createFlow',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateIGameInitialize = /*#__PURE__*/ createSimulateContract({
+  abi: iGameAbi,
+  functionName: 'initialize',
+});
+ 

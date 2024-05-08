@@ -21,14 +21,14 @@ export const componentRegistryAbi = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'getModuleCount',
+    name: 'getComponentCount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'startAt', internalType: 'uint8', type: 'uint8' }],
-    name: 'getModules',
+    name: 'getComponents',
     outputs: [
       {
         name: 'result',
@@ -44,6 +44,13 @@ export const componentRegistryAbi = [
         ],
       },
     ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'module', internalType: 'address', type: 'address' }],
+    name: 'isRegistered',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -623,6 +630,14 @@ export const gameAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const gameFactoryAbi = [
+  { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'admin',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
   {
     stateMutability: 'nonpayable',
     type: 'function',
@@ -711,6 +726,24 @@ export const gameFactoryAbi = [
     outputs: [],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_entityFactory', internalType: 'address', type: 'address' },
+    ],
+    name: 'setEntityFactory',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_gameContract', internalType: 'address', type: 'address' },
+    ],
+    name: 'setGameContract',
+    outputs: [],
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
@@ -724,6 +757,7 @@ export const gameFactoryAbi = [
     ],
     name: 'GameCreated',
   },
+  { type: 'error', inputs: [], name: 'OnlyAdmin' },
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -830,21 +864,30 @@ export const useReadComponentRegistry = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getModuleCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getComponentCount"`
  */
-export const useReadComponentRegistryGetModuleCount =
+export const useReadComponentRegistryGetComponentCount =
   /*#__PURE__*/ createUseReadContract({
     abi: componentRegistryAbi,
-    functionName: 'getModuleCount',
+    functionName: 'getComponentCount',
   });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getModules"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getComponents"`
  */
-export const useReadComponentRegistryGetModules =
+export const useReadComponentRegistryGetComponents =
   /*#__PURE__*/ createUseReadContract({
     abi: componentRegistryAbi,
-    functionName: 'getModules',
+    functionName: 'getComponents',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"isRegistered"`
+ */
+export const useReadComponentRegistryIsRegistered =
+  /*#__PURE__*/ createUseReadContract({
+    abi: componentRegistryAbi,
+    functionName: 'isRegistered',
   });
 
 /**
@@ -1438,6 +1481,14 @@ export const useReadGameFactory = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"admin"`
+ */
+export const useReadGameFactoryAdmin = /*#__PURE__*/ createUseReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'admin',
+});
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"entityFactory"`
  */
 export const useReadGameFactoryEntityFactory =
@@ -1506,6 +1557,24 @@ export const useWriteGameFactoryInitialize =
   });
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setEntityFactory"`
+ */
+export const useWriteGameFactorySetEntityFactory =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: gameFactoryAbi,
+    functionName: 'setEntityFactory',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setGameContract"`
+ */
+export const useWriteGameFactorySetGameContract =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: gameFactoryAbi,
+    functionName: 'setGameContract',
+  });
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameFactoryAbi}__
  */
 export const useSimulateGameFactory = /*#__PURE__*/ createUseSimulateContract({
@@ -1528,6 +1597,24 @@ export const useSimulateGameFactoryInitialize =
   /*#__PURE__*/ createUseSimulateContract({
     abi: gameFactoryAbi,
     functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setEntityFactory"`
+ */
+export const useSimulateGameFactorySetEntityFactory =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'setEntityFactory',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setGameContract"`
+ */
+export const useSimulateGameFactorySetGameContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'setGameContract',
   });
 
 /**
@@ -1691,20 +1778,31 @@ export const readComponentRegistry = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getModuleCount"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getComponentCount"`
  */
-export const readComponentRegistryGetModuleCount =
+export const readComponentRegistryGetComponentCount =
   /*#__PURE__*/ createReadContract({
     abi: componentRegistryAbi,
-    functionName: 'getModuleCount',
+    functionName: 'getComponentCount',
   });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getModules"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"getComponents"`
  */
-export const readComponentRegistryGetModules = /*#__PURE__*/ createReadContract(
-  { abi: componentRegistryAbi, functionName: 'getModules' }
-);
+export const readComponentRegistryGetComponents =
+  /*#__PURE__*/ createReadContract({
+    abi: componentRegistryAbi,
+    functionName: 'getComponents',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link componentRegistryAbi}__ and `functionName` set to `"isRegistered"`
+ */
+export const readComponentRegistryIsRegistered =
+  /*#__PURE__*/ createReadContract({
+    abi: componentRegistryAbi,
+    functionName: 'isRegistered',
+  });
 
 /**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link componentRegistryAbi}__
@@ -2273,6 +2371,14 @@ export const readGameFactory = /*#__PURE__*/ createReadContract({
 });
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"admin"`
+ */
+export const readGameFactoryAdmin = /*#__PURE__*/ createReadContract({
+  abi: gameFactoryAbi,
+  functionName: 'admin',
+});
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"entityFactory"`
  */
 export const readGameFactoryEntityFactory = /*#__PURE__*/ createReadContract({
@@ -2336,6 +2442,24 @@ export const writeGameFactoryInitialize = /*#__PURE__*/ createWriteContract({
 });
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setEntityFactory"`
+ */
+export const writeGameFactorySetEntityFactory =
+  /*#__PURE__*/ createWriteContract({
+    abi: gameFactoryAbi,
+    functionName: 'setEntityFactory',
+  });
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setGameContract"`
+ */
+export const writeGameFactorySetGameContract =
+  /*#__PURE__*/ createWriteContract({
+    abi: gameFactoryAbi,
+    functionName: 'setGameContract',
+  });
+
+/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__
  */
 export const simulateGameFactory = /*#__PURE__*/ createSimulateContract({
@@ -2358,6 +2482,24 @@ export const simulateGameFactoryInitialize =
   /*#__PURE__*/ createSimulateContract({
     abi: gameFactoryAbi,
     functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setEntityFactory"`
+ */
+export const simulateGameFactorySetEntityFactory =
+  /*#__PURE__*/ createSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'setEntityFactory',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"setGameContract"`
+ */
+export const simulateGameFactorySetGameContract =
+  /*#__PURE__*/ createSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'setGameContract',
   });
 
 /**
@@ -2502,4 +2644,3 @@ export const simulateIGameInitialize = /*#__PURE__*/ createSimulateContract({
   abi: iGameAbi,
   functionName: 'initialize',
 });
- 

@@ -49,37 +49,8 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
     return data as GameSummary;
 }
 
-export async function simulateJoinRPS() {
-    const simulate = await simulateGameExecuteFlow(config, {
-        address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-        args: [
-            "playRPS",
-            {
-                addresses: [],
-                uints: [],
-                strings: []
-            }
-        ],
-    })
 
-    return simulate;
-}
-
-export async function executeJoinRPS() {
-    const write = await writeGameExecuteFlow(config, {
-        address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-        args: [
-            "playRPS",
-            {
-                addresses: [],
-                uints: [],
-                strings: []
-            }
-        ],
-    })
-
-    return write;
-}
+ 
 
 export async function executeFlow(address: Address, functionName: string, args: GameFuncParams) {
 

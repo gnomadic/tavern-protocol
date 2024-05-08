@@ -25,6 +25,10 @@ contract EntityFactory {
     return entity;
   }
 
+  function getEntity(string calldata _entityName) external view returns (address) {
+    return entities[_entityName];
+  }
+
   error EntityNotFound();
   event EntityCreated(address entity);
 }

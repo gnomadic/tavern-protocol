@@ -71,31 +71,14 @@ contract RockPaperScissors is IComponent {
       gameEntity.addPlayerUint(executor, 'amount', 3);
     }
 
-    // QueueSessionEntity queue = QueueSessionEntity(game.getEntity('players'));
-
-    // if (queue.getQueueSize() == 0) {
-    //   RockPaperScissorEntity(game.getEntity('actions')).setPlayerAction(
-    //     player,
-    //     action
-    //   );
-    //   queue.enqueue(player);
-    // } else {
-    //   address player2 = QueueSessionEntity(game.getEntity('nextPlayer'))
-    //     .nextPlayer();
-
-    //   uint256 player2Action = RockPaperScissorEntity(game.getEntity('actions'))
-    //     .getPlayerAction(player2);
-
-    //   address winner = play(Hand(player, action), Hand(player2, player2Action));
-    //   if (winner == address(0)) {
-    //     console.log('It is a tie');
-    //   } else {
-    //     console.log('The winner is: ', winner);
-    //   }
+    emit GameResult(Hand(player, action), Hand(player2, player2Action), winner);
 
     rpsEntity.setPlayerAction(player, 0);
     rpsEntity.setPlayerAction(player2, 0);
   }
+
+event GameResult(Hand player1, Hand player2, address winner);
+
   struct Hand {
     address player;
     uint256 actionIndex;

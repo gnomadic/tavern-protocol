@@ -7,7 +7,7 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {FlowParams, UintKey} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-import {console} from 'forge-std/Console.sol';
+import 'forge-std/console.sol';
 
 contract QueueSession is IComponent {
   string[] public required = ['playerParams', 'nextPlayer'];

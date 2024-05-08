@@ -2,9 +2,8 @@ import { Address } from "viem";
 
 export type Deployment = {
   gameFactory: Address;
-  entityFactory: Address;
   d7: Address;
-  moduleRegistry: Address;
+  componentRegistry: Address;
   displayName: string;
   currency: string;
   chain: string;

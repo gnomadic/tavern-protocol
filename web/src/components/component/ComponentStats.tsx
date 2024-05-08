@@ -1,7 +1,7 @@
 "use client"
 import { ComponentSummary } from "@/domain/Domain";
 import { pretty } from "@/domain/utils";
-import { useReadComponentRegistryGetModules, useReadIComponentGetSummary } from "@/generated";
+import { useReadIComponentGetSummary } from "@/generated";
 import useDeployment from "@/hooks/useDeployment";
 import useGameSummary from "@/hooks/useGameSummary";
 import { useEffect, useState } from "react";

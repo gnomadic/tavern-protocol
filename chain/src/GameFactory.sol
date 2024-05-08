@@ -11,8 +11,25 @@ contract GameFactory {
   Game[] public games;
   address public entityFactory;
 
-  function initialize(address _gameContract, address _entityFactory) public {
+  address public admin;
+
+  constructor() {
+    admin = msg.sender;
+  }
+
+  function initialize(
+    address _gameContract,
+    address _entityFactory
+  ) public onlyAdmin {
     gameContract = _gameContract;
+    entityFactory = _entityFactory;
+  }
+
+  function setGameContract(address _gameContract) public onlyAdmin {
+    gameContract = _gameContract;
+  }
+
+  function setEntityFactory(address _entityFactory) public onlyAdmin {
     entityFactory = _entityFactory;
   }
 
@@ -45,4 +62,11 @@ contract GameFactory {
   }
 
   event GameCreated(address gm, address game);
+
+  error OnlyAdmin();
+
+  modifier onlyAdmin() {
+    if (msg.sender != admin) revert OnlyAdmin();
+    _;
+  }
 }

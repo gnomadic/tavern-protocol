@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import ModuleCard from '@/components/ModuleCard';
 import DiscoverModules from '@/components/explore/ExploreComponents';
 import { GameSummary, ComponentSummary } from '@/domain/Domain';
-import { useReadComponentRegistryGetModuleCount, useReadComponentRegistryGetModules, useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/generated';
+import { useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
 import Image from 'next/image';
 import { useEffect } from 'react';

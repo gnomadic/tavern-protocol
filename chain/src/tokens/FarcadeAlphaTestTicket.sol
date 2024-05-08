@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {ERC20} from "solady/tokens/ERC20.sol";
 
-contract FarcadeTicket is ERC20 {
+contract FarcadeAlphaTestTicket is ERC20 {
     address public minter;
     address public admin;
 
@@ -27,13 +27,13 @@ contract FarcadeTicket is ERC20 {
      * @dev Return the name of the token.
      */
     function name() public pure override returns (string memory) {
-        return "Farcade Tickets";
+        return "Farcade Alpha Tester Tickets";
     }
 
     /**
      * @dev Return the symbol of the token.
      */
     function symbol() public pure override returns (string memory) {
-        return "TICKET";
+        return "A-TKT";
     }
 }

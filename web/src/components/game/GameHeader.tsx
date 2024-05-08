@@ -64,7 +64,7 @@ export default function GameHeader(props: HeaderProps) {
               <a target="_blank"
                 rel="noopener noreferrer"
                 href={deploy.scan + props.gameAddress} >
-                {pretty(props.gameAddress)}
+                {props.gameAddress}
                 <span>
                   <ArrowUpRightIcon
                     className="w-4 h-4 mb-1"

@@ -4,7 +4,7 @@ import { pretty } from "@/domain/utils";
 import useDeployment from "@/hooks/useDeployment";
 import { useEffect, useState } from "react";
 import { Address } from "viem";
-import { useReadComponentRegistryGetModules, useReadIComponentGetSummary } from '@/generated';
+import { useReadIComponentGetSummary } from '@/generated';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 
 type HeaderProps = {

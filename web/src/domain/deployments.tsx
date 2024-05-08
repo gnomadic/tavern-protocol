@@ -20,10 +20,9 @@ export const Deployments: { [key: string]: Deployment } = {
   //   chain: 'polygon',
   // },
   sepolia: {
-    gameFactory: '0xAb674876bf497Db3E0C52B995D38c67536d14B67',
-    entityFactory: '0x85D72A40029f59712c73f56DEb2855Ff54aB61A6',
+    gameFactory: '0x234f98309176a8b1646d5C390a18809b8BE39c7F',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    moduleRegistry: '0x4AeA256fD2b36A073AD4cB10b0A9B926259C66CE',
+    componentRegistry: '0xA0100fb44e9D00D8677968eD71acEF8daa8fD484',
     displayName: 'Tavern',
     currency: 'eth',
     chain: 'sepolia',
@@ -32,10 +31,9 @@ export const Deployments: { [key: string]: Deployment } = {
   },
 
   localhost: {
-    gameFactory: '0xA15BB66138824a1c7167f5E85b957d04Dd34E468',
-    entityFactory: '0xeD1DB453C3156Ff3155a97AD217b3087D5Dc5f6E',
+    gameFactory: '0x234f98309176a8b1646d5C390a18809b8BE39c7F',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    moduleRegistry: '0x8ce361602B935680E8DeC218b820ff5056BeB7af',
+    componentRegistry: '0xA0100fb44e9D00D8677968eD71acEF8daa8fD484',
     displayName: 'Tavern',
     currency: 'eth',
     chain: 'local',
@@ -44,9 +42,8 @@ export const Deployments: { [key: string]: Deployment } = {
   },
   tavern: {
     gameFactory: '0x0',
-    entityFactory: '0x0',
     d7: '0x0',
-    moduleRegistry: '0x0',
+    componentRegistry: '0x0',
     displayName: 'Tavern',
     currency: 'eth',
     chain: '( -disconnected-  Connect your wallet! )',

@@ -63,7 +63,7 @@ const usePlayerIndex = ({
     if (playerIndex) {
       setPlayer(BigInt(playerIndex as string).toString());
     }
-  }, [playerIndex, playerIndexError, isPlayerIndexLoading]);
+  }, [playerIndex, playerIndexError, isPlayerIndexLoading, gameAddress, moduleAddress]);
 
   return { player, playerIndexError };
 };

@@ -11,7 +11,7 @@ type StepThreeProps = {
 export default function GameInfo(props: StepThreeProps) {
 
     const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
-    const {data: flows} = useReadGameFlows({address: props.gameAddress, args: ["playRPS", BigInt(0)]});
+    const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
 
 
     return (
@@ -19,7 +19,18 @@ export default function GameInfo(props: StepThreeProps) {
 
             {summary ?
                 <div>
-                    <div className="pb-8 text-xl">This Component provides {summary?.flows.length} Flow{summary.flows.length > 1 ? "s" : ""}</div>
+                    <div className="pb-8 text-xl">This Game has {summary?.availableFunctions.length} available function{summary.availableFunctions.length > 1 ? "s" : ""}</div>
+                    <ul>
+                        {Array.from({ length: summary?.availableFunctions.length as number }).map((object, i) => {
+                            return (
+                                <div key={i} className='justify-center '>
+                                    <div className='py-3 pl-8 text-lg'>{summary!.availableFunctions[i].name} at {summary!.availableFunctions[i].value}</div>
+
+                                </div>
+                            );
+                        })}
+                    </ul>
+                    <div className="pt-12 pb-8 text-xl">This Game provides {summary?.flows.length} Flow{summary.flows.length > 1 ? "s" : ""}</div>
                     <ul>
                         {Array.from({ length: summary?.flows.length as number }).map((object, i) => {
                             return (

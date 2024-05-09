@@ -14,7 +14,7 @@ import {console} from 'forge-std/console.sol';
 
 contract RockPaperScissors is IComponent {
   string[] public required = ['nextPlayer'];
-  string[] public functions = ['joinGame'];
+  string[] public functions = ['oneOnOne'];
   string[] public abis = ['oneOnOne(address,address)'];
 
   function initialize(address game) external {
@@ -47,6 +47,8 @@ contract RockPaperScissors is IComponent {
     action = gameEntity.getPlayerUint(executor, 'action');
 
     rpsEntity.setPlayerAction(player, action);
+
+    //player action set player action
 
     address player2 = gameEntity.getPlayerAddress(executor, 'player2');
     if (player2 == address(0)) {

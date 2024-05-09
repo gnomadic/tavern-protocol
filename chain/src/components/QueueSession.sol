@@ -41,6 +41,8 @@ contract QueueSession is IComponent {
     player = gameEntity.getPlayerAddress(executor, 'player');
 
     QueueSessionEntity(game.getEntity('nextPlayer')).enqueue(player);
+
+    emit JoinedQueue(player, QueueSessionEntity(game.getEntity('nextPlayer')).getQueueSize());
   }
 
   function setMatchOrWait(address executor, address gameAddress) public {
@@ -51,18 +53,21 @@ contract QueueSession is IComponent {
       joinGame(executor, gameAddress);
       return;
     }
+    
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     address player1 = gameEntity.getPlayerAddress(executor, 'player');
     address player2 = queue.nextPlayer();
 
-    // console.log('Matched players: ', player1, player2);
-    // console.log("with execu", executor);
-
     gameEntity.addPlayerAddress(executor, 'player1', player1);
     gameEntity.addPlayerAddress(executor, 'player2', player2);
+
+    emit MatchMade(player1, player2);
   }
 
   function getPlayerCount(IGame game) external view returns (uint256) {
     return QueueSessionEntity(game.getEntity('nextPlayer')).getQueueSize();
   }
+
+  event JoinedQueue(address player, uint256 queueSize);
+  event MatchMade(address player1, address player2);
 }

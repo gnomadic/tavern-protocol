@@ -34,7 +34,7 @@ export default function GameHeader(props: HeaderProps) {
               game
             </div>
             <div className="pt-12 text-sm">
-              play at: {' '}
+              can be played at: {' '}
               <a target="_blank"
                 rel="noopener noreferrer"
                 href={summary.gameUrl} >
@@ -46,7 +46,7 @@ export default function GameHeader(props: HeaderProps) {
                 </span>
               </a>
             </div>
-            <div className="text-sm pt-22">
+            <div className="text-sm">
               has a GM: {' '}
               <a target="_blank"
                 rel="noopener noreferrer"
@@ -58,20 +58,21 @@ export default function GameHeader(props: HeaderProps) {
                     style={{ display: "inline" }} />
                 </span>
               </a>
+              <div className="text-sm">
+                is deployed at: {' '}
+                <a target="_blank"
+                  rel="noopener noreferrer"
+                  href={deploy.scan + props.gameAddress} >
+                  {pretty(props.gameAddress)}
+                  <span>
+                    <ArrowUpRightIcon
+                      className="w-4 h-4 mb-1"
+                      style={{ display: "inline" }} />
+                  </span>
+                </a>
+              </div>
             </div>
-            <div className="pt-2 text-sm">
-              is deployed at: {' '}
-              <a target="_blank"
-                rel="noopener noreferrer"
-                href={deploy.scan + props.gameAddress} >
-                {props.gameAddress}
-                <span>
-                  <ArrowUpRightIcon
-                    className="w-4 h-4 mb-1"
-                    style={{ display: "inline" }} />
-                </span>
-              </a>
-            </div>
+
             <div className="pt-12 text-xl">
               {summary.description ? summary.description : "no description yet"}
             </div>

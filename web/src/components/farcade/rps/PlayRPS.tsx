@@ -3,15 +3,22 @@
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import useDeployment from "@/hooks/useDeployment";
 import { executeFlow } from '@/services/viemService';
-import { useReadGameFactoryGetGames, useWriteGame, useWriteGameExecuteFlow } from '@/generated';
+import { useReadGameFactoryGetGames, useReadQueueSessionGetPlayerCount, useWriteGame, useWriteGameExecuteFlow } from '@/generated';
 import { GameFuncParams } from '@/domain/Domain';
 import { useAccount } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
+import { Address } from 'viem';
 
-export default function PlayRPS() {
+type PlayRPSProps = {
+    gameAddress: Address;
+}
+
+export default function PlayRPS(props: PlayRPSProps) {
 
     const { deploy } = useDeployment();
     const { data: games } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
+     const {data: queueSize, error: quueError} = useReadQueueSessionGetPlayerCount({address:"0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [props.gameAddress]});
+    
     const { address } = useAccount();
 
     const { data, isPending, isSuccess, error,  writeContract } = useWriteGame();
@@ -31,7 +38,7 @@ export default function PlayRPS() {
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
         console.log("params", params);
-        writeContract({ address: '0x5671A42608c06180CfE1c86919d68a65d99F450E', functionName: "executeFlow", args: ["playRPS", params] });
+        writeContract({ address: props.gameAddress, functionName: "executeFlow", args: ["playRPS", params] });
 
 
 
@@ -67,6 +74,13 @@ export default function PlayRPS() {
         
             </div>
             <div>{JSON.stringify(error?.message)}</div>
+
+            <div>
+                There are {queueSize?.toString()} players in the queue.
+            </div>
+            <div>
+                nope {JSON.stringify(quueError)}
+            </div>
         </section >
     );
 }

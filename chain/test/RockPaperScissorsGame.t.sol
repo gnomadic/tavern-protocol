@@ -66,10 +66,14 @@ contract RockPaperScissorsGame is TavernTest {
   }
 
   function test_first_join() public {
+    vm.expectEmit();
+
     clearParams(joinParams);
 
     joinParams.addresses.push(AddressKey('player', address(1)));
     joinParams.uints.push(UintKey('action', 1));
+
+    emit QueueSession.JoinedQueue(address(1), 1);
     liveGame.executeFlow('playRPS', joinParams);
 
     uint256 playerCount = queueComponent.getPlayerCount(liveGame);
@@ -81,6 +85,9 @@ contract RockPaperScissorsGame is TavernTest {
 
     uint256 action = rpsEntity.getPlayerAction(address(1));
     assertEq(action, 1);
+
+    uint256 balance = rewardToken.balanceOf(address(1));
+    assertEq(balance, 0);
   }
 
   function test_second_win() public {
@@ -94,6 +101,8 @@ contract RockPaperScissorsGame is TavernTest {
     //player 1 joins with a rock
     joinParams.addresses.push(AddressKey('player', address(1)));
     joinParams.uints.push(UintKey('action', 1));
+
+    
     vm.prank(address(1));
     liveGame.executeFlow('playRPS', joinParams);
 
@@ -113,7 +122,7 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(winner, address(2));
 
     balance = rewardToken.balanceOf(address(2));
-    assertEq(balance, 3);
+    assertEq(balance, 3 * 10 ** 18);
   }
 
   function test_second_lose() public {
@@ -148,7 +157,7 @@ contract RockPaperScissorsGame is TavernTest {
     balance = rewardToken.balanceOf(address(2));
     assertEq(balance, 0);
     balance = rewardToken.balanceOf(address(1));
-    assertEq(balance, 3);
+    assertEq(balance, 3 * 10 ** 18);
   }
 
   function test_second_tie() public {
@@ -182,9 +191,9 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(tie2, address(1));
 
     uint256 balance = rewardToken.balanceOf(address(2));
-    assertEq(balance, 1);
+    assertEq(balance, 1 * 10 ** 18);
     balance = rewardToken.balanceOf(address(1));
-    assertEq(balance, 1);
+    assertEq(balance, 1 * 10 ** 18);
   }
 
   function deployGame() public {

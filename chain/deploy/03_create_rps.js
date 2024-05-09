@@ -11,7 +11,7 @@ module.exports = async (hre) => {
   //   // ------------------------------------- deploy
 
 
-  const gameName = "Rock Paper Scissors";
+  const gameName = "Rock Paper Scissors 3";
 
   const gameFactory = await getDeployedContract("GameFactory");
   const queueComponent = await getDeployedContract("QueueSession");
@@ -29,8 +29,8 @@ module.exports = async (hre) => {
   let tx;
   if (!exists) {
     console.log("creating game");
-    // tx = await gameFactory.createGame(deployer, gameName);
-    // await tx.wait();
+    tx = await gameFactory.createGame(deployer, gameName);
+    await tx.wait();
   } else{
     console.log("game exists");
   }
@@ -85,6 +85,17 @@ module.exports = async (hre) => {
     console.log("adding Reward");
     tx = await game.addComponent(rewardComponent.target);
     await tx.wait();
+
+
+    tx = await rewardComponent.setReward(game.target, ticket.target);
+    await tx.wait();
+  
+    let rewardEnt = await game.getEntity("rewardAddress");
+  
+    tx = await ticket.updateMinter(rewardEnt)
+    await tx.wait();
+
+
   } else {
     console.log("reward exists");
   }
@@ -105,8 +116,7 @@ module.exports = async (hre) => {
     console.log("gameUrl exists");
   }
 
-  tx = await rewardComponent.setReward(game.target, ticket.target);
-  await tx.wait();
+  
 
   if (flows === undefined || flows.length === 0) {
     console.log("adding flows");

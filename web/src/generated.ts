@@ -18,6 +18,32 @@ import {
 
 export const componentRegistryAbi = [
   {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'module',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'ModeleUnregistered',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'module',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'ModuleRegistered',
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     inputs: [],
@@ -66,32 +92,6 @@ export const componentRegistryAbi = [
     name: 'unRegister',
     outputs: [],
   },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'module',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
-    name: 'ModeleUnregistered',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'module',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
-    name: 'ModuleRegistered',
-  },
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +100,105 @@ export const componentRegistryAbi = [
 
 export const d7Abi = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
+  { type: 'error', inputs: [], name: 'ApprovalCallerNotOwnerNorApproved' },
+  { type: 'error', inputs: [], name: 'ApprovalQueryForNonexistentToken' },
+  { type: 'error', inputs: [], name: 'BalanceQueryForZeroAddress' },
+  { type: 'error', inputs: [], name: 'MintERC2309QuantityExceedsLimit' },
+  { type: 'error', inputs: [], name: 'MintToZeroAddress' },
+  { type: 'error', inputs: [], name: 'MintZeroQuantity' },
+  { type: 'error', inputs: [], name: 'NotCompatibleWithSpotMints' },
+  { type: 'error', inputs: [], name: 'OwnerQueryForNonexistentToken' },
+  { type: 'error', inputs: [], name: 'OwnershipNotInitializedForExtraData' },
+  { type: 'error', inputs: [], name: 'SequentialMintExceedsLimit' },
+  { type: 'error', inputs: [], name: 'SequentialUpToTooSmall' },
+  { type: 'error', inputs: [], name: 'SpotMintTokenIdTooSmall' },
+  { type: 'error', inputs: [], name: 'TokenAlreadyExists' },
+  { type: 'error', inputs: [], name: 'TransferCallerNotOwnerNorApproved' },
+  { type: 'error', inputs: [], name: 'TransferFromIncorrectOwner' },
+  { type: 'error', inputs: [], name: 'TransferToNonERC721ReceiverImplementer' },
+  { type: 'error', inputs: [], name: 'TransferToZeroAddress' },
+  { type: 'error', inputs: [], name: 'URIQueryForNonexistentToken' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'approved',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'tokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'operator',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'ApprovalForAll',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'fromTokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'toTokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+    ],
+    name: 'ConsecutiveTransfer',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'tokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+    ],
+    name: 'Transfer',
+  },
   {
     stateMutability: 'payable',
     type: 'function',
@@ -227,105 +326,6 @@ export const d7Abi = [
     name: 'transferFrom',
     outputs: [],
   },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'approved',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'tokenId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true,
-      },
-    ],
-    name: 'Approval',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
-    ],
-    name: 'ApprovalForAll',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'fromTokenId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true,
-      },
-      {
-        name: 'toTokenId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-    ],
-    name: 'ConsecutiveTransfer',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'tokenId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true,
-      },
-    ],
-    name: 'Transfer',
-  },
-  { type: 'error', inputs: [], name: 'ApprovalCallerNotOwnerNorApproved' },
-  { type: 'error', inputs: [], name: 'ApprovalQueryForNonexistentToken' },
-  { type: 'error', inputs: [], name: 'BalanceQueryForZeroAddress' },
-  { type: 'error', inputs: [], name: 'MintERC2309QuantityExceedsLimit' },
-  { type: 'error', inputs: [], name: 'MintToZeroAddress' },
-  { type: 'error', inputs: [], name: 'MintZeroQuantity' },
-  { type: 'error', inputs: [], name: 'NotCompatibleWithSpotMints' },
-  { type: 'error', inputs: [], name: 'OwnerQueryForNonexistentToken' },
-  { type: 'error', inputs: [], name: 'OwnershipNotInitializedForExtraData' },
-  { type: 'error', inputs: [], name: 'SequentialMintExceedsLimit' },
-  { type: 'error', inputs: [], name: 'SequentialUpToTooSmall' },
-  { type: 'error', inputs: [], name: 'SpotMintTokenIdTooSmall' },
-  { type: 'error', inputs: [], name: 'TokenAlreadyExists' },
-  { type: 'error', inputs: [], name: 'TransferCallerNotOwnerNorApproved' },
-  { type: 'error', inputs: [], name: 'TransferFromIncorrectOwner' },
-  { type: 'error', inputs: [], name: 'TransferToNonERC721ReceiverImplementer' },
-  { type: 'error', inputs: [], name: 'TransferToZeroAddress' },
-  { type: 'error', inputs: [], name: 'URIQueryForNonexistentToken' },
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -333,6 +333,32 @@ export const d7Abi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const gameAbi = [
+  { type: 'error', inputs: [], name: 'FlowAlreadyExists' },
+  { type: 'error', inputs: [], name: 'FlowDoesNotExist' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'component', internalType: 'address', type: 'address' },
+      { name: 'functionKey', internalType: 'string', type: 'string' },
+    ],
+    name: 'FlowExecutionError',
+  },
+  { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  { type: 'error', inputs: [], name: 'NotInitializing' },
+  { type: 'error', inputs: [], name: 'OnlyGM' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'version',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+    ],
+    name: 'Initialized',
+  },
   {
     stateMutability: 'nonpayable',
     type: 'function',
@@ -597,32 +623,6 @@ export const gameAbi = [
     name: 'validateIsModule',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'version',
-        internalType: 'uint64',
-        type: 'uint64',
-        indexed: false,
-      },
-    ],
-    name: 'Initialized',
-  },
-  { type: 'error', inputs: [], name: 'FlowAlreadyExists' },
-  { type: 'error', inputs: [], name: 'FlowDoesNotExist' },
-  {
-    type: 'error',
-    inputs: [
-      { name: 'component', internalType: 'address', type: 'address' },
-      { name: 'functionKey', internalType: 'string', type: 'string' },
-    ],
-    name: 'FlowExecutionError',
-  },
-  { type: 'error', inputs: [], name: 'InvalidInitialization' },
-  { type: 'error', inputs: [], name: 'NotInitializing' },
-  { type: 'error', inputs: [], name: 'OnlyGM' },
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -631,6 +631,21 @@ export const gameAbi = [
 
 export const gameFactoryAbi = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
+  { type: 'error', inputs: [], name: 'OnlyAdmin' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'gm', internalType: 'address', type: 'address', indexed: false },
+      {
+        name: 'game',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'GameCreated',
+  },
   {
     stateMutability: 'view',
     type: 'function',
@@ -743,21 +758,6 @@ export const gameFactoryAbi = [
     name: 'setGameContract',
     outputs: [],
   },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'gm', internalType: 'address', type: 'address', indexed: false },
-      {
-        name: 'game',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
-    name: 'GameCreated',
-  },
-  { type: 'error', inputs: [], name: 'OnlyAdmin' },
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -849,6 +849,303 @@ export const iGameAbi = [
     inputs: [{ name: 'module', internalType: 'address', type: 'address' }],
     name: 'validateIsModule',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QueueSession
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const queueSessionAbi = [
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'player',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'queueSize',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'JoinedQueue',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'player1',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'player2',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'MatchMade',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'abis',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'functions',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'game', internalType: 'contract IGame', type: 'address' }],
+    name: 'getPlayerCount',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSummary',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ComponentSummary',
+        type: 'tuple',
+        components: [
+          { name: 'component', internalType: 'address', type: 'address' },
+          { name: 'functions', internalType: 'string[]', type: 'string[]' },
+          { name: 'abis', internalType: 'string[]', type: 'string[]' },
+          { name: 'required', internalType: 'string[]', type: 'string[]' },
+          { name: 'displayName', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'game', internalType: 'address', type: 'address' }],
+    name: 'initialize',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'executor', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'joinGame',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'required',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'executor', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'setMatchOrWait',
+    outputs: [],
+  },
+] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RewardERC20
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const rewardErc20Abi = [
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'abis',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'functions',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSummary',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ComponentSummary',
+        type: 'tuple',
+        components: [
+          { name: 'component', internalType: 'address', type: 'address' },
+          { name: 'functions', internalType: 'string[]', type: 'string[]' },
+          { name: 'abis', internalType: 'string[]', type: 'string[]' },
+          { name: 'required', internalType: 'string[]', type: 'string[]' },
+          { name: 'displayName', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'game', internalType: 'address', type: 'address' }],
+    name: 'initialize',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'required',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'executor', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'reward',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'game', internalType: 'contract IGame', type: 'address' },
+      { name: '_reward', internalType: 'address', type: 'address' },
+    ],
+    name: 'setReward',
+    outputs: [],
+  },
+] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RockPaperScissors
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const rockPaperScissorsAbi = [
+  { type: 'error', inputs: [], name: 'NoActionYet' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'player1',
+        internalType: 'struct RockPaperScissors.Hand',
+        type: 'tuple',
+        components: [
+          { name: 'player', internalType: 'address', type: 'address' },
+          { name: 'actionIndex', internalType: 'uint256', type: 'uint256' },
+        ],
+        indexed: false,
+      },
+      {
+        name: 'player2',
+        internalType: 'struct RockPaperScissors.Hand',
+        type: 'tuple',
+        components: [
+          { name: 'player', internalType: 'address', type: 'address' },
+          { name: 'actionIndex', internalType: 'uint256', type: 'uint256' },
+        ],
+        indexed: false,
+      },
+      {
+        name: 'winner',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'GameResult',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'abis',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'functions',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSummary',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ComponentSummary',
+        type: 'tuple',
+        components: [
+          { name: 'component', internalType: 'address', type: 'address' },
+          { name: 'functions', internalType: 'string[]', type: 'string[]' },
+          { name: 'abis', internalType: 'string[]', type: 'string[]' },
+          { name: 'required', internalType: 'string[]', type: 'string[]' },
+          { name: 'displayName', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'game', internalType: 'address', type: 'address' }],
+    name: 'initialize',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'executor', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'oneOnOne',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'required',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
 ] as const;
 
@@ -1766,6 +2063,356 @@ export const useSimulateIGameInitialize =
     functionName: 'initialize',
   });
 
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const useReadQueueSession = /*#__PURE__*/ createUseReadContract({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"abis"`
+ */
+export const useReadQueueSessionAbis = /*#__PURE__*/ createUseReadContract({
+  abi: queueSessionAbi,
+  functionName: 'abis',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"functions"`
+ */
+export const useReadQueueSessionFunctions = /*#__PURE__*/ createUseReadContract(
+  { abi: queueSessionAbi, functionName: 'functions' }
+);
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"getPlayerCount"`
+ */
+export const useReadQueueSessionGetPlayerCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: queueSessionAbi,
+    functionName: 'getPlayerCount',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const useReadQueueSessionGetSummary =
+  /*#__PURE__*/ createUseReadContract({
+    abi: queueSessionAbi,
+    functionName: 'getSummary',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"required"`
+ */
+export const useReadQueueSessionRequired = /*#__PURE__*/ createUseReadContract({
+  abi: queueSessionAbi,
+  functionName: 'required',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const useWriteQueueSession = /*#__PURE__*/ createUseWriteContract({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteQueueSessionInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: queueSessionAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ */
+export const useWriteQueueSessionJoinGame =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: queueSessionAbi,
+    functionName: 'joinGame',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"setMatchOrWait"`
+ */
+export const useWriteQueueSessionSetMatchOrWait =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: queueSessionAbi,
+    functionName: 'setMatchOrWait',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const useSimulateQueueSession = /*#__PURE__*/ createUseSimulateContract({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateQueueSessionInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: queueSessionAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ */
+export const useSimulateQueueSessionJoinGame =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: queueSessionAbi,
+    functionName: 'joinGame',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"setMatchOrWait"`
+ */
+export const useSimulateQueueSessionSetMatchOrWait =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: queueSessionAbi,
+    functionName: 'setMatchOrWait',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const useWatchQueueSessionEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: queueSessionAbi });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link queueSessionAbi}__ and `eventName` set to `"JoinedQueue"`
+ */
+export const useWatchQueueSessionJoinedQueueEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: queueSessionAbi,
+    eventName: 'JoinedQueue',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link queueSessionAbi}__ and `eventName` set to `"MatchMade"`
+ */
+export const useWatchQueueSessionMatchMadeEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: queueSessionAbi,
+    eventName: 'MatchMade',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__
+ */
+export const useReadRewardErc20 = /*#__PURE__*/ createUseReadContract({
+  abi: rewardErc20Abi,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"abis"`
+ */
+export const useReadRewardErc20Abis = /*#__PURE__*/ createUseReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'abis',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"functions"`
+ */
+export const useReadRewardErc20Functions = /*#__PURE__*/ createUseReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'functions',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"getSummary"`
+ */
+export const useReadRewardErc20GetSummary = /*#__PURE__*/ createUseReadContract(
+  { abi: rewardErc20Abi, functionName: 'getSummary' }
+);
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"required"`
+ */
+export const useReadRewardErc20Required = /*#__PURE__*/ createUseReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'required',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__
+ */
+export const useWriteRewardErc20 = /*#__PURE__*/ createUseWriteContract({
+  abi: rewardErc20Abi,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteRewardErc20Initialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: rewardErc20Abi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ */
+export const useWriteRewardErc20Reward = /*#__PURE__*/ createUseWriteContract({
+  abi: rewardErc20Abi,
+  functionName: 'reward',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"setReward"`
+ */
+export const useWriteRewardErc20SetReward =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: rewardErc20Abi,
+    functionName: 'setReward',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__
+ */
+export const useSimulateRewardErc20 = /*#__PURE__*/ createUseSimulateContract({
+  abi: rewardErc20Abi,
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateRewardErc20Initialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ */
+export const useSimulateRewardErc20Reward =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'reward',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"setReward"`
+ */
+export const useSimulateRewardErc20SetReward =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'setReward',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const useReadRockPaperScissors = /*#__PURE__*/ createUseReadContract({
+  abi: rockPaperScissorsAbi,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"abis"`
+ */
+export const useReadRockPaperScissorsAbis = /*#__PURE__*/ createUseReadContract(
+  { abi: rockPaperScissorsAbi, functionName: 'abis' }
+);
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"functions"`
+ */
+export const useReadRockPaperScissorsFunctions =
+  /*#__PURE__*/ createUseReadContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'functions',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const useReadRockPaperScissorsGetSummary =
+  /*#__PURE__*/ createUseReadContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'getSummary',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"required"`
+ */
+export const useReadRockPaperScissorsRequired =
+  /*#__PURE__*/ createUseReadContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'required',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const useWriteRockPaperScissors = /*#__PURE__*/ createUseWriteContract({
+  abi: rockPaperScissorsAbi,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteRockPaperScissorsInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"oneOnOne"`
+ */
+export const useWriteRockPaperScissorsOneOnOne =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'oneOnOne',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const useSimulateRockPaperScissors =
+  /*#__PURE__*/ createUseSimulateContract({ abi: rockPaperScissorsAbi });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateRockPaperScissorsInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"oneOnOne"`
+ */
+export const useSimulateRockPaperScissorsOneOnOne =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'oneOnOne',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const useWatchRockPaperScissorsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: rockPaperScissorsAbi });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `eventName` set to `"GameResult"`
+ */
+export const useWatchRockPaperScissorsGameResultEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: rockPaperScissorsAbi,
+    eventName: 'GameResult',
+  });
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Action
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2644,3 +3291,345 @@ export const simulateIGameInitialize = /*#__PURE__*/ createSimulateContract({
   abi: iGameAbi,
   functionName: 'initialize',
 });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const readQueueSession = /*#__PURE__*/ createReadContract({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"abis"`
+ */
+export const readQueueSessionAbis = /*#__PURE__*/ createReadContract({
+  abi: queueSessionAbi,
+  functionName: 'abis',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"functions"`
+ */
+export const readQueueSessionFunctions = /*#__PURE__*/ createReadContract({
+  abi: queueSessionAbi,
+  functionName: 'functions',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"getPlayerCount"`
+ */
+export const readQueueSessionGetPlayerCount = /*#__PURE__*/ createReadContract({
+  abi: queueSessionAbi,
+  functionName: 'getPlayerCount',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const readQueueSessionGetSummary = /*#__PURE__*/ createReadContract({
+  abi: queueSessionAbi,
+  functionName: 'getSummary',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"required"`
+ */
+export const readQueueSessionRequired = /*#__PURE__*/ createReadContract({
+  abi: queueSessionAbi,
+  functionName: 'required',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const writeQueueSession = /*#__PURE__*/ createWriteContract({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeQueueSessionInitialize = /*#__PURE__*/ createWriteContract({
+  abi: queueSessionAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ */
+export const writeQueueSessionJoinGame = /*#__PURE__*/ createWriteContract({
+  abi: queueSessionAbi,
+  functionName: 'joinGame',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"setMatchOrWait"`
+ */
+export const writeQueueSessionSetMatchOrWait =
+  /*#__PURE__*/ createWriteContract({
+    abi: queueSessionAbi,
+    functionName: 'setMatchOrWait',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const simulateQueueSession = /*#__PURE__*/ createSimulateContract({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateQueueSessionInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: queueSessionAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ */
+export const simulateQueueSessionJoinGame =
+  /*#__PURE__*/ createSimulateContract({
+    abi: queueSessionAbi,
+    functionName: 'joinGame',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"setMatchOrWait"`
+ */
+export const simulateQueueSessionSetMatchOrWait =
+  /*#__PURE__*/ createSimulateContract({
+    abi: queueSessionAbi,
+    functionName: 'setMatchOrWait',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link queueSessionAbi}__
+ */
+export const watchQueueSessionEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: queueSessionAbi,
+});
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link queueSessionAbi}__ and `eventName` set to `"JoinedQueue"`
+ */
+export const watchQueueSessionJoinedQueueEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: queueSessionAbi,
+    eventName: 'JoinedQueue',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link queueSessionAbi}__ and `eventName` set to `"MatchMade"`
+ */
+export const watchQueueSessionMatchMadeEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: queueSessionAbi,
+    eventName: 'MatchMade',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__
+ */
+export const readRewardErc20 = /*#__PURE__*/ createReadContract({
+  abi: rewardErc20Abi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"abis"`
+ */
+export const readRewardErc20Abis = /*#__PURE__*/ createReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'abis',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"functions"`
+ */
+export const readRewardErc20Functions = /*#__PURE__*/ createReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'functions',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"getSummary"`
+ */
+export const readRewardErc20GetSummary = /*#__PURE__*/ createReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'getSummary',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"required"`
+ */
+export const readRewardErc20Required = /*#__PURE__*/ createReadContract({
+  abi: rewardErc20Abi,
+  functionName: 'required',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__
+ */
+export const writeRewardErc20 = /*#__PURE__*/ createWriteContract({
+  abi: rewardErc20Abi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"initialize"`
+ */
+export const writeRewardErc20Initialize = /*#__PURE__*/ createWriteContract({
+  abi: rewardErc20Abi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ */
+export const writeRewardErc20Reward = /*#__PURE__*/ createWriteContract({
+  abi: rewardErc20Abi,
+  functionName: 'reward',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"setReward"`
+ */
+export const writeRewardErc20SetReward = /*#__PURE__*/ createWriteContract({
+  abi: rewardErc20Abi,
+  functionName: 'setReward',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__
+ */
+export const simulateRewardErc20 = /*#__PURE__*/ createSimulateContract({
+  abi: rewardErc20Abi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateRewardErc20Initialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ */
+export const simulateRewardErc20Reward = /*#__PURE__*/ createSimulateContract({
+  abi: rewardErc20Abi,
+  functionName: 'reward',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"setReward"`
+ */
+export const simulateRewardErc20SetReward =
+  /*#__PURE__*/ createSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'setReward',
+  });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const readRockPaperScissors = /*#__PURE__*/ createReadContract({
+  abi: rockPaperScissorsAbi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"abis"`
+ */
+export const readRockPaperScissorsAbis = /*#__PURE__*/ createReadContract({
+  abi: rockPaperScissorsAbi,
+  functionName: 'abis',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"functions"`
+ */
+export const readRockPaperScissorsFunctions = /*#__PURE__*/ createReadContract({
+  abi: rockPaperScissorsAbi,
+  functionName: 'functions',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const readRockPaperScissorsGetSummary = /*#__PURE__*/ createReadContract(
+  { abi: rockPaperScissorsAbi, functionName: 'getSummary' }
+);
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"required"`
+ */
+export const readRockPaperScissorsRequired = /*#__PURE__*/ createReadContract({
+  abi: rockPaperScissorsAbi,
+  functionName: 'required',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const writeRockPaperScissors = /*#__PURE__*/ createWriteContract({
+  abi: rockPaperScissorsAbi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writeRockPaperScissorsInitialize =
+  /*#__PURE__*/ createWriteContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"oneOnOne"`
+ */
+export const writeRockPaperScissorsOneOnOne = /*#__PURE__*/ createWriteContract(
+  { abi: rockPaperScissorsAbi, functionName: 'oneOnOne' }
+);
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const simulateRockPaperScissors = /*#__PURE__*/ createSimulateContract({
+  abi: rockPaperScissorsAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulateRockPaperScissorsInitialize =
+  /*#__PURE__*/ createSimulateContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"oneOnOne"`
+ */
+export const simulateRockPaperScissorsOneOnOne =
+  /*#__PURE__*/ createSimulateContract({
+    abi: rockPaperScissorsAbi,
+    functionName: 'oneOnOne',
+  });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link rockPaperScissorsAbi}__
+ */
+export const watchRockPaperScissorsEvent =
+  /*#__PURE__*/ createWatchContractEvent({ abi: rockPaperScissorsAbi });
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `eventName` set to `"GameResult"`
+ */
+export const watchRockPaperScissorsGameResultEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: rockPaperScissorsAbi,
+    eventName: 'GameResult',
+  });

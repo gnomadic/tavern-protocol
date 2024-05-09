@@ -18,7 +18,7 @@ export default function ExploreGames() {
     return (
         <div className="pt-12">
             <p> Explore Games that others have deployed on {deploy.chain} </p>
-            <p> There are {gameCount ? gameCount.toString() : 0}  </p>
+            <p> There are {gameCount ? gameCount.toString() : '...'}  </p>
         
             <ul className=''>
 

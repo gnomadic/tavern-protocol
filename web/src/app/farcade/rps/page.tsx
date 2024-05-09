@@ -18,6 +18,8 @@ interface SearchParams {
   action: string;
 }
 
+const GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
+
 export async function generateMetadata({
 
 }: {
@@ -136,7 +138,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
       <section className='py-4'>
         <Divider />
       </section>
-      <PlayRPS />
+      <PlayRPS gameAddress={GAME_ADDRESS}/>
       {/* <div className='pb-8 text-4xl'>
         Try it out on
       </div>

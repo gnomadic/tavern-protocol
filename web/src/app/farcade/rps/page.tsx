@@ -7,7 +7,6 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { FrameButtonMetadata, getFrameMetadata } from '@coinbase/onchainkit';
 import Players from '@/components/game/Players';
 import PlayRPS from '@/components/farcade/rps/PlayRPS';
-import { Play } from 'next/font/google';
 
 
 interface Params {
@@ -138,7 +137,6 @@ export default function Game({ params }: { params: { address: string, chainid: s
         <Divider />
       </section>
       <PlayRPS />
-      <Players gameAddress='0xa040245440C7711232C0aB3fA5a62D09bB266818' refresh />
       {/* <div className='pb-8 text-4xl'>
         Try it out on
       </div>

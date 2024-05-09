@@ -16,11 +16,6 @@ export default function PlayRPS() {
 
     const { data, isPending, isSuccess, error,  writeContract } = useWriteGame();
 
-    const { throwHash, throwError, throwPending, throwSuccess, writeThrow } = useThrowBall({ game: deploy.gameFactory, moduleAddress: deploy.componentRegistry, player: address! });
-
-
-
-
     const executeFlowTx = (action: number) => {
         console.log("games and address", games, address)
         if (!games || !address) {
@@ -35,8 +30,8 @@ export default function PlayRPS() {
         }
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
-        writeContract({ address: '0xa040245440C7711232C0aB3fA5a62D09bB266818', functionName: "executeFlow", args: ["playRPS", params] });
-        writeThrow();
+        console.log("params", params);
+        writeContract({ address: '0x5671A42608c06180CfE1c86919d68a65d99F450E', functionName: "executeFlow", args: ["playRPS", params] });
 
 
 
@@ -69,15 +64,7 @@ export default function PlayRPS() {
                         SCISSORS
                     </button>
                 </div>
-                
-                <button className="pl-4 border-slate-400 border-[2px] px-24 py-4 mt-4"
-                    disabled={throwPending && !throwSuccess}
-                    onClick={() => {
-                        writeThrow()
-                    }}
-                >
-                    {throwSuccess ? `Thrown` : throwPending ? 'Confirming...' : throwError ? `Error!` : `Throw`}
-                </button>
+        
             </div>
             <div>{JSON.stringify(error?.message)}</div>
         </section >

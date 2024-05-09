@@ -42,59 +42,6 @@ contract OneOff is Script {
 
   
 
-    // IGame liveGame = factory.games(0);
-
-    joinParams.addresses.push(AddressKey('player', address(1)));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(2));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(3));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(4));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(5));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(6));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(7));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(8));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(9));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(10));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    joinParams.addresses[0] = AddressKey('player', address(11));
-    liveGame.executeFlow('joinCatch', joinParams);
-
-    // neighborInteraction.joinSession(liveGame, address(1));
-    // neighborInteraction.joinSession(liveGame, address(2));
-    // neighborInteraction.joinSession(liveGame, address(3));
-    // neighborInteraction.joinSession(liveGame, address(4));
-    // neighborInteraction.joinSession(liveGame, address(5));
-    // neighborInteraction.joinSession(liveGame, address(6));
-    // neighborInteraction.joinSession(liveGame, address(7));
-    // neighborInteraction.joinSession(liveGame, address(8));
-    // neighborInteraction.joinSession(liveGame, address(9));
-    // neighborInteraction.joinSession(liveGame, address(10));
-    // neighborInteraction.joinSession(liveGame, address(11));
-    // neighborInteraction.joinSession(liveGame, address(12));
-    // neighborInteraction.joinSession(liveGame, address(13));
-    // neighborInteraction.joinSession(liveGame, address(14));
-    // neighborInteraction.joinSession(liveGame, address(15));
-    // neighborInteraction.joinSession(liveGame, address(16));
-    // neighborInteraction.joinSession(liveGame, address(17));
-
     vm.stopBroadcast();
   }
 

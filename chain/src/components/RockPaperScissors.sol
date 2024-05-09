@@ -88,16 +88,16 @@ event GameResult(Hand player1, Hand player2, address winner);
   function play(
     Hand memory player1,
     Hand memory player2
-  ) internal view returns (address winner) {
+  ) internal view returns (address) {
     //TODO require both players to have a nonzero index
-    uint256 player1Action = player1.actionIndex; //playerAction[player1];
-    uint256 player2Action = player2.actionIndex; //playerAction[player2];
+    uint256 player1Action = player1.actionIndex;
+    uint256 player2Action = player2.actionIndex;
+    address winner = address(0);
 
     if (player1Action == player2Action) {
       console.log('It is a tie');
-      winner = address(0);
     } else if (
-      (player1Action == 1 && player2Action == 3) ||
+      (player1Action == 1  && player2Action == 3) ||
       (player1Action == 2 && player2Action == 1) ||
       (player1Action == 3 && player2Action == 2)
     ) {
@@ -107,5 +107,6 @@ event GameResult(Hand player1, Hand player2, address winner);
       winner = player2.player;
       console.log('Player 2 wins');
     }
+    return winner;
   }
 }

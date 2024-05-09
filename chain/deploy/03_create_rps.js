@@ -17,6 +17,7 @@ module.exports = async (hre) => {
   const queueComponent = await getDeployedContract("QueueSession");
   const RPS = await getDeployedContract("RockPaperScissors");
   const rewardComponent = await getDeployedContract("RewardERC20");
+  const ticket = await getDeployedContract("FarcadeAlphaTestTicket");
 
   let gameSummary = await getGame(gameName);
 
@@ -103,6 +104,9 @@ module.exports = async (hre) => {
   } else {
     console.log("gameUrl exists");
   }
+
+  tx = await rewardComponent.setReward(game.target, ticket.target);
+  await tx.wait();
 
   if (flows === undefined || flows.length === 0) {
     console.log("adding flows");

@@ -34,6 +34,8 @@ contract RewardERC20 is IComponent {
     Reward20Entity(game.getEntity('rewardAddress')).setReward(_reward);
   }
 
+
+  // TODO rename to indicate it is sending ^ 18 rewards
   function reward(address executor, address gameAddress) public {
     IGame game = IGame(gameAddress);
 
@@ -44,21 +46,22 @@ contract RewardERC20 is IComponent {
     if (player != address(0)) {
       Reward20Entity(game.getEntity('rewardAddress')).sendReward(
         player,
-        amount
+        amount * 10**18
       );
       return;
     }
 
     address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
     address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
-
-    Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-      tiePlayer1,
-      amount
-    );
-    Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-      tiePlayer2,
-      amount
-    );
+    if (tiePlayer1 != address(0) && tiePlayer2 != address(0)) {
+      Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+        tiePlayer1,
+        amount * 10**18
+      );
+      Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+        tiePlayer2,
+        amount * 10**18
+      );
+    }
   }
 }

@@ -23,7 +23,7 @@ export default function WelcomeRPS(props: imageProps) {
         fontSize: 32,
         fontWeight: 600,
         color: "#fff",
-        backgroundImage: 'url(https://ipfs.io/ipfs/QmWfMMZnnrTiyXknqDEFt4gMNjkxz5bvRMYdwsuPH2C3R4)',
+        // backgroundImage: 'url(https://ipfs.io/ipfs/QmWfMMZnnrTiyXknqDEFt4gMNjkxz5bvRMYdwsuPH2C3R4)',
       }}
     >
 

@@ -27,28 +27,39 @@ export async function generateMetadata({
   }): Promise<Metadata> {
 
   const postURL = `${process.env.NEXT_PUBLIC_URL}/farcade/rps/frame?action=`;
-  const imageURL = `${process.env.NEXT_PUBLIC_URL}/farcade/rps/frame/images?page=one`;
+  const txURL = `${process.env.NEXT_PUBLIC_URL}/farcade/rps/frame/txdata?action=`;
+  const imageURL = `${process.env.NEXT_PUBLIC_URL}/farcade/rps/frame/images`;
 
+
+  // let rockButton: FrameButtonMetadata =
+  // {
+  //   action: "post",
+  //   label: "ROCK",
+  //   target: `${postURL}rock&game=${GAME_ADDRESS}`,
+  // }
 
   let rockButton: FrameButtonMetadata =
   {
-    action: "post",
+    action: "tx",
     label: "ROCK",
-    target: `${postURL}rock`,
+    target: `${txURL}rock&game=${GAME_ADDRESS}`,
+    postUrl: `${postURL}rock&game=${GAME_ADDRESS}`,
+    
+    
   }
 
   let paperButton: FrameButtonMetadata =
   {
     action: "post",
     label: "PAPER",
-    target: `${postURL}paper`,
+    target: `${postURL}paper&game=${GAME_ADDRESS}`,
   }
 
   let scissorsButton: FrameButtonMetadata =
   {
     action: "post",
     label: "SCISSORS",
-    target: `${postURL}scissors`,
+    target: `${postURL}scissors&game=${GAME_ADDRESS}`,
   }
 
   let tavernButton: FrameButtonMetadata =

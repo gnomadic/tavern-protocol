@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next";
 import { frames } from "./frames";
-import WelcomeRPS from "../images/WelcomeRPS";
+import WelcomeRPS from "./images/WelcomeRPS";
 
 
 
@@ -17,24 +17,29 @@ const handleRequest = frames(async (ctx) => {
   //   throw new Error("Invalid Frame");
   // }
 
-  const action = ctx.searchParams.value;
+  const action = ctx.searchParams.action;
+  const game = ctx.searchParams.game;
   if (!action) {
     
   }
+  console.log("action", action);
+  console.log("game", game);
+
+  
 
 
   return {
     image: (
-      getImage(ctx.searchParams.value)
+      getImage(action)
     ),
     buttons: [
-      <Button action="post" target={{ pathname: "/rps", query: { value: "rock" } }}>
+      <Button action="post" target={{ pathname: "/rps/frame", query: { action: "rock" } }}>
         ROCK
       </Button>,
-      <Button action="post" target={{ pathname: "/rps", query: { value: "paper" } }}>
+      <Button action="post" target={{ pathname: "/rps/frame", query: { action: "paper" } }}>
         PAPER
       </Button>,
-      <Button action="post" target={{ pathname: "/rps", query: { value: "scissors" } }}>
+      <Button action="post" target={{ pathname: "/rps/frame", query: { action: "scissors" } }}>
         SCISSORS
       </Button>,
       <Button action="link" target={"https://docs.playtavern.com"}>
@@ -47,12 +52,12 @@ const handleRequest = frames(async (ctx) => {
 const getImage = (action: string) => {
   if (action === "rock") {
     return <WelcomeRPS
-      titleFirst="come play"
-      titleSecond="ROCK PAPER SCISSORS"
-      rowOneFirst="at the"
-      rowOneSecond="farcade"
-      rowTwoFirst="built on-chain with the"
-      rowTwoSecond="tavern game engine"
+    titleFirst="you played"
+    titleSecond="ROCK"
+    rowOneFirst="at the"
+    rowOneSecond="farcade"
+    rowTwoFirst="built on-chain with the"
+    rowTwoSecond="tavern"
     />
 
   } else if (action == "paper") {
@@ -81,7 +86,7 @@ const getImage = (action: string) => {
   rowOneFirst="at the"
   rowOneSecond="farcade"
   rowTwoFirst="built on-chain with the"
-  rowTwoSecond="tavern game engine"
+  rowTwoSecond="tavern"
   />
 }
 

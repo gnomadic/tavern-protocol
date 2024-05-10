@@ -1,5 +1,5 @@
 import { createFrames } from "frames.js/next";
-import { farcasterHubContext } from "frames.js/middleware";
+// import { farcasterHubContext } from "frames.js/middleware";
 
 // const baseUrl =  "http://localhost:3000";
 
@@ -17,6 +17,6 @@ const getBaseUrl = () => {
 export const frames = createFrames({
   basePath: "/farcade",
   baseUrl: getBaseUrl(),
-  middleware: [farcasterHubContext()],
+  // middleware: [farcasterHubContext()],
 
 });

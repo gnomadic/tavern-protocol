@@ -2,7 +2,7 @@
 import { Button } from "frames.js/next";
 import { frames } from "./frames";
 import WelcomeRPS from "./images/WelcomeRPS";
-import { GAME_ADDRESS } from "../page";
+import { RPS_GAME_ADDRESS } from "@/domain/deployments";
 
 
 
@@ -19,7 +19,7 @@ const handleRequest = frames(async (ctx) => {
   // }
 
   const action = ctx.searchParams.action;
-  const game = GAME_ADDRESS;
+  const game = RPS_GAME_ADDRESS;
   if (!action) {
 
   }

@@ -9,6 +9,7 @@ import Players from '@/components/game/Players';
 import PlayRPS from '@/components/farcade/rps/PlayRPS';
 import { fetchMetadata } from 'frames.js/next';
 import { getBaseUrl } from './frame/frames';
+import { RPS_GAME_ADDRESS } from '@/domain/deployments';
 
 
 interface Params {
@@ -20,7 +21,7 @@ interface SearchParams {
   action: string;
 }
 
-export const GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
+// export const GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
 
 export async function generateMetadata({
 
@@ -44,8 +45,8 @@ export async function generateMetadata({
   {
     action: "tx",
     label: "ROCK",
-    target: `${txURL}rock&game=${GAME_ADDRESS}`,
-    postUrl: `${postURL}rock&game=${GAME_ADDRESS}`,
+    target: `${txURL}rock&game=${RPS_GAME_ADDRESS}`,
+    postUrl: `${postURL}rock&game=${RPS_GAME_ADDRESS}`,
     
     
   }
@@ -54,14 +55,14 @@ export async function generateMetadata({
   {
     action: "post",
     label: "PAPER",
-    target: `${postURL}paper&game=${GAME_ADDRESS}`,
+    target: `${postURL}paper&game=${RPS_GAME_ADDRESS}`,
   }
 
   let scissorsButton: FrameButtonMetadata =
   {
     action: "post",
     label: "SCISSORS",
-    target: `${postURL}scissors&game=${GAME_ADDRESS}`,
+    target: `${postURL}scissors&game=${RPS_GAME_ADDRESS}`,
   }
 
   let tavernButton: FrameButtonMetadata =
@@ -164,7 +165,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
       <section className='py-4'>
         <Divider />
       </section>
-      <PlayRPS gameAddress={GAME_ADDRESS}/>
+      <PlayRPS gameAddress={RPS_GAME_ADDRESS}/>
       {/* <div className='pb-8 text-4xl'>
         Try it out on
       </div>

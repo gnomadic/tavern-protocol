@@ -17,11 +17,11 @@ export default function PlayRPS(props: PlayRPSProps) {
 
     const { deploy } = useDeployment();
     const { data: games } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-     const {data: queueSize, error: quueError} = useReadQueueSessionGetPlayerCount({address:"0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [props.gameAddress]});
-    
+    const { data: queueSize, error: quueError } = useReadQueueSessionGetPlayerCount({ address: "0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [props.gameAddress] });
+
     const { address } = useAccount();
 
-    const { data, isPending, isSuccess, error,  writeContract } = useWriteGame();
+    const { data, isPending, isSuccess, error, writeContract } = useWriteGame();
 
     const executeFlowTx = (action: number) => {
         console.log("games and address", games, address)
@@ -71,18 +71,18 @@ export default function PlayRPS(props: PlayRPSProps) {
                         SCISSORS
                     </button>
                 </div>
-        
+
             </div>
             <div>{JSON.stringify(error?.message)}</div>
 
             <div className='pt-12'>
                 There are {queueSize?.toString()} players in the queue.
             </div>
-            {error ? 
-            <div>
-                error {JSON.stringify(error?.message)}
-             </div> :<></>
-}
+            {error ?
+                <div>
+                    error {JSON.stringify(error?.message)}
+                </div> : <></>
+            }
         </section >
     );
 }

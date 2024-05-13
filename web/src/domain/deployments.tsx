@@ -1,4 +1,9 @@
+import { Address } from 'viem';
 import { Deployment } from './Domain';
+
+
+export const RPS_GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
+
 
 export const Deployments: { [key: string]: Deployment } = {
   // ethereum: {

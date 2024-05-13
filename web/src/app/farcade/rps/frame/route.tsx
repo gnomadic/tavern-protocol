@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next";
 import { frames } from "./frames";
-import WelcomeRPS from "../images/WelcomeRPS";
+import WelcomeRPS from "./images/WelcomeRPS";
+import { GAME_ADDRESS } from "../page";
 
 
 
@@ -17,28 +18,44 @@ const handleRequest = frames(async (ctx) => {
   //   throw new Error("Invalid Frame");
   // }
 
-  const action = ctx.searchParams.value;
+  const action = ctx.searchParams.action;
+  const game = GAME_ADDRESS;
   if (!action) {
-    
+
   }
+  console.log("action", action);
+  // console.log("game", game);
+
+  const postURL = `/rps/frame?action=`;
+  const txURL = `/rps/frame/txdata?action=`;
+  const imageURL = `/rps/frame/images`;
 
 
   return {
     image: (
-      getImage(ctx.searchParams.value)
+      getImage(action)
     ),
     buttons: [
-      <Button action="post" target={{ pathname: "/rps", query: { value: "rock" } }}>
+      <Button
+        action="tx"
+        target={{ pathname: "/rps/frame/txdata", query: { action: "rock", game: game } }}
+        post_url={{ pathname: "/rps/frame", query: { action: "scissors", game: game } }}>
         ROCK
       </Button>,
-      <Button action="post" target={{ pathname: "/rps", query: { value: "paper" } }}>
+      <Button
+        action="tx"
+        target={{ pathname: "/rps/frame/txdata", query: { action: "paper", game: game } }}
+        post_url={{ pathname: "/rps/frame", query: { action: "paper", game: game } }}>
         PAPER
       </Button>,
-      <Button action="post" target={{ pathname: "/rps", query: { value: "scissors" } }}>
+      <Button 
+      action="post" 
+      target={{ pathname: "/rps/frame", query: { action: "scissors" } }}>
         SCISSORS
       </Button>,
-      <Button action="link" target={"https://docs.playtavern.com"}>
-        Status
+      <Button
+        action="link" target={"https://www.playtavern.com"}>
+        TAVERN
       </Button>,
     ],
   };
@@ -47,12 +64,12 @@ const handleRequest = frames(async (ctx) => {
 const getImage = (action: string) => {
   if (action === "rock") {
     return <WelcomeRPS
-      titleFirst="come play"
-      titleSecond="ROCK PAPER SCISSORS"
+      titleFirst="you played"
+      titleSecond="ROCK"
       rowOneFirst="at the"
       rowOneSecond="farcade"
       rowTwoFirst="built on-chain with the"
-      rowTwoSecond="tavern game engine"
+      rowTwoSecond="tavern"
     />
 
   } else if (action == "paper") {
@@ -76,12 +93,12 @@ const getImage = (action: string) => {
   }
   // first load
   return <WelcomeRPS
-  titleFirst="come play"
-  titleSecond="ROCK PAPER SCISSORS"
-  rowOneFirst="at the"
-  rowOneSecond="farcade"
-  rowTwoFirst="built on-chain with the"
-  rowTwoSecond="tavern game engine"
+    titleFirst="come play"
+    titleSecond="ROCK PAPER SCISSORS"
+    rowOneFirst="at the"
+    rowOneSecond="farcade"
+    rowTwoFirst="built on-chain with the"
+    rowTwoSecond="tavern"
   />
 }
 

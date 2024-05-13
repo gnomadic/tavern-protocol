@@ -20,15 +20,15 @@ export default function Home() {
 
         <br />
         <p>
-          We believe in the power of play to foster stronger connections and shared experiences.
+          We believe playing together fosters stronger connections through shared experiences.
           Everything we do, we try
-          to enable and empower existing communities and their members. We also
+          to enable and empower existing communities and their members. We just
           believe in the power of play.
           <br />
           <br />
           Tavern is an on-chain game engine made for existing web3
           communities. Launch your own game for your own community
-          today.  Join us on {' '}
+          today without writing any code.  Join us on {' '}
           <a target="_blank"
             rel="noopener noreferrer"
             href="https://warpcast.com/~/channel/playtavern">

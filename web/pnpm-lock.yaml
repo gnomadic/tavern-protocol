@@ -42,8 +42,8 @@ dependencies:
     specifier: ^11.0.24
     version: 11.0.24(react-dom@18.2.0)(react@18.2.0)
   frames.js:
-    specifier: ^0.15.1
-    version: 0.15.1(@cloudflare/workers-types@4.20240502.0)(@types/express@4.17.21)(@xmtp/frames-validator@0.5.2)(@xmtp/proto@3.45.0)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4)
+    specifier: ^0.15.2
+    version: 0.15.2(@cloudflare/workers-types@4.20240502.0)(@types/express@4.17.21)(@xmtp/frames-validator@0.5.2)(@xmtp/proto@3.45.0)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4)
   jotai:
     specifier: ^2.7.2
     version: 2.7.2(@types/react@18.2.74)(react@18.2.0)
@@ -6622,8 +6622,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /frames.js@0.15.1(@cloudflare/workers-types@4.20240502.0)(@types/express@4.17.21)(@xmtp/frames-validator@0.5.2)(@xmtp/proto@3.45.0)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4):
-    resolution: {integrity: sha512-5DyeJbDjCqUEhCSv7E/eXni1oED2VAW7mKJZcrq416M1RNOSL4dWMzF9uG/sYf3OVhwNBhCmlSrJwA1rHOHFKQ==}
+  /frames.js@0.15.2(@cloudflare/workers-types@4.20240502.0)(@types/express@4.17.21)(@xmtp/frames-validator@0.5.2)(@xmtp/proto@3.45.0)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4):
+    resolution: {integrity: sha512-nQ9Zc2tcJ1Khiz3MACKNL2KXLRyX+pw0p70vEGK//x0WoFKcI5FY+L5O2143ZfTPrmuXbNgbhAhVbWb0j+Jrpg==}
     peerDependencies:
       '@cloudflare/workers-types': ^4.20240320.1
       '@types/express': ^4.17.21

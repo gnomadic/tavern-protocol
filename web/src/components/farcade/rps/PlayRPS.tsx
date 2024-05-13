@@ -75,12 +75,14 @@ export default function PlayRPS(props: PlayRPSProps) {
             </div>
             <div>{JSON.stringify(error?.message)}</div>
 
-            <div>
+            <div className='pt-12'>
                 There are {queueSize?.toString()} players in the queue.
             </div>
+            {error ? 
             <div>
-                nope {JSON.stringify(quueError)}
-            </div>
+                error {JSON.stringify(error?.message)}
+             </div> :<></>
+}
         </section >
     );
 }

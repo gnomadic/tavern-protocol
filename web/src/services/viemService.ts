@@ -49,6 +49,13 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
     return data as GameSummary;
 }
 
+// export async function getQueueSize(){
+//     const client = getClient();
+
+//     const data = await client.readContract({
+//         address: '0x
+// }
+
 
  
 

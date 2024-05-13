@@ -20,7 +20,7 @@ export default function ExploreGames() {
             <p> Explore Games that others have deployed on {deploy.chain} </p>
             <p> There are {gameCount ? gameCount.toString() : '...'}  </p>
         
-            <ul className=''>
+            <ul className='pb-24'>
 
             {/* <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2'> */}
                 {Array.from({ length: currentGames ? currentGames.length : 0 }).map((object, i) => {

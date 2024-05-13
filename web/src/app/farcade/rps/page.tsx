@@ -7,6 +7,8 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { FrameButtonMetadata, getFrameMetadata } from '@coinbase/onchainkit';
 import Players from '@/components/game/Players';
 import PlayRPS from '@/components/farcade/rps/PlayRPS';
+import { fetchMetadata } from 'frames.js/next';
+import { getBaseUrl } from './frame/frames';
 
 
 interface Params {
@@ -18,7 +20,7 @@ interface SearchParams {
   action: string;
 }
 
-const GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
+export const GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
 
 export async function generateMetadata({
 
@@ -72,22 +74,35 @@ export async function generateMetadata({
   // console.log(gameSummary)
 
   //   const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].Key : "no modules!"
-  const buttonLabels = "ROCK";
+  // const buttonLabels = "ROCK";
+
+  // return {
+  //   title: 'Rock Paper Scissors ',
+  //   description: `A Tavern game`,
+  //   openGraph: {
+  //     title: 'playtavern.com',
+  //     description: 'nocode onchain game creation',
+  //     images: [`${imageURL}`],
+  //   },
+  //   other: {
+  //     ...getFrameMetadata({
+  //       buttons: [rockButton, paperButton, scissorsButton, tavernButton],
+  //       image: `${imageURL}`,
+  //     }),
+  //   },
+  // };
+
   return {
-    title: 'Rock Paper Scissors ',
-    description: `A Tavern game`,
-    openGraph: {
-      title: 'playtavern.com',
-      description: 'nocode onchain game creation',
-      images: [`${imageURL}`],
-    },
+    title: "New api example",
+    description: "This is a new api example",
     other: {
-      ...getFrameMetadata({
-        buttons: [rockButton, paperButton, scissorsButton, tavernButton],
-        image: `${imageURL}`,
-      }),
+      ...(await fetchMetadata(
+        new URL("/farcade/rps/frame", getBaseUrl())
+      )),
     },
   };
+
+  
 }
 
 

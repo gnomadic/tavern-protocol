@@ -34,43 +34,55 @@ contract RockPaperScissors is IComponent {
   }
 
   function oneOnOne(address executor, address gameAddress) public {
-    address player;
-    uint256 action;
-
     IGame game = IGame(gameAddress);
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
       game.getEntity('actions')
     );
 
-    player = gameEntity.getPlayerAddress(executor, 'player');
-    action = gameEntity.getPlayerUint(executor, 'action');
+    address player = gameEntity.getPlayerAddress(executor, 'player');
+    uint256 action = gameEntity.getPlayerUint(executor, 'action');
+    address player2 = gameEntity.getPlayerAddress(executor, 'player2');
+    uint256 player2Action = rpsEntity.getPlayerAction(player2);
 
+    console.log('Player 1: ', player);
+    console.log('Player 1 action: ', action);
+    console.log('Player 2: ', player2);
+    console.log('Player 2 action: ', player2Action);
+    
+    console.log('setting player action');
     rpsEntity.setPlayerAction(player, action);
 
-    //player action set player action
-
-    address player2 = gameEntity.getPlayerAddress(executor, 'player2');
-    if (player2 == address(0)) {
+    console.log('checking player2');
+    if (player2 == address(0) || player2Action == 0) {
       console.log('Player 2 not found');
       return;
     }
-    uint256 player2Action = rpsEntity.getPlayerAction(player2);
-    if (player2Action == 0) {
-      console.log('Player 2 has not played yet');
-      revert NoActionYet();
-    }
+
+
+    // //player action set player action
+    // if (player2 == address(0)) {
+    //   console.log('Player 2 not found');
+    //   return;
+    // }
+    // console.log("checking player2 actions");
+    // if (player2Action == 0) {
+    //   console.log('Player 2 has not played yet');
+    //   revert NoActionYet();
+    // }
+
+    console.log("finding winner");
 
     address winner = play(Hand(player, action), Hand(player2, player2Action));
     if (winner == address(0)) {
       console.log('It is a tie');
       gameEntity.addPlayerAddress(executor, 'tie1', player);
       gameEntity.addPlayerAddress(executor, 'tie2', player2);
-      gameEntity.addPlayerUint(executor, 'amount', 1);
+      gameEntity.addPlayerUint(executor, 'amount', 1 * 10 ** 18);
     } else {
       console.log('The winner is: ', winner);
       gameEntity.addPlayerAddress(executor, 'winner', winner);
-      gameEntity.addPlayerUint(executor, 'amount', 3);
+      gameEntity.addPlayerUint(executor, 'amount', 3 * 10 ** 18);
     }
 
     emit GameResult(Hand(player, action), Hand(player2, player2Action), winner);

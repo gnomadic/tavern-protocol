@@ -29,7 +29,7 @@ contract QueueSession is IComponent {
         abis,
         required,
         'Queue Session',
-        "Allow players to join a queue and match with other players"
+        'Allow players to join a queue and match with other players'
       );
   }
 
@@ -42,7 +42,10 @@ contract QueueSession is IComponent {
 
     QueueSessionEntity(game.getEntity('nextPlayer')).enqueue(player);
 
-    emit JoinedQueue(player, QueueSessionEntity(game.getEntity('nextPlayer')).getQueueSize());
+    emit JoinedQueue(
+      player,
+      QueueSessionEntity(game.getEntity('nextPlayer')).getQueueSize()
+    );
   }
 
   function setMatchOrWait(address executor, address gameAddress) public {
@@ -50,13 +53,15 @@ contract QueueSession is IComponent {
     QueueSessionEntity queue = QueueSessionEntity(game.getEntity('nextPlayer'));
 
     if (queue.getQueueSize() == 0) {
+      console.log('joining queue');
       joinGame(executor, gameAddress);
       return;
     }
-    
+
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     address player1 = gameEntity.getPlayerAddress(executor, 'player');
     address player2 = queue.nextPlayer();
+    console.log('setting player one and two');
 
     gameEntity.addPlayerAddress(executor, 'player1', player1);
     gameEntity.addPlayerAddress(executor, 'player2', player2);

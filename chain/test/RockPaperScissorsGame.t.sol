@@ -59,7 +59,10 @@ contract RockPaperScissorsGame is TavernTest {
       AddressKey('oneOnOne(address,address)', address(rpsComponent))
     );
     joinKeys.push(
-      AddressKey('reward(address,address)', address(rewardComponent))
+      AddressKey('rewardWinner(address,address)', address(rewardComponent))
+    );
+        joinKeys.push(
+      AddressKey('rewardTie(address,address)', address(rewardComponent))
     );
 
     liveGame.createFlow('playRPS', joinKeys);
@@ -74,6 +77,7 @@ contract RockPaperScissorsGame is TavernTest {
     joinParams.uints.push(UintKey('action', 1));
 
     emit QueueSession.JoinedQueue(address(1), 1);
+    vm.prank(address(1));
     liveGame.executeFlow('playRPS', joinParams);
 
     uint256 playerCount = queueComponent.getPlayerCount(liveGame);

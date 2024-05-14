@@ -9,6 +9,7 @@ export type Deployment = {
   chain: string;
   chainId: string;
   scan: string;
+  rpsGame: Address;
 }
 
 export type GameSummary = {

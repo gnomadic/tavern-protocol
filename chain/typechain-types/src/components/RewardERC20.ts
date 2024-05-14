@@ -54,7 +54,8 @@ export interface RewardERC20Interface extends Interface {
       | "getSummary"
       | "initialize"
       | "required"
-      | "reward"
+      | "rewardTie"
+      | "rewardWinner"
       | "setReward"
   ): FunctionFragment;
 
@@ -76,7 +77,11 @@ export interface RewardERC20Interface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "reward",
+    functionFragment: "rewardTie",
+    values: [AddressLike, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "rewardWinner",
     values: [AddressLike, AddressLike]
   ): string;
   encodeFunctionData(
@@ -89,7 +94,11 @@ export interface RewardERC20Interface extends Interface {
   decodeFunctionResult(functionFragment: "getSummary", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "required", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "reward", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "rewardTie", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "rewardWinner",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "setReward", data: BytesLike): Result;
 }
 
@@ -146,7 +155,13 @@ export interface RewardERC20 extends BaseContract {
 
   required: TypedContractMethod<[arg0: BigNumberish], [string], "view">;
 
-  reward: TypedContractMethod<
+  rewardTie: TypedContractMethod<
+    [executor: AddressLike, gameAddress: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  rewardWinner: TypedContractMethod<
     [executor: AddressLike, gameAddress: AddressLike],
     [void],
     "nonpayable"
@@ -178,7 +193,14 @@ export interface RewardERC20 extends BaseContract {
     nameOrSignature: "required"
   ): TypedContractMethod<[arg0: BigNumberish], [string], "view">;
   getFunction(
-    nameOrSignature: "reward"
+    nameOrSignature: "rewardTie"
+  ): TypedContractMethod<
+    [executor: AddressLike, gameAddress: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "rewardWinner"
   ): TypedContractMethod<
     [executor: AddressLike, gameAddress: AddressLike],
     [void],

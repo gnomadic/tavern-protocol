@@ -160,6 +160,11 @@ contract Game is IGame, Initializable {
   }
   error FlowExecutionError(address component, string functionKey);
 
+  function debugFlow(string memory name, FlowParams memory params) external {
+
+    
+  }
+
   modifier onlyGm() {
     if (msg.sender != gm) revert OnlyGM();
     _;

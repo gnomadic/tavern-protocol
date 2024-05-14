@@ -9,7 +9,7 @@ import Players from '@/components/game/Players';
 import PlayRPS from '@/components/farcade/rps/PlayRPS';
 import { fetchMetadata } from 'frames.js/next';
 import { getBaseUrl } from './frame/frames';
-import { RPS_GAME_ADDRESS } from '@/domain/deployments';
+// import { RPS_GAME_ADDRESS } from '@/domain/deployments';
 
 
 interface Params {
@@ -41,36 +41,36 @@ export async function generateMetadata({
   //   target: `${postURL}rock&game=${GAME_ADDRESS}`,
   // }
 
-  let rockButton: FrameButtonMetadata =
-  {
-    action: "tx",
-    label: "ROCK",
-    target: `${txURL}rock&game=${RPS_GAME_ADDRESS}`,
-    postUrl: `${postURL}rock&game=${RPS_GAME_ADDRESS}`,
+  // let rockButton: FrameButtonMetadata =
+  // {
+  //   action: "tx",
+  //   label: "ROCK",
+  //   target: `${txURL}rock`,
+  //   postUrl: `${postURL}rock`,
     
     
-  }
+  // }
 
-  let paperButton: FrameButtonMetadata =
-  {
-    action: "post",
-    label: "PAPER",
-    target: `${postURL}paper&game=${RPS_GAME_ADDRESS}`,
-  }
+  // let paperButton: FrameButtonMetadata =
+  // {
+  //   action: "post",
+  //   label: "PAPER",
+  //   target: `${postURL}paper`,
+  // }
 
-  let scissorsButton: FrameButtonMetadata =
-  {
-    action: "post",
-    label: "SCISSORS",
-    target: `${postURL}scissors&game=${RPS_GAME_ADDRESS}`,
-  }
+  // let scissorsButton: FrameButtonMetadata =
+  // {
+  //   action: "post",
+  //   label: "SCISSORS",
+  //   target: `${postURL}scissors`,
+  // }
 
-  let tavernButton: FrameButtonMetadata =
-  {
-    action: "link",
-    label: "TAVERN",
-    target: `https://docs.playtavern.com`,
-  }
+  // let tavernButton: FrameButtonMetadata =
+  // {
+  //   action: "link",
+  //   label: "TAVERN",
+  //   target: `https://docs.playtavern.com`,
+  // }
   //   const gameSummary = await getGameSummary(params.chainid, params.address as Address)
   // console.log(gameSummary)
 
@@ -165,7 +165,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
       <section className='py-4'>
         <Divider />
       </section>
-      <PlayRPS gameAddress={RPS_GAME_ADDRESS}/>
+      <PlayRPS />
       {/* <div className='pb-8 text-4xl'>
         Try it out on
       </div>

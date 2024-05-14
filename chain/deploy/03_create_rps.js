@@ -11,7 +11,7 @@ module.exports = async (hre) => {
   //   // ------------------------------------- deploy
 
 
-  const gameName = "Rock Paper Scissors 3";
+  const gameName = "Rock Paper Scissors";
 
   const gameFactory = await getDeployedContract("GameFactory");
   const queueComponent = await getDeployedContract("QueueSession");
@@ -124,7 +124,8 @@ module.exports = async (hre) => {
     let keys = [];
     keys.push({name: 'setMatchOrWait(address,address)', value: queueComponent.target});
     keys.push({name: 'oneOnOne(address,address)', value: RPS.target});
-    keys.push({name: 'reward(address,address)', value: rewardComponent.target});
+    keys.push({name: 'rewardWinner(address,address)', value: rewardComponent.target});
+    keys.push({name: 'rewardTie(address,address)', value: rewardComponent.target});
  
 
 

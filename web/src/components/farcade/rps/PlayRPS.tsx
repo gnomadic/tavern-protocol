@@ -9,15 +9,12 @@ import { useAccount } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
 import { Address } from 'viem';
 
-type PlayRPSProps = {
-    gameAddress: Address;
-}
 
-export default function PlayRPS(props: PlayRPSProps) {
+export default function PlayRPS() {
 
     const { deploy } = useDeployment();
     const { data: games } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: quueError } = useReadQueueSessionGetPlayerCount({ address: "0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [props.gameAddress] });
+    const { data: queueSize, error: quueError } = useReadQueueSessionGetPlayerCount({ address: "0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [deploy.rpsGame] });
 
     const { address } = useAccount();
 
@@ -38,7 +35,7 @@ export default function PlayRPS(props: PlayRPSProps) {
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
         console.log("params", params);
-        writeContract({ address: props.gameAddress, functionName: "executeFlow", args: ["playRPS", params] });
+        writeContract({ address: deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
 
 
 

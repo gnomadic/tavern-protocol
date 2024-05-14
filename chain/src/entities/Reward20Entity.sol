@@ -19,7 +19,13 @@ contract Reward20Entity is IEntity {
     address player,
     uint256 amount
   ) external onlyModule {
+    if (token == address(0)) {
+      console.log('No token set');
+      return;
+    }else{
+      console.log('sending token');
     SimpleMintableERC20(token).mint(player, amount);
+    }
   }
 }
 

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import {GameFunction, ConfigFunction} from '../components/interfaces/IComponent.sol';
+
 interface IGame {
   function initialize(
     address _gm,
@@ -11,7 +13,7 @@ interface IGame {
   function createEntity(string memory name) external returns (address);
   function createFlow(string memory name, AddressKey[] memory funcs) external;
 
-  function validateIsModule(address module) external view returns (bool);
+  // function validateIsModule(address module) external view returns (bool);
   function getEntity(string memory key) external view returns (address);
 }
 
@@ -21,7 +23,10 @@ struct GameSummary {
   string displayName;
   string description;
   string gameUrl;
-  AddressKey[] availableFunctions;
+  // AddressKey[] availableFunctions;
+
+  GameFunction[] gameFunctions;
+ConfigFunction[] configFunctions;
   AddressKey[] availableData;
   string[] flows;
 }

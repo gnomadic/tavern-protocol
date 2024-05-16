@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
+import {IComponent, ComponentSummary, GameFunction, ConfigFunction} from './interfaces/IComponent.sol';
 import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
@@ -22,16 +22,50 @@ contract RewardERC20 is IComponent {
     IGame(game).createEntity('Reward20Entity');
   }
 
-  function getSummary() external view returns (ComponentSummary memory) {
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
+    (
+      GameFunction[] memory gameFunctions,
+      ConfigFunction[] memory configFunctions
+    ) = prepare();
     return
       ComponentSummary(
         address(this),
-        functions,
-        abis,
-        required,
         'Reward ERC20',
-        'Allow players to receive rewards in the form of ERC20 tokens'
+        'Allow players to receive rewards in the form of ERC20 tokens',
+        gameFunctions,
+        configFunctions
       );
+  }
+
+  function prepare()
+    internal
+    pure
+    returns (GameFunction[] memory, ConfigFunction[] memory)
+  {
+    GameFunction[] memory gameFunctions = new GameFunction[](1);
+    ConfigFunction[] memory configFunctions = new ConfigFunction[](0);
+
+    string[] memory required = new string[](1);
+    required[0] = 'tokenId';
+    string[] memory creates = new string[](2);
+    creates[0] = 'dailyAction';
+    creates[1] = 'lastActionAt';
+
+    GameFunction memory first = GameFunction(
+      'Daily Interaction',
+      'dailyInteraction(address,address)',
+      required,
+      creates
+    );
+
+    gameFunctions[0] = first;
+
+    return (gameFunctions, configFunctions);
   }
 
   function setReward(IGame game, address _reward) external {

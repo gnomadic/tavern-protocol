@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
+import {IComponent, ComponentSummary, GameFunction, ConfigFunction} from './interfaces/IComponent.sol';
 import {RockPaperScissorEntity} from '../entities/RockPaperScissorEntity.sol';
 
 import {IGame} from '../interfaces/IGame.sol';
@@ -13,24 +13,45 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
 contract RockPaperScissors is IComponent {
-  string[] public required = ['nextPlayer'];
-  string[] public functions = ['oneOnOne'];
-  string[] public abis = ['oneOnOne(address,address)'];
 
-  function initialize(address game) external {
-    IGame(game).createEntity('RockPaperScissorEntity');
-  }
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
+    GameFunction[] memory gameFunctions = new GameFunction[](1);
+    gameFunctions[0] = GameFunction(
+      'One on One',
+      'oneOnOne(address,address)',
+      new string[](4),
+      new string[](4)
+    );
 
-  function getSummary() external view returns (ComponentSummary memory) {
+    gameFunctions[0].required[0] = 'player';
+    gameFunctions[0].required[1] = 'action';
+    gameFunctions[0].required[2] = 'player2';
+    gameFunctions[0].required[3] = 'player2Action';
+
+    gameFunctions[0].creates[0] = 'winner';
+    gameFunctions[0].creates[1] = 'tie1';
+    gameFunctions[0].creates[2] = 'tie2';
+    gameFunctions[0].creates[3] = 'amount';
+
+    ConfigFunction[] memory configFunctions = new ConfigFunction[](0);
+
     return
       ComponentSummary(
         address(this),
-        functions,
-        abis,
-        required,
         'Rock Paper Scissors',
-        'Allow players to submit a move out of three options, which will be compared to another player to determine the winner.  This follows the rules of rock paper scissors.'
+        'Allow players to submit a move out of three options, which will be compared to another player to determine the winner.  This follows the rules of rock paper scissors.',
+        gameFunctions,
+        configFunctions
       );
+  }
+
+  function initialize(address game) external {
+    IGame(game).createEntity('RockPaperScissorEntity');
   }
 
   function oneOnOne(address executor, address gameAddress) public {
@@ -49,7 +70,7 @@ contract RockPaperScissors is IComponent {
     console.log('Player 1 action: ', action);
     console.log('Player 2: ', player2);
     console.log('Player 2 action: ', player2Action);
-    
+
     console.log('setting player action');
     rpsEntity.setPlayerAction(player, action);
 
@@ -59,19 +80,7 @@ contract RockPaperScissors is IComponent {
       return;
     }
 
-
-    // //player action set player action
-    // if (player2 == address(0)) {
-    //   console.log('Player 2 not found');
-    //   return;
-    // }
-    // console.log("checking player2 actions");
-    // if (player2Action == 0) {
-    //   console.log('Player 2 has not played yet');
-    //   revert NoActionYet();
-    // }
-
-    console.log("finding winner");
+    console.log('finding winner');
 
     address winner = play(Hand(player, action), Hand(player2, player2Action));
     if (winner == address(0)) {
@@ -91,7 +100,7 @@ contract RockPaperScissors is IComponent {
     rpsEntity.setPlayerAction(player2, 0);
   }
 
-event GameResult(Hand player1, Hand player2, address winner);
+  event GameResult(Hand player1, Hand player2, address winner);
 
   struct Hand {
     address player;
@@ -111,7 +120,7 @@ event GameResult(Hand player1, Hand player2, address winner);
     if (player1Action == player2Action) {
       console.log('It is a tie');
     } else if (
-      (player1Action == 1  && player2Action == 3) ||
+      (player1Action == 1 && player2Action == 3) ||
       (player1Action == 2 && player2Action == 1) ||
       (player1Action == 3 && player2Action == 2)
     ) {

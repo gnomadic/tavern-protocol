@@ -5,7 +5,7 @@ import {Initializable} from 'solady/utils/Initializable.sol';
 
 import {IGame, GameSummary, AddressKey, FlowParams} from './interfaces/IGame.sol';
 import {IEntity} from './entities/interfaces/IEntity.sol';
-import {IComponent} from './components/interfaces/IComponent.sol';
+import {IComponent, GameFunction, ConfigFunction} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
 import {FlowEntity} from './entities/FlowEntity.sol';
 
@@ -25,9 +25,12 @@ contract Game is IGame, Initializable {
   mapping(string => address) public availableEntityData;
   AddressKey[] dataKeys;
 
-  mapping(string => address) public functionLookup;
-  AddressKey[] functionKeys;
-  mapping(address => string[]) public supportedFunctions;
+  // mapping(string => address) public functionLookup;
+  // AddressKey[] functionKeys;
+  // mapping(address => string[]) public supportedFunctions;
+
+  GameFunction[] public gameFunctions;
+  ConfigFunction[] public configFunctions;
 
   mapping(string => AddressKey[]) public flows;
   string[] public flowNames;
@@ -65,7 +68,8 @@ contract Game is IGame, Initializable {
         displayName,
         description,
         gameUrl,
-        functionKeys,
+        gameFunctions, 
+        configFunctions,
         dataKeys,
         flowNames
       );
@@ -91,20 +95,30 @@ contract Game is IGame, Initializable {
   function addComponent(address component) external onlyGm(){
     // TODO verify the module exists in the registry for user safety
     IComponent newComponent = IComponent(component);
-    string[] memory componentFunctions = newComponent.getSummary().functions;
-    for (uint8 i = 0; i < componentFunctions.length; i++) {
-      functionKeys.push(AddressKey(componentFunctions[i], component));
-      functionLookup[componentFunctions[i]] = component;
-      supportedFunctions[component].push(componentFunctions[i]);
+    for (uint8 i = 0; i < newComponent.getSummary().gameFunctions.length; i++) {
+      gameFunctions.push(newComponent.getSummary().gameFunctions[i]);
     }
-    newComponent.initialize(address(this));
+    for (uint8 i = 0; i < newComponent.getSummary().configFunctions.length; i++) {
+      configFunctions.push(newComponent.getSummary().configFunctions[i]);
+    }
+
     components.push(newComponent);
+    newComponent.initialize(address(this));
+    
   }
 
-  function getSupportedFunctions(
-    address module
-  ) external view returns (string[] memory) {
-    return supportedFunctions[module];
+  // function getSupportedFunctions(
+  //   address module
+  // ) external view returns (string[] memory) {
+  //   return supportedFunctions[module];
+  // }
+
+  function getGameFunction() public view returns (GameFunction[] memory){
+    return gameFunctions;
+  }
+
+  function getConfigFunction() public view returns (ConfigFunction[] memory){
+    return configFunctions;
   }
 
   function getEntity(string memory key) public view returns (address) {
@@ -113,9 +127,9 @@ contract Game is IGame, Initializable {
     return (availableEntityData[key]);
   }
 
-  function validateIsModule(address module) external view returns (bool) {
-    return (supportedFunctions[module].length > 0);
-  }
+  // function validateIsModule(address module) external view returns (bool) {
+  //   return (supportedFunctions[module].length > 0);
+  // }
 
   //TODO only GM can create game functions
   function createFlow(string memory name, AddressKey[] memory funcs) external onlyGm() {

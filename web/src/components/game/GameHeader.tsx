@@ -5,6 +5,7 @@ import { Address } from "viem";
 import useDeployment from '@/hooks/useDeployment';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import { useReadGameGetSummary } from "@/generated";
+import { useGameMetadata } from "@/hooks/useGameMetadata";
 
 
 type HeaderProps = {
@@ -17,18 +18,19 @@ export default function GameHeader(props: HeaderProps) {
 
   // const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
   const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
+  const { data } = useGameMetadata(summary?.metadata);
 
   return (
 
     <section id='connect' className='relative items-start pt-48 pb-12 min-w-screen'>
       <div className='pb-2 text-4xl lg:text-8xl'>
-        {!summary ? "loading" :
+        {!summary || !data ? "loading" :
           <div>
             <div className="text-xl">
               the
             </div>
             <div>
-              {summary.displayName}
+              {data.name}
             </div>
             <div className="text-xl">
               game
@@ -37,8 +39,8 @@ export default function GameHeader(props: HeaderProps) {
               can be played at: {' '}
               <a target="_blank"
                 rel="noopener noreferrer"
-                href={summary.gameUrl} >
-                {summary.gameUrl}
+                href={data.gameUrl} >
+                {data.gameUrl}
                 <span>
                   <ArrowUpRightIcon
                     className="w-4 h-4 mb-1"
@@ -74,7 +76,7 @@ export default function GameHeader(props: HeaderProps) {
             </div>
 
             <div className="pt-12 text-xl">
-              {summary.description ? summary.description : "no description yet"}
+              {data.description ? data.description : "no description yet"}
             </div>
           </div>
         }

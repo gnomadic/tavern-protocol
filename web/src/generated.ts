@@ -62,11 +62,7 @@ export const componentRegistryAbi = [
         type: 'tuple[10]',
         components: [
           { name: 'component', internalType: 'address', type: 'address' },
-          { name: 'functions', internalType: 'string[]', type: 'string[]' },
-          { name: 'abis', internalType: 'string[]', type: 'string[]' },
-          { name: 'required', internalType: 'string[]', type: 'string[]' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'metadata', internalType: 'string', type: 'string' },
         ],
       },
     ],
@@ -378,9 +374,7 @@ export const gameAbi = [
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     name: 'components',
-    outputs: [
-      { name: '', internalType: 'contract IComponent', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -408,18 +402,47 @@ export const gameAbi = [
     outputs: [],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [],
-    name: 'description',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'displayName',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    inputs: [
+      { name: 'name', internalType: 'string', type: 'string' },
+      {
+        name: 'params',
+        internalType: 'struct FlowParams',
+        type: 'tuple',
+        components: [
+          {
+            name: 'addresses',
+            internalType: 'struct AddressKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'address', type: 'address' },
+            ],
+          },
+          {
+            name: 'uints',
+            internalType: 'struct UintKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'strings',
+            internalType: 'struct StringKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'value', internalType: 'string', type: 'string' },
+            ],
+          },
+        ],
+      },
+    ],
+    name: 'debugFlow',
+    outputs: [],
   },
   {
     stateMutability: 'view',
@@ -503,20 +526,6 @@ export const gameAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: '', internalType: 'string', type: 'string' }],
-    name: 'functionLookup',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'gameUrl',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [{ name: 'key', internalType: 'string', type: 'string' }],
     name: 'getEntity',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -541,18 +550,8 @@ export const gameAbi = [
         components: [
           { name: 'game', internalType: 'address', type: 'address' },
           { name: 'gm', internalType: 'address', type: 'address' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
-          { name: 'gameUrl', internalType: 'string', type: 'string' },
-          {
-            name: 'availableFunctions',
-            internalType: 'struct AddressKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'address', type: 'address' },
-            ],
-          },
+          { name: 'metadata', internalType: 'string', type: 'string' },
+          { name: 'components', internalType: 'address[]', type: 'address[]' },
           {
             name: 'availableData',
             internalType: 'struct AddressKey[]',
@@ -570,13 +569,6 @@ export const gameAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'module', internalType: 'address', type: 'address' }],
-    name: 'getSupportedFunctions',
-    outputs: [{ name: '', internalType: 'string[]', type: 'string[]' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [],
     name: 'gm',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -586,7 +578,7 @@ export const gameAbi = [
     type: 'function',
     inputs: [
       { name: '_gm', internalType: 'address', type: 'address' },
-      { name: '_displayName', internalType: 'string', type: 'string' },
+      { name: '_metadata', internalType: 'string', type: 'string' },
       { name: '_entityFactory', internalType: 'address', type: 'address' },
     ],
     name: 'initialize',
@@ -595,25 +587,15 @@ export const gameAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'supportedFunctions',
+    inputs: [],
+    name: 'metadata',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: '_description', internalType: 'string', type: 'string' }],
-    name: 'updateDescription',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_gameUrl', internalType: 'string', type: 'string' }],
-    name: 'updateGameUrl',
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
+    name: 'updateMetadata',
     outputs: [],
   },
   {
@@ -636,11 +618,17 @@ export const gameFactoryAbi = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'gm', internalType: 'address', type: 'address', indexed: false },
       {
         name: 'game',
         internalType: 'address',
         type: 'address',
+        indexed: false,
+      },
+      { name: 'gm', internalType: 'address', type: 'address', indexed: false },
+      {
+        name: 'metadata',
+        internalType: 'string',
+        type: 'string',
         indexed: false,
       },
     ],
@@ -658,7 +646,7 @@ export const gameFactoryAbi = [
     type: 'function',
     inputs: [
       { name: '_gm', internalType: 'address', type: 'address' },
-      { name: 'displayName', internalType: 'string', type: 'string' },
+      { name: 'metadata', internalType: 'string', type: 'string' },
     ],
     name: 'createGame',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -704,18 +692,8 @@ export const gameFactoryAbi = [
         components: [
           { name: 'game', internalType: 'address', type: 'address' },
           { name: 'gm', internalType: 'address', type: 'address' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
-          { name: 'gameUrl', internalType: 'string', type: 'string' },
-          {
-            name: 'availableFunctions',
-            internalType: 'struct AddressKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'address', type: 'address' },
-            ],
-          },
+          { name: 'metadata', internalType: 'string', type: 'string' },
+          { name: 'components', internalType: 'address[]', type: 'address[]' },
           {
             name: 'availableData',
             internalType: 'struct AddressKey[]',
@@ -777,11 +755,7 @@ export const iComponentAbi = [
         type: 'tuple',
         components: [
           { name: 'component', internalType: 'address', type: 'address' },
-          { name: 'functions', internalType: 'string[]', type: 'string[]' },
-          { name: 'abis', internalType: 'string[]', type: 'string[]' },
-          { name: 'required', internalType: 'string[]', type: 'string[]' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'metadata', internalType: 'string', type: 'string' },
         ],
       },
     ],
@@ -858,6 +832,11 @@ export const iGameAbi = [
 
 export const queueSessionAbi = [
   {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
@@ -898,20 +877,6 @@ export const queueSessionAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'abis',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'functions',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [{ name: 'game', internalType: 'contract IGame', type: 'address' }],
     name: 'getPlayerCount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
@@ -928,11 +893,7 @@ export const queueSessionAbi = [
         type: 'tuple',
         components: [
           { name: 'component', internalType: 'address', type: 'address' },
-          { name: 'functions', internalType: 'string[]', type: 'string[]' },
-          { name: 'abis', internalType: 'string[]', type: 'string[]' },
-          { name: 'required', internalType: 'string[]', type: 'string[]' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'metadata', internalType: 'string', type: 'string' },
         ],
       },
     ],
@@ -951,14 +912,14 @@ export const queueSessionAbi = [
       { name: 'executor', internalType: 'address', type: 'address' },
       { name: 'gameAddress', internalType: 'address', type: 'address' },
     ],
-    name: 'joinGame',
+    name: 'joinQueue',
     outputs: [],
   },
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'required',
+    inputs: [],
+    name: 'metadata',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
   {
@@ -979,18 +940,9 @@ export const queueSessionAbi = [
 
 export const rewardErc20Abi = [
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'abis',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'functions',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
   },
   {
     stateMutability: 'view',
@@ -1004,11 +956,7 @@ export const rewardErc20Abi = [
         type: 'tuple',
         components: [
           { name: 'component', internalType: 'address', type: 'address' },
-          { name: 'functions', internalType: 'string[]', type: 'string[]' },
-          { name: 'abis', internalType: 'string[]', type: 'string[]' },
-          { name: 'required', internalType: 'string[]', type: 'string[]' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'metadata', internalType: 'string', type: 'string' },
         ],
       },
     ],
@@ -1023,8 +971,8 @@ export const rewardErc20Abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'required',
+    inputs: [],
+    name: 'metadata',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
   {
@@ -1034,7 +982,17 @@ export const rewardErc20Abi = [
       { name: 'executor', internalType: 'address', type: 'address' },
       { name: 'gameAddress', internalType: 'address', type: 'address' },
     ],
-    name: 'reward',
+    name: 'rewardTie',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'executor', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'rewardWinner',
     outputs: [],
   },
   {
@@ -1054,6 +1012,11 @@ export const rewardErc20Abi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const rockPaperScissorsAbi = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
+  },
   { type: 'error', inputs: [], name: 'NoActionYet' },
   {
     type: 'event',
@@ -1091,20 +1054,6 @@ export const rockPaperScissorsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'abis',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'functions',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [],
     name: 'getSummary',
     outputs: [
@@ -1114,11 +1063,7 @@ export const rockPaperScissorsAbi = [
         type: 'tuple',
         components: [
           { name: 'component', internalType: 'address', type: 'address' },
-          { name: 'functions', internalType: 'string[]', type: 'string[]' },
-          { name: 'abis', internalType: 'string[]', type: 'string[]' },
-          { name: 'required', internalType: 'string[]', type: 'string[]' },
-          { name: 'displayName', internalType: 'string', type: 'string' },
-          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'metadata', internalType: 'string', type: 'string' },
         ],
       },
     ],
@@ -1131,6 +1076,13 @@ export const rockPaperScissorsAbi = [
     outputs: [],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'metadata',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -1139,13 +1091,6 @@ export const rockPaperScissorsAbi = [
     ],
     name: 'oneOnOne',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'required',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
 ] as const;
 
@@ -1499,22 +1444,6 @@ export const useReadGameComponents = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"description"`
- */
-export const useReadGameDescription = /*#__PURE__*/ createUseReadContract({
-  abi: gameAbi,
-  functionName: 'description',
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"displayName"`
- */
-export const useReadGameDisplayName = /*#__PURE__*/ createUseReadContract({
-  abi: gameAbi,
-  functionName: 'displayName',
-});
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"entities"`
  */
 export const useReadGameEntities = /*#__PURE__*/ createUseReadContract({
@@ -1547,22 +1476,6 @@ export const useReadGameFlows = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"functionLookup"`
- */
-export const useReadGameFunctionLookup = /*#__PURE__*/ createUseReadContract({
-  abi: gameAbi,
-  functionName: 'functionLookup',
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameUrl"`
- */
-export const useReadGameGameUrl = /*#__PURE__*/ createUseReadContract({
-  abi: gameAbi,
-  functionName: 'gameUrl',
-});
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getEntity"`
  */
 export const useReadGameGetEntity = /*#__PURE__*/ createUseReadContract({
@@ -1587,15 +1500,6 @@ export const useReadGameGetSummary = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getSupportedFunctions"`
- */
-export const useReadGameGetSupportedFunctions =
-  /*#__PURE__*/ createUseReadContract({
-    abi: gameAbi,
-    functionName: 'getSupportedFunctions',
-  });
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gm"`
  */
 export const useReadGameGm = /*#__PURE__*/ createUseReadContract({
@@ -1604,13 +1508,12 @@ export const useReadGameGm = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"supportedFunctions"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"metadata"`
  */
-export const useReadGameSupportedFunctions =
-  /*#__PURE__*/ createUseReadContract({
-    abi: gameAbi,
-    functionName: 'supportedFunctions',
-  });
+export const useReadGameMetadata = /*#__PURE__*/ createUseReadContract({
+  abi: gameAbi,
+  functionName: 'metadata',
+});
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"validateIsModule"`
@@ -1652,6 +1555,14 @@ export const useWriteGameCreateFlow = /*#__PURE__*/ createUseWriteContract({
 });
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
+ */
+export const useWriteGameDebugFlow = /*#__PURE__*/ createUseWriteContract({
+  abi: gameAbi,
+  functionName: 'debugFlow',
+});
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
 export const useWriteGameExecuteFlow = /*#__PURE__*/ createUseWriteContract({
@@ -1668,20 +1579,11 @@ export const useWriteGameInitialize = /*#__PURE__*/ createUseWriteContract({
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateDescription"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateMetadata"`
  */
-export const useWriteGameUpdateDescription =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: gameAbi,
-    functionName: 'updateDescription',
-  });
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateGameUrl"`
- */
-export const useWriteGameUpdateGameUrl = /*#__PURE__*/ createUseWriteContract({
+export const useWriteGameUpdateMetadata = /*#__PURE__*/ createUseWriteContract({
   abi: gameAbi,
-  functionName: 'updateGameUrl',
+  functionName: 'updateMetadata',
 });
 
 /**
@@ -1719,6 +1621,13 @@ export const useSimulateGameCreateFlow =
   });
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
+ */
+export const useSimulateGameDebugFlow = /*#__PURE__*/ createUseSimulateContract(
+  { abi: gameAbi, functionName: 'debugFlow' }
+);
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
 export const useSimulateGameExecuteFlow =
@@ -1737,21 +1646,12 @@ export const useSimulateGameInitialize =
   });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateDescription"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateMetadata"`
  */
-export const useSimulateGameUpdateDescription =
+export const useSimulateGameUpdateMetadata =
   /*#__PURE__*/ createUseSimulateContract({
     abi: gameAbi,
-    functionName: 'updateDescription',
-  });
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateGameUrl"`
- */
-export const useSimulateGameUpdateGameUrl =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: gameAbi,
-    functionName: 'updateGameUrl',
+    functionName: 'updateMetadata',
   });
 
 /**
@@ -2071,21 +1971,6 @@ export const useReadQueueSession = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"abis"`
- */
-export const useReadQueueSessionAbis = /*#__PURE__*/ createUseReadContract({
-  abi: queueSessionAbi,
-  functionName: 'abis',
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"functions"`
- */
-export const useReadQueueSessionFunctions = /*#__PURE__*/ createUseReadContract(
-  { abi: queueSessionAbi, functionName: 'functions' }
-);
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"getPlayerCount"`
  */
 export const useReadQueueSessionGetPlayerCount =
@@ -2104,11 +1989,11 @@ export const useReadQueueSessionGetSummary =
   });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"required"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"metadata"`
  */
-export const useReadQueueSessionRequired = /*#__PURE__*/ createUseReadContract({
+export const useReadQueueSessionMetadata = /*#__PURE__*/ createUseReadContract({
   abi: queueSessionAbi,
-  functionName: 'required',
+  functionName: 'metadata',
 });
 
 /**
@@ -2128,12 +2013,12 @@ export const useWriteQueueSessionInitialize =
   });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinQueue"`
  */
-export const useWriteQueueSessionJoinGame =
+export const useWriteQueueSessionJoinQueue =
   /*#__PURE__*/ createUseWriteContract({
     abi: queueSessionAbi,
-    functionName: 'joinGame',
+    functionName: 'joinQueue',
   });
 
 /**
@@ -2162,12 +2047,12 @@ export const useSimulateQueueSessionInitialize =
   });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinQueue"`
  */
-export const useSimulateQueueSessionJoinGame =
+export const useSimulateQueueSessionJoinQueue =
   /*#__PURE__*/ createUseSimulateContract({
     abi: queueSessionAbi,
-    functionName: 'joinGame',
+    functionName: 'joinQueue',
   });
 
 /**
@@ -2211,22 +2096,6 @@ export const useReadRewardErc20 = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"abis"`
- */
-export const useReadRewardErc20Abis = /*#__PURE__*/ createUseReadContract({
-  abi: rewardErc20Abi,
-  functionName: 'abis',
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"functions"`
- */
-export const useReadRewardErc20Functions = /*#__PURE__*/ createUseReadContract({
-  abi: rewardErc20Abi,
-  functionName: 'functions',
-});
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"getSummary"`
  */
 export const useReadRewardErc20GetSummary = /*#__PURE__*/ createUseReadContract(
@@ -2234,11 +2103,11 @@ export const useReadRewardErc20GetSummary = /*#__PURE__*/ createUseReadContract(
 );
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"required"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"metadata"`
  */
-export const useReadRewardErc20Required = /*#__PURE__*/ createUseReadContract({
+export const useReadRewardErc20Metadata = /*#__PURE__*/ createUseReadContract({
   abi: rewardErc20Abi,
-  functionName: 'required',
+  functionName: 'metadata',
 });
 
 /**
@@ -2258,12 +2127,22 @@ export const useWriteRewardErc20Initialize =
   });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardTie"`
  */
-export const useWriteRewardErc20Reward = /*#__PURE__*/ createUseWriteContract({
-  abi: rewardErc20Abi,
-  functionName: 'reward',
-});
+export const useWriteRewardErc20RewardTie =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: rewardErc20Abi,
+    functionName: 'rewardTie',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardWinner"`
+ */
+export const useWriteRewardErc20RewardWinner =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: rewardErc20Abi,
+    functionName: 'rewardWinner',
+  });
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"setReward"`
@@ -2291,12 +2170,21 @@ export const useSimulateRewardErc20Initialize =
   });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardTie"`
  */
-export const useSimulateRewardErc20Reward =
+export const useSimulateRewardErc20RewardTie =
   /*#__PURE__*/ createUseSimulateContract({
     abi: rewardErc20Abi,
-    functionName: 'reward',
+    functionName: 'rewardTie',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardWinner"`
+ */
+export const useSimulateRewardErc20RewardWinner =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'rewardWinner',
   });
 
 /**
@@ -2316,22 +2204,6 @@ export const useReadRockPaperScissors = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"abis"`
- */
-export const useReadRockPaperScissorsAbis = /*#__PURE__*/ createUseReadContract(
-  { abi: rockPaperScissorsAbi, functionName: 'abis' }
-);
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"functions"`
- */
-export const useReadRockPaperScissorsFunctions =
-  /*#__PURE__*/ createUseReadContract({
-    abi: rockPaperScissorsAbi,
-    functionName: 'functions',
-  });
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"getSummary"`
  */
 export const useReadRockPaperScissorsGetSummary =
@@ -2341,12 +2213,12 @@ export const useReadRockPaperScissorsGetSummary =
   });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"required"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"metadata"`
  */
-export const useReadRockPaperScissorsRequired =
+export const useReadRockPaperScissorsMetadata =
   /*#__PURE__*/ createUseReadContract({
     abi: rockPaperScissorsAbi,
-    functionName: 'required',
+    functionName: 'metadata',
   });
 
 /**
@@ -2752,22 +2624,6 @@ export const readGameComponents = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"description"`
- */
-export const readGameDescription = /*#__PURE__*/ createReadContract({
-  abi: gameAbi,
-  functionName: 'description',
-});
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"displayName"`
- */
-export const readGameDisplayName = /*#__PURE__*/ createReadContract({
-  abi: gameAbi,
-  functionName: 'displayName',
-});
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"entities"`
  */
 export const readGameEntities = /*#__PURE__*/ createReadContract({
@@ -2800,22 +2656,6 @@ export const readGameFlows = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"functionLookup"`
- */
-export const readGameFunctionLookup = /*#__PURE__*/ createReadContract({
-  abi: gameAbi,
-  functionName: 'functionLookup',
-});
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameUrl"`
- */
-export const readGameGameUrl = /*#__PURE__*/ createReadContract({
-  abi: gameAbi,
-  functionName: 'gameUrl',
-});
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getEntity"`
  */
 export const readGameGetEntity = /*#__PURE__*/ createReadContract({
@@ -2840,14 +2680,6 @@ export const readGameGetSummary = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getSupportedFunctions"`
- */
-export const readGameGetSupportedFunctions = /*#__PURE__*/ createReadContract({
-  abi: gameAbi,
-  functionName: 'getSupportedFunctions',
-});
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gm"`
  */
 export const readGameGm = /*#__PURE__*/ createReadContract({
@@ -2856,11 +2688,11 @@ export const readGameGm = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"supportedFunctions"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"metadata"`
  */
-export const readGameSupportedFunctions = /*#__PURE__*/ createReadContract({
+export const readGameMetadata = /*#__PURE__*/ createReadContract({
   abi: gameAbi,
-  functionName: 'supportedFunctions',
+  functionName: 'metadata',
 });
 
 /**
@@ -2901,6 +2733,14 @@ export const writeGameCreateFlow = /*#__PURE__*/ createWriteContract({
 });
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
+ */
+export const writeGameDebugFlow = /*#__PURE__*/ createWriteContract({
+  abi: gameAbi,
+  functionName: 'debugFlow',
+});
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
 export const writeGameExecuteFlow = /*#__PURE__*/ createWriteContract({
@@ -2917,19 +2757,11 @@ export const writeGameInitialize = /*#__PURE__*/ createWriteContract({
 });
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateDescription"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateMetadata"`
  */
-export const writeGameUpdateDescription = /*#__PURE__*/ createWriteContract({
+export const writeGameUpdateMetadata = /*#__PURE__*/ createWriteContract({
   abi: gameAbi,
-  functionName: 'updateDescription',
-});
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateGameUrl"`
- */
-export const writeGameUpdateGameUrl = /*#__PURE__*/ createWriteContract({
-  abi: gameAbi,
-  functionName: 'updateGameUrl',
+  functionName: 'updateMetadata',
 });
 
 /**
@@ -2964,6 +2796,14 @@ export const simulateGameCreateFlow = /*#__PURE__*/ createSimulateContract({
 });
 
 /**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
+ */
+export const simulateGameDebugFlow = /*#__PURE__*/ createSimulateContract({
+  abi: gameAbi,
+  functionName: 'debugFlow',
+});
+
+/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
 export const simulateGameExecuteFlow = /*#__PURE__*/ createSimulateContract({
@@ -2980,20 +2820,11 @@ export const simulateGameInitialize = /*#__PURE__*/ createSimulateContract({
 });
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateDescription"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateMetadata"`
  */
-export const simulateGameUpdateDescription =
-  /*#__PURE__*/ createSimulateContract({
-    abi: gameAbi,
-    functionName: 'updateDescription',
-  });
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"updateGameUrl"`
- */
-export const simulateGameUpdateGameUrl = /*#__PURE__*/ createSimulateContract({
+export const simulateGameUpdateMetadata = /*#__PURE__*/ createSimulateContract({
   abi: gameAbi,
-  functionName: 'updateGameUrl',
+  functionName: 'updateMetadata',
 });
 
 /**
@@ -3300,22 +3131,6 @@ export const readQueueSession = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"abis"`
- */
-export const readQueueSessionAbis = /*#__PURE__*/ createReadContract({
-  abi: queueSessionAbi,
-  functionName: 'abis',
-});
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"functions"`
- */
-export const readQueueSessionFunctions = /*#__PURE__*/ createReadContract({
-  abi: queueSessionAbi,
-  functionName: 'functions',
-});
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"getPlayerCount"`
  */
 export const readQueueSessionGetPlayerCount = /*#__PURE__*/ createReadContract({
@@ -3332,11 +3147,11 @@ export const readQueueSessionGetSummary = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"required"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"metadata"`
  */
-export const readQueueSessionRequired = /*#__PURE__*/ createReadContract({
+export const readQueueSessionMetadata = /*#__PURE__*/ createReadContract({
   abi: queueSessionAbi,
-  functionName: 'required',
+  functionName: 'metadata',
 });
 
 /**
@@ -3355,11 +3170,11 @@ export const writeQueueSessionInitialize = /*#__PURE__*/ createWriteContract({
 });
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinQueue"`
  */
-export const writeQueueSessionJoinGame = /*#__PURE__*/ createWriteContract({
+export const writeQueueSessionJoinQueue = /*#__PURE__*/ createWriteContract({
   abi: queueSessionAbi,
-  functionName: 'joinGame',
+  functionName: 'joinQueue',
 });
 
 /**
@@ -3388,12 +3203,12 @@ export const simulateQueueSessionInitialize =
   });
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinGame"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"joinQueue"`
  */
-export const simulateQueueSessionJoinGame =
+export const simulateQueueSessionJoinQueue =
   /*#__PURE__*/ createSimulateContract({
     abi: queueSessionAbi,
-    functionName: 'joinGame',
+    functionName: 'joinQueue',
   });
 
 /**
@@ -3438,22 +3253,6 @@ export const readRewardErc20 = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"abis"`
- */
-export const readRewardErc20Abis = /*#__PURE__*/ createReadContract({
-  abi: rewardErc20Abi,
-  functionName: 'abis',
-});
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"functions"`
- */
-export const readRewardErc20Functions = /*#__PURE__*/ createReadContract({
-  abi: rewardErc20Abi,
-  functionName: 'functions',
-});
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"getSummary"`
  */
 export const readRewardErc20GetSummary = /*#__PURE__*/ createReadContract({
@@ -3462,11 +3261,11 @@ export const readRewardErc20GetSummary = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"required"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"metadata"`
  */
-export const readRewardErc20Required = /*#__PURE__*/ createReadContract({
+export const readRewardErc20Metadata = /*#__PURE__*/ createReadContract({
   abi: rewardErc20Abi,
-  functionName: 'required',
+  functionName: 'metadata',
 });
 
 /**
@@ -3485,11 +3284,19 @@ export const writeRewardErc20Initialize = /*#__PURE__*/ createWriteContract({
 });
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardTie"`
  */
-export const writeRewardErc20Reward = /*#__PURE__*/ createWriteContract({
+export const writeRewardErc20RewardTie = /*#__PURE__*/ createWriteContract({
   abi: rewardErc20Abi,
-  functionName: 'reward',
+  functionName: 'rewardTie',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardWinner"`
+ */
+export const writeRewardErc20RewardWinner = /*#__PURE__*/ createWriteContract({
+  abi: rewardErc20Abi,
+  functionName: 'rewardWinner',
 });
 
 /**
@@ -3517,12 +3324,22 @@ export const simulateRewardErc20Initialize =
   });
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"reward"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardTie"`
  */
-export const simulateRewardErc20Reward = /*#__PURE__*/ createSimulateContract({
-  abi: rewardErc20Abi,
-  functionName: 'reward',
-});
+export const simulateRewardErc20RewardTie =
+  /*#__PURE__*/ createSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'rewardTie',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"rewardWinner"`
+ */
+export const simulateRewardErc20RewardWinner =
+  /*#__PURE__*/ createSimulateContract({
+    abi: rewardErc20Abi,
+    functionName: 'rewardWinner',
+  });
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link rewardErc20Abi}__ and `functionName` set to `"setReward"`
@@ -3541,22 +3358,6 @@ export const readRockPaperScissors = /*#__PURE__*/ createReadContract({
 });
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"abis"`
- */
-export const readRockPaperScissorsAbis = /*#__PURE__*/ createReadContract({
-  abi: rockPaperScissorsAbi,
-  functionName: 'abis',
-});
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"functions"`
- */
-export const readRockPaperScissorsFunctions = /*#__PURE__*/ createReadContract({
-  abi: rockPaperScissorsAbi,
-  functionName: 'functions',
-});
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"getSummary"`
  */
 export const readRockPaperScissorsGetSummary = /*#__PURE__*/ createReadContract(
@@ -3564,11 +3365,11 @@ export const readRockPaperScissorsGetSummary = /*#__PURE__*/ createReadContract(
 );
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"required"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link rockPaperScissorsAbi}__ and `functionName` set to `"metadata"`
  */
-export const readRockPaperScissorsRequired = /*#__PURE__*/ createReadContract({
+export const readRockPaperScissorsMetadata = /*#__PURE__*/ createReadContract({
   abi: rockPaperScissorsAbi,
-  functionName: 'required',
+  functionName: 'metadata',
 });
 
 /**

@@ -21,10 +21,11 @@ export default function ExploreComponents() {
             return (
               <li key={i} className="pt-8">
                 <ModuleCard
-                  displayName={currentModules![i].displayName}
+                  // displayName={currentModules![i].displayName}
                   address={currentModules![i].component}
-                  functions={currentModules![i].functions}
-                  description={currentModules![i].description}
+                  metadata={currentModules![i].metadata}
+                  // functions={currentModules![i].functions}
+                  // description={currentModules![i].description}
                 />
               </li>
             );

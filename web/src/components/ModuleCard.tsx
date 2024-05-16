@@ -1,25 +1,28 @@
+import { useGameMetadata } from '@/hooks/useGameMetadata';
 import { censor, pretty } from '../domain/utils';
 import Link from 'next/link';
 import { Address } from 'viem';
 
 
 type ModuleCardProps = {
-  displayName: string;
+  // displayName: string;
   address: Address;
-  functions: readonly string[]
-  description: string;
+  // functions: readonly string[]
+  // description: string;
+  metadata:string;
 }
 
 export default function ModuleCard(props: ModuleCardProps) {
+  const { data } = useGameMetadata(props.metadata);
 
   return (
     <Link href={`/module/${props.address}`}>
       <div className='justify-center border-2 border-gray-300 rounded-md bg-slate-800'>
         <div className='pt-5 pl-8 text-2xl'>
-          {censor(props.displayName)}
+          {censor(data?.name)}
         </div>
         <div className='pt-5 pb-2 pl-2 text-sm'>
-          {censor(props.description)}
+          {censor(data?.description)}
         </div>
         {/* <ul>
           {Array.from({ length: props.functions.length as number }).map((object, i) => {

@@ -4,7 +4,7 @@
     "functions": [
         {
             "name": "Join Queue",
-            "description": "This puts a player in the queue",
+            "description": "This puts a player in the queue.",
             "abi": "joinQueue(address,address)",
             "requires": [
                 "player"

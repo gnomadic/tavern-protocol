@@ -20,38 +20,54 @@ export default function ComponentHeader(props: HeaderProps) {
 
   return (
     <section id='connect' className='relative items-start pt-48 pb-12 min-w-screen'>
-      <div className='pb-2 text-4xl lg:text-8xl'>
+      <div className='pb-2'>
         {!summary || !data ? "loading" :
           <div>
-            <div className="text-xl">
+            <div className="text-md md:text-lg">
               the
             </div>
-            <div>
+            <div className="text-6xl md:text-8xl">
               {data.name}
             </div>
-            <div className="text-xl">
-              component
+            <div className="text-md md:text-lg">
+              component 
+
+              <span className="">
+              {' '} is deployed at: {' '}
+              <a target="_blank"
+                rel="noopener noreferrer"
+                href={deploy.scan + props.moduleAddress} >
+                {pretty(props.moduleAddress)}
+                <span>
+                  <ArrowUpRightIcon
+                    className="w-4 h-4 mb-1"
+                    style={{ display: "inline" }} />
+                </span>
+              </a>
+            </span>
+
+
             </div>
 
-            <div className="text-sm pt-12">
-              can be used to
+            <div className="text-md: md:text-lg pt-12">
+              and it can be used to
             </div>
-            <div className=" text-xl">
+            <div className=" text-2xl">
               {data.description}
             </div>
-            <div className="pt-12 text-sm">
+            {/* <div className="pt-12 text-sm">
               is deployed at: {' '}
               <a target="_blank"
                 rel="noopener noreferrer"
                 href={deploy.scan + props.moduleAddress} >
                 {pretty(props.moduleAddress)}
                 <span>
-              <ArrowUpRightIcon
-                className="w-4 h-4 mb-1"
-                style={{ display: "inline" }} />
-            </span>
+                  <ArrowUpRightIcon
+                    className="w-4 h-4 mb-1"
+                    style={{ display: "inline" }} />
+                </span>
               </a>
-            </div>
+            </div> */}
           </div>
         }
       </div>

@@ -19,7 +19,6 @@ export default function GameInfo(props: StepThreeProps) {
 
     return (
         <section id='connect' className='relative items-center pt-12 pb-12'>
-{JSON.stringify(data)}
             {summary && data ?
                 <div>
                     {/* <div className="pb-8 text-xl">This Game has {data?.availableFunctions.length} available function{data.availableFunctions.length > 1 ? "s" : ""}</div> */}

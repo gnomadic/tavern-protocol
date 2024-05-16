@@ -21,9 +21,9 @@ async function getDeployedContract(name) {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-const IPFS_COMPONENTS = 'QmZPVG81rB2Ppr93hudg5yJUJRh64QnozbBxZH6fsVSxE7';
+const IPFS_COMPONENTS = 'QmaDx7bjx12C5P2sT17qSANk5LincrrhPLXHTnJVRmjXZb';
 
-const IPFS_GAMES = 'QmazHCMAoLMjkt2Qm3KfNnzbRbjP1yYsdhEbaX7m4d5Tz6';
+const IPFS_GAMES = 'QmVSwRPRRPUe6mUx7Q3VxoQ8YFKfyU6x4abjBKWdT5hkrd';
 
 module.exports = {
     getDeployedContract,

@@ -8,17 +8,19 @@ export async function GET(request: NextRequest, context: { params: Params }) {
     const url = request.nextUrl.searchParams.get('ipfsURL');
 
     console.log("server requesting url: ", url)
-    if (!url) {
+    if (!url || url === "undefined") {
       return NextResponse.json({});
+      // throw new Error('Failed to fetch data')
     }
+    console.log('fetching: ', url)
     const res = await fetch(url as string);
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
    
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-    //   throw new Error('Failed to fetch data')
-      return NextResponse.error()
+      throw new Error('Failed to fetch data')
+      // return NextResponse.error()
     }
 
     const json = await res.json();

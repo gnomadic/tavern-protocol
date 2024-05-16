@@ -1,7 +1,7 @@
 {
     "name": "Reward ERC20",
     "description": "Allow players to receive rewards in the form of ERC20 tokens",
-    "provides": [
+    "functions": [
         {
             "name": "Join Queue",
             "description": "This puts a player in the queue",

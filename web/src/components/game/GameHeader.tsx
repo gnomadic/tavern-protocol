@@ -5,7 +5,8 @@ import { Address } from "viem";
 import useDeployment from '@/hooks/useDeployment';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import { useReadGameGetSummary } from "@/generated";
-import { useGameMetadata } from "@/hooks/useGameMetadata";
+import { useMetadata } from "@/hooks/useMetadata";
+import { GameMetadata } from "@/domain/Domain";
 
 
 type HeaderProps = {
@@ -18,7 +19,7 @@ export default function GameHeader(props: HeaderProps) {
 
   // const { gameSummary, gameSummaryError } = useGameSummary({ address: props.gameAddress });
   const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
-  const { data } = useGameMetadata(summary?.metadata);
+  const { data } = useMetadata<GameMetadata>(summary?.metadata);
 
   return (
 

@@ -24,7 +24,8 @@ export function pretty(address :Address){
     return `${address.toString().substring(0, 6)}...${address.toString().substring(38, 42)}`;
 }
 
-export function censor(input: string){
+export function censor(input: string | undefined){
+	if (!input) return "";
     const censor = new TextCensor();
     const matches = matcher.getAllMatches(input);
     return censor.applyTo(input, matches);

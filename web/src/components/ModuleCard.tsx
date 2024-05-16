@@ -1,7 +1,8 @@
-import { useGameMetadata } from '@/hooks/useGameMetadata';
+import { useMetadata } from '@/hooks/useMetadata';
 import { censor, pretty } from '../domain/utils';
 import Link from 'next/link';
 import { Address } from 'viem';
+import { ComponentMetadata } from '@/domain/Domain';
 
 
 type ModuleCardProps = {
@@ -13,13 +14,13 @@ type ModuleCardProps = {
 }
 
 export default function ModuleCard(props: ModuleCardProps) {
-  const { data } = useGameMetadata(props.metadata);
+  const { data } = useMetadata<ComponentMetadata>(props.metadata);
 
   return (
     <Link href={`/module/${props.address}`}>
       <div className='justify-center border-2 border-gray-300 rounded-md bg-slate-800'>
         <div className='pt-5 pl-8 text-2xl'>
-          {censor(data?.name)}
+          {data ? censor(data.name) : "loading"}
         </div>
         <div className='pt-5 pb-2 pl-2 text-sm'>
           {censor(data?.description)}

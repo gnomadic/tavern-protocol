@@ -1,12 +1,12 @@
 "use client"
-import { ComponentSummary } from "@/domain/Domain";
+import { ComponentMetadata, ComponentSummary } from "@/domain/Domain";
 import { pretty } from "@/domain/utils";
 import useDeployment from "@/hooks/useDeployment";
 import { useEffect, useState } from "react";
 import { Address } from "viem";
 import { useReadIComponentGetSummary } from '@/generated';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
-import { useGameMetadata } from "@/hooks/useGameMetadata";
+import { useMetadata } from "@/hooks/useMetadata";
 
 type HeaderProps = {
   moduleAddress: Address
@@ -16,7 +16,7 @@ export default function ComponentHeader(props: HeaderProps) {
 
   const { deploy } = useDeployment();
   const { data: summary } = useReadIComponentGetSummary({ address: props.moduleAddress })
-  const { data } = useGameMetadata(summary?.metadata);
+  const { data } = useMetadata<ComponentMetadata>(summary?.metadata);
 
   return (
     <section id='connect' className='relative items-start pt-48 pb-12 min-w-screen'>

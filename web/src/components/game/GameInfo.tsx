@@ -2,7 +2,8 @@
 import { Address } from 'viem';
 import Divider from '../Divider';
 import { useReadGameFlows, useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
-import { useGameMetadata } from '@/hooks/useGameMetadata';
+import { useMetadata } from '@/hooks/useMetadata';
+import { GameMetadata, GameSummary } from '@/domain/Domain';
 
 
 type StepThreeProps = {
@@ -13,7 +14,7 @@ export default function GameInfo(props: StepThreeProps) {
 
     const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
     const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
-    const { data } = useGameMetadata(summary?.metadata);
+    const { data } = useMetadata<GameMetadata>(summary?.metadata);
 
 
     return (

@@ -1,13 +1,10 @@
 "use client"
-import { ComponentSummary } from "@/domain/Domain";
-import { pretty } from "@/domain/utils";
+
+import { ComponentMetadata } from "@/domain/Domain";
 import { useReadIComponentGetSummary } from "@/generated";
 import useDeployment from "@/hooks/useDeployment";
-import { useGameMetadata } from "@/hooks/useGameMetadata";
-import useGameSummary from "@/hooks/useGameSummary";
-import { useEffect, useState } from "react";
+import { useMetadata } from "@/hooks/useMetadata";
 import { Address } from "viem";
-
 
 type StatsProps = {
     moduleAddress: Address
@@ -17,7 +14,7 @@ export default function ComponentStats(props: StatsProps) {
 
     const { deploy } = useDeployment();
     const { data: summary } = useReadIComponentGetSummary({ address: props.moduleAddress })
-    const { data } = useGameMetadata(summary?.metadata);
+    const { data } = useMetadata<ComponentMetadata>(summary?.metadata);
 
     return (
         <section id='connect' className='relative items-center pt-12 pb-12'>

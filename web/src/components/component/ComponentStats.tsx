@@ -20,27 +20,27 @@ export default function ComponentStats(props: StatsProps) {
         <section id='connect' className='relative items-center pt-12 pb-12'>
             {summary && data ?
                 <div>
-                    <div className="pb-8 text-xl">This Component provides {data.functions?.length} Game Function{data.functions?.length > 1 ? "s" : ""}.</div>
+                    <div className="pb-8 text-xl">This Component provides {data.gameFunctions?.length} Game Function{data.gameFunctions?.length > 1 ? "s" : ""}.</div>
                     <ul className="border-t-2 border-gray-300">
-                        {Array.from({ length: data.functions?.length as number }).map((object, i) => {
+                        {Array.from({ length: data.gameFunctions?.length as number }).map((object, i) => {
                             return (
                                 <div key={i} className='justify-center border-b-2 border-gray-300 '>
                                     <div className='pt-5 pl-8 text-2xl'>
                                         <span className="text-sm">the</span>
-                                        {' '}{data.functions[i].name}{' '}
+                                        {' '}{data.gameFunctions[i].name}{' '}
                                         <span className="text-sm">function.</span>
                                     </div>
-                                    <div className='pt-2 text-xl'>{data.functions[i].description}</div>
+                                    <div className='pt-2 text-xl'>{data.gameFunctions[i].description}</div>
                                     {/* <div className="flex py-8"> */}
                                     <div className="mx-auto p-4">
                                         <p className="">
                                             This keys required by this function are
 
                                         </p>
-                                        {Array.from({ length: data!.functions[i].requires.length as number }).map((object, j) => {
+                                        {Array.from({ length: data!.gameFunctions[i].requires.length as number }).map((object, j) => {
                                             return (
                                                 <span key={i}>
-                                                    {data.functions[i].requires[j]} {''}
+                                                    {data.gameFunctions[i].requires[j]} {''}
                                                 </span>
                                             );
                                         })}
@@ -51,10 +51,10 @@ export default function ComponentStats(props: StatsProps) {
 
                                             This keys created by this function are
                                         </p>
-                                        {Array.from({ length: data!.functions[i].creates.length as number }).map((object, j) => {
+                                        {Array.from({ length: data!.gameFunctions[i].creates.length as number }).map((object, j) => {
                                             return (
                                                 <span key={i}>
-                                                    {data.functions[i].creates[j]} {''}
+                                                    {data.gameFunctions[i].creates[j]} {''}
                                                 </span>
                                             );
                                         })}

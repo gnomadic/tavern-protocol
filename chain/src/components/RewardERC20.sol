@@ -71,34 +71,4 @@ contract RewardERC20 is IComponent {
     }
   }
 
-  // // TODO rename to indicate it is sending ^ 18 rewards
-  // function reward(address executor, address gameAddress) public {
-  //   console.log('rewarding');
-  //   IGame game = IGame(gameAddress);
-
-  //   FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-  //   uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
-
-  //   address player = gameEntity.getPlayerAddress(executor, 'winner');
-  //   if (player != address(0)) {
-  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-  //       player,
-  //       amount * 10**18
-  //     );
-  //     return;
-  //   }
-
-  //   address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
-  //   address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
-  //   if (tiePlayer1 != address(0) && tiePlayer2 != address(0)) {
-  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-  //       tiePlayer1,
-  //       amount * 10**18
-  //     );
-  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-  //       tiePlayer2,
-  //       amount * 10**18
-  //     );
-  //   }
-  // }
 }

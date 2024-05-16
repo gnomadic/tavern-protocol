@@ -1,24 +1,47 @@
 {
     "name": "Reward ERC20",
-    "description": "Allow players to receive rewards in the form of ERC20 tokens",
-    "functions": [
+    "description": "Allow players to receive rewards in the form of ERC20 tokens.",
+    "gameFunctions": [
         {
-            "name": "Join Queue",
-            "description": "This puts a player in the queue",
-            "abi": "joinQueue(address,address)",
+            "name": "Reward Winner",
+            "description": "Send an ERC20 token to an address flagged a winner.",
+            "abi": "rewardWinner(address,address)",
             "requires": [
-                "player"
+                "amount",
+                "winner",
+                "rewardAddress"
             ],
             "creates": [],
-            "emits":["JoinedQueue"]
+            "emits": [
+                "Transfer"
+            ]
         },
         {
-            "name": "Set Match Or Wait",
-            "description": "If there is already a player in the queue will match them and pass one two players.  If the queue is empty, will put the current player in the queue.",
-            "abi": "setMatchOrWait(address,address)",
-            "requires": ["player"],
-            "creates": ["player1", "player2"],
-            "emits":["JoinedQueue", "MatchMade"]
+            "name": "Reward Tie",
+            "description": "Send an ERC@) token to two addresses, both of which are flagged as ties.",
+            "abi": "rewardTie(address,address)",
+            "requires": [
+                "amount",
+                "tie1",
+                "tie2",
+                "rewardAddress"
+            ],
+            "creates": [],
+            "emits": [
+                "Transfer"
+            ]
+        }
+    ],
+    "configFunctions": [
+        {
+            "name": "Set Reward",
+            "description": "Set the address of the ERC20 token to be used for rewards.",
+            "abi": "setReward(address)",
+            "requires": [
+                "rewardAddress"
+            ],
+            "creates": [],
+            "emits": []
         }
     ]
 }

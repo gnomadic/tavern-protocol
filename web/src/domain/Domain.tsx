@@ -71,7 +71,8 @@ export type GameFuncParams = {
 export type ComponentMetadata = {
   name: string;
   description: Address;
-  functions: ComponentMetadataFunction[];
+  gameFunctions: ComponentMetadataFunction[];
+  configFunctions: ComponentMetadataFunction[];
 }
 
 export type ComponentMetadataFunction = {

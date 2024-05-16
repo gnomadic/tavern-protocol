@@ -1,7 +1,7 @@
 {
     "name": "Queue Session",
     "description": "Allow players to join a matchmaking queue and match with other players.  It supports 2 players per match, and if the queue is empty the first player will have to wait.",
-    "functions": [
+    "gameFunctions": [
         {
             "name": "Join Queue",
             "description": "This puts a player in the queue.",
@@ -20,5 +20,6 @@
             "creates": ["player1", "player2"],
             "emits":["JoinedQueue", "MatchMade"]
         }
-    ]
+    ],
+    "configFunctions": []
 }

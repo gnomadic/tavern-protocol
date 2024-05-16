@@ -2,6 +2,8 @@
 import { Address } from 'viem';
 import Divider from '../Divider';
 import { useReadGameFlows, useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
+import { useMetadata } from '@/hooks/useMetadata';
+import { GameMetadata, GameSummary } from '@/domain/Domain';
 
 
 type StepThreeProps = {
@@ -12,23 +14,24 @@ export default function GameInfo(props: StepThreeProps) {
 
     const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
     const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
+    const { data } = useMetadata<GameMetadata>(summary?.metadata);
 
 
     return (
         <section id='connect' className='relative items-center pt-12 pb-12'>
-
-            {summary ?
+{JSON.stringify(data)}
+            {summary && data ?
                 <div>
-                    <div className="pb-8 text-xl">This Game has {summary?.availableFunctions.length} available function{summary.availableFunctions.length > 1 ? "s" : ""}</div>
+                    {/* <div className="pb-8 text-xl">This Game has {data?.availableFunctions.length} available function{data.availableFunctions.length > 1 ? "s" : ""}</div> */}
                     <ul>
-                        {Array.from({ length: summary?.availableFunctions.length as number }).map((object, i) => {
+                        {/* {Array.from({ length: data?.availableFunctions.length as number }).map((object, i) => {
                             return (
                                 <div key={i} className='justify-center '>
-                                    <div className='py-3 pl-8 text-lg'>{summary!.availableFunctions[i].name} at {summary!.availableFunctions[i].value}</div>
+                                    <div className='py-3 pl-8 text-lg'>{data!.availableFunctions[i].name} at {data!.availableFunctions[i].value}</div>
 
                                 </div>
                             );
-                        })}
+                        })} */}
                     </ul>
                     <div className="pt-12 pb-8 text-xl">This Game provides {summary?.flows.length} Flow{summary.flows.length > 1 ? "s" : ""}</div>
                     <ul>
@@ -39,13 +42,13 @@ export default function GameInfo(props: StepThreeProps) {
                                     <div className="flex">
                                         <div className="mx-auto">
                                             requires
-                                            {Array.from({ length: summary?.availableFunctions.length as number }).map((object, i) => {
+                                            {/* {Array.from({ length: data?.availableFunctions.length as number }).map((object, i) => {
                                                 return (
                                                     <div key={i}>
-                                                        <div >{summary!.availableFunctions[i].name}</div>
+                                                        <div >{data!.availableFunctions[i].name}</div>
                                                     </div>
                                                 );
-                                            })}
+                                            })} */}
                                         </div>
                                         <div className="pb-5 mx-auto">
                                             creates

@@ -15,6 +15,7 @@ export default function ExploreGames() {
     const { data: currentGames } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
     const { data: gameCount } = useReadGameFactoryGetGameCount({ address: deploy.gameFactory })
 
+
     return (
         <div className="pt-12">
             <p> Explore Games that others have deployed on {deploy.chain} </p>
@@ -27,12 +28,14 @@ export default function ExploreGames() {
                     if (currentGames![i].game !== '0x0000000000000000000000000000000000000000') {
                         return (
                             <div key={i} className="pt-8">
+                                {/* {JSON.stringify(currentGames![i])} */}
                                 <GameCard
                                     // gameSummary={currentGames![i]}
                                     deployment={deploy}
-                                    displayName={currentGames![i].displayName}
+                                    // displayName={currentGames![i].displayName}
                                     gm={currentGames![i].gm}
-                                    description={currentGames![i].description}
+                                    metadata={currentGames![i].metadata}
+                                    // description={currentGames![i].description}
                                     address={currentGames![i].game}
                                 />
                             </div>

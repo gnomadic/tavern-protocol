@@ -13,10 +13,11 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
 contract RockPaperScissors is IComponent {
-  string[] public required = ['nextPlayer'];
-  string[] public functions = ['oneOnOne'];
-  string[] public abis = ['oneOnOne(address,address)'];
+  string public metadata;
 
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
   function initialize(address game) external {
     IGame(game).createEntity('RockPaperScissorEntity');
   }
@@ -25,11 +26,7 @@ contract RockPaperScissors is IComponent {
     return
       ComponentSummary(
         address(this),
-        functions,
-        abis,
-        required,
-        'Rock Paper Scissors',
-        'Allow players to submit a move out of three options, which will be compared to another player to determine the winner.  This follows the rules of rock paper scissors.'
+        metadata
       );
   }
 

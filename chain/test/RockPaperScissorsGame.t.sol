@@ -25,17 +25,17 @@ contract RockPaperScissorsGame is TavernTest {
   }
 
   function loadModules() public override {
-    queueComponent = new QueueSession();
+    queueComponent = new QueueSession("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(queueComponent));
     QueueSessionEntity queueEntity = new QueueSessionEntity();
     entityFactory.registerEntity('QueueSessionEntity', address(queueEntity));
 
-    rpsComponent = new RockPaperScissors();
+    rpsComponent = new RockPaperScissors("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(rpsComponent));
     RockPaperScissorEntity rpsEntity = new RockPaperScissorEntity();
     entityFactory.registerEntity('RockPaperScissorEntity', address(rpsEntity));
 
-    rewardComponent = new RewardERC20();
+    rewardComponent = new RewardERC20("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(rewardComponent));
     Reward20Entity rewardEntity = new Reward20Entity();
     entityFactory.registerEntity('Reward20Entity', address(rewardEntity));

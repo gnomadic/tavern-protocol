@@ -5,6 +5,10 @@ import { Deployment } from './Domain';
 // export const RPS_GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
 export const RPS_GAME_ADDRESS: Address = '0xc19Bc969cfc40DfF49605AedefC69a74c5Aef69E'
 
+export const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
+
+
+
 export const Deployments: { [key: string]: Deployment } = {
   // ethereum: {
   //   gameFactory: '0xe38092416635F9a3a63Ad27984C622918173EBab',

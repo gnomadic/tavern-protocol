@@ -10,30 +10,21 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import 'forge-std/console.sol';
 
 contract QueueSession is IComponent {
-  string[] public required = ['playerParams', 'nextPlayer'];
-  string[] public functions = ['joinGame', 'setMatchOrWait'];
-  string[] public abis = [
-    'joinGame(address,address)',
-    'setMatchOrWait(address,address)'
-  ];
+  string public metadata;
+
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
 
   function initialize(address game) external {
     IGame(game).createEntity('QueueSessionEntity');
   }
 
   function getSummary() external view returns (ComponentSummary memory) {
-    return
-      ComponentSummary(
-        address(this),
-        functions,
-        abis,
-        required,
-        'Queue Session',
-        'Allow players to join a queue and match with other players'
-      );
+    return ComponentSummary(address(this), metadata);
   }
 
-  function joinGame(address executor, address gameAddress) public {
+  function joinQueue(address executor, address gameAddress) public {
     address player;
     IGame game = IGame(gameAddress);
 
@@ -54,7 +45,7 @@ contract QueueSession is IComponent {
 
     if (queue.getQueueSize() == 0) {
       console.log('joining queue');
-      joinGame(executor, gameAddress);
+      joinQueue(executor, gameAddress);
       return;
     }
 

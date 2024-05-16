@@ -25,7 +25,7 @@ contract DeployProtocol is Script {
     factory.initialize(address(game), address(entityFactory));
 
     ComponentRegistry registry = new ComponentRegistry();
-    DailyInteractionModule dailyInteraction = new DailyInteractionModule();
+    DailyInteractionModule dailyInteraction = new DailyInteractionModule("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(dailyInteraction));
 
     vm.stopBroadcast();

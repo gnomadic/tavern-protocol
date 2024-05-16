@@ -1,0 +1,11 @@
+{
+    "name": "A Tavern Component",
+    "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
+    "functions": [{
+        "name": "First Function",
+        "description": "this is an example of a function, it requires a player and welcomes them to the tavern.",
+        "abi": "firstFunction(address,address)",
+        "requires": "player",
+        "creates": "tavern"
+    }]
+}

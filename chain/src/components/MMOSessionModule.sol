@@ -11,9 +11,11 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
 contract MMOSessionModule is IComponent {
-  string[] public required = ['players'];
-  string[] public functions = ['joinGame'];
-  string[] public abis = ['joinGame(address,address)'];
+  string public metadata;
+
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
 
   function initialize(address game) external {
     IGame(game).createEntity('MMOSessionEntity');
@@ -21,7 +23,7 @@ contract MMOSessionModule is IComponent {
 
   function getSummary() external view returns (ComponentSummary memory) {
     return
-      ComponentSummary(address(this), functions, abis, required, 'MMO Session', "Allow players to join an MMO game");
+      ComponentSummary(address(this), metadata);
   }
 
   function joinGame(address executor, address gameAddress) public {

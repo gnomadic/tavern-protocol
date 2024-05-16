@@ -10,18 +10,17 @@ import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract Reward1155 is IComponent {
-  string[] public required = ['players'];
-  string[] public functions = ['reward'];
-  string[] public abis = ['reward(address,address)'];
+  string public metadata;
+
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
+  function getSummary() external view returns (ComponentSummary memory) {
+    return ComponentSummary(address(this), metadata);
+  }
 
   function initialize(address game) external {
     IGame(game).createEntity('Reward1155Entity');
-  }
-
-  function getSummary() external view returns (ComponentSummary memory) {
-    return
-      ComponentSummary(address(this), functions, abis, required, 'Reward 1155',
-      "Allow players to receive rewards in the form of ERC1155 tokens");
   }
 
   function setReward(IGame game, address _reward) external {
@@ -45,8 +44,6 @@ contract Reward1155 is IComponent {
       amount
     );
   }
-
-
 
   function sendReward(address player, uint256 token, uint256 amount) external {
     Reward1155Entity(msg.sender).sendReward(player, token, amount);

@@ -15,6 +15,8 @@ export type Deployment = {
 export type GameSummary = {
   game: Address;
   gm: Address;
+  metadata: string;
+  // TODO clean this up
   displayName: string;
   availableFunctions: readonly AddressKey[];
   availableData: readonly AddressKey[];
@@ -63,4 +65,26 @@ export type GameFuncParams = {
   addresses: readonly AddressKey[];
   uints: readonly UintKey[];
   strings: readonly StringKey[];
+}
+
+
+export type ComponentMetadata = {
+  name: string;
+  description: Address;
+  functions: ComponentMetadataFunction[];
+}
+
+export type ComponentMetadataFunction = {
+  name: string;
+  description: string;
+  abi: string;
+  requires: string[];
+  creates: string[];
+  emits: string[];
+}
+
+export type GameMetadata = {
+  name: string;
+  description: Address;
+  gameUrl: string;
 }

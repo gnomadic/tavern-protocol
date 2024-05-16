@@ -14,20 +14,14 @@ import 'forge-std/console.sol';
 // Roles for access control
 contract Game is IGame, Initializable {
   address public gm;
-  string public displayName;
-  string public description;
-  string public gameUrl;
+  string public metadata;
   IEntityFactory public entityFactory;
 
   IEntity[] public entities;
-  IComponent[] public components;
+  address[] public components;
 
   mapping(string => address) public availableEntityData;
   AddressKey[] dataKeys;
-
-  mapping(string => address) public functionLookup;
-  AddressKey[] functionKeys;
-  mapping(address => string[]) public supportedFunctions;
 
   mapping(string => AddressKey[]) public flows;
   string[] public flowNames;
@@ -44,11 +38,11 @@ contract Game is IGame, Initializable {
 
   function initialize(
     address _gm,
-    string calldata _displayName,
+    string calldata _metadata,
     address _entityFactory
   ) public initializer {
     gm = _gm;
-    displayName = _displayName;
+    metadata = _metadata;
     entityFactory = IEntityFactory(_entityFactory);
 
     FlowEntity flowEntity = new FlowEntity();
@@ -59,16 +53,7 @@ contract Game is IGame, Initializable {
 
   function getSummary() external view returns (GameSummary memory) {
     return
-      GameSummary(
-        address(this),
-        gm,
-        displayName,
-        description,
-        gameUrl,
-        functionKeys,
-        dataKeys,
-        flowNames
-      );
+      GameSummary(address(this), gm, metadata, components, dataKeys, flowNames);
   }
 
   function addEntity(address entity) internal {
@@ -88,23 +73,12 @@ contract Game is IGame, Initializable {
   /// @dev It will load every available function from the module and add it to the game's function lookup.
   /// @dev It will initiatlize the module for the game, so the module can create it's entities or whatever else it needs.
   /// @param component the address of the component to load.
-  function addComponent(address component) external onlyGm(){
+  function addComponent(address component) external onlyGm {
     // TODO verify the module exists in the registry for user safety
-    IComponent newComponent = IComponent(component);
-    string[] memory componentFunctions = newComponent.getSummary().functions;
-    for (uint8 i = 0; i < componentFunctions.length; i++) {
-      functionKeys.push(AddressKey(componentFunctions[i], component));
-      functionLookup[componentFunctions[i]] = component;
-      supportedFunctions[component].push(componentFunctions[i]);
-    }
-    newComponent.initialize(address(this));
-    components.push(newComponent);
-  }
 
-  function getSupportedFunctions(
-    address module
-  ) external view returns (string[] memory) {
-    return supportedFunctions[module];
+    IComponent newComponent = IComponent(component);
+    components.push(component);
+    newComponent.initialize(address(this));
   }
 
   function getEntity(string memory key) public view returns (address) {
@@ -114,11 +88,19 @@ contract Game is IGame, Initializable {
   }
 
   function validateIsModule(address module) external view returns (bool) {
-    return (supportedFunctions[module].length > 0);
+    for (uint8 i = 0; i < components.length; i++) {
+      if (address(components[i]) == module) {
+        return true;
+      }
+    }
+    return false;
   }
 
   //TODO only GM can create game functions
-  function createFlow(string memory name, AddressKey[] memory funcs) external onlyGm() {
+  function createFlow(
+    string memory name,
+    AddressKey[] memory funcs
+  ) external onlyGm {
     if (flows[name].length > 0) {
       revert FlowAlreadyExists();
     }
@@ -128,12 +110,8 @@ contract Game is IGame, Initializable {
     flowNames.push(name);
   }
 
-  function updateDescription(string memory _description) external onlyGm(){
-    description = _description;
-  }
-
-  function updateGameUrl(string memory _gameUrl) external onlyGm() {
-    gameUrl = _gameUrl;
+  function updateMetadata(string memory _metadata) external onlyGm {
+    metadata = _metadata;
   }
 
   error FlowAlreadyExists();
@@ -160,10 +138,7 @@ contract Game is IGame, Initializable {
   }
   error FlowExecutionError(address component, string functionKey);
 
-  function debugFlow(string memory name, FlowParams memory params) external {
-
-    
-  }
+  function debugFlow(string memory name, FlowParams memory params) external {}
 
   modifier onlyGm() {
     if (msg.sender != gm) revert OnlyGM();

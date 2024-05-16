@@ -8,15 +8,15 @@ import {IGame} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract DailyInteractionModule is IComponent, Initializable {
+  
+  string public metadata;
 
-
-  string public displayName = 'Daily Interaction';
-  string[] public required = ['dailyAction', 'lastActionAt'];
-  string[] public functions = ['dailyInteraction'];
-  string[] public abis = ['dailyInteraction(address,address)'];
-
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
 
   function initialize(address game) external override {}
+
   function getSummary()
     external
     view
@@ -24,7 +24,10 @@ contract DailyInteractionModule is IComponent, Initializable {
     returns (ComponentSummary memory)
   {
     return
-      ComponentSummary(address(this), functions, abis, required, displayName, "Allow players to interact with the game once per day");
+      ComponentSummary(
+        address(this),
+        metadata
+      );
   }
 
   function dailyInteraction(address executor, address gameAddress) public {

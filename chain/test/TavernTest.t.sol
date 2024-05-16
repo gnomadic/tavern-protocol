@@ -28,7 +28,7 @@ abstract contract TavernTest is Test {
 
   
 
-    factory.createGame(address(0), 'testGame');
+    factory.createGame(address(0), 'http://ipfs.io/ipfs/QmUXhiGQsawmyaAJ1zdiGEANbW3WAVSdJYrqosX6RTvgLC/template.json');
     liveGame = factory.games(0);
 
 

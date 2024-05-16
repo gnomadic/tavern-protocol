@@ -18,10 +18,8 @@ interface IGame {
 struct GameSummary {
   address game;
   address gm;
-  string displayName;
-  string description;
-  string gameUrl;
-  AddressKey[] availableFunctions;
+  string metadata;
+  address[] components;
   AddressKey[] availableData;
   string[] flows;
 }

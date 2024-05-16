@@ -12,22 +12,11 @@ import {FlowParams} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract MMONeighborInteractionModule is IComponent {
-  string public displayName = 'Daily Interaction';
-  string[] public required = ['players', 'canPlayerThrow'];
-  string[] public functions = [
-    'throwBall',
-    'catchBall',
-    'canPlayerCatch',
-    'canPlayerThrow',
-    'getPlayerCount',
-    'getBallCount',
-    'getBallHolderIndexes',
-    'getPlayerIndex',
-    'getCatchableIndexes'
-  ];
-  string[] public abis = [
-    'joinSession(address,address), throwBall(address,address), catchBall(address,address)'
-  ];
+  string public metadata;
+
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
 
   function initialize(address game) external {
     IGame(game).createEntity('CatchEntity');
@@ -37,11 +26,7 @@ contract MMONeighborInteractionModule is IComponent {
     return
       ComponentSummary(
         address(this),
-        functions,
-        abis,
-        required,
-        'Neighbor Interaction',
-        "Allow players to interact with each other based on their position"
+        metadata
       );
   }
 

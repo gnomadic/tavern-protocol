@@ -1,0 +1,24 @@
+{
+    "name": "Queue Session",
+    "description": "Allow players to join a matchmaking queue and match with other players.  It supports 2 players per match, and if the queue is empty the first player will have to wait.",
+    "functions": [
+        {
+            "name": "Join Queue",
+            "description": "This puts a player in the queue",
+            "abi": "joinQueue(address,address)",
+            "requires": [
+                "player"
+            ],
+            "creates": [],
+            "emits":["JoinedQueue"]
+        },
+        {
+            "name": "Set Match Or Wait",
+            "description": "If there is already a player in the queue will match them and pass one two players.  If the queue is empty, will put the current player in the queue.",
+            "abi": "setMatchOrWait(address,address)",
+            "requires": ["player"],
+            "creates": ["player1", "player2"],
+            "emits":["JoinedQueue", "MatchMade"]
+        }
+    ]
+}

@@ -35,13 +35,13 @@ contract GameFactory {
 
   function createGame(
     address _gm,
-    string calldata displayName
+    string calldata metadata
   ) public returns (address) {
     address game = LibClone.clone(gameContract);
-    IGame(game).initialize(_gm, displayName, entityFactory);
+    IGame(game).initialize(_gm, metadata, entityFactory);
     games.push(Game(game));
 
-    emit GameCreated(_gm, game);
+    emit GameCreated(game, _gm, metadata);
 
     return game;
   }
@@ -61,7 +61,7 @@ contract GameFactory {
     return games.length;
   }
 
-  event GameCreated(address gm, address game);
+  event GameCreated(address game, address gm, string metadata);
 
   error OnlyAdmin();
 

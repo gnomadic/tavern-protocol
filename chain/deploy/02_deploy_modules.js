@@ -1,4 +1,4 @@
-const { verify, getDeployedContract, ZERO_ADDRESS } = require("../../deployments/utils");
+const { verify, getDeployedContract, ZERO_ADDRESS, IPFS_COMPONENTS } = require("../../deployments/utils");
 
 module.exports = async (hre) => {
   const { getNamedAccounts, deployments, getChainId, ethers } = hre;
@@ -13,6 +13,7 @@ module.exports = async (hre) => {
   const queueSession = await deploy("QueueSession", {
     from: deployer,
     log: true,
+    args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`],
   });
 
 
@@ -30,6 +31,7 @@ module.exports = async (hre) => {
   const rockPaperScissors = await deploy("RockPaperScissors", {
     from: deployer,
     log: true,
+    args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/RPS.json`],
   });
 
 
@@ -45,6 +47,7 @@ module.exports = async (hre) => {
   const rewardERC20 = await deploy("RewardERC20", {
     from: deployer,
     log: true,
+    args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/RewardERC20.json`],
   });
 
 

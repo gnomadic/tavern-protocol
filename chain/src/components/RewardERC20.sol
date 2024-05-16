@@ -11,12 +11,11 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
 contract RewardERC20 is IComponent {
-  string[] public required = ['winner', 'amount', 'tiePlayer1', 'tiePlayer2'];
-  string[] public functions = ['rewardWinner', 'rewardTie'];
-  string[] public abis = [
-    'rewardWinner(address,address)',
-    'rewardTie(address,address)'
-  ];
+  string public metadata;
+
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
 
   function initialize(address game) external {
     IGame(game).createEntity('Reward20Entity');
@@ -26,11 +25,7 @@ contract RewardERC20 is IComponent {
     return
       ComponentSummary(
         address(this),
-        functions,
-        abis,
-        required,
-        'Reward ERC20',
-        'Allow players to receive rewards in the form of ERC20 tokens'
+        metadata
       );
   }
 

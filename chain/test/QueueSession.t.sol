@@ -18,7 +18,7 @@ contract QueueSessionTest is TavernTest {
   }
 
   function loadModules() public override {
-    queue = new QueueSession();
+    queue = new QueueSession("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(queue));
     QueueSessionEntity queueEntity = new QueueSessionEntity();
     entityFactory.registerEntity('QueueSessionEntity', address(queueEntity));

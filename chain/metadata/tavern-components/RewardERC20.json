@@ -1,0 +1,24 @@
+{
+    "name": "Reward ERC20",
+    "description": "Allow players to receive rewards in the form of ERC20 tokens",
+    "provides": [
+        {
+            "name": "Join Queue",
+            "description": "This puts a player in the queue",
+            "abi": "joinQueue(address,address)",
+            "requires": [
+                "player"
+            ],
+            "creates": [],
+            "emits":["JoinedQueue"]
+        },
+        {
+            "name": "Set Match Or Wait",
+            "description": "If there is already a player in the queue will match them and pass one two players.  If the queue is empty, will put the current player in the queue.",
+            "abi": "setMatchOrWait(address,address)",
+            "requires": ["player"],
+            "creates": ["player1", "player2"],
+            "emits":["JoinedQueue", "MatchMade"]
+        }
+    ]
+}

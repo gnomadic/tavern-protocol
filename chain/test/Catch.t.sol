@@ -33,12 +33,12 @@ contract Catch is Test {
 
     ComponentRegistry registry = new ComponentRegistry();
 
-    mmoSession = new MMOSessionModule();
+    mmoSession = new MMOSessionModule("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(mmoSession));
     MMOSessionEntity mmoSessionEntity = new MMOSessionEntity();
     entityFactory.registerEntity('MMOSessionEntity', address(mmoSessionEntity));
 
-    neighborInteraction = new MMONeighborInteractionModule();
+    neighborInteraction = new MMONeighborInteractionModule("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(neighborInteraction));
     MMONeighborInteractionEntity neighborInteractionEntity = new MMONeighborInteractionEntity();
     entityFactory.registerEntity(
@@ -48,7 +48,7 @@ contract Catch is Test {
     CatchEntity catchEntity = new CatchEntity();
     entityFactory.registerEntity('CatchEntity', address(catchEntity));
 
-    factory.createGame(address(0), 'Catch');
+    factory.createGame(address(0), 'http://ipfs.io/ipfs/QmUXhiGQsawmyaAJ1zdiGEANbW3WAVSdJYrqosX6RTvgLC/template.json');
     liveGame = factory.games(0);
 
     liveGame.addComponent(address(mmoSession));

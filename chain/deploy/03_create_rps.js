@@ -1,5 +1,5 @@
 const { get } = require("http");
-const { verify, getDeployedContract, ZERO_ADDRESS } = require("../../deployments/utils");
+const { verify, getDeployedContract, ZERO_ADDRESS, IPFS_GAMES } = require("../../deployments/utils");
 
 module.exports = async (hre) => {
   const { getNamedAccounts, deployments, getChainId, ethers } = hre;
@@ -11,7 +11,7 @@ module.exports = async (hre) => {
   //   // ------------------------------------- deploy
 
 
-  const gameName = "Rock Paper Scissors";
+  const gameName = `http://ipfs.io/ipfs/${IPFS_GAMES}/RockPaperScissors.json`;
 
   const gameFactory = await getDeployedContract("GameFactory");
   const queueComponent = await getDeployedContract("QueueSession");
@@ -42,27 +42,33 @@ module.exports = async (hre) => {
   // const game = await getDeployedContract("Game", gameSummary.game);
 
   const game = await hre.ethers.getContractAt("Game", gameSummary.game);
-  // console.log("game", game);
+  console.log("game", gameSummary);
   // console.log('queueComponent', queueComponent);
 
 
 
-  let functions = gameSummary.availableFunctions;
+  let components = gameSummary.components;
+  let availableData = gameSummary.availableData;
   let flows = gameSummary.flows;
-  let description = gameSummary.description;
-  let gameUrl = gameSummary.gameUrl;
 
 
-  console.log("functions", functions);
+
+  // let functions = gameSummary.availableFunctions;
+  // let flows = gameSummary.flows;
+  // let description = gameSummary.description;
+  // let gameUrl = gameSummary.gameUrl;
+
+
+  console.log("components", components);
+  console.log("availableData", availableData);
   console.log("flows", flows);
-  console.log("description", description);
-  console.log("gameUrl", gameUrl);
+  // console.log("gameUrl", gameUrl);
 
-  const queueExists = functions.find((f) => f.value === queueComponent.target);
-  const rpsExists = functions.find((f) => f.value === RPS.target);
-  const rewardExists = functions.find((f) => f.value === rewardComponent.target);
+  const queueExists = components.find((f) => f === queueComponent.target);
+  const rpsExists = components.find((f) => f === RPS.target);
+  const rewardExists = components.find((f) => f === rewardComponent.target);
 
-  // console.log("queue address", queueComponent.target);
+  // // console.log("queue address", queueComponent.target);
 
   
   if (!queueExists) {
@@ -100,23 +106,7 @@ module.exports = async (hre) => {
     console.log("reward exists");
   }
 
-  if (description === "" || description === undefined) {
-    console.log("adding description");
-    tx = await game.updateDescription("A multiplayer Rock Paper Scissors game");
-    await tx.wait();
-  } else {
-    console.log("description exists");
-  }
 
-  if (gameUrl === "" || gameUrl === undefined) {
-    console.log("adding gameUrl");
-    tx = await game.updateGameUrl("https://www.playtavern.com/farcade/rps");
-    await tx.wait();
-  } else {
-    console.log("gameUrl exists");
-  }
-
-  
 
   if (flows === undefined || flows.length === 0) {
     console.log("adding flows");
@@ -141,21 +131,11 @@ module.exports = async (hre) => {
 
 
 
-
-  // const game = await gameFactory.getGames(0);
-  // tx = game.addComponent(queueComponent.address);
-  // await tx.wait();
-
-  // tx = game.addComponent(RPS.address);
-  // await tx.wait();
-
-  // tx = game.addComponent(rewardComponent.address);
-  // await tx.wait();
-  async function getGame(name) {
+  async function getGame(_metadata) {
     const games = await gameFactory.getGames(0);
     let game = undefined;
     for (let i = 0; i < games.length; i++) {
-      if (games[i].displayName === name) {
+      if (games[i].metadata === _metadata) {
 
         game = games[i];
         return game;

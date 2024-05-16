@@ -48,22 +48,22 @@ contract DeployRPS is Script {
     RewardERC20 rewardComponent;
     // Mock20 rewardToken;
 
-    queueComponent = new QueueSession();
+    queueComponent = new QueueSession("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(queueComponent));
     QueueSessionEntity queueEntity = new QueueSessionEntity();
     entityFactory.registerEntity('QueueSessionEntity', address(queueEntity));
 
-    rpsComponent = new RockPaperScissors();
+    rpsComponent = new RockPaperScissors("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(rpsComponent));
     RockPaperScissorEntity rpsEntity = new RockPaperScissorEntity();
     entityFactory.registerEntity('RockPaperScissorEntity', address(rpsEntity));
 
-    rewardComponent = new RewardERC20();
+    rewardComponent = new RewardERC20("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
     registry.register(address(rewardComponent));
     Reward20Entity rewardEntity = new Reward20Entity();
     entityFactory.registerEntity('Reward20Entity', address(rewardEntity));
 
-    factory.createGame(deployPublicKey, 'Rock Paper Scissor Demo');
+    factory.createGame(deployPublicKey, 'http://ipfs.io/ipfs/QmUXhiGQsawmyaAJ1zdiGEANbW3WAVSdJYrqosX6RTvgLC/template.json');
     Game liveGame = factory.games(0);
 
     liveGame.addComponent(address(queueComponent));

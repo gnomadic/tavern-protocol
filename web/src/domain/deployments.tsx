@@ -29,15 +29,15 @@ export const Deployments: { [key: string]: Deployment } = {
   //   chain: 'polygon',
   // },
   sepolia: {
-    gameFactory: '0x4de99C29a829A057FAba4377943dbe6F807A3a2C',
+    gameFactory: '0xff31ffE4EA3aCDc548b874f02f67280f2c9edbD4',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    componentRegistry: '0x82BBf2C98ba76dA156fa1da1Ae34654acf2A621d',
+    componentRegistry: '0xefB2dEd626656dbC9708623AdFE6930E3Af096E1',
     displayName: 'Tavern',
     currency: 'eth',
     chain: 'sepolia',
     chainId: "11155111",
     scan:"https://sepolia.etherscan.io/address/",
-    rpsGame: '0x114D2D3848907a6a4472Bcc1839Fd0CFEA5d1aCA'
+    rpsGame: '0x1d6E6F3D1A89Fa917d313a297b61B6109e6eCCFA'
   },
 
   localhost: {

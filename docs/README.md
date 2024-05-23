@@ -6,13 +6,13 @@ We believe in the power of play to foster stronger connections and shared experi
 
 ## What is the Tavern Protocol?
 
-The Tavern Protocol serves as a robust foundation for the development and management of blockchain-based games. At its core, the protocol provides a set of tools, standards, and best practices designed to empower developers, game creators, and players alike.
+The Tavern Protocol serves as a foundation for the development and management of blockchain-based games. At its core, the protocol provides a set of game building blocks and the means to string them together into gameplay.  Game creators can submit transactions to accomplish all this, and all the information necessary is provided as metadata by the contracts.
 
 ## Blockchain Gaming for all
 
 ### Enabling Game Creators
 
-Game creators play a pivotal role in the ecosystem, shaping the landscape of blockchain gaming with their creativity and vision. The Tavern Protocol provides game creators with a versatile toolkit for bringing their ideas to life, offering pre-built and customizable components to streamline the game development process.
+Game creators play a pivotal role in the ecosystem, shaping the landscape of blockchain gaming with their creativity and vision. The Tavern Protocol provides game creators with a versatile toolkit for bringing their ideas to life, offering pre-built and customizable components that can be chained together to create unique experiences.
 
 ### Empowering Players
 
@@ -20,13 +20,13 @@ At the heart of every game are the players, whose engagement and enjoyment are p
 
 ### Unlocking Developers
 
-For developers, the Tavern Protocol opens new doors of opportunity by offering a comprehensive framework for building decentralized games components.  Developers can create immersive and unique gaming experiences to share with the community of Game Creators. &#x20;
+For developers, the Tavern Protocol opens new doors of opportunity by offering a comprehensive framework for building decentralized gameplay components.  Developers can create immersive and unique gaming experiences to share with the community of Game Creators.
 
 ## Game Creation and Management
 
 The Tavern Protocol facilitates the creation and management of blockchain-based games through its core components:
 
-* **Entities:** Store and manage game data securely on the blockchain, including player details, item attributes, and game state information.
+* **Entities:** Store and manage game data uniquely associated with a game, including player details, item attributes, and game state information.
 * **Modules (Components):** Pre-built components that handle specific actions within games, such as player movement, combat mechanics, and inventory management.
 * **Flows:** Customizable sequences of modules that define gameplay logic, allowing for dynamic and engaging gaming experiences.
 

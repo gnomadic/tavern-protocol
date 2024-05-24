@@ -2,7 +2,12 @@
     "name": "Reward ERC20",
     "description": "Allow players to receive rewards in the form of ERC20 tokens.",
     "gameFunctions": [
+    "description": "Allow players to receive rewards in the form of ERC20 tokens.",
+    "gameFunctions": [
         {
+            "name": "Reward Winner",
+            "description": "Send an ERC20 token to an address flagged a winner.",
+            "abi": "rewardWinner(address,address)",
             "name": "Reward Winner",
             "description": "Send an ERC20 token to an address flagged a winner.",
             "abi": "rewardWinner(address,address)",
@@ -10,8 +15,14 @@
                 "amount",
                 "winner",
                 "rewardAddress"
+                "amount",
+                "winner",
+                "rewardAddress"
             ],
             "creates": [],
+            "emits": [
+                "Transfer"
+            ]
             "emits": [
                 "Transfer"
             ]
@@ -45,3 +56,4 @@
         }
     ]
 }
+

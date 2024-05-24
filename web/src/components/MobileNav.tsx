@@ -47,7 +47,7 @@ export default function MobileNav(props: MobileNavProps) {
               <div className='relative cursor-pointer'>warpcast</div>
             </a>
           </li>
-{/* 
+          {/* 
           <li className='pb-8'>
             <a
               href='https://discord.gg/pP2G7sY7GY'
@@ -75,7 +75,10 @@ export default function MobileNav(props: MobileNavProps) {
           </li>
         </ul>
         <div className='mb-8 flex transform items-center justify-center py-4 pt-16 duration-200'>
-          <ConnectButton />
+          <ConnectButton
+            chainStatus='icon'
+            accountStatus='avatar
+            showBalance={false} />
         </div>
       </nav>
     </div>

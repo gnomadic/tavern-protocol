@@ -21,7 +21,12 @@ struct GameSummary {
   string metadata;
   address[] components;
   AddressKey[] availableData;
-  string[] flows;
+  FlowKey[] flows;
+}
+
+struct FlowKey {
+  string name;
+  AddressKey[] values;
 }
 
 struct AddressKey {

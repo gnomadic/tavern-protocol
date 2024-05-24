@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
-import {IGame, GameSummary, AddressKey, FlowParams} from './interfaces/IGame.sol';
+import {IGame, GameSummary, AddressKey, FlowParams, FlowKey} from './interfaces/IGame.sol';
 import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IComponent} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
@@ -52,8 +52,13 @@ contract Game is IGame, Initializable {
   }
 
   function getSummary() external view returns (GameSummary memory) {
+    FlowKey[] memory flowKeys = new FlowKey[](flowNames.length);
+    for (uint8 i = 0; i < flowNames.length; i++) {
+      flowKeys[i] = FlowKey(flowNames[i], flows[flowNames[i]]);
+    }
+
     return
-      GameSummary(address(this), gm, metadata, components, dataKeys, flowNames);
+      GameSummary(address(this), gm, metadata, components, dataKeys, flowKeys);
   }
 
   function addEntity(address entity) internal {

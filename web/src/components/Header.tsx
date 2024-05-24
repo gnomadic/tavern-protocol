@@ -97,7 +97,7 @@ export default function Header() {
             <div className='text-offwhite relative hidden py-1.5 lg:block'>
               <ConnectButton
                 chainStatus='icon'
-                accountStatus='address'
+                accountStatus='avatar'
                 showBalance={false}
               />
             </div>

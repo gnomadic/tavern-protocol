@@ -40,7 +40,7 @@
             "requires": [
                 "rewardAddress"
             ],
-            "creates": [],
+            "creates": ["rewardAddress"],
             "emits": []
         }
     ]

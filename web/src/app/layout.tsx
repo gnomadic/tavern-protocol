@@ -81,7 +81,7 @@ export default function RootLayout({
       </Head> */}
       {/* <div className="flex flex-col min-h-screen"> */}
 
-      <body className={inter.className}>
+      <body className={inter.className + " font-anon"}>
         <Providers>
           <Header />
 

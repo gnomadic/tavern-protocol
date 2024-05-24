@@ -19,7 +19,7 @@ export default function ConnectWallet() {
             aria-hidden="true"
             className="relative inset-0 z-0 pt-24 min-w-max bg-gradient-to-b from-clearslate/0 via-clearslate/50 to-clearslate"
           />
-          <div className="relative z-10 md:pt-18 bg-clearslate font-kdam py-16">
+          <div className="relative z-10 md:pt-18 bg-clearslate font-anon py-16">
             <section className="text-offwhite text-xl md:px-36">
               <div className="text-2xl md:text-6xl  uppercase leading-normal text-center text-offwhite px-8 md:pt-28">
                 Connect your wallet to Join the Cosmic Community

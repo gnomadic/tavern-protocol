@@ -1,11 +1,13 @@
+import ExploreGames from '@/components/explore/ExploreGames';
 import ExploreTabs from '@/components/explore/ExploreTabs';
 
 export default function Explore() {
   return (
-    <main className='items-center px-24 pt-40 font-anon'>
+    <main className='items-center px-5 md:px-24 pt-40'>
       <div className='pt-24 text-6xl'> </div>
       {/* <div className='pt-24 text-6xl'>{'//'} EXPLORE {'//'} </div> */}
-      <ExploreTabs />
+      {/* <ExploreTabs /> */}
+      <ExploreGames />  
     </main>
   );
 }

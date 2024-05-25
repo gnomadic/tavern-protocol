@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className='flex flex-col items-center justify-between min-h-screen p-24 font-anon'>
       <section id='hero' className='relative items-center min-h-screen pt-48'>
-        <p className=''>Play together.</p>
+        <p className=''>Play together with TAVERN.</p>
         <p className='pt-8'>Bring Games to your web3 Communities.</p>
         <p className='pt-8'>
           Launch codeless games onchain for your communities with

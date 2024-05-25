@@ -1,5 +1,7 @@
 export const NavItems = [
-  // { href: '/create', label: 'create' },
-  { href: '/explore', label: 'explore' },
+  { href: '/games', label: 'demo' },
+  { href: '/games', label: 'games' },
+  { href: '/library', label: 'library' },
+
   // { href: '/build', label: 'build' },
 ];

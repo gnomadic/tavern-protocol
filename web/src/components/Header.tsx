@@ -23,7 +23,8 @@ export default function Header() {
   return (
     <header className='absolute top-0 z-50 w-full'>
       <div className='px-6 pt-4 mx-auto md:pt-8 lg:px-12 xl:px-6 flex items-center justify-between text-offwhite'>
-        <nav className='items-center flex gap-3 p-2 border-b-2 border-white pr-24 md:pr-12 lg:pr-20'>
+        <nav className='items-center flex gap-3 p-2'>
+        {/* <nav className='items-center flex gap-3 p-2 border-b-2 border-white pr-24 md:pr-12 lg:pr-20'> */}
           <Link href='/'>
             <div className='text-3xl font-bold leading-loose text-white uppercase cursor-pointer'>
               {/* {deploy.displayName} */}
@@ -31,7 +32,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <ul className='mt-5 hidden md:text-xl lg:text-3xl tracking-wider uppercase text-offwhite md:flex md:gap-8 pl-36'>
+          <ul className='mt-5 hidden md:text-lg lg:text-2xl tracking-wider uppercase text-offwhite md:flex gap-6 pl-4 '>
             {NavItems.map((element, i) => {
               return (
                 <Fragment key={i}>
@@ -43,7 +44,7 @@ export default function Header() {
                     </Link>
                   </li>
 
-                  <div className='border-r-2' />
+                  <div className='' >/</div>
 
                 </Fragment>
               );

@@ -58,7 +58,7 @@ export const Deployments: { [key: string]: Deployment } = {
     displayName: 'Tavern',
     currency: 'eth',
     chain: '( -disconnected-  Connect your wallet! )',
-    chainId: "1",
+    chainId: "0",
     scan:"",
     rpsGame: '0x0',
   },

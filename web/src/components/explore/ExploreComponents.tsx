@@ -11,10 +11,14 @@ export default function ExploreComponents() {
   const { data: currentModules } = useReadComponentRegistryGetComponents({ address: deploy.componentRegistry, args: [0] })
 
   return (
-    <div className="pt-12 pb-24">
-      <p> Explore Modules in the registry that you can use for your games on {deploy.chain}</p>
-      <p> There are {moduleCount ? moduleCount.toString() : '...'}  </p>
-      
+    <div className="md:pt-12 pb-24">
+      <div className='text-4xl md:text-5xl lg:text-6xl uppercase'>
+        {deploy.chain}{'/'}LIB{'/'}{moduleCount ? moduleCount.toString() : "..."}
+      </div>
+
+      {/* <p> Explore Modules in the registry that you can use for your games on {deploy.chain}</p> */}
+      {/* <p> There are {moduleCount ? moduleCount.toString() : '...'}  </p> */}
+
       <ul className=''>
         {Array.from({ length: currentModules ? currentModules.length : 0 }).map((object, i) => {
           if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
@@ -22,10 +26,11 @@ export default function ExploreComponents() {
               <li key={i} className="pt-8">
                 <ModuleCard
                   // displayName={currentModules![i].displayName}
+                  index={i}
                   address={currentModules![i].component}
                   metadata={currentModules![i].metadata}
-                  // functions={currentModules![i].functions}
-                  // description={currentModules![i].description}
+                // functions={currentModules![i].functions}
+                // description={currentModules![i].description}
                 />
               </li>
             );

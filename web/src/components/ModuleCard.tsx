@@ -10,7 +10,8 @@ type ModuleCardProps = {
   address: Address;
   // functions: readonly string[]
   // description: string;
-  metadata:string;
+  metadata: string;
+  index: number;
 }
 
 export default function ModuleCard(props: ModuleCardProps) {
@@ -18,9 +19,9 @@ export default function ModuleCard(props: ModuleCardProps) {
 
   return (
     <Link href={`/module/${props.address}`}>
-      <div className='justify-center border-2 border-gray-300 rounded-md bg-slate-800'>
-        <div className='pt-5 pl-8 text-2xl'>
-          {data ? censor(data.name) : "loading"}
+      {/* <div className='justify-center '> */}
+        <div className='pt-5 pl-5 text-lg border-b-2 border-white'>
+        {props.index + 1}{"/"}{data ? censor(data.name) : "loading"}
         </div>
         <div className='pt-5 pb-2 pl-2 text-sm'>
           {censor(data?.description)}
@@ -40,7 +41,7 @@ export default function ModuleCard(props: ModuleCardProps) {
         </ul> */}
 
 
-      </div>
+      {/* </div> */}
     </Link>
   );
 }

@@ -9,18 +9,28 @@ import { useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/ge
 import useDeployment from '@/hooks/useDeployment';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { useConfig } from 'wagmi'
+
 
 export default function ExploreGames() {
     const { deploy } = useDeployment();
     const { data: currentGames } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: gameCount } = useReadGameFactoryGetGameCount({ address: deploy.gameFactory })
+    const { data: gameCount, error,  } = useReadGameFactoryGetGameCount({ address: deploy.gameFactory })
 
+
+    const { chain } = useAccount()
+    const config = useConfig()
+    // const connections = getConnections(config)
 
     return (
         <div className="md:pt-12 pb-24">
             <div className='text-4xl md:text-5xl lg:text-6xl uppercase'>
                 {deploy.chain}{'/'}GAMES{'/'}{gameCount ? gameCount.toString() : "..."}
             </div>
+            {/* <div>{JSON.stringify(error)}</div> */}
+            {/* <div>chain: {JSON.stringify(chain)}</div> */}
+            {/* <div>config: {JSON.stringify(config)}</div> */}
 
             {/* <p> Explore Games that others have deployed on {deploy.chain} </p> */}
             {/* <p> There are {gameCount ? gameCount.toString() : '...'}  </p> */}

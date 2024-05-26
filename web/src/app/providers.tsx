@@ -30,10 +30,10 @@ const config = getDefaultConfig({
   projectId: 'YOUR_PROJECT_ID',
   wallets: [
     ...wallets,
-    {
-      groupName: 'Other',
-      wallets: [argentWallet, trustWallet, ledgerWallet],
-    },
+    // {
+    //   groupName: 'Other',
+    //   wallets: [argentWallet, trustWallet, ledgerWallet],
+    // },
   ],
   chains: [
     // mainnet,
@@ -41,13 +41,14 @@ const config = getDefaultConfig({
     // optimism,
     // arbitrum,
     // base,
-    localhost,
     sepolia,
-    // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [localhost] : []),
   ],
   transports: {
+    
+    [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
     [localhost.id]: http(),
-    [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`),
   },
   ssr: true,
 });

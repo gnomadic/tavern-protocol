@@ -19,22 +19,17 @@ export default function ComponentStats(props: StatsProps) {
     const { data } = useMetadata<ComponentMetadata>(summary?.metadata);
 
     return (
-        <section id='connect' className='relative items-center pt-12 pb-12'>
+        <section id='connect' className='relative items-center pt-24 pb-12'>
             {summary && data ?
                 <div>
                     <div className="text-3xl uppercase">
-                        {'/'}lib/{censor(data.name)}{'/'}functions{'/'}{data.gameFunctions?.length}
+                    {censor(data.name)}/functions/{data.gameFunctions?.length}
                     </div>
-
                     <ComponentFunctions functions={data.gameFunctions} />
-
-
                     <div className="text-3xl uppercase pt-20">
-                        {'/'}lib/{censor(data.name)}{'/'}config{'/'}{data.configFunctions?.length}
+                        {censor(data.name)}/config/{data.configFunctions?.length}
                     </div>
                     <ComponentFunctions functions={data.configFunctions} />
-
-
                 </div>
                 :
                 <></>}

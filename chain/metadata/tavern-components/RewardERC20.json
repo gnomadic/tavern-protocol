@@ -18,7 +18,7 @@
         },
         {
             "name": "Reward Tie",
-            "description": "Send an ERC@) token to two addresses, both of which are flagged as ties.",
+            "description": "Send an ERC20 token to two addresses, both of which are flagged as ties.",
             "abi": "rewardTie(address,address)",
             "requires": [
                 "amount",

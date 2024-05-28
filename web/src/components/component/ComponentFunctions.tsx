@@ -35,9 +35,9 @@ export default function ComponentFunctions(props: FunctionProps) {
 
                                 {Array.from({ length: props.functions[i].requires.length as number }).map((object, j) => {
                                     return (
-                                        <span key={i}>
+                                        <p key={j}>
                                             {props.functions[i].requires[j]} {''}
-                                        </span>
+                                        </p>
                                     );
                                 })}
                             </div>
@@ -48,7 +48,7 @@ export default function ComponentFunctions(props: FunctionProps) {
 
                                 {Array.from({ length: props.functions[i].creates.length as number }).map((object, j) => {
                                     return (
-                                        <p key={i}>
+                                        <p key={j}>
                                             {props.functions[i].creates[j]} {''}
                                         </p>
                                     );

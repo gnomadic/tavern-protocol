@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className='absolute top-0 z-50 w-full'>
-      <div className='px-6 pt-4 mx-auto md:pt-8 lg:px-12 xl:px-6 flex items-center justify-between text-offwhite'>
+      <div className='px-6 pt-4 mx-auto md:pt-8 lg:px-12 flex items-center justify-between text-offwhite'>
         <nav className='items-center flex gap-3 p-2'>
         {/* <nav className='items-center flex gap-3 p-2 border-b-2 border-white pr-24 md:pr-12 lg:pr-20'> */}
           <Link href='/'>
@@ -32,7 +32,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <ul className='mt-5 hidden md:text-lg lg:text-2xl tracking-wider uppercase text-offwhite md:flex gap-6 pl-4 '>
+          <ul className='mt-5 hidden md:text-lg lg:text-xl tracking-wider uppercase text-offwhite md:flex gap-6 pl-4 '>
             {NavItems.map((element, i) => {
               return (
                 <Fragment key={i}>
@@ -59,7 +59,7 @@ export default function Header() {
                 <div className="relative cursor-pointer">
                   docs
                   <ArrowUpRightIcon
-                    className="w-3 h-3 mb-0 "
+                    className="w-3 h-3 mb-4 "
                     style={{ display: "inline" }}
                   />
                 </div>

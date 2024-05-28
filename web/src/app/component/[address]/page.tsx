@@ -8,10 +8,9 @@ export default function Module({ params }: { params: { address: string } }) {
 
 
   return (
-    <main className='flex flex-col px-24 pt-8 font-anon'>
+    <main className='items-center px-5 md:px-24 pt-40'>
       <ComponentHeader moduleAddress={params.address as Address} />
-
-      <Divider />
+      {/* <Divider /> */}
 
       <ComponentStats moduleAddress={params.address as Address} />
 

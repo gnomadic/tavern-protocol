@@ -1,15 +1,15 @@
-import ExploreGames from '@/components/explore/ExploreGames';
+import ExploreComponents from '@/components/explore/ExploreComponents';
 import ExploreTabs from '@/components/explore/ExploreTabs';
 
-export default function Games() {
+export default function Registry() {
   return (
     <main className='items-center py-24 font-anon'>
       <section className='pt-36 min-w-full'>
         <div className='uppercase text-9xl border-t-2 border-b-2 border-white text-center '>
-          games
+          registry
         </div>
       </section>
-      <ExploreGames />  
+      <ExploreComponents />
     </main>
   );
 }

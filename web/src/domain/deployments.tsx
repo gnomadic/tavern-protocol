@@ -29,9 +29,9 @@ export const Deployments: { [key: string]: Deployment } = {
   //   chain: 'polygon',
   // },
   sepolia: {
-    gameFactory: '0xff31ffE4EA3aCDc548b874f02f67280f2c9edbD4',
+    gameFactory: '0xEBD8EA8581D043dD8C1f794C4FFF1e325A089190',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    componentRegistry: '0xefB2dEd626656dbC9708623AdFE6930E3Af096E1',
+    componentRegistry: '0x0a4Ad37eF8AeAbA454cDDde9DE3fFF18c52E0Dfc',
     displayName: 'Tavern',
     currency: 'eth',
     chain: 'sepolia',

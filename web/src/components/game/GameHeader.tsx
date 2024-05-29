@@ -22,19 +22,27 @@ export default function GameHeader(props: HeaderProps) {
   const { data } = useMetadata<GameMetadata>(summary?.metadata);
 
   return (
+    <section id='connect' className='relative items-start min-w-screen py-12 md:py-24'>
 
-    <section id='connect' className='relative items-start pt-24 min-w-screen'>
-
-      <div className='pb-2'>
+      <div className='pb-2 pt-36'>
         {!summary || !data ? "loading" :
+
           <div>
-            <div className='text-4xl md:text-5xl lg:text-6xl uppercase border-b-2 border-white'>
-              {deploy.chain}{'/'}game{'/'}{data ? censor(data.name) : "loading"}
+            <div className="text-xs pl-4">
+            {deploy.chain}
             </div>
-            <div>
+            <section className=' min-w-full'>
+              <div className='uppercase text-7xl md:text-9xl border-t-2 border-b-2 border-white text-center '>
+                {data ? censor(data.name) : "loading"}
+              </div>
+            </section>
+            {/* <div className='text-4xl md:text-5xl lg:text-6xl uppercase border-b-2 border-white'>
+              {deploy.chain}{'/'}game{'/'}{data ? censor(data.name) : "loading"}
+            </div> */}
+            <div className="px-6 md:px-24">
 
               <div className='text-right pb-2 pl-4 text-xs'>
-              <div>
+                <div>
                   <a target="_blank"
                     rel="noopener noreferrer"
                     href={data.gameUrl} >
@@ -73,7 +81,7 @@ export default function GameHeader(props: HeaderProps) {
               </div>
             </div>
 
-            <div className="text-base pt-6">
+            <div className="text-base pt-12 px-6 md:px-24">
               {data.description}
             </div>
 

@@ -1,19 +1,17 @@
 import Divider from '@/components/Divider';
+import BigTitle from '@/components/base/BigTitle';
+import SmallTitle from '@/components/base/SmallTitle';
 import GamePitchCard from '@/components/landing/GamePitchCard';
 import GameCard from '@/components/landing/GamePitchCard';
 import StepCard from '@/components/landing/StepCard';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 
 export default function Home() {
-  const verbs = ['play', 'create', 'grow', 'build'];
-  // const [activeVerb, setActiveVerb] = useState(verbs[0]);
 
   return (
     <main className='items-center py-12 md:py-24 font-anon'>
       <section className='pt-36 min-w-full'>
-        <div className='uppercase text-7xl md:text-9xl border-t-2 border-b-2 border-white text-center '>
-          tavern
-        </div>
+        <BigTitle title='tavern' />
       </section>
       <section id='intro' className=' items-center pt-24 px-12 md:p-24'>
         <div className='flex'>
@@ -36,9 +34,7 @@ export default function Home() {
       </section>
 
       <section className='px-12 py-24 md:p-24'>
-        <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
-          3 transactions
-        </div>
+        <SmallTitle title='3 transactions' />
         <div className="grid grid-cols-1 gap-20 md:grid-cols-3 pt-24 ">
           <StepCard
             title="1/games"
@@ -57,9 +53,7 @@ export default function Home() {
       {/* <Divider /> */}
 
       <section className='px-12 py-24 md:p-24'>
-        <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
-          Anything is possible
-        </div>
+        <SmallTitle title='Anything is possible' />
         <div className="grid grid-cols-1 gap-20 md:grid-cols-2 pt-24">
           <GamePitchCard
             title="1/drop in social games "

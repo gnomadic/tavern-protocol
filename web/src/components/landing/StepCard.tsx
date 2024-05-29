@@ -1,13 +1,6 @@
 
 "use client"
 
-import { ComponentMetadata, ComponentMetadataFunction } from "@/domain/Domain";
-import { censor } from "@/domain/utils";
-import { useReadIComponentGetSummary } from "@/generated";
-import useDeployment from "@/hooks/useDeployment";
-import { useMetadata } from "@/hooks/useMetadata";
-import { Address } from "viem";
-
 type StepCardProps = {
     title: string,
     description: string

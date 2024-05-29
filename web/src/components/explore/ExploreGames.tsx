@@ -22,7 +22,7 @@ export default function ExploreGames() {
     const config = useConfig()
 
     return (
-        <div className="px-6 md:px-24 pt-36">
+        <div className="px-6 md:px-24 pt-12">
             <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
                 {deploy.chain}{'/'}GAMES{'/'}{gameCount ? gameCount.toString() : "..."}
             </div>
@@ -31,8 +31,7 @@ export default function ExploreGames() {
             {/* <div>chain: {JSON.stringify(chain)}</div> */}
             {/* <div>config: {JSON.stringify(config)}</div> */}
 
-            {/* <p> Explore Games that others have deployed on {deploy.chain} </p> */}
-            {/* <p> There are {gameCount ? gameCount.toString() : '...'}  </p> */}
+    
 
             <ul className='pb-24 pt-12'>
 

@@ -11,13 +11,12 @@ export default function ExploreComponents() {
   const { data: moduleCount } = useReadComponentRegistryGetComponentCount({ address: deploy.componentRegistry })
 
   return (
-    <div className="px-6 md:px-24 pt-36">
-    <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
+    <div className="px-6 md:px-24 pt-12">
+
+      <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
         {deploy.chain}{'/'}reg{'/'}{moduleCount ? moduleCount.toString() : "..."}
       </div>
 
-      {/* <p> Explore Modules in the registry that you can use for your games on {deploy.chain}</p> */}
-      {/* <p> There are {moduleCount ? moduleCount.toString() : '...'}  </p> */}
 
       <ul className='pb-24 pt-12'>
         {Array.from({ length: currentModules ? currentModules.length : 0 }).map((object, i) => {
@@ -25,12 +24,9 @@ export default function ExploreComponents() {
             return (
               <li key={i} className="pt-8 pb-8">
                 <ModuleCard
-                  // displayName={currentModules![i].displayName}
                   index={i}
                   address={currentModules![i].component}
                   metadata={currentModules![i].metadata}
-                // functions={currentModules![i].functions}
-                // description={currentModules![i].description}
                 />
               </li>
             );

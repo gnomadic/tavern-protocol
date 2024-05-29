@@ -5,7 +5,7 @@ import {Initializable} from 'solady/utils/Initializable.sol';
 
 import {IGame, GameSummary, AddressKey, FlowParams, FlowKey} from './interfaces/IGame.sol';
 import {IEntity} from './entities/interfaces/IEntity.sol';
-import {IComponent} from './components/interfaces/IComponent.sol';
+import {IComponent, ComponentSummary} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
 import {FlowEntity} from './entities/FlowEntity.sol';
 
@@ -57,8 +57,24 @@ contract Game is IGame, Initializable {
       flowKeys[i] = FlowKey(flowNames[i], flows[flowNames[i]]);
     }
 
+    ComponentSummary[] memory componentMetadata = new ComponentSummary[](
+      components.length
+    );
+    for (uint8 i = 0; i < components.length; i++) {
+      IComponent component = IComponent(components[i]);
+      componentMetadata[i] = component.getSummary();
+    }
+
     return
-      GameSummary(address(this), gm, metadata, components, dataKeys, flowKeys);
+      GameSummary(
+        address(this),
+        gm,
+        metadata,
+        components,
+        componentMetadata,
+        dataKeys,
+        flowKeys
+      );
   }
 
   function addEntity(address entity) internal {

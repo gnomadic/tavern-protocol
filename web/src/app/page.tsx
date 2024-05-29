@@ -9,26 +9,16 @@ export default function Home() {
   // const [activeVerb, setActiveVerb] = useState(verbs[0]);
 
   return (
-    <main className='items-center py-24 font-anon'>
+    <main className='items-center py-12 md:py-24 font-anon'>
       <section className='pt-36 min-w-full'>
-        <div className='uppercase text-9xl border-t-2 border-b-2 border-white text-center '>
+        <div className='uppercase text-7xl md:text-9xl border-t-2 border-b-2 border-white text-center '>
           tavern
         </div>
       </section>
-
-      {/* <section id='hero' className=' items-center py-36'>
-        <p className=''>Play together with TAVERN.</p>
-        <p className='pt-8'>Bring Games to your web3 Communities.</p>
-        <p className='pt-8'>
-          Launch codeless games onchain for your communities with
-          Tavern.
-        </p>
-        <p className='pt-8'></p>
-      </section> */}
-      <section id='intro' className=' items-center p-24'>
+      <section id='intro' className=' items-center pt-24 px-12 md:p-24'>
         <div className='flex'>
-          <div className='justify-right w-1/2'></div>
-          <div className='justify-right w-1/2 '>
+          <div className='justify-right md:w-1/2'></div>
+          <div className='justify-right md:w-1/2 '>
             <p>
               We believe playing together fosters stronger connections through shared experiences.
               Everything we do, we try
@@ -45,9 +35,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* <Divider /> */}
-      <section className='p-24'>
-        <div className='text-center text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
+      <section className='px-12 py-24 md:p-24'>
+        <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
           3 transactions
         </div>
         <div className="grid grid-cols-1 gap-20 md:grid-cols-3 pt-24 ">
@@ -67,8 +56,8 @@ export default function Home() {
       </section>
       {/* <Divider /> */}
 
-      <section className='p-24'>
-        <div className='text-center text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
+      <section className='px-12 py-24 md:p-24'>
+        <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
           Anything is possible
         </div>
         <div className="grid grid-cols-1 gap-20 md:grid-cols-2 pt-24">

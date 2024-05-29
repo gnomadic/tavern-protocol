@@ -22,8 +22,8 @@ export default function ExploreGames() {
     const config = useConfig()
 
     return (
-        <div className="p-24 pt-36">
-            <div className='text-center text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
+        <div className="px-6 md:px-24 pt-36">
+            <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
                 {deploy.chain}{'/'}GAMES{'/'}{gameCount ? gameCount.toString() : "..."}
             </div>
 

@@ -38,7 +38,7 @@ export default function MobileNav(props: MobileNavProps) {
             );
           })}
 
-          <li className='pb-8 '>
+          {/* <li className='pb-8 '>
             <a
               href='https://warpcast.com/gn0madic'
               rel='noopener noreferrer'
@@ -46,7 +46,7 @@ export default function MobileNav(props: MobileNavProps) {
             >
               <div className='relative cursor-pointer'>warpcast</div>
             </a>
-          </li>
+          </li> */}
           {/* 
           <li className='pb-8'>
             <a

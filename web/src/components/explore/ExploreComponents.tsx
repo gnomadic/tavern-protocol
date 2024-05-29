@@ -9,12 +9,12 @@ export default function ExploreComponents() {
   const { deploy } = useDeployment();
   const { data: currentModules } = useReadComponentRegistryGetComponents({ address: deploy.componentRegistry, args: [0] })
   const { data: moduleCount } = useReadComponentRegistryGetComponentCount({ address: deploy.componentRegistry })
-  
+
   return (
-      <div className="p-24 pt-36">
-            <div className='text-center text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
-            {deploy.chain}{'/'}reg{'/'}{moduleCount ? moduleCount.toString() : "..."}
-            </div>
+    <div className="px-6 md:px-24 pt-36">
+    <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
+        {deploy.chain}{'/'}reg{'/'}{moduleCount ? moduleCount.toString() : "..."}
+      </div>
 
       {/* <p> Explore Modules in the registry that you can use for your games on {deploy.chain}</p> */}
       {/* <p> There are {moduleCount ? moduleCount.toString() : '...'}  </p> */}

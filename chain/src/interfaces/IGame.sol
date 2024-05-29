@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import {ComponentSummary} from '../components/interfaces/IComponent.sol';
+
 interface IGame {
   function initialize(
     address _gm,
@@ -20,8 +22,14 @@ struct GameSummary {
   address gm;
   string metadata;
   address[] components;
+  ComponentSummary[] componentSummaries;
   AddressKey[] availableData;
-  string[] flows;
+  FlowKey[] flows;
+}
+
+struct FlowKey {
+  string name;
+  AddressKey[] values;
 }
 
 struct AddressKey {

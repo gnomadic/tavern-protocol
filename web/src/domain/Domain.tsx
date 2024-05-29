@@ -67,6 +67,12 @@ export type GameFuncParams = {
   strings: readonly StringKey[];
 }
 
+export type BatchComponentMetadata = {
+  addresses: Address;
+  components: ComponentMetadata[];
+
+}
+
 
 export type ComponentMetadata = {
   name: string;

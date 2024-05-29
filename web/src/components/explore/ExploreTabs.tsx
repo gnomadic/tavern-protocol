@@ -3,15 +3,19 @@
 import DiscoverGames from '@/components/explore/ExploreGames';
 import DiscoverComponents from '@/components/explore/ExploreComponents';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+// import 'react-tabs/style/react-tabs.css';
 
 export default function ExploreTabs() {
     return (
-        <Tabs>
+        <Tabs  defaultIndex={0} className="pt-12">
             <TabList>
-                <Tab>Games</Tab>
-                <Tab>Components</Tab>
+                {/* <Tab disabled={true} >EXPLORE {'/'}</Tab> */}
+                <Tab default={true} >GAMES</Tab>
+                <Tab>COMPONENTS</Tab>
             </TabList>
+            {/* <TabPanel>
+                <></>
+            </TabPanel> */}
             <TabPanel>
                 <DiscoverGames />
             </TabPanel>

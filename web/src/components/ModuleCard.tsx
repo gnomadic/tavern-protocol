@@ -10,37 +10,23 @@ type ModuleCardProps = {
   address: Address;
   // functions: readonly string[]
   // description: string;
-  metadata:string;
+  metadata: string;
+  index: number;
 }
 
 export default function ModuleCard(props: ModuleCardProps) {
   const { data } = useMetadata<ComponentMetadata>(props.metadata);
 
   return (
-    <Link href={`/module/${props.address}`}>
-      <div className='justify-center border-2 border-gray-300 rounded-md bg-slate-800'>
-        <div className='pt-5 pl-8 text-2xl'>
-          {data ? censor(data.name) : "loading"}
+    <div className='border-2 border-gray-500'>
+      <Link href={`/component/${props.address}`}>
+        <div className='border-b-2 border-white text-2xl pl-4 py-2'>
+          {props.index + 1}{"/"}{data ? censor(data.name) : "loading"}
         </div>
         <div className='pt-5 pb-2 pl-2 text-sm'>
           {censor(data?.description)}
         </div>
-        {/* <ul>
-          {Array.from({ length: props.functions.length as number }).map((object, i) => {
-
-            return (
-              <div key={i}>
-
-                <div className="px-12">{props.functions[i]}</div>
-              </div>
-
-            );
-
-          })}
-        </ul> */}
-
-
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }

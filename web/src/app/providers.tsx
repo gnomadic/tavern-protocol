@@ -21,19 +21,19 @@ import {
   sepolia,
 } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
+import { WagmiProvider, http } from 'wagmi';
 
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-  appName: 'RainbowKit demo',
+  appName: 'TAVERN PROTOCOL',
   projectId: 'YOUR_PROJECT_ID',
   wallets: [
     ...wallets,
-    {
-      groupName: 'Other',
-      wallets: [argentWallet, trustWallet, ledgerWallet],
-    },
+    // {
+    //   groupName: 'Other',
+    //   wallets: [argentWallet, trustWallet, ledgerWallet],
+    // },
   ],
   chains: [
     // mainnet,
@@ -41,12 +41,18 @@ const config = getDefaultConfig({
     // optimism,
     // arbitrum,
     // base,
-    localhost,
     sepolia,
-    // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [localhost] : []),
   ],
+  transports: {
+    
+    [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+    [localhost.id]: http(),
+  },
   ssr: true,
 });
+
 
 const queryClient = new QueryClient();
 

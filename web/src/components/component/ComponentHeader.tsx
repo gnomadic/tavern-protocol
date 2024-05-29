@@ -1,6 +1,6 @@
 "use client"
 import { ComponentMetadata, ComponentSummary } from "@/domain/Domain";
-import { pretty } from "@/domain/utils";
+import { censor, pretty } from "@/domain/utils";
 import useDeployment from "@/hooks/useDeployment";
 import { useEffect, useState } from "react";
 import { Address } from "viem";
@@ -19,21 +19,14 @@ export default function ComponentHeader(props: HeaderProps) {
   const { data } = useMetadata<ComponentMetadata>(summary?.metadata);
 
   return (
-    <section id='connect' className='relative items-start pt-48 pb-12 min-w-screen'>
+    <section id='connect' className='relative items-start pt-24 min-w-screen'>
       <div className='pb-2'>
         {!summary || !data ? "loading" :
           <div>
-            <div className="text-md md:text-lg">
-              the
+            <div className='text-4xl md:text-5xl lg:text-6xl uppercase border-b-2 border-white'>
+              {deploy.chain}{'/'}reg{'/'}{data ? censor(data.name) : "loading"}
             </div>
-            <div className="text-6xl md:text-8xl">
-              {data.name}
-            </div>
-            <div className="text-md md:text-lg">
-              component 
-
-              <span className="">
-              {' '} is deployed at: {' '}
+            <div className='text-right pb-2 pl-4 text-xs'>
               <a target="_blank"
                 rel="noopener noreferrer"
                 href={deploy.scan + props.moduleAddress} >
@@ -44,30 +37,12 @@ export default function ComponentHeader(props: HeaderProps) {
                     style={{ display: "inline" }} />
                 </span>
               </a>
-            </span>
-
-
             </div>
-
-            <div className="text-md: md:text-lg pt-12">
-              and it can be used to
-            </div>
-            <div className=" text-2xl">
+         
+            <div className="text-base pt-6">
               {data.description}
             </div>
-            {/* <div className="pt-12 text-sm">
-              is deployed at: {' '}
-              <a target="_blank"
-                rel="noopener noreferrer"
-                href={deploy.scan + props.moduleAddress} >
-                {pretty(props.moduleAddress)}
-                <span>
-                  <ArrowUpRightIcon
-                    className="w-4 h-4 mb-1"
-                    style={{ display: "inline" }} />
-                </span>
-              </a>
-            </div> */}
+            
           </div>
         }
       </div>

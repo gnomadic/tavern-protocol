@@ -553,6 +553,15 @@ export const gameAbi = [
           { name: 'metadata', internalType: 'string', type: 'string' },
           { name: 'components', internalType: 'address[]', type: 'address[]' },
           {
+            name: 'componentSummaries',
+            internalType: 'struct ComponentSummary[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'component', internalType: 'address', type: 'address' },
+              { name: 'metadata', internalType: 'string', type: 'string' },
+            ],
+          },
+          {
             name: 'availableData',
             internalType: 'struct AddressKey[]',
             type: 'tuple[]',
@@ -561,7 +570,23 @@ export const gameAbi = [
               { name: 'value', internalType: 'address', type: 'address' },
             ],
           },
-          { name: 'flows', internalType: 'string[]', type: 'string[]' },
+          {
+            name: 'flows',
+            internalType: 'struct FlowKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              {
+                name: 'values',
+                internalType: 'struct AddressKey[]',
+                type: 'tuple[]',
+                components: [
+                  { name: 'name', internalType: 'string', type: 'string' },
+                  { name: 'value', internalType: 'address', type: 'address' },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],
@@ -695,6 +720,15 @@ export const gameFactoryAbi = [
           { name: 'metadata', internalType: 'string', type: 'string' },
           { name: 'components', internalType: 'address[]', type: 'address[]' },
           {
+            name: 'componentSummaries',
+            internalType: 'struct ComponentSummary[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'component', internalType: 'address', type: 'address' },
+              { name: 'metadata', internalType: 'string', type: 'string' },
+            ],
+          },
+          {
             name: 'availableData',
             internalType: 'struct AddressKey[]',
             type: 'tuple[]',
@@ -703,7 +737,23 @@ export const gameFactoryAbi = [
               { name: 'value', internalType: 'address', type: 'address' },
             ],
           },
-          { name: 'flows', internalType: 'string[]', type: 'string[]' },
+          {
+            name: 'flows',
+            internalType: 'struct FlowKey[]',
+            type: 'tuple[]',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              {
+                name: 'values',
+                internalType: 'struct AddressKey[]',
+                type: 'tuple[]',
+                components: [
+                  { name: 'name', internalType: 'string', type: 'string' },
+                  { name: 'value', internalType: 'address', type: 'address' },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],

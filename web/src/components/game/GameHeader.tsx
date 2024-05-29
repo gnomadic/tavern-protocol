@@ -1,5 +1,5 @@
 "use client"
-import { pretty } from "@/domain/utils";
+import { censor, pretty } from "@/domain/utils";
 import useGameSummary from "@/hooks/useGameSummary";
 import { Address } from "viem";
 import useDeployment from '@/hooks/useDeployment';
@@ -22,63 +22,69 @@ export default function GameHeader(props: HeaderProps) {
   const { data } = useMetadata<GameMetadata>(summary?.metadata);
 
   return (
+    <section id='connect' className='relative items-start min-w-screen py-12 md:py-24'>
 
-    <section id='connect' className='relative items-start pt-48 pb-12 min-w-screen'>
-      <div className='pb-2 text-4xl lg:text-8xl'>
+      <div className='pb-2 pt-36'>
         {!summary || !data ? "loading" :
+
           <div>
-            <div className="text-xl">
-              the
+            <div className="text-xs pl-4">
+            {deploy.chain}
             </div>
-            <div>
-              {data.name}
-            </div>
-            <div className="text-xl">
-              game
-            </div>
-            <div className="pt-12 text-sm">
-              can be played at: {' '}
-              <a target="_blank"
-                rel="noopener noreferrer"
-                href={data.gameUrl} >
-                {data.gameUrl}
-                <span>
-                  <ArrowUpRightIcon
-                    className="w-4 h-4 mb-1"
-                    style={{ display: "inline" }} />
-                </span>
-              </a>
-            </div>
-            <div className="text-sm">
-              has a GM: {' '}
-              <a target="_blank"
-                rel="noopener noreferrer"
-                href={deploy.scan + summary.gm} >
-                {pretty(summary.gm)}
-                <span>
-                  <ArrowUpRightIcon
-                    className="w-4 h-4 mb-1"
-                    style={{ display: "inline" }} />
-                </span>
-              </a>
-              <div className="text-sm">
-                is deployed at: {' '}
-                <a target="_blank"
-                  rel="noopener noreferrer"
-                  href={deploy.scan + props.gameAddress} >
-                  {pretty(props.gameAddress)}
-                  <span>
-                    <ArrowUpRightIcon
-                      className="w-4 h-4 mb-1"
-                      style={{ display: "inline" }} />
-                  </span>
-                </a>
+            <section className=' min-w-full'>
+              <div className='uppercase text-7xl md:text-9xl border-t-2 border-b-2 border-white text-center '>
+                {data ? censor(data.name) : "loading"}
+              </div>
+            </section>
+            {/* <div className='text-4xl md:text-5xl lg:text-6xl uppercase border-b-2 border-white'>
+              {deploy.chain}{'/'}game{'/'}{data ? censor(data.name) : "loading"}
+            </div> */}
+            <div className="px-6 md:px-24">
+
+              <div className='text-right pb-2 pl-4 text-xs'>
+                <div>
+                  <a target="_blank"
+                    rel="noopener noreferrer"
+                    href={data.gameUrl} >
+                    play at: {data.gameUrl}
+                    <span>
+                      <ArrowUpRightIcon
+                        className="w-4 h-4 mb-1"
+                        style={{ display: "inline" }} />
+                    </span>
+                  </a>
+                </div>
+                <div>
+                  <a target="_blank"
+                    rel="noopener noreferrer"
+                    href={deploy.scan + props.gameAddress} >
+                    deployed at: {pretty(props.gameAddress)}
+                    <span>
+                      <ArrowUpRightIcon
+                        className="w-4 h-4 mb-1"
+                        style={{ display: "inline" }} />
+                    </span>
+                  </a>
+                </div>
+                <div>
+                  <a target="_blank"
+                    rel="noopener noreferrer"
+                    href={deploy.scan + summary.gm} >
+                    gm: {pretty(summary.gm)}
+                    <span>
+                      <ArrowUpRightIcon
+                        className="w-4 h-4 mb-1"
+                        style={{ display: "inline" }} />
+                    </span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="pt-12 text-xl">
-              {data.description ? data.description : "no description yet"}
+            <div className="text-base pt-12 px-6 md:px-24">
+              {data.description}
             </div>
+
           </div>
         }
       </div>

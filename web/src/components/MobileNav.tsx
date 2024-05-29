@@ -19,11 +19,11 @@ export default function MobileNav(props: MobileNavProps) {
       ></div>
       <nav className='bg-slate-900 relative flex h-full w-full flex-col overflow-y-auto border-r px-10 py-8'>
         <Link href='/'>
-          <span className='font-heading mb-16 inline-block text-xl font-medium text-white'>
+          <span className='font-anon mb-16 inline-block text-xl font-medium text-white'>
             <Image width={45} height={45} src={logo} alt='logo' />
           </span>
         </Link>
-        <ul className='b-32 font-kdam gap-8 uppercase tracking-wider'>
+        <ul className='b-32 font-anon gap-8 uppercase tracking-wider'>
           {NavItems.map((element, i) => {
             return (
               <Fragment key={i}>
@@ -38,7 +38,7 @@ export default function MobileNav(props: MobileNavProps) {
             );
           })}
 
-          <li className='pb-8 '>
+          {/* <li className='pb-8 '>
             <a
               href='https://warpcast.com/gn0madic'
               rel='noopener noreferrer'
@@ -46,8 +46,8 @@ export default function MobileNav(props: MobileNavProps) {
             >
               <div className='relative cursor-pointer'>warpcast</div>
             </a>
-          </li>
-{/* 
+          </li> */}
+          {/* 
           <li className='pb-8'>
             <a
               href='https://discord.gg/pP2G7sY7GY'
@@ -75,7 +75,10 @@ export default function MobileNav(props: MobileNavProps) {
           </li>
         </ul>
         <div className='mb-8 flex transform items-center justify-center py-4 pt-16 duration-200'>
-          <ConnectButton />
+          <ConnectButton
+            chainStatus='icon'
+            accountStatus='avatar'
+            showBalance={false} />
         </div>
       </nav>
     </div>

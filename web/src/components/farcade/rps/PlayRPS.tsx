@@ -8,17 +8,20 @@ import { GameFuncParams } from '@/domain/Domain';
 import { useAccount } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
 import { Address } from 'viem';
+import SmallTitle from '@/components/base/SmallTitle';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 
 export default function PlayRPS() {
 
     const { deploy } = useDeployment();
-    const { data: games } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: quueError } = useReadQueueSessionGetPlayerCount({ address: "0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [deploy.rpsGame] });
+    const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
+    const { data: queueSize, error: queueError } = useReadQueueSessionGetPlayerCount({ address: "0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [deploy.rpsGame] });
 
     const { address } = useAccount();
 
-    const { data, isPending, isSuccess, error, writeContract } = useWriteGame();
+    const { data, isPending, isSuccess, error: writeError, writeContract } = useWriteGame();
 
     const executeFlowTx = (action: number) => {
         console.log("games and address", games, address)
@@ -41,12 +44,54 @@ export default function PlayRPS() {
 
     }
 
+    useEffect(() => {
+        if (gameError) {
+            toast.error(gameError.message, {
+                position: "bottom-right"
+            });
+        }
+        if (queueError) {
+            toast.error(queueError.message, {
+                position: "bottom-right"
+            });
+        }
+        if (writeError) {
+            toast.error(writeError.message, {
+                position: "bottom-right"
+            });
+        }
+    }, [gameError, queueError, writeError]);
+
     return (
-        <section className='pb-24' >
-            <div className='pb-8 text-4xl'>
-                Try it out on {deploy.chain}
-            </div>
-            <div className='flex justify-center pt-4 align-middle justify-items-center'>
+        <section className='pt-24 px-12 md:px-24' >
+            <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
+                <div className='flex'>
+                    <div className='justify-right md:w-1/2'></div>
+                    <div className='justify-right md:w-1/2 '>
+                        <p>
+                            This is a multiplayer game of rock-paper-scissors with matchmaking.  
+                            This game was deployed using the Tavern game engine without writing any code.
+                            <br />
+                            <br />
+                            First, the game was deployed using the Game Factory.
+                            <br />
+                            Then, three components were added to the game.
+                            <br />
+                            Finally, a Flow was created to call functions in order on all the components.
+                            <br />
+                            <br />
+                            The buttons below will execute that created flow, passing in the players address and choice of action.
+                            <br />
+                            <br />
+                            More details about this game can be found in the Games section.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+            <SmallTitle title='PLAY' />
+
+            <div className='flex justify-center pt:12 md:pt-24 align-middle justify-items-center'>
                 <div className='mx-auto'>
                     <button className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
                         onClick={() => {
@@ -57,7 +102,6 @@ export default function PlayRPS() {
                 <div className='mx-auto'>
                     <button className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
                         onClick={() => { executeFlowTx(2); }}>
-
                         PAPER
                     </button>
                 </div>
@@ -70,16 +114,41 @@ export default function PlayRPS() {
                 </div>
 
             </div>
-            <div>{JSON.stringify(error?.message)}</div>
+            {/* <div>{JSON.stringify(writeError?.message)}</div> */}
 
             <div className='pt-12'>
                 There are {queueSize?.toString()} players in the queue.
             </div>
-            {error ?
-                <div>
-                    error {JSON.stringify(error?.message)}
-                </div> : <></>
-            }
+
+            {/* <section className='pt-12 md:pt-24'>
+                <SmallTitle title='details' />
+            </section>
+            <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
+                <div className='flex'>
+                    <div className='justify-right md:w-1/2'></div>
+                    <div className='justify-right md:w-1/2 '>
+                        <p>
+                            This is a multiplayer game of rock-paper-scissors with matchmaking.  
+                            This game was deployed using the Tavern game engine without writing any code.
+                            <br />
+                            <br />
+                            First, the game was deployed using the Game Factory.
+                            <br />
+                            Then, three components were added to the game.
+                            <br />
+                            Finally, a Flow was created to call functions in order on all the components.
+                            <br />
+                            <br />
+                            The buttons below will execute that created flow, passing in the players address and choice of action.
+                            <br />
+                            <br />
+                            More details about this game can be found in the Games section.
+                        </p>
+                    </div>
+
+                </div>
+            </section> */}
+
         </section >
     );
 }

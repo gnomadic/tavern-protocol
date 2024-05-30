@@ -10,7 +10,7 @@ import { GameMetadata } from "@/domain/Domain";
 import { toast } from 'react-toastify';
 import { useEffect } from "react";
 import BigTitle from "../base/BigTitle";
-import ExploreHeader from "../explore/ExploreHeader";
+import ChainTitle from "../base/ChainTitle";
 import Explore from "@/app/explore/page";
 
 
@@ -49,7 +49,7 @@ export default function GameHeader(props: HeaderProps) {
         {!summary || !data ? "loading" :
 
           <div>
-            <ExploreHeader title={data ? censor(data.name) : "loading"} />
+            <ChainTitle title={data ? censor(data.name) : "loading"} />
             {/* <div className="text-xs pl-4">
             {deploy.chain}
             </div>

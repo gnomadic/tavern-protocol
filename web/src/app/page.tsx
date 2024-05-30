@@ -1,7 +1,7 @@
 import Divider from '@/components/Divider';
 import BigTitle from '@/components/base/BigTitle';
 import SmallTitle from '@/components/base/SmallTitle';
-import ExploreHeader from '@/components/explore/ExploreHeader';
+import ChainTitle from '@/components/base/ChainTitle';
 import GamePitchCard from '@/components/landing/GamePitchCard';
 import GameCard from '@/components/landing/GamePitchCard';
 import StepCard from '@/components/landing/StepCard';
@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <main className='items-center py-12 md:py-24 font-anon'>
       <section className='pt-36 min-w-full'>
-        <ExploreHeader title='tavern' />
+        <ChainTitle title='tavern' />
         {/* <BigTitle title='tavern' /> */}
       </section>
       <section id='intro' className=' items-center pt-24 px-12 md:p-24'>

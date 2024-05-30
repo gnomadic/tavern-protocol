@@ -1,6 +1,6 @@
 import BigTitle from '@/components/base/BigTitle';
 import ExploreGames from '@/components/explore/ExploreGames';
-import ExploreHeader from '@/components/explore/ExploreHeader';
+import ChainTitle from '@/components/base/ChainTitle';
 import ExploreTabs from '@/components/explore/ExploreTabs';
 
 export default function Games() {
@@ -8,7 +8,7 @@ export default function Games() {
     <main className='items-center py-12 md:py-24 font-anon'>
       <section className='pt-36 min-w-full'>
 
-        <ExploreHeader title='games' />
+        <ChainTitle title='games' />
       </section>
       <section id='intro' className=' items-center p-12 md:p-24 '>
         <div className='flex'>

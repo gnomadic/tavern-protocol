@@ -19,6 +19,8 @@ import {
 } from 'wagmi/chains';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Providers } from './providers';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -86,6 +88,8 @@ export default function RootLayout({
           <Header />
 
           {children}
+          <ToastContainer />
+
           <Analytics />
         </Providers>
       </body>

@@ -1,22 +1,23 @@
+import BigTitle from '@/components/base/BigTitle';
 import ExploreGames from '@/components/explore/ExploreGames';
+import ExploreHeader from '@/components/explore/ExploreHeader';
 import ExploreTabs from '@/components/explore/ExploreTabs';
 
 export default function Games() {
   return (
     <main className='items-center py-12 md:py-24 font-anon'>
       <section className='pt-36 min-w-full'>
-        <div className='uppercase text-7xl md:text-9xl border-t-2 border-b-2 border-white text-center '>
-          games
-        </div>
+
+        <ExploreHeader title='games' />
       </section>
       <section id='intro' className=' items-center p-12 md:p-24 '>
         <div className='flex'>
           <div className='justify-right md:w-1/2'></div>
           <div className='justify-right md:w-1/2 '>
             <p>
-              These games are all unique.  Each one has its own data, set of components, and flows.    
-             Data is stored onchain uniquely for each game.  Data is accessed by components, which provide gameplay.
-             Lastly, flows are the sequences of functions from components that are executed in a game.
+              These games are all unique.  Each one has its own data, set of components, and flows.
+              Data is stored onchain uniquely for each game.  Data is accessed by components, which provide gameplay.
+              Lastly, flows are the sequences of functions from components that are executed in a game.
               <br />
               <br />
               {/* Every function in a component has required keys and created keys.  
@@ -36,7 +37,7 @@ export default function Games() {
 
         </div>
       </section>
-      <ExploreGames />  
+      <ExploreGames />
     </main>
   );
 }

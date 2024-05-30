@@ -24,25 +24,21 @@ export default function GameInfo(props: StepThreeProps) {
 
 
     return (
-
         <section id='connect' className='relative items-center px-6 md:px-24 pt-24 pb-12'>
             <section>
                 <SmallTitle title={'components/' + summary?.components.length} />
-                {/* <div>{JSON.stringify(summary)}</div> */}
-                <ul>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12'>
                     {Array.from({ length: summary?.components.length as number }).map((object, i) => {
                         return (
-                            <li key={i} className="pt-8 pb-8">
-                                <ModuleCard
-                                    index={i}
-                                    address={summary?.componentSummaries[i].component!}
-                                    metadata={summary?.componentSummaries[i].metadata!}
-                                />
-                            </li>
-
+                            <ModuleCard
+                                key={i}
+                                index={i}
+                                address={summary?.componentSummaries[i].component!}
+                                metadata={summary?.componentSummaries[i].metadata!}
+                            />
                         );
                     })}
-                </ul>
+                </div>
             </section>
 
 
@@ -50,16 +46,16 @@ export default function GameInfo(props: StepThreeProps) {
 
             <section>
                 <SmallTitle title={'data/' + summary?.availableData.length} />
-                <ul>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12'>
                     {Array.from({ length: summary?.availableData.length as number }).map((object, i) => {
                         return (
-                            <li key={i} className="pt-8 pb-8">
+                            <div key={i} className="pt-8 pb-8">
                                 <div>{summary?.availableData[i].name}</div>
-                            </li>
+                            </div>
 
                         );
                     })}
-                </ul>
+                </div>
 
             </section>
 

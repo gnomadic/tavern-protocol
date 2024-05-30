@@ -1,7 +1,7 @@
 'use client';
 
 import useDeployment from "@/hooks/useDeployment";
-import BigTitle from "../base/BigTitle";
+import BigTitle from "./BigTitle";
 
 
 type TitleProps = {
@@ -9,7 +9,7 @@ type TitleProps = {
 
 }
 
-export default function ExploreHeader(props: TitleProps) {
+export default function ChainTitle(props: TitleProps) {
 
     const { deploy } = useDeployment();
 

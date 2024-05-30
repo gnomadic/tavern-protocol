@@ -1,5 +1,5 @@
 export const NavItems = [
-  // { href: '/games', label: 'demo' },
+  { href: '/demo', label: 'demo' },
   { href: '/games', label: 'games' },
   { href: '/registry', label: 'registry' },
 

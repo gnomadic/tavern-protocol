@@ -9,17 +9,31 @@ import { useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/ge
 import useDeployment from '@/hooks/useDeployment';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useAccount } from 'wagmi';
 import { useConfig } from 'wagmi'
 
 
 export default function ExploreGames() {
     const { deploy } = useDeployment();
-    const { data: currentGames, error } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: gameCount } = useReadGameFactoryGetGameCount({ address: deploy.gameFactory })
+    const { data: currentGames, error: curError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
+    const { data: gameCount, error: countError } = useReadGameFactoryGetGameCount({ address: deploy.gameFactory })
 
     const { chain } = useAccount()
     const config = useConfig()
+
+    useEffect(() => {
+        if (curError) {
+            toast.error(curError.message, {
+                position: "bottom-right"
+            });
+        }
+        if (countError) {
+            toast.error(countError.message, {
+                position: "bottom-right"
+            });
+        }
+    }, [curError, countError]);
 
     return (
         <div className="px-6 md:px-24 pt-12">
@@ -31,7 +45,7 @@ export default function ExploreGames() {
             {/* <div>chain: {JSON.stringify(chain)}</div> */}
             {/* <div>config: {JSON.stringify(config)}</div> */}
 
-    
+
 
             <ul className='pb-24 pt-12'>
 

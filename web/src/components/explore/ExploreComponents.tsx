@@ -3,12 +3,27 @@
 import ModuleCard from '@/components/ModuleCard';
 import { useReadComponentRegistryGetComponentCount, useReadComponentRegistryGetComponents } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export default function ExploreComponents() {
 
   const { deploy } = useDeployment();
-  const { data: currentModules } = useReadComponentRegistryGetComponents({ address: deploy.componentRegistry, args: [0] })
-  const { data: moduleCount } = useReadComponentRegistryGetComponentCount({ address: deploy.componentRegistry })
+  const { data: currentModules, error: curError } = useReadComponentRegistryGetComponents({ address: deploy.componentRegistry, args: [0] })
+  const { data: moduleCount, error: countError } = useReadComponentRegistryGetComponentCount({ address: deploy.componentRegistry })
+
+  useEffect(() => {
+    if (curError) {
+      toast.error(curError.message, {
+        position: "bottom-right"
+      });
+    }
+    if (countError) {
+      toast.error(countError.message, {
+        position: "bottom-right"
+      });
+    }
+  }, [curError, countError]);
 
   return (
     <div className="px-6 md:px-24 pt-12">

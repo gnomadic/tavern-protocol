@@ -57,6 +57,20 @@ module.exports = async (hre) => {
     log: true,
   });
 
+  // ------------------------------------- PVP Result Component
+
+  const pvpResult = await deploy("PVPResult", {
+    from: deployer,
+    log: true,
+    args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/PVPResult.json`],
+  });
+
+  const pvpResultEntity = await deploy("PVPResultEntity", {
+    from: deployer,
+    log: true,
+  });
+
+
 
 
 
@@ -83,6 +97,11 @@ module.exports = async (hre) => {
     await tx.wait();
   }
 
+  if (!await componentRegistry.isRegistered(pvpResult.address)) {
+    tx = await componentRegistry.register(pvpResult.address);
+    await tx.wait();
+  }
+
   // ------------------------------------- register entities
   if (await entityFactory.getEntity("QueueSessionEntity") == ZERO_ADDRESS) {
     tx = await entityFactory.registerEntity("QueueSessionEntity", queueSessionEntity.address);
@@ -99,6 +118,11 @@ module.exports = async (hre) => {
     await tx.wait();
   }
 
+  if (await entityFactory.getEntity("PVPResultEntity") == ZERO_ADDRESS) {
+    tx = await entityFactory.registerEntity("PVPResultEntity", pvpResultEntity.address);
+    await tx.wait();
+  }
+
   // ------------------------------------- write address megafile
 
   let networkName = hre.network.name;
@@ -110,6 +134,7 @@ module.exports = async (hre) => {
   object.queueSession = queueSession.address;
   object.rockPaperScissors = rockPaperScissors.address;
   object.rewardERC20 = rewardERC20.address;
+  object.pvpResult = pvpResult.address;
 
   await fs.writeFileSync(filename, JSON.stringify(object, null, 2));
   console.log("local address file created");
@@ -117,14 +142,19 @@ module.exports = async (hre) => {
   // ------------------------------------- verify
 
   console.log("done deploying");
-  if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "hardhat") {
+  if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
     console.log("verifing");
     await verify(hre, queueSession.address, "QueueSession", "components/");
     await verify(hre, queueSessionEntity.address, "QueueSessionEntity", "entities/");
+    
     await verify(hre, rockPaperScissors.address, "RockPaperScissors", "components/");
     await verify(hre, rockPaperScissorEntity.address, "RockPaperScissorEntity", "entities/");
+    
     await verify(hre, rewardERC20.address, "RewardERC20", "components/");
     await verify(hre, reward20Entity.address, "Reward20Entity", "entities/");
+    
+    await verify(hre, pvpResult.address, "PVPResult", "components/");
+    await verify(hre, pvpResultEntity.address, "PVPResultEntity", "entities/");
   }
 
 };

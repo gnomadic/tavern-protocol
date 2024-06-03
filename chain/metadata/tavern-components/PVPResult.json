@@ -1,0 +1,32 @@
+{
+    "name": "PVP Result",
+    "description": "Stores the result of a one-on-one match onchain, so that it can be queried.",
+    "gameFunctions": [
+        {
+            "name": "Store Result",
+            "description": "Stashes data about the result of a one-on-one match onchain.",
+            "abi": "storeResult(address,address)",
+            "requires": [
+                "player",
+                "player2",
+                "action",
+                "action2",
+                "winner"
+            ],
+            "creates": [],
+            "emits":[]
+        }
+    ],
+    "configFunctions": [],
+    "readFunctions":[  {
+        "name": "get Last Game",
+        "description": "Returns the results of a players last match.",
+        "abi": "getLastGame(address,address)",
+        "requires": [
+            "player",
+            "game"
+        ],
+        "creates": [],
+        "emits":[]
+    }]
+}

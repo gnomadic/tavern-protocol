@@ -40,7 +40,7 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsGame: '0xdB7f437573FDB65892DB5Bc7b00601D281201912',
     rpsComponent: '0x75f71BaBB609b14aaF5c672D4606e5F55B69FC66',
     queueComponent: '0xF31e5B19d061c9a105AB70b929bC6cb895061AeD',
-
+    resultComponent: '0x82C6D3ed4cD33d8EC1E51d0B5Cc1d822Eaa0c3dC',
   },
 
   localhost: {
@@ -55,6 +55,7 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsGame: '0xc19Bc969cfc40DfF49605AedefC69a74c5Aef69E',
     rpsComponent: '0xf7Cd8fa9b94DB2Aa972023b379c7f72c65E4De9D',
     queueComponent: '0x0C8E79F3534B00D9a3D4a856B665Bf4eBC22f2ba',
+    resultComponent: '0x82C6D3ed4cD33d8EC1E51d0B5Cc1d822Eaa0c3dC',
   },
   tavern: {
     gameFactory: '0x0',
@@ -68,6 +69,8 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsGame: '0x0',
     rpsComponent: '0x75f71BaBB609b14aaF5c672D4606e5F55B69FC66',
     queueComponent: '0xF31e5B19d061c9a105AB70b929bC6cb895061AeD',
+    resultComponent: '0x0',
+
   },
 };
 

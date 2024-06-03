@@ -5,8 +5,10 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract QueueSessionEntity is IEntity {
-  address[] public players;
-  mapping(address => uint256) playerIndex;
+  mapping(uint256 => address) queue;
+  uint256 first;
+  uint256 last;
+  mapping(address => bool) playerInQueue;
 
   function setAvailableKeys(string[] storage keys) internal override {
     keys.push('nextPlayer');
@@ -15,16 +17,13 @@ contract QueueSessionEntity is IEntity {
     last = 0;
   }
 
-  mapping(uint256 => address) queue;
-  uint256 first;
-  uint256 last;
-
   function enqueue(address data) public {
-// console.log("enqieue last", last);
-// console.log("enqieue first", first);
+    // console.log("enqieue last", last);
+    // console.log("enqieue first", first);
 
     last += 1;
     queue[last] = data;
+    playerInQueue[data] = true;
     //     console.log('0', queue[0]);
     // console.log('1', queue[1]);
     // console.log('2', queue[2]);
@@ -39,6 +38,7 @@ contract QueueSessionEntity is IEntity {
     // console.log('1', queue[1]);
     // console.log('2', queue[2]);
     data = queue[first];
+    playerInQueue[data] = false;
 
     delete queue[first];
     first += 1;
@@ -48,5 +48,9 @@ contract QueueSessionEntity is IEntity {
     if (last < first) return 0;
     // if (last == first) return 1;
     return last + 1 - first;
+  }
+
+  function isPlayerInQueue(address player) public view returns (bool) {
+    return playerInQueue[player];
   }
 }

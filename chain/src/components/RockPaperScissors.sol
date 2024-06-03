@@ -56,6 +56,10 @@ contract RockPaperScissors is IComponent {
       return;
     }
 
+    if (player == player2){
+      return;
+    }
+
 
     // //player action set player action
     // if (player2 == address(0)) {

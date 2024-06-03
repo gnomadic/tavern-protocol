@@ -64,6 +64,14 @@ contract QueueSession is IComponent {
     return QueueSessionEntity(game.getEntity('nextPlayer')).getQueueSize();
   }
 
+  function isPlayerInQueue(
+    IGame game,
+    address player
+  ) public view returns (bool) {
+    return
+      QueueSessionEntity(game.getEntity('nextPlayer')).isPlayerInQueue(player);
+  }
+
   event JoinedQueue(address player, uint256 queueSize);
   event MatchMade(address player1, address player2);
 }

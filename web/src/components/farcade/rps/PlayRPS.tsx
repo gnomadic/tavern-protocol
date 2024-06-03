@@ -3,11 +3,11 @@
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import useDeployment from "@/hooks/useDeployment";
 import { executeFlow } from '@/services/viemService';
-import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadQueueSessionGetPlayerCount, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
+import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadPvpResultGetLastGame, useReadQueueSessionGetPlayerCount, useReadQueueSessionIsPlayerInQueue, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
 import { GameFuncParams } from '@/domain/Domain';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
-import { Abi, Address, decodeEventLog, erc20Abi, erc721Abi } from 'viem';
+import { Abi, Address, decodeEventLog, erc20Abi, erc721Abi, zeroAddress } from 'viem';
 import SmallTitle from '@/components/base/SmallTitle';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -17,13 +17,19 @@ import { config } from '@/domain/WagmiConfig';
 export default function PlayRPS() {
 
     const { deploy } = useDeployment();
+    const { address } = useAccount();
+
     const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
     const { data: queueSize, error: queueError } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
+    const { data: inQueue, error: inQueueError } = useReadQueueSessionIsPlayerInQueue({ address: deploy.queueComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
+    const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
+    // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [deploy.rpsGame, address ? address : zeroAddress]});
 
-    const { address } = useAccount();
 
     const { data: hash, error: writeError, writeContract } = useWriteGame();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+
+
 
 
     const executeFlowTx = (action: number) => {
@@ -84,7 +90,12 @@ export default function PlayRPS() {
         }
     }, [gameError, queueError, writeError, isLoading, isSuccess, data]);
 
+    const replacer = (key, value) =>
+        typeof value === 'bigint' ? value.toString() : value
+
     return (
+
+        
         <section className='pt-24 px-12 md:px-24' >
             <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
                 {/* <div>{JSON.stringify(data?.logs)}</div> */}
@@ -131,7 +142,6 @@ export default function PlayRPS() {
                 <div className='mx-auto'>
                     <button className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
                         onClick={() => { executeFlowTx(3); }}>
-
                         SCISSORS
                     </button>
                 </div>
@@ -141,6 +151,22 @@ export default function PlayRPS() {
 
             <div className='pt-12'>
                 There are {queueSize?.toString()} players in the queue.
+                
+                
+            </div>
+            <div className='pt-12'>
+                You are in the queue: {inQueue?.toString()}
+
+                
+            </div>
+            <div className='pt-12'>
+      
+                Your last game was: {JSON.stringify(lastGame, replacer)}
+                
+            </div>
+            <div className='pt-12'>
+                error : {lastGameError?.message}
+                
             </div>
 
             {/* <section className='pt-12 md:pt-24'>

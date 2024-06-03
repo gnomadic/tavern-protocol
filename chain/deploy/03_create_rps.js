@@ -17,6 +17,7 @@ module.exports = async (hre) => {
   const queueComponent = await getDeployedContract("QueueSession");
   const RPS = await getDeployedContract("RockPaperScissors");
   const rewardComponent = await getDeployedContract("RewardERC20");
+  const resultComponent = await getDeployedContract("PVPResult");
   const ticket = await getDeployedContract("FarcadeAlphaTestTicket");
 
   let gameSummary = await getGame(gameName);
@@ -67,6 +68,7 @@ module.exports = async (hre) => {
   const queueExists = components.find((f) => f === queueComponent.target);
   const rpsExists = components.find((f) => f === RPS.target);
   const rewardExists = components.find((f) => f === rewardComponent.target);
+  const resultExists = components.find((f) => f === resultComponent.target);
 
   // // console.log("queue address", queueComponent.target);
 
@@ -106,6 +108,15 @@ module.exports = async (hre) => {
     console.log("reward exists");
   }
 
+  if (!resultExists) {
+    console.log("adding Result");
+    tx = await game.addComponent(resultComponent.target);
+    await tx.wait();
+  } else {
+    console.log("result exists");
+  }
+
+
 
 
   if (flows === undefined || flows.length === 0) {
@@ -116,6 +127,7 @@ module.exports = async (hre) => {
     keys.push({name: 'oneOnOne(address,address)', value: RPS.target});
     keys.push({name: 'rewardWinner(address,address)', value: rewardComponent.target});
     keys.push({name: 'rewardTie(address,address)', value: rewardComponent.target});
+    keys.push({name: 'storeResult(address,address)', value: resultComponent.target});
  
 
 

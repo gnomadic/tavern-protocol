@@ -12,6 +12,7 @@ export type Deployment = {
   rpsGame: Address;
   rpsComponent: Address;
   queueComponent: Address;
+  resultComponent: Address;
 }
 
 export type GameSummary = {

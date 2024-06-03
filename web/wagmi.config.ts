@@ -21,6 +21,7 @@ export default defineConfig({
         'QueueSession.sol/**',
         'RockPaperScissors.sol/**',
         'RewardERC20.sol/**',
+        'PVPResult.sol/**',
       ],
     }),
     react(),

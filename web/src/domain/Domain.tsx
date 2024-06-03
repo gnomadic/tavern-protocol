@@ -10,6 +10,8 @@ export type Deployment = {
   chainId: string;
   scan: string;
   rpsGame: Address;
+  rpsComponent: Address;
+  queueComponent: Address;
 }
 
 export type GameSummary = {

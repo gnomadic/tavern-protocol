@@ -37,7 +37,10 @@ export const Deployments: { [key: string]: Deployment } = {
     chain: 'sepolia',
     chainId: "11155111",
     scan:"https://sepolia.etherscan.io/address/",
-    rpsGame: '0x1d6E6F3D1A89Fa917d313a297b61B6109e6eCCFA'
+    rpsGame: '0xdB7f437573FDB65892DB5Bc7b00601D281201912',
+    rpsComponent: '0x75f71BaBB609b14aaF5c672D4606e5F55B69FC66',
+    queueComponent: '0xF31e5B19d061c9a105AB70b929bC6cb895061AeD',
+
   },
 
   localhost: {
@@ -50,6 +53,8 @@ export const Deployments: { [key: string]: Deployment } = {
     chainId: "31337",
     scan:"",
     rpsGame: '0xc19Bc969cfc40DfF49605AedefC69a74c5Aef69E',
+    rpsComponent: '0xf7Cd8fa9b94DB2Aa972023b379c7f72c65E4De9D',
+    queueComponent: '0x0C8E79F3534B00D9a3D4a856B665Bf4eBC22f2ba',
   },
   tavern: {
     gameFactory: '0x0',
@@ -61,6 +66,8 @@ export const Deployments: { [key: string]: Deployment } = {
     chainId: "0",
     scan:"",
     rpsGame: '0x0',
+    rpsComponent: '0x75f71BaBB609b14aaF5c672D4606e5F55B69FC66',
+    queueComponent: '0xF31e5B19d061c9a105AB70b929bC6cb895061AeD',
   },
 };
 

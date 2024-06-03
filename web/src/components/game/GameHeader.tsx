@@ -29,14 +29,10 @@ export default function GameHeader(props: HeaderProps) {
 
   useEffect(() => {
     if (summaryError) {
-      toast.error(summaryError.message, {
-        position: "bottom-right"
-      });
+      toast.error(summaryError.message);
     }
     if (metaError) {
-      toast.error(metaError.message, {
-        position: "bottom-right"
-      });
+      toast.error(metaError.message);
     }
   }
   , [summaryError, metaError]);

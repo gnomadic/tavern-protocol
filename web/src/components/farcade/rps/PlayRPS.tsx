@@ -3,25 +3,28 @@
 import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import useDeployment from "@/hooks/useDeployment";
 import { executeFlow } from '@/services/viemService';
-import { useReadGameFactoryGetGames, useReadQueueSessionGetPlayerCount, useWriteGame, useWriteGameExecuteFlow } from '@/generated';
+import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadQueueSessionGetPlayerCount, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
 import { GameFuncParams } from '@/domain/Domain';
-import { useAccount } from 'wagmi';
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
-import { Address } from 'viem';
+import { Abi, Address, decodeEventLog, erc20Abi, erc721Abi } from 'viem';
 import SmallTitle from '@/components/base/SmallTitle';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { config } from '@/domain/WagmiConfig';
 
 
 export default function PlayRPS() {
 
     const { deploy } = useDeployment();
     const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: queueError } = useReadQueueSessionGetPlayerCount({ address: "0xa20884C2DFBFF5776B53D82B89acD6e7F770984e", args: [deploy.rpsGame] });
+    const { data: queueSize, error: queueError } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
 
     const { address } = useAccount();
 
-    const { data, isPending, isSuccess, error: writeError, writeContract } = useWriteGame();
+    const { data: hash, error: writeError, writeContract } = useWriteGame();
+    const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+
 
     const executeFlowTx = (action: number) => {
         console.log("games and address", games, address)
@@ -37,39 +40,59 @@ export default function PlayRPS() {
         }
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
-        console.log("params", params);
+        // console.log("params", params);
+        console.log("watching for component: ", deploy.rpsComponent)
+        console.log("watching for game: ", deploy.rpsGame)
         writeContract({ address: deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
 
 
-
     }
-
     useEffect(() => {
         if (gameError) {
-            toast.error(gameError.message, {
-                position: "bottom-right"
-            });
+            toast.error(gameError.message);
         }
         if (queueError) {
-            toast.error(queueError.message, {
-                position: "bottom-right"
-            });
+            toast.error(queueError.message);
         }
         if (writeError) {
-            toast.error(writeError.message, {
-                position: "bottom-right"
+            toast.error(writeError.message);
+        }
+        if (isLoading) {
+            toast.info("Transaction is pending");
+
+        }
+        if (isSuccess) {
+            toast.success("Transaction is successful");
+
+        }
+        if (data) {
+            console.log("data", data.logs);
+            const MY_ABI: Abi = [...gameAbi, ...rockPaperScissorsAbi, ...rewardErc20Abi, ...queueSessionAbi, ...erc20Abi, ...erc721Abi];
+
+            data.logs.map((log: any) => {
+                try {
+                    const wat = decodeEventLog({ abi: MY_ABI, ...log });
+                    console.log(wat)
+                    if (wat.eventName == "GameResult") {
+                        console.log("game result", wat)
+                    }
+                } catch (e) {
+                    console.log("bad abi")
+                }
+
             });
         }
-    }, [gameError, queueError, writeError]);
+    }, [gameError, queueError, writeError, isLoading, isSuccess, data]);
 
     return (
         <section className='pt-24 px-12 md:px-24' >
             <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
+                {/* <div>{JSON.stringify(data?.logs)}</div> */}
                 <div className='flex'>
                     <div className='justify-right md:w-1/2'></div>
                     <div className='justify-right md:w-1/2 '>
                         <p>
-                            This is a multiplayer game of rock-paper-scissors with matchmaking.  
+                            This is a multiplayer game of rock-paper-scissors with matchmaking.
                             This game was deployed using the Tavern game engine without writing any code.
                             <br />
                             <br />

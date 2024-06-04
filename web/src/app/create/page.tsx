@@ -1,5 +1,6 @@
-'use client';
 import Divider from '@/components/Divider';
+import ChainTitle from '@/components/base/ChainTitle';
+import CreateForm from '@/components/create/CreateForm';
 import useDeployment from '@/hooks/useDeployment';
 import useCreateEntity from '@/mutations/useCreateEntity';
 import useCreateGame from '@/mutations/useCreateGame';
@@ -10,48 +11,81 @@ import { BaseError, useWriteContract, useWaitForTransactionReceipt, useAccount }
 
 export default function Create() {
 
-  const { deploy } = useDeployment();
-  const { address } = useAccount()
-  // const { hash, error, isPending, writeToChain: createGame } = useCreateGame({ contractAddress: deploy.gameFactory });
-  const { createGameHash, createGameError, createGameisPending, writeCreateGameToChain } = useCreateGame({ contractAddress: deploy.gameFactory });
-  // const { createEntityHash, createEntityError, createEntityisPending, writeCreateEntityToChain } = useCreateEntity({ contractAddress: deploy.entityFactory });
-  // const { registerModule, registerModuleGameError, registerModuleisPending, writeRegisterModule } = useRegisterModule({contractAddress: deploy.});
+  // const { deploy } = useDeployment();
+  // const { address } = useAccount()
+  // // const { hash, error, isPending, writeToChain: createGame } = useCreateGame({ contractAddress: deploy.gameFactory });
+  // const { createGameHash, createGameError, createGameisPending, writeCreateGameToChain } = useCreateGame({ contractAddress: deploy.gameFactory });
+  // // const { createEntityHash, createEntityError, createEntityisPending, writeCreateEntityToChain } = useCreateEntity({ contractAddress: deploy.entityFactory });
+  // // const { registerModule, registerModuleGameError, registerModuleisPending, writeRegisterModule } = useRegisterModule({contractAddress: deploy.});
 
 
-  async function handleCreateGame(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    console.log('submit form');
+  // async function handleCreateGame(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault()
+  //   console.log('submit form');
 
 
-    const formData = new FormData(e.target as HTMLFormElement)
-    const tokenId = formData.get('tokenId') as string
-    const displayName = formData.get('displayName') as string
+  //   const formData = new FormData(e.target as HTMLFormElement)
+  //   const tokenId = formData.get('tokenId') as string
+  //   const displayName = formData.get('displayName') as string
 
-    writeCreateGameToChain(address as Address, displayName);
+  //   writeCreateGameToChain(address as Address, displayName);
 
-  }
+  // }
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash: createGameHash
-    });
+  // const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  //   useWaitForTransactionReceipt({
+  //     hash: createGameHash
+  //   });
+
+  // async function create() {
+  //   'use server'
+
+  //   console.log("running on server")
+
+  //   // ...
+  // }
 
   return (
-    <main className='flex flex-col items-center justify-between min-h-screen p-24 font-anon'>
-      <section id='hero' className='relative items-center pt-48'>
-        <p className=''>Games can be created by submitting transactions.  You do not have to write any code.</p>
-        <p className='pt-8'>
-          Tavern provides a set of Components that can be combined and customized to fit your gameplay.
-        </p>
-        <p className='pt-8'>Permissionless, free, and on-chain.</p>
+    <main className='items-center py-12 md:py-24 font-anon'>
+      <section className='pt-36 min-w-full'>
+        <ChainTitle title='Create' />
       </section>
 
-      <section className='pt-12'>
-        <Divider />
+      <section id='intro' className=' items-center p-12 md:p-24 '>
+        <div className='flex'>
+          <div className='justify-right md:w-1/2'></div>
+          <div className='justify-right md:w-1/2 '>
+            <p>
+              Launch an onchain game for your community without writing a line of code.
+              <br />
+              <br />
+              Gameplay is created by choosing the components you want.  Components are in the registry.
+              <br />
+              <br />
+              After your game is created you can visit the Game Page and manage your component,
+              set customization options, and create your Flows.
+              <br />
+              <br />
+              Flows are how players will interact with your game.
+              When you create a flow you choose the game functions on your selected components to chain together,
+              and the flow will execute them in order.
+              Note every component game function has inputs and outputs, allowing data to be passed around.
+
+            </p>
+          </div>
+
+        </div>
       </section>
+      <section>
+        <CreateForm />
+      </section>
+
+      {/* <section className='pt-12'>
+        <Divider />
+      </section> */}
 
       <section id='hero' className='relative items-center pt-12'>
-        <p className=''>A Form to create your game is coming soon </p>
+        {/* <p className=''>A Form to create your game is coming soon </p> */}
         {/* <p className='pt-8'>
           You can launch a game by executing the following functions on the following contracts
         </p>

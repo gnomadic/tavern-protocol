@@ -32,7 +32,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <ul className='mt-5 hidden md:text-lg lg:text-xl tracking-wider uppercase text-offwhite md:flex gap-6 pl-4 '>
+          <ul className='mt-5 hidden md:text-lg lg:text-xl tracking-wider uppercase text-offwhite md:flex md:gap-2 lg:gap-6 pl-4 '>
             {NavItems.map((element, i) => {
               return (
                 <Fragment key={i}>
@@ -59,7 +59,7 @@ export default function Header() {
                 <div className="relative cursor-pointer">
                   docs
                   <ArrowUpRightIcon
-                    className="w-3 h-3 mb-4 "
+                    className="w- h-3 mb-4 "
                     style={{ display: "inline" }}
                   />
                 </div>

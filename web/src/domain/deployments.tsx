@@ -29,18 +29,18 @@ export const Deployments: { [key: string]: Deployment } = {
   //   chain: 'polygon',
   // },
   sepolia: {
-    gameFactory: '0x99c93C94f7f5E874AE523af2BDc1Eb2eAab12925',
+    gameFactory: '0x14360E6054A666B18d49bF3B4fFeE7D63319770e',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    componentRegistry: '0xA81c6104a1A67CA26AB9EFA619497E01787c8FD1',
+    componentRegistry: '0xD47ACDB3B7a7bb9C4a2be1FF9803bca103cd65d9',
     displayName: 'Tavern',
     currency: 'eth',
     chain: 'sepolia',
     chainId: "11155111",
     scan:"https://sepolia.etherscan.io/address/",
     rpsGame: '0x5a8e6d11C3E7E99b11Ef69F9333116b6734c2a28',
-    rpsComponent: '0xA31036d21DEee669Ece4c82C9C5B17F165E8Ce39',
-    queueComponent: '0x1F5DB26A7B7637F232c68Ca5c61499f22751042F',
-    resultComponent: '0xaC009e22F95C314Ac29F3E394E7737cB17e42ae6',
+    rpsComponent: '0xcfF5fdBAD245183728972Ffd3036d0f6bD2cFb4F',
+    queueComponent: '0xe8D49Ea4e2457b2B3c112650b1dA05eCdF2BD3E2',
+    resultComponent: '0x44C8c71086EBa3a2AEb61f2CA635Ff64EC143bcE',
   },
 
   localhost: {

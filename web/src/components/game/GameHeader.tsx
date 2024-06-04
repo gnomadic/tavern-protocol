@@ -45,7 +45,7 @@ export default function GameHeader(props: HeaderProps) {
         {!summary || !data ? "loading" :
 
           <div>
-            <ChainTitle title={data ? censor(data.name) : "loading"} />
+            <ChainTitle title={data.name.length > 0 ? censor(data.name) : "No Name Yet"} />
             {/* <div className="text-xs pl-4">
             {deploy.chain}
             </div>
@@ -100,7 +100,7 @@ export default function GameHeader(props: HeaderProps) {
             </div>
 
             <div className="text-base pt-12 px-6 md:px-24">
-              {data.description}
+              {data.description.length > 0 ? censor(data.description) : "No Description Yet"}
             </div>
 
           </div>

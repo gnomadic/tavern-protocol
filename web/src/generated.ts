@@ -483,6 +483,13 @@ export const gameAbi = [
   {
     stateMutability: 'view',
     type: 'function',
+    inputs: [],
+    name: 'gameFactory',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     inputs: [{ name: 'key', internalType: 'string', type: 'string' }],
     name: 'getEntity',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -559,6 +566,7 @@ export const gameAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
+      { name: '_gameFactory', internalType: 'address', type: 'address' },
       { name: '_gm', internalType: 'address', type: 'address' },
       { name: '_metadata', internalType: 'string', type: 'string' },
       { name: '_entityFactory', internalType: 'address', type: 'address' },
@@ -631,6 +639,17 @@ export const gameFactoryAbi = [
       { name: 'metadata', internalType: 'string', type: 'string' },
     ],
     name: 'createGame',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_gm', internalType: 'address', type: 'address' },
+      { name: 'metadata', internalType: 'string', type: 'string' },
+      { name: 'components', internalType: 'address[]', type: 'address[]' },
+    ],
+    name: 'createGameWithComponents',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
@@ -750,6 +769,7 @@ export const gameFactoryAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const iComponentAbi = [
+  { type: 'error', inputs: [], name: 'OnlyGameCanCall' },
   {
     stateMutability: 'view',
     type: 'function',
@@ -781,6 +801,13 @@ export const iComponentAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const iGameAbi = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'component', internalType: 'address', type: 'address' }],
+    name: 'addComponent',
+    outputs: [],
+  },
   {
     stateMutability: 'nonpayable',
     type: 'function',
@@ -817,6 +844,7 @@ export const iGameAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
+      { name: 'gameFactory', internalType: 'address', type: 'address' },
       { name: '_gm', internalType: 'address', type: 'address' },
       { name: 'displayName', internalType: 'string', type: 'string' },
       { name: 'entityFactory', internalType: 'address', type: 'address' },
@@ -843,12 +871,13 @@ export const pvpResultAbi = [
     type: 'constructor',
     inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
   },
+  { type: 'error', inputs: [], name: 'OnlyGameCanCall' },
   {
     stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: 'player', internalType: 'address', type: 'address' },
       { name: 'gameAddress', internalType: 'address', type: 'address' },
+      { name: 'player', internalType: 'address', type: 'address' },
     ],
     name: 'getLastGame',
     outputs: [
@@ -918,6 +947,7 @@ export const queueSessionAbi = [
     type: 'constructor',
     inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
   },
+  { type: 'error', inputs: [], name: 'OnlyGameCanCall' },
   {
     type: 'event',
     anonymous: false,
@@ -1036,6 +1066,7 @@ export const rewardErc20Abi = [
     type: 'constructor',
     inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
   },
+  { type: 'error', inputs: [], name: 'OnlyGameCanCall' },
   {
     stateMutability: 'view',
     type: 'function',
@@ -1110,6 +1141,7 @@ export const rockPaperScissorsAbi = [
     inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
   },
   { type: 'error', inputs: [], name: 'NoActionYet' },
+  { type: 'error', inputs: [], name: 'OnlyGameCanCall' },
   {
     type: 'event',
     anonymous: false,
@@ -1568,6 +1600,14 @@ export const useReadGameFlows = /*#__PURE__*/ createUseReadContract({
 });
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameFactory"`
+ */
+export const useReadGameGameFactory = /*#__PURE__*/ createUseReadContract({
+  abi: gameAbi,
+  functionName: 'gameFactory',
+});
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getEntity"`
  */
 export const useReadGameGetEntity = /*#__PURE__*/ createUseReadContract({
@@ -1822,6 +1862,15 @@ export const useWriteGameFactoryCreateGame =
   });
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"createGameWithComponents"`
+ */
+export const useWriteGameFactoryCreateGameWithComponents =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: gameFactoryAbi,
+    functionName: 'createGameWithComponents',
+  });
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"initialize"`
  */
 export const useWriteGameFactoryInitialize =
@@ -1862,6 +1911,15 @@ export const useSimulateGameFactoryCreateGame =
   /*#__PURE__*/ createUseSimulateContract({
     abi: gameFactoryAbi,
     functionName: 'createGame',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"createGameWithComponents"`
+ */
+export const useSimulateGameFactoryCreateGameWithComponents =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'createGameWithComponents',
   });
 
 /**
@@ -1983,6 +2041,14 @@ export const useWriteIGame = /*#__PURE__*/ createUseWriteContract({
 });
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"addComponent"`
+ */
+export const useWriteIGameAddComponent = /*#__PURE__*/ createUseWriteContract({
+  abi: iGameAbi,
+  functionName: 'addComponent',
+});
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createEntity"`
  */
 export const useWriteIGameCreateEntity = /*#__PURE__*/ createUseWriteContract({
@@ -2012,6 +2078,15 @@ export const useWriteIGameInitialize = /*#__PURE__*/ createUseWriteContract({
 export const useSimulateIGame = /*#__PURE__*/ createUseSimulateContract({
   abi: iGameAbi,
 });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"addComponent"`
+ */
+export const useSimulateIGameAddComponent =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iGameAbi,
+    functionName: 'addComponent',
+  });
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createEntity"`
@@ -2821,6 +2896,14 @@ export const readGameFlows = /*#__PURE__*/ createReadContract({
 });
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"gameFactory"`
+ */
+export const readGameGameFactory = /*#__PURE__*/ createReadContract({
+  abi: gameAbi,
+  functionName: 'gameFactory',
+});
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"getEntity"`
  */
 export const readGameGetEntity = /*#__PURE__*/ createReadContract({
@@ -3061,6 +3144,15 @@ export const writeGameFactoryCreateGame = /*#__PURE__*/ createWriteContract({
 });
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"createGameWithComponents"`
+ */
+export const writeGameFactoryCreateGameWithComponents =
+  /*#__PURE__*/ createWriteContract({
+    abi: gameFactoryAbi,
+    functionName: 'createGameWithComponents',
+  });
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"initialize"`
  */
 export const writeGameFactoryInitialize = /*#__PURE__*/ createWriteContract({
@@ -3100,6 +3192,15 @@ export const simulateGameFactoryCreateGame =
   /*#__PURE__*/ createSimulateContract({
     abi: gameFactoryAbi,
     functionName: 'createGame',
+  });
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameFactoryAbi}__ and `functionName` set to `"createGameWithComponents"`
+ */
+export const simulateGameFactoryCreateGameWithComponents =
+  /*#__PURE__*/ createSimulateContract({
+    abi: gameFactoryAbi,
+    functionName: 'createGameWithComponents',
   });
 
 /**
@@ -3218,6 +3319,14 @@ export const readIGameValidateIsModule = /*#__PURE__*/ createReadContract({
 export const writeIGame = /*#__PURE__*/ createWriteContract({ abi: iGameAbi });
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"addComponent"`
+ */
+export const writeIGameAddComponent = /*#__PURE__*/ createWriteContract({
+  abi: iGameAbi,
+  functionName: 'addComponent',
+});
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"createEntity"`
  */
 export const writeIGameCreateEntity = /*#__PURE__*/ createWriteContract({
@@ -3246,6 +3355,14 @@ export const writeIGameInitialize = /*#__PURE__*/ createWriteContract({
  */
 export const simulateIGame = /*#__PURE__*/ createSimulateContract({
   abi: iGameAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link iGameAbi}__ and `functionName` set to `"addComponent"`
+ */
+export const simulateIGameAddComponent = /*#__PURE__*/ createSimulateContract({
+  abi: iGameAbi,
+  functionName: 'addComponent',
 });
 
 /**

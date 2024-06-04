@@ -15,11 +15,16 @@ contract Reward1155 is IComponent {
   constructor(string memory _metadata) {
     metadata = _metadata;
   }
-  function getSummary() external view returns (ComponentSummary memory) {
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
     return ComponentSummary(address(this), metadata);
   }
 
-  function initialize(address game) external {
+  function initialize(address game) external override {
     IGame(game).createEntity('Reward1155Entity');
   }
 

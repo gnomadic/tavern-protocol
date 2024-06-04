@@ -16,15 +16,23 @@ contract QueueSession is IComponent {
     metadata = _metadata;
   }
 
-  function initialize(address game) external {
+  function initialize(address game) external override {
     IGame(game).createEntity('QueueSessionEntity');
   }
 
-  function getSummary() external view returns (ComponentSummary memory) {
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
     return ComponentSummary(address(this), metadata);
   }
 
-  function joinQueue(address executor, address gameAddress) public {
+  function joinQueue(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     address player;
     IGame game = IGame(gameAddress);
 
@@ -39,7 +47,10 @@ contract QueueSession is IComponent {
     );
   }
 
-  function setMatchOrWait(address executor, address gameAddress) public {
+  function setMatchOrWait(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     IGame game = IGame(gameAddress);
     QueueSessionEntity queue = QueueSessionEntity(game.getEntity('nextPlayer'));
 

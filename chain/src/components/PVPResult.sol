@@ -16,21 +16,29 @@ contract PVPResult is IComponent {
     metadata = _metadata;
   }
 
-  function initialize(address game) external {
+  function initialize(address game) external override {
     IGame(game).createEntity('PVPResultEntity');
   }
 
-  function getSummary() external view returns (ComponentSummary memory) {
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
     return ComponentSummary(address(this), metadata);
   }
 
-  function storeResult(address executor, address gameAddress) public {
-    console.log("storeResult");
+  function storeResult(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
+    console.log('storeResult');
     IGame game = IGame(gameAddress);
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     PVPResultEntity resultEntity = PVPResultEntity(game.getEntity('lastGames'));
 
-    console.log("resultEntity: %s", address(resultEntity));
+    console.log('resultEntity: %s', address(resultEntity));
 
     address player = gameEntity.getPlayerAddress(executor, 'player');
     address opponent = gameEntity.getPlayerAddress(executor, 'player2');
@@ -38,11 +46,21 @@ contract PVPResult is IComponent {
     uint256 myAction = gameEntity.getPlayerUint(executor, 'action');
     uint256 opponentAction = gameEntity.getPlayerUint(executor, 'action2');
 
-    console.log("player: %s", player);
-    console.log("opponent: %s", opponent);
-    console.log("winner: %s", winner);
-    console.log("myAction: %s", myAction);
-    console.log("opponentAction: %s", opponentAction);
+    console.log('player: %s', player);
+    console.log('opponent: %s', opponent);
+    console.log('winner: %s', winner);
+    console.log('myAction: %s', myAction);
+    console.log('opponentAction: %s', opponentAction);
+
+    if (player == address(0) || opponent == address(0)) {
+      console.log('player or opponent not found');
+      return;
+    }
+
+    if (player == opponent) {
+      console.log('player and opponent are the same');
+      return;
+    }
 
     resultEntity.setLastGame(
       player,
@@ -51,13 +69,20 @@ contract PVPResult is IComponent {
       myAction,
       opponentAction
     );
+
+    resultEntity.setLastGame(
+      opponent,
+      player,
+      winner,
+      opponentAction,
+      myAction
+    );
   }
 
-  function getLastGame(address gameAddress, address player )
-    public
-    view
-    returns (PVPResultEntity.LastGame memory)
-  {
+  function getLastGame(
+    address gameAddress,
+    address player
+  ) public view returns (PVPResultEntity.LastGame memory) {
     IGame game = IGame(gameAddress);
     PVPResultEntity resultEntity = PVPResultEntity(game.getEntity('lastGames'));
     return resultEntity.getLastGame(player);

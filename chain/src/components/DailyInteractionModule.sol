@@ -8,7 +8,6 @@ import {IGame} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract DailyInteractionModule is IComponent, Initializable {
-  
   string public metadata;
 
   constructor(string memory _metadata) {
@@ -23,11 +22,7 @@ contract DailyInteractionModule is IComponent, Initializable {
     override
     returns (ComponentSummary memory)
   {
-    return
-      ComponentSummary(
-        address(this),
-        metadata
-      );
+    return ComponentSummary(address(this), metadata);
   }
 
   function dailyInteraction(address executor, address gameAddress) public {

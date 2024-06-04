@@ -17,13 +17,17 @@ contract MMOSessionModule is IComponent {
     metadata = _metadata;
   }
 
-  function initialize(address game) external {
+  function initialize(address game) external override {
     IGame(game).createEntity('MMOSessionEntity');
   }
 
-  function getSummary() external view returns (ComponentSummary memory) {
-    return
-      ComponentSummary(address(this), metadata);
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
+    return ComponentSummary(address(this), metadata);
   }
 
   function joinGame(address executor, address gameAddress) public {

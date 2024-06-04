@@ -12,6 +12,7 @@ import SmallTitle from '@/components/base/SmallTitle';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { config } from '@/domain/WagmiConfig';
+import { pretty } from '@/domain/utils';
 
 
 export default function PlayRPS() {
@@ -20,16 +21,20 @@ export default function PlayRPS() {
     const { address } = useAccount();
 
     const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: queueError } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
-    const { data: inQueue, error: inQueueError } = useReadQueueSessionIsPlayerInQueue({ address: deploy.queueComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
-    const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
-    // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [deploy.rpsGame, address ? address : zeroAddress]});
+    const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
+    const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: deploy.queueComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
+    // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
+    const { data: lastGame, error: lastGameError, refetch: refetchGetLastGame } = useReadPvpResultGetLastGame({ address: deploy.resultComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
 
 
     const { data: hash, error: writeError, writeContract } = useWriteGame();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-
+    let actionmap = [
+        { num: "0", value: 'rock' },
+        { num: "1", value: 'paper' },
+        { num: "2", value: 'scissors' }
+    ]
 
 
     const executeFlowTx = (action: number) => {
@@ -47,8 +52,8 @@ export default function PlayRPS() {
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
         // console.log("params", params);
-        console.log("watching for component: ", deploy.rpsComponent)
-        console.log("watching for game: ", deploy.rpsGame)
+        // console.log("watching for component: ", deploy.rpsComponent)
+        // console.log("watching for game: ", deploy.rpsGame)
         writeContract({ address: deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
 
 
@@ -69,6 +74,9 @@ export default function PlayRPS() {
         }
         if (isSuccess) {
             toast.success("Transaction is successful");
+            refetchGetLastGame();
+            refetchQueuePlayers();
+            refetchInQueue();
 
         }
         if (data) {
@@ -90,12 +98,12 @@ export default function PlayRPS() {
         }
     }, [gameError, queueError, writeError, isLoading, isSuccess, data]);
 
-    const replacer = (key, value) =>
-        typeof value === 'bigint' ? value.toString() : value
+    // const replacer = (key, value) =>
+    //     typeof value === 'bigint' ? value.toString() : value
 
     return (
 
-        
+
         <section className='pt-24 px-12 md:px-24' >
             <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
                 {/* <div>{JSON.stringify(data?.logs)}</div> */}
@@ -123,51 +131,116 @@ export default function PlayRPS() {
 
                 </div>
             </section>
-            <SmallTitle title='PLAY' />
+            <section>
+                <SmallTitle title={Number(queueSize) == 0 ? "Join Queue" : "Play now"} />
 
-            <div className='flex justify-center pt:12 md:pt-24 align-middle justify-items-center'>
-                <div className='mx-auto'>
-                    <button className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
-                        onClick={() => {
-                            executeFlowTx(1)
-                        }}> ROCK
-                    </button>
+                {Number(queueSize) == 0 ? (
+                    <div className='pt-12 text-center'>
+                        The queue is empty so after you submit your action you&apos;ll have to wait for a match!
+                    </div>
+                ) : (
+                    <div className='pt-12 text-center'>
+                        There is someone in the queue waiting so you will play immediately!
+                    </div>
+                )}
+
+                <div className='flex justify-center pt:12 md:pt-24 align-middle justify-items-center'>
+                    <div className='mx-auto'>
+                        <button
+                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
+                            onClick={() => { executeFlowTx(1); }}
+                            disabled={inQueue}>
+                            ROCK
+                        </button>
+                    </div>
+                    <div className='mx-auto'>
+                        <button
+                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
+                            onClick={() => { executeFlowTx(2); }}
+                            disabled={inQueue}>
+                            PAPER
+
+                        </button>
+                    </div>
+                    <div className='mx-auto'>
+                        <button
+                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
+                            onClick={() => { executeFlowTx(3); }}
+                            disabled={inQueue}>
+                            SCISSORS
+                        </button>
+                    </div>
+
                 </div>
-                <div className='mx-auto'>
-                    <button className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
-                        onClick={() => { executeFlowTx(2); }}>
-                        PAPER
-                    </button>
-                </div>
-                <div className='mx-auto'>
-                    <button className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
-                        onClick={() => { executeFlowTx(3); }}>
-                        SCISSORS
-                    </button>
-                </div>
+            </section>
+            <section className='pt-12 md:pt-24'>
+                {/* <div>{JSON.stringify(writeError?.message)}</div> */}
+                {/* <SmallTitle title='STATUS' />
 
-            </div>
-            {/* <div>{JSON.stringify(writeError?.message)}</div> */}
+                {queueSize !== undefined && inQueue !== undefined ? (
 
-            <div className='pt-12'>
-                There are {queueSize?.toString()} players in the queue.
-                
-                
-            </div>
-            <div className='pt-12'>
-                You are in the queue: {inQueue?.toString()}
 
-                
-            </div>
-            <div className='pt-12'>
-      
-                Your last game was: {JSON.stringify(lastGame, replacer)}
-                
-            </div>
-            <div className='pt-12'>
-                error : {lastGameError?.message}
-                
-            </div>
+                    <div className='pt-12'>
+                        {inQueue ? "you are in the queue!  If you want to play, you can use a second account." : Number(queueSize) == 0 ? "the queue is empty, you'll be the first one in it!" : "There is a player waiting for you!"}
+                    </div>
+                ) : (
+                    <div className='pt-12'>
+                        Loading Queue Status
+                    </div>
+                )} */}
+
+                {/* <div className='pt-12'>
+                    There are {queueSize?.toString()} players in the queue.
+
+
+                </div> */}
+                {/* <div className='pt-12'>
+                    You are in the queue: {inQueue?.toString()}
+
+
+                </div> */}
+                {(lastGame && lastGame.opponent != zeroAddress) ? (<div className='pt-12'>
+                    <SmallTitle title="last game" />
+                    <div className=" text-2xl pt-12 md:pt-24 text-center ">
+                        Your last game was a
+                    </div>
+                    <div className=" text-center text-4xl">
+                        {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == address ? "win" : "loss"}
+                    </div>
+
+                    <div className="grid md:grid-cols-2 py-8 gap-8 pt-12 md:pt-24">
+                        <div className="mx-12">
+                            <div className="border-b-2 border-white text-lg ">
+                                You played
+                            </div>
+                            <div>
+                                {actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                            </div>
+
+                        </div>
+
+
+                        <div className="mx-12">
+                            <div className="border-b-2 border-white text-lg ">
+                                your opponent, {pretty(lastGame?.opponent)}, played
+                            </div>
+                            <div>
+                                {actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.value}
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>) : (<></>)}
+
+                {/* <div className='pt-12'>
+                    error : {lastGameError?.message}
+                    error2: {JSON.stringify(writeError, null, 2)}
+                </div> */}
+            </section>
 
             {/* <section className='pt-12 md:pt-24'>
                 <SmallTitle title='details' />

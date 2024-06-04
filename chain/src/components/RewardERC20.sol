@@ -17,23 +17,27 @@ contract RewardERC20 is IComponent {
     metadata = _metadata;
   }
 
-  function initialize(address game) external {
+  function initialize(address game) external override {
     IGame(game).createEntity('Reward20Entity');
   }
 
-  function getSummary() external view returns (ComponentSummary memory) {
-    return
-      ComponentSummary(
-        address(this),
-        metadata
-      );
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
+    return ComponentSummary(address(this), metadata);
   }
 
   function setReward(IGame game, address _reward) external {
     Reward20Entity(game.getEntity('rewardAddress')).setReward(_reward);
   }
 
-  function rewardWinner(address executor, address gameAddress) public {
+  function rewardWinner(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     console.log('reward winner');
 
     IGame game = IGame(gameAddress);
@@ -50,7 +54,10 @@ contract RewardERC20 is IComponent {
     }
   }
 
-  function rewardTie(address executor, address gameAddress) public {
+  function rewardTie(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     console.log('reward tie');
     IGame game = IGame(gameAddress);
 
@@ -70,5 +77,4 @@ contract RewardERC20 is IComponent {
       );
     }
   }
-
 }

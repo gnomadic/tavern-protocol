@@ -8,7 +8,7 @@ import ModuleCard from '../ModuleCard';
 import ChooseModule from './ChooseModule';
 import { useEffect, useState } from 'react';
 import { Address, getAddress } from 'viem';
-import { useWriteIPFS } from '@/mutations/useWriteIPFS';
+import { WriteIPFS } from '@/mutations/WriteIPFS';
 import { toast } from 'react-toastify';
 
 export default function CreateForm() {
@@ -28,7 +28,7 @@ export default function CreateForm() {
         if (writeError) {
             toast.error(writeError.message);
         }
- 
+
         if (isLoading) {
             toast.info("Transaction is pending");
 
@@ -60,7 +60,7 @@ export default function CreateForm() {
 
         console.log(gameName, gm, description, gameURL, components);
 
-        const response = await useWriteIPFS(gameName, description, gameURL);
+        const response = await WriteIPFS(gameName, description, gameURL);
         // console.log( JSON.stringify(await response.json()));
         const ipfsJSON = await response.json();
         toast.success(`Uploaded metadata!`);
@@ -86,7 +86,7 @@ export default function CreateForm() {
             <div className='py-12 md:py-24'>
                 Everything here can be edited after the game is live.
             </div>
-                
+
 
 
             <form onSubmit={handleCreateGame} className='pt-8 px-24 '>
@@ -103,7 +103,7 @@ export default function CreateForm() {
                         <label htmlFor="gm" className="block mb-2 text-sm text-white text-start">
                             Game Manager (GM)
                         </label>
-                        <input type="text" id="gm" className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500" placeholder={address} disabled value={address ? address: ""} />
+                        <input type="text" id="gm" className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500" placeholder={address} disabled value={address ? address : ""} />
                     </div>
                     <div>
                         <label htmlFor="description" className="block mb-2 text-sm text-white text-start">
@@ -137,7 +137,7 @@ export default function CreateForm() {
                                             } else {
                                                 setSelectedComponents([...selectedComponents, address]);
                                             }
-                                        
+
                                         }}
                                     />
                                 );
@@ -149,11 +149,11 @@ export default function CreateForm() {
                 {/* <div className='w-screen'>
                     <input name="displayName" placeholder="My New Game" required className='text-slate-900' />
                 </div> */}
-                           <div className='pt-12 md:pt-24'>
-                
-                
-                Once your game is created, visit the game page to create flows and edit your game.
-            </div>
+                <div className='pt-12 md:pt-24'>
+
+
+                    Once your game is created, visit the game page to create flows and edit your game.
+                </div>
                 <div className='pt-12 md:pt-24'>
                     <button className="px-12 border-slate-400 border-[2px] px-24 py-4 mt-4"
                         disabled={createGameisPending}
@@ -170,11 +170,11 @@ export default function CreateForm() {
 
             </form>
             <section>
-            {/* <div>pending: {JSON.stringify(hash)}</div>
+                {/* <div>pending: {JSON.stringify(hash)}</div>
             <div>error: {JSON.stringify(writeError)}</div> */}
+            </section>
         </section>
-        </section>
-        
+
 
     );
 }

@@ -1,6 +1,6 @@
 
 
-export function useWriteIPFS(gameName: string, description: string, gameURL: string) {
+export function WriteIPFS(gameName: string, description: string, gameURL: string) {
 
   let body = {
     name: gameName,

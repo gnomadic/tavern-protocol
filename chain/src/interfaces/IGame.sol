@@ -5,6 +5,7 @@ import {ComponentSummary} from '../components/interfaces/IComponent.sol';
 
 interface IGame {
   function initialize(
+    address gameFactory,
     address _gm,
     string calldata displayName,
     address entityFactory
@@ -15,6 +16,7 @@ interface IGame {
 
   function validateIsModule(address module) external view returns (bool);
   function getEntity(string memory key) external view returns (address);
+  function addComponent(address component) external;
 }
 
 struct GameSummary {

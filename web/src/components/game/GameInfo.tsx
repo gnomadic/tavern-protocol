@@ -27,7 +27,7 @@ export default function GameInfo(props: StepThreeProps) {
         <section id='connect' className='relative items-center px-6 md:px-24 pt-24 pb-12'>
             <section>
                 <SmallTitle title={'components/' + summary?.components.length} />
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
                     {Array.from({ length: summary?.components.length as number }).map((object, i) => {
                         return (
                             <ModuleCard
@@ -46,7 +46,7 @@ export default function GameInfo(props: StepThreeProps) {
 
             <section>
                 <SmallTitle title={'data/' + summary?.availableData.length} />
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
                     {Array.from({ length: summary?.availableData.length as number }).map((object, i) => {
                         return (
                             <div key={i} className="pt-8 pb-8">
@@ -69,7 +69,7 @@ export default function GameInfo(props: StepThreeProps) {
 
             <section>
                 <SmallTitle title={'flows/' + summary?.flows.length} />
-                <ul>
+                <ul className='py-12 md:py-24'>
                     {Array.from({ length: summary?.flows.length as number }).map((object, i) => {
                         return (
                             <div key={i} className='justify-center pt-12'>

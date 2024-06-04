@@ -25,7 +25,7 @@ contract DailyInteractionModule is IComponent, Initializable {
     return ComponentSummary(address(this), metadata);
   }
 
-  function dailyInteraction(address executor, address gameAddress) public {
+  function dailyInteraction(address executor, address gameAddress) public onlyGame(gameAddress) {
     IGame game = IGame(gameAddress);
 
     uint256 tokenId;

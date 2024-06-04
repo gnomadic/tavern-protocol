@@ -58,6 +58,7 @@ export default function PlayRPS() {
 
 
     }
+    
     useEffect(() => {
         if (gameError) {
             toast.error(gameError.message);
@@ -79,23 +80,23 @@ export default function PlayRPS() {
             refetchInQueue();
 
         }
-        if (data) {
-            console.log("data", data.logs);
-            const MY_ABI: Abi = [...gameAbi, ...rockPaperScissorsAbi, ...rewardErc20Abi, ...queueSessionAbi, ...erc20Abi, ...erc721Abi];
+        // if (data) {
+        //     console.log("data", data.logs);
+        //     const MY_ABI: Abi = [...gameAbi, ...rockPaperScissorsAbi, ...rewardErc20Abi, ...queueSessionAbi, ...erc20Abi, ...erc721Abi];
 
-            data.logs.map((log: any) => {
-                try {
-                    const wat = decodeEventLog({ abi: MY_ABI, ...log });
-                    console.log(wat)
-                    if (wat.eventName == "GameResult") {
-                        console.log("game result", wat)
-                    }
-                } catch (e) {
-                    console.log("bad abi")
-                }
+        //     data.logs.map((log: any) => {
+        //         try {
+        //             const wat = decodeEventLog({ abi: MY_ABI, ...log });
+        //             console.log(wat)
+        //             if (wat.eventName == "GameResult") {
+        //                 console.log("game result", wat)
+        //             }
+        //         } catch (e) {
+        //             console.log("bad abi")
+        //         }
 
-            });
-        }
+        //     });
+        // }
     }, [gameError, queueError, writeError, isLoading, isSuccess, data]);
 
     // const replacer = (key, value) =>
@@ -132,9 +133,13 @@ export default function PlayRPS() {
                 </div>
             </section>
             <section>
-                <SmallTitle title={Number(queueSize) == 0 ? "Join Queue" : "Play now"} />
+                <SmallTitle title={inQueue ? "Waiting for player" : Number(queueSize) == 0 ? "Join Queue" : "Play now"} />
 
-                {Number(queueSize) == 0 ? (
+                {inQueue ? (
+                    <div className='pt-12 text-center'>
+                        you can use a second wallet to play against yourself if you want to see the experience!
+                    </div>
+                ) : Number(queueSize) == 0 ? (
                     <div className='pt-12 text-center'>
                         The queue is empty so after you submit your action you&apos;ll have to wait for a match!
                     </div>
@@ -147,7 +152,7 @@ export default function PlayRPS() {
                 <div className='flex justify-center pt:12 md:pt-24 align-middle justify-items-center'>
                     <div className='mx-auto'>
                         <button
-                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
+                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800 disabled:bg-slate-950'
                             onClick={() => { executeFlowTx(1); }}
                             disabled={inQueue}>
                             ROCK

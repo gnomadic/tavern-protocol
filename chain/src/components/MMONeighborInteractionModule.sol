@@ -18,16 +18,17 @@ contract MMONeighborInteractionModule is IComponent {
     metadata = _metadata;
   }
 
-  function initialize(address game) external {
+  function initialize(address game) external override {
     IGame(game).createEntity('CatchEntity');
   }
 
-  function getSummary() external view returns (ComponentSummary memory) {
-    return
-      ComponentSummary(
-        address(this),
-        metadata
-      );
+  function getSummary()
+    external
+    view
+    override
+    returns (ComponentSummary memory)
+  {
+    return ComponentSummary(address(this), metadata);
   }
 
   // --------------------------------- ACTION FUNCTIONS ---------------------------------

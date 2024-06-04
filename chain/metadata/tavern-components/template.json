@@ -1,11 +1,38 @@
 {
     "name": "A Tavern Component",
     "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
-    "functions": [{
-        "name": "First Function",
-        "description": "this is an example of a function, it requires a player and welcomes them to the tavern.",
-        "abi": "firstFunction(address,address)",
-        "requires": "player",
-        "creates": "tavern"
-    }]
+    "gameFunctions": [
+        {
+            "name": "First Function",
+            "description": "this is an example of a function, it requires a player and welcomes them to the tavern.",
+            "abi": "firstFunction(address,address)",
+            "requires": "player",
+            "creates": "tavern",
+            "emits": [
+                "firstEvent"
+            ]
+        }
+    ],
+    "configFunctions": [
+        {
+            "name": "First Config Function",
+            "description": "This config function will update some global state on the component for the game.",
+            "abi": "SetRewardToken(address)",
+            "requires": "tokenAddress",
+            "creates": "reward",
+            "emits": [
+                "rewardSet"
+            ]
+        }
+    ],
+    "readFunctions": [
+        {
+            "name": "First read Function",
+            "description": "This function returns something from the game entity.",
+            "abi": "getRewardToken()",
+            "requires": "",
+            "creates": "",
+            "emits": []
+        }
+    ]
 }

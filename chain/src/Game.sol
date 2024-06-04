@@ -154,12 +154,16 @@ contract Game is IGame, Initializable {
       (bool success, ) = funcs[i].value.call(
         abi.encodeWithSignature(funcs[i].name, msg.sender, address(this))
       );
-      if (!success) revert FlowExecutionError(funcs[i].value, funcs[i].name);
+      if (!success){ 
+        console.log("Execution failed");
+        revert FlowExecutionError(funcs[i].value, funcs[i].name);
+      }else{
+        console.log("Execution success");
+      
+      }
     }
   }
   error FlowExecutionError(address component, string functionKey);
-
-  function debugFlow(string memory name, FlowParams memory params) external {}
 
   modifier onlyGm() {
     if (msg.sender != gm) revert OnlyGM();

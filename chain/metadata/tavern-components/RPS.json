@@ -15,5 +15,6 @@
             "emits":["GameResult"]
         }
     ],
-    "configFunctions": []
+    "configFunctions": [],
+    "readFunctions":[]
 }

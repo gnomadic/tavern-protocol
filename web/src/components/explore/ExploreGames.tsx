@@ -24,14 +24,10 @@ export default function ExploreGames() {
 
     useEffect(() => {
         if (curError) {
-            toast.error(curError.message, {
-                position: "bottom-right"
-            });
+            toast.error(curError.message);
         }
         if (countError) {
-            toast.error(countError.message, {
-                position: "bottom-right"
-            });
+            toast.error(countError.message);
         }
     }, [curError, countError]);
 

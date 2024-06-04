@@ -32,7 +32,7 @@ module.exports = async (hre) => {
     // ------------------------------------- verify
   
     console.log("done deploying");
-    if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "hardhat") {
+    if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
       console.log("verifing");
       await verify(hre, farcadeAlphaTestTicket.address, "FarcadeAlphaTestTicket", "tokens/");
 

@@ -21,5 +21,6 @@
             "emits":["JoinedQueue", "MatchMade"]
         }
     ],
-    "configFunctions": []
+    "configFunctions": [],
+    "readFunctions":[]
 }

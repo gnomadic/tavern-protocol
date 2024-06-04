@@ -88,7 +88,7 @@ export default function RootLayout({
           <Header />
 
           {children}
-          <ToastContainer />
+          <ToastContainer position='bottom-right' />
 
           <Analytics />
         </Providers>

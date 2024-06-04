@@ -402,49 +402,6 @@ export const gameAbi = [
     outputs: [],
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'name', internalType: 'string', type: 'string' },
-      {
-        name: 'params',
-        internalType: 'struct FlowParams',
-        type: 'tuple',
-        components: [
-          {
-            name: 'addresses',
-            internalType: 'struct AddressKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'address', type: 'address' },
-            ],
-          },
-          {
-            name: 'uints',
-            internalType: 'struct UintKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'uint256', type: 'uint256' },
-            ],
-          },
-          {
-            name: 'strings',
-            internalType: 'struct StringKey[]',
-            type: 'tuple[]',
-            components: [
-              { name: 'name', internalType: 'string', type: 'string' },
-              { name: 'value', internalType: 'string', type: 'string' },
-            ],
-          },
-        ],
-      },
-    ],
-    name: 'debugFlow',
-    outputs: [],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
@@ -877,6 +834,81 @@ export const iGameAbi = [
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PVPResult
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const pvpResultAbi = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'player', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'getLastGame',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct PVPResultEntity.LastGame',
+        type: 'tuple',
+        components: [
+          { name: 'opponent', internalType: 'address', type: 'address' },
+          { name: 'winner', internalType: 'address', type: 'address' },
+          { name: 'myAction', internalType: 'uint256', type: 'uint256' },
+          { name: 'opponentAction', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSummary',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ComponentSummary',
+        type: 'tuple',
+        components: [
+          { name: 'component', internalType: 'address', type: 'address' },
+          { name: 'metadata', internalType: 'string', type: 'string' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'game', internalType: 'address', type: 'address' }],
+    name: 'initialize',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'metadata',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'executor', internalType: 'address', type: 'address' },
+      { name: 'gameAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'storeResult',
+    outputs: [],
+  },
+] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QueueSession
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -954,6 +986,16 @@ export const queueSessionAbi = [
     inputs: [{ name: 'game', internalType: 'address', type: 'address' }],
     name: 'initialize',
     outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'game', internalType: 'contract IGame', type: 'address' },
+      { name: 'player', internalType: 'address', type: 'address' },
+    ],
+    name: 'isPlayerInQueue',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -1605,14 +1647,6 @@ export const useWriteGameCreateFlow = /*#__PURE__*/ createUseWriteContract({
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
- */
-export const useWriteGameDebugFlow = /*#__PURE__*/ createUseWriteContract({
-  abi: gameAbi,
-  functionName: 'debugFlow',
-});
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
 export const useWriteGameExecuteFlow = /*#__PURE__*/ createUseWriteContract({
@@ -1669,13 +1703,6 @@ export const useSimulateGameCreateFlow =
     abi: gameAbi,
     functionName: 'createFlow',
   });
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
- */
-export const useSimulateGameDebugFlow = /*#__PURE__*/ createUseSimulateContract(
-  { abi: gameAbi, functionName: 'debugFlow' }
-);
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
@@ -2014,6 +2041,85 @@ export const useSimulateIGameInitialize =
   });
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link pvpResultAbi}__
+ */
+export const useReadPvpResult = /*#__PURE__*/ createUseReadContract({
+  abi: pvpResultAbi,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"getLastGame"`
+ */
+export const useReadPvpResultGetLastGame = /*#__PURE__*/ createUseReadContract({
+  abi: pvpResultAbi,
+  functionName: 'getLastGame',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const useReadPvpResultGetSummary = /*#__PURE__*/ createUseReadContract({
+  abi: pvpResultAbi,
+  functionName: 'getSummary',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"metadata"`
+ */
+export const useReadPvpResultMetadata = /*#__PURE__*/ createUseReadContract({
+  abi: pvpResultAbi,
+  functionName: 'metadata',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pvpResultAbi}__
+ */
+export const useWritePvpResult = /*#__PURE__*/ createUseWriteContract({
+  abi: pvpResultAbi,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWritePvpResultInitialize = /*#__PURE__*/ createUseWriteContract(
+  { abi: pvpResultAbi, functionName: 'initialize' }
+);
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"storeResult"`
+ */
+export const useWritePvpResultStoreResult =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: pvpResultAbi,
+    functionName: 'storeResult',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pvpResultAbi}__
+ */
+export const useSimulatePvpResult = /*#__PURE__*/ createUseSimulateContract({
+  abi: pvpResultAbi,
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulatePvpResultInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: pvpResultAbi,
+    functionName: 'initialize',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"storeResult"`
+ */
+export const useSimulatePvpResultStoreResult =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: pvpResultAbi,
+    functionName: 'storeResult',
+  });
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__
  */
 export const useReadQueueSession = /*#__PURE__*/ createUseReadContract({
@@ -2036,6 +2142,15 @@ export const useReadQueueSessionGetSummary =
   /*#__PURE__*/ createUseReadContract({
     abi: queueSessionAbi,
     functionName: 'getSummary',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"isPlayerInQueue"`
+ */
+export const useReadQueueSessionIsPlayerInQueue =
+  /*#__PURE__*/ createUseReadContract({
+    abi: queueSessionAbi,
+    functionName: 'isPlayerInQueue',
   });
 
 /**
@@ -2783,14 +2898,6 @@ export const writeGameCreateFlow = /*#__PURE__*/ createWriteContract({
 });
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
- */
-export const writeGameDebugFlow = /*#__PURE__*/ createWriteContract({
-  abi: gameAbi,
-  functionName: 'debugFlow',
-});
-
-/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"executeFlow"`
  */
 export const writeGameExecuteFlow = /*#__PURE__*/ createWriteContract({
@@ -2843,14 +2950,6 @@ export const simulateGameCreateEntity = /*#__PURE__*/ createSimulateContract({
 export const simulateGameCreateFlow = /*#__PURE__*/ createSimulateContract({
   abi: gameAbi,
   functionName: 'createFlow',
-});
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link gameAbi}__ and `functionName` set to `"debugFlow"`
- */
-export const simulateGameDebugFlow = /*#__PURE__*/ createSimulateContract({
-  abi: gameAbi,
-  functionName: 'debugFlow',
 });
 
 /**
@@ -3174,6 +3273,83 @@ export const simulateIGameInitialize = /*#__PURE__*/ createSimulateContract({
 });
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link pvpResultAbi}__
+ */
+export const readPvpResult = /*#__PURE__*/ createReadContract({
+  abi: pvpResultAbi,
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"getLastGame"`
+ */
+export const readPvpResultGetLastGame = /*#__PURE__*/ createReadContract({
+  abi: pvpResultAbi,
+  functionName: 'getLastGame',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"getSummary"`
+ */
+export const readPvpResultGetSummary = /*#__PURE__*/ createReadContract({
+  abi: pvpResultAbi,
+  functionName: 'getSummary',
+});
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"metadata"`
+ */
+export const readPvpResultMetadata = /*#__PURE__*/ createReadContract({
+  abi: pvpResultAbi,
+  functionName: 'metadata',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link pvpResultAbi}__
+ */
+export const writePvpResult = /*#__PURE__*/ createWriteContract({
+  abi: pvpResultAbi,
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"initialize"`
+ */
+export const writePvpResultInitialize = /*#__PURE__*/ createWriteContract({
+  abi: pvpResultAbi,
+  functionName: 'initialize',
+});
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"storeResult"`
+ */
+export const writePvpResultStoreResult = /*#__PURE__*/ createWriteContract({
+  abi: pvpResultAbi,
+  functionName: 'storeResult',
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link pvpResultAbi}__
+ */
+export const simulatePvpResult = /*#__PURE__*/ createSimulateContract({
+  abi: pvpResultAbi,
+});
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"initialize"`
+ */
+export const simulatePvpResultInitialize = /*#__PURE__*/ createSimulateContract(
+  { abi: pvpResultAbi, functionName: 'initialize' }
+);
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link pvpResultAbi}__ and `functionName` set to `"storeResult"`
+ */
+export const simulatePvpResultStoreResult =
+  /*#__PURE__*/ createSimulateContract({
+    abi: pvpResultAbi,
+    functionName: 'storeResult',
+  });
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__
  */
 export const readQueueSession = /*#__PURE__*/ createReadContract({
@@ -3195,6 +3371,13 @@ export const readQueueSessionGetSummary = /*#__PURE__*/ createReadContract({
   abi: queueSessionAbi,
   functionName: 'getSummary',
 });
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"isPlayerInQueue"`
+ */
+export const readQueueSessionIsPlayerInQueue = /*#__PURE__*/ createReadContract(
+  { abi: queueSessionAbi, functionName: 'isPlayerInQueue' }
+);
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link queueSessionAbi}__ and `functionName` set to `"metadata"`

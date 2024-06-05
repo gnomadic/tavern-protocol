@@ -8,7 +8,7 @@ import { censor, pretty } from '@/domain/utils';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import useDeployment from '@/hooks/useDeployment';
 import SmallTitle from '../base/SmallTitle';
-import ModuleCard from '../ModuleCard';
+import ModuleCard from '../component/ModuleCard';
 
 
 type StepThreeProps = {
@@ -40,10 +40,6 @@ export default function GameInfo(props: StepThreeProps) {
                     })}
                 </div>
             </section>
-
-
-
-
             <section>
                 <SmallTitle title={'data/' + summary?.availableData.length} />
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
@@ -56,17 +52,7 @@ export default function GameInfo(props: StepThreeProps) {
                         );
                     })}
                 </div>
-
             </section>
-
-
-
-
-
-
-
-
-
             <section>
                 <SmallTitle title={'flows/' + summary?.flows.length} />
                 <ul className='py-12 md:py-24'>

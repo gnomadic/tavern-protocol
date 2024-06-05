@@ -1,13 +1,10 @@
 
-"use client"
-
 type StepCardProps = {
     title: string,
     description: string
 }
 
 export default function StepCard(props: StepCardProps) {
-
 
     return (
         <div>

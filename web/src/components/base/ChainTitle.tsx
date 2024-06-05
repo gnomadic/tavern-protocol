@@ -3,16 +3,12 @@
 import useDeployment from "@/hooks/useDeployment";
 import BigTitle from "./BigTitle";
 
-
 type TitleProps = {
     title: string;
-
 }
 
 export default function ChainTitle(props: TitleProps) {
-
     const { deploy } = useDeployment();
-
 
     return (
         <>

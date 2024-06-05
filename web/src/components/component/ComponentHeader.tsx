@@ -1,8 +1,8 @@
 "use client"
+
 import { ComponentMetadata, ComponentSummary } from "@/domain/Domain";
 import { censor, pretty } from "@/domain/utils";
 import useDeployment from "@/hooks/useDeployment";
-import { useEffect, useState } from "react";
 import { Address } from "viem";
 import { useReadIComponentGetSummary } from '@/generated';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';

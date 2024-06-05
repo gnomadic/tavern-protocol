@@ -8,13 +8,6 @@ export default function ConnectWallet() {
           id="connect"
           className="relative items-center min-h-screen pt-48"
         >
-          {/* <Image
-            src="/bigsky.svg"
-            className="fixed inset-0 object-cover w-full h-full"
-            alt="night sky"
-            width="4160"
-            height="6240"
-          /> */}
           <div
             aria-hidden="true"
             className="relative inset-0 z-0 pt-24 min-w-max bg-gradient-to-b from-clearslate/0 via-clearslate/50 to-clearslate"

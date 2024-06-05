@@ -1,13 +1,8 @@
 'use client';
 
 import GameCard from '@/components/GameCard';
-import Header from '@/components/Header';
-import ModuleCard from '@/components/ModuleCard';
-import DiscoverModules from '@/components/explore/ExploreComponents';
-import { GameSummary, ComponentSummary } from '@/domain/Domain';
 import { useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useAccount } from 'wagmi';

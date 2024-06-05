@@ -1,19 +1,12 @@
-
 "use client"
 
-import { ComponentMetadata, ComponentMetadataFunction } from "@/domain/Domain";
-import { censor } from "@/domain/utils";
-import { useReadIComponentGetSummary } from "@/generated";
-import useDeployment from "@/hooks/useDeployment";
-import { useMetadata } from "@/hooks/useMetadata";
-import { Address } from "viem";
+import { ComponentMetadataFunction } from "@/domain/Domain";
 
 type FunctionProps = {
     functions: ComponentMetadataFunction[]
 }
 
 export default function ComponentFunctions(props: FunctionProps) {
-
 
     return (
         <ul className="">
@@ -60,8 +53,6 @@ export default function ComponentFunctions(props: FunctionProps) {
                 );
             })}
         </ul>
-
-
     );
 
 }

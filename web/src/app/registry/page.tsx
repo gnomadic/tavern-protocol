@@ -1,6 +1,5 @@
 import ExploreComponents from '@/components/explore/ExploreComponents';
 import ChainTitle from '@/components/base/ChainTitle';
-import ExploreTabs from '@/components/explore/ExploreTabs';
 
 export default function Registry() {
   return (

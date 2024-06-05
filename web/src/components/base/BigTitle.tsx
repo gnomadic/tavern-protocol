@@ -1,9 +1,5 @@
-
-
-
 type TitleProps = {
   title: string;
-
 }
 
 export default function BigTitle(props: TitleProps) {

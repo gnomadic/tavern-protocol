@@ -1,11 +1,9 @@
-import Divider from '@/components/Divider';
 import GameHeader from '@/components/game/GameHeader';
-
 import { Address } from 'viem';
 import { Metadata } from 'next';
 import { getFrameMetadata } from '@coinbase/onchainkit';
-
 import GameInfo from '@/components/game/GameInfo';
+import GMSection from '@/components/game/GMSection';
 
 
 interface Params {
@@ -28,10 +26,7 @@ export async function generateMetadata({
   const { action } = searchParams;
 
   const postURL = `${process.env.NEXT_PUBLIC_URL}/game/${chainid}/${address}/frame?action=${action}`;
-  // const gameSummary = await getGameSummary(params.chainid, params.address as Address)
-  // console.log(gameSummary)
-
-  // const buttonLabels = gameSummary.availableFunctions.length > 0 ? gameSummary.availableFunctions[0].name : "no modules!"
+  
   const buttonLabels = 'nope';
 
   return {
@@ -62,9 +57,9 @@ export default function Game({ params }: { params: { address: string, chainid: s
 
       <GameHeader gameAddress={params.address as Address} />
 
-      {/* <Divider /> */}
-
       <GameInfo gameAddress={params.address as Address} />
+
+      {/* <GMSection gameAddress={params.address as Address} /> */}
 
     </main>
   );

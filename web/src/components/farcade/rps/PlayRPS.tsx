@@ -20,7 +20,7 @@ export default function PlayRPS() {
     const { deploy } = useDeployment();
     const { address } = useAccount();
 
-    const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
+    // const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
     const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
     const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: deploy.queueComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
     // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
@@ -38,8 +38,8 @@ export default function PlayRPS() {
 
 
     const executeFlowTx = (action: number) => {
-        console.log("games and address", games, address)
-        if (!games || !address) {
+        console.log("games and address", address)
+        if (!address) {
             console.log("too soon!");
             return;
         }
@@ -60,9 +60,6 @@ export default function PlayRPS() {
     }
     
     useEffect(() => {
-        if (gameError) {
-            toast.error(gameError.message);
-        }
         if (queueError) {
             toast.error(queueError.message);
         }
@@ -78,7 +75,6 @@ export default function PlayRPS() {
             refetchGetLastGame();
             refetchQueuePlayers();
             refetchInQueue();
-
         }
         // if (data) {
         //     console.log("data", data.logs);
@@ -97,14 +93,12 @@ export default function PlayRPS() {
 
         //     });
         // }
-    }, [gameError, queueError, writeError, isLoading, isSuccess, data]);
+    }, [queueError, writeError, isLoading, isSuccess, data]);
 
     // const replacer = (key, value) =>
     //     typeof value === 'bigint' ? value.toString() : value
 
     return (
-
-
         <section className='pt-24 px-12 md:px-24' >
             <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
                 {/* <div>{JSON.stringify(data?.logs)}</div> */}
@@ -129,7 +123,6 @@ export default function PlayRPS() {
                             More details about this game can be found in the Games section.
                         </p>
                     </div>
-
                 </div>
             </section>
             <section>

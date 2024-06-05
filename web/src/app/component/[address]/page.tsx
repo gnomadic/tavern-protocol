@@ -1,4 +1,3 @@
-import Divider from '@/components/Divider';
 import ComponentHeader from '@/components/component/ComponentHeader';
 import ComponentStats from '@/components/component/ComponentStats';
 import { Address } from 'viem';

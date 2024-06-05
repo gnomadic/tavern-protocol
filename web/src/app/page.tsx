@@ -1,11 +1,7 @@
-import Divider from '@/components/Divider';
-import BigTitle from '@/components/base/BigTitle';
 import SmallTitle from '@/components/base/SmallTitle';
 import ChainTitle from '@/components/base/ChainTitle';
 import GamePitchCard from '@/components/landing/GamePitchCard';
-import GameCard from '@/components/landing/GamePitchCard';
 import StepCard from '@/components/landing/StepCard';
-import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 
 export default function Home() {
 
@@ -13,7 +9,7 @@ export default function Home() {
     <main className='items-center py-12 md:py-24 font-anon'>
       <section className='pt-36 min-w-full'>
         <ChainTitle title='tavern' />
-        {/* <BigTitle title='tavern' /> */}
+        
       </section>
       <section id='intro' className=' items-center pt-24 px-12 md:p-24'>
         <div className='flex'>
@@ -26,8 +22,8 @@ export default function Home() {
               believe in the power of play.
               <br />
               <br />
-              Tavern is an on-chain game engine made for existing web3
-              communities. Launch your own game for your own community
+              Tavern is an onchain gamification protocol made for the web3
+              landscape. Launch your own gamification campaigns to encourage your users to participate in your ecosystem
               today by submitting transactions, without writing any code.
             </p>
           </div>
@@ -40,7 +36,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-20 md:grid-cols-3 pt-24 ">
           <StepCard
             title="1/games"
-            description="Deploy your game.  Your game tracks data and gameplay onchain.  It is the entry point and organizer for your game."
+            description="Deploy your game.  Your game stores data and gameplay onchain.  It is the entry point and organizer for your gamification campaign."
           />
           <StepCard
             title="2/components"
@@ -52,7 +48,7 @@ export default function Home() {
           />
         </div>
       </section>
-      {/* <Divider /> */}
+      
 
       <section className='px-12 py-24 md:p-24'>
         <SmallTitle title='Anything is possible' />

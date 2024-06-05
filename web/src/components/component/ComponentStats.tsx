@@ -23,7 +23,7 @@ export default function ComponentStats(props: StatsProps) {
             {summary && data ?
                 <div>
                     <div className="text-3xl uppercase">
-                    {censor(data.name)}/functions/{data.gameFunctions?.length}
+                        {censor(data.name)}/functions/{data.gameFunctions?.length}
                     </div>
                     <ComponentFunctions functions={data.gameFunctions} />
                     <div className="text-3xl uppercase pt-20">
@@ -34,7 +34,5 @@ export default function ComponentStats(props: StatsProps) {
                 :
                 <></>}
         </section>
-
     );
-
 }

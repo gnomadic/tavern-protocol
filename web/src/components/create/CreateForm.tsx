@@ -1,10 +1,9 @@
 'use client'
+
 import { useWriteGameFactoryCreateGame, useReadComponentRegistryGetComponents, useWriteGameFactoryCreateGameWithComponents } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
-import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import SmallTitle from '../base/SmallTitle';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
-import ModuleCard from '../ModuleCard';
 import ChooseModule from './ChooseModule';
 import { useEffect, useState } from 'react';
 import { Address, getAddress } from 'viem';

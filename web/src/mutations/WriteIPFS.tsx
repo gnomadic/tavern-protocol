@@ -8,7 +8,7 @@ export function WriteIPFS(gameName: string, description: string, gameURL: string
     gameUrl: gameURL
   }
 
-  let url = `/api`
+  let url = `/api/ipfs`
 
 
   return fetch(url, {

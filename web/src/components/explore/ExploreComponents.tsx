@@ -1,6 +1,6 @@
 'use client';
 
-import ModuleCard from '@/components/ModuleCard';
+import ModuleCard from '@/components/component/ModuleCard';
 import { useReadComponentRegistryGetComponentCount, useReadComponentRegistryGetComponents } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
 import { useEffect } from 'react';

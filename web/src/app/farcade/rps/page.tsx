@@ -1,16 +1,8 @@
 import Divider from '@/components/Divider';
-import GameHeader from '@/components/game/GameHeader';
-import StepThree from '@/components/game/StepThree';
-
-import { Address } from 'viem';
 import { Metadata, ResolvingMetadata } from 'next';
-import { FrameButtonMetadata, getFrameMetadata } from '@coinbase/onchainkit';
-import Players from '@/components/game/Players';
 import PlayRPS from '@/components/farcade/rps/PlayRPS';
 import { fetchMetadata } from 'frames.js/next';
 import { getBaseUrl } from './frame/frames';
-// import { RPS_GAME_ADDRESS } from '@/domain/deployments';
-
 
 interface Params {
   chainid: string;

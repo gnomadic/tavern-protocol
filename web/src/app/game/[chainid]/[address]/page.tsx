@@ -59,7 +59,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
 
       <GameInfo gameAddress={params.address as Address} />
 
-      {/* <GMSection gameAddress={params.address as Address} /> */}
+      <GMSection gameAddress={params.address as Address} />
 
     </main>
   );

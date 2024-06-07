@@ -34,13 +34,9 @@ export default function CreateForm() {
         }
         if (isSuccess) {
             toast.success("Transaction is successful");
-            // refetchGetLastGame();
-            // refetchQueuePlayers();
-            // refetchInQueue();
-
         }
 
-    }, [writeError, isLoading, isSuccess, data]);
+    }, [writeError, isLoading, isSuccess]);
 
 
 

@@ -85,12 +85,12 @@ export async function executeFunction(account: Address, address: Address, functi
     })
 
 
-    const execute = await client.writeContract(simulate)
+    // const execute = await client.writeContract(simulate)
 
 
 
 
-    return execute;
+    return simulate;
 
 }
 

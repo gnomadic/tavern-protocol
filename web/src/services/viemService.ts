@@ -2,7 +2,7 @@ import { GameFuncParams, GameSummary } from '@/domain/Domain';
 import { GameABI } from '@/domain/abi/GameABI';
 import { Deployments } from '@/domain/deployments';
 import { readPvpResultGetLastGame, readQueueSessionGetPlayerCount, readQueueSessionIsPlayerInQueue, simulateGameExecuteFlow, writeGameExecuteFlow } from '@/generated';
-import { Address, Chain, PublicClient, createPublicClient, http } from 'viem'
+import { Abi, Address, Chain, PublicClient, WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem'
 import { localhost, sepolia } from 'viem/chains'
 import { State, CreateConnectorFn, Connector, createConfig } from 'wagmi';
 import { writeContractMutationOptions } from 'wagmi/query';
@@ -10,6 +10,7 @@ import { writeContractMutationOptions } from 'wagmi/query';
 
 
 let publicClient: PublicClient;
+let walletClient: WalletClient;
 
 const config = createConfig({
     chains: [sepolia],
@@ -19,7 +20,7 @@ const config = createConfig({
     },
 })
 
-function getClient() {
+function getPublicClient() {
     if (publicClient) {
         return publicClient;
     }
@@ -29,6 +30,18 @@ function getClient() {
     })
     return publicClient;
 }
+
+function getWalletClient() {
+    if (walletClient) {
+        return walletClient;
+    }
+    walletClient = createWalletClient({
+        chain: sepolia as Chain,
+        transport: custom(window.ethereum)
+    })
+    return walletClient;
+}
+
 
 function getDeployment(chainId: string) {
     for (const key in Deployments) {
@@ -41,14 +54,14 @@ function getDeployment(chainId: string) {
 
 export async function getBlockNumber() {
 
-    const client = getClient();
+    const client = getPublicClient();
 
     const blockNumber = await client.getBlockNumber();
     return blockNumber;
 }
 
 export async function getGameSummary(chainId: string, gameAddress: Address): Promise<GameSummary> {
-    const client = getClient();
+    const client = getPublicClient();
 
     const data = await client.readContract({
         address: gameAddress,
@@ -60,6 +73,27 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
     return data as GameSummary;
 }
 
+export async function executeFunction(account: Address, address: Address, functionName: string, abi: Abi): Promise<any> {
+    const client = getPublicClient();
+
+    const simulate = await client.simulateContract({
+        account: account,
+        address: address,
+        functionName: functionName,
+        abi: abi,
+        args:[]
+    })
+
+
+    const execute = await client.writeContract(simulate)
+
+
+
+
+    return execute;
+
+}
+
 // export async function getQueueSize(){
 //     const client = getClient();
 
@@ -68,7 +102,7 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
 // }
 
 export async function getQueueSize(chainId: string, gameAddress: Address) {
-    const client = getClient();
+    const client = getPublicClient();
     const deployment = getDeployment(chainId);
 
     const data = await readQueueSessionGetPlayerCount(config, {
@@ -81,7 +115,7 @@ export async function getQueueSize(chainId: string, gameAddress: Address) {
 }
 
 export async function isPlayerInQueue(chainId: string, gameAddress: Address, playerAddress: Address) {
-    const client = getClient();
+    const client = getPublicClient();
     const deployment = getDeployment(chainId);
 
     const data = await readQueueSessionIsPlayerInQueue(config, {
@@ -94,7 +128,7 @@ export async function isPlayerInQueue(chainId: string, gameAddress: Address, pla
 }
 
 export async function getLastGame(chainId: string, gameAddress: Address, playerAddress: Address) {
-    const client = getClient();
+    const client = getPublicClient();
     const deployment = getDeployment(chainId);
 
     const data = await readPvpResultGetLastGame(config, {

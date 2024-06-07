@@ -36,8 +36,9 @@
         {
             "name": "Set Reward",
             "description": "Set the address of the ERC20 token to be used for rewards.",
-            "abi": "setReward(address)",
+            "abi": "setReward(address,address)",
             "requires": [
+                "gameAddress",
                 "rewardAddress"
             ],
             "creates": [

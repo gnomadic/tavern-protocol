@@ -66,7 +66,9 @@ const handleRequest = frames(async (ctx) => {
   };
 });
 
-async function getImage(action: string, userAddress: string | undefined) {
+// async function getImage(action: string, userAddress: string | undefined) {
+
+  const getImage = (action: string, userAddress: string | undefined) => {
 
 
 
@@ -100,23 +102,29 @@ async function getImage(action: string, userAddress: string | undefined) {
       titleFirst="you are in the"
       titleSecond="queue"
     />
-  } else if (action == "status" && userAddress) {
+  // } else if (action == "status" && userAddress) {
 
-    const deployment = getDeployment(CHAIN_ID);
-    const resultAddress = deployment.resultComponent;
-    const data = await getGameResult(CHAIN_ID, resultAddress, RPS_GAME_ADDRESS, userAddress as Address);
-    console.log("data", JSON.stringify(data));
+  //   const deployment = getDeployment(CHAIN_ID);
+  //   const resultAddress = deployment.resultComponent;
+  //   const data = await getGameResult(CHAIN_ID, resultAddress, RPS_GAME_ADDRESS, userAddress as Address);
+  //   console.log("data", JSON.stringify(data));
+    
+  //   let result = "draw";
+  //   if (data?.winner === userAddress) {
+  //      result = "win";
+  //   }else {
+  //      result = "loss";
+  //   }
 
-    const result = {data?.winner === zeroAddress ? "draw" : data?.winner === userAddress ? "win" : "loss"}
 
-    return <WelcomeRPS
-      rowOneFirst="you"
-      rowOneSecond=`${result}
-      rowTwoFirst=""
-      rowTwoSecond=""
-      titleFirst="queue size"
-      titleSecond="string"
-    />
+  //   return <WelcomeRPS
+  //     rowOneFirst="you"
+  //     rowOneSecond=""
+  //     rowTwoFirst=""
+  //     rowTwoSecond=""
+  //     titleFirst="queue size"
+  //     titleSecond="string"
+  //   />
   }
   // first load
   return <WelcomeRPS

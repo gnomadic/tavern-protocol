@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next";
-import { frames } from "./frames";
+import { CHAIN_ID, frames } from "./frames";
 import WelcomeRPS from "./images/WelcomeRPS";
 import { RPS_GAME_ADDRESS } from "@/domain/deployments";
+import { getDeployment, getGameResult } from "@/services/viemService";
+import { Address, zeroAddress } from "viem";
 
 
 
@@ -30,16 +32,18 @@ const handleRequest = frames(async (ctx) => {
   const txURL = `/rps/frame/txdata?action=`;
   const imageURL = `/rps/frame/images`;
 
+  const userAddress = ctx?.message?.connectedAddress;
+
 
   return {
     image: (
-      getImage(action)
+      getImage(action, userAddress)
     ),
     buttons: [
       <Button
         action="tx"
         target={{ pathname: "/rps/frame/txdata", query: { action: "rock", game: game } }}
-        post_url={{ pathname: "/rps/frame", query: { action: "scissors", game: game } }}>
+        post_url={{ pathname: "/rps/frame", query: { action: "rock", game: game } }}>
         ROCK
       </Button>,
       <Button
@@ -48,9 +52,10 @@ const handleRequest = frames(async (ctx) => {
         post_url={{ pathname: "/rps/frame", query: { action: "paper", game: game } }}>
         PAPER
       </Button>,
-      <Button 
-      action="post" 
-      target={{ pathname: "/rps/frame", query: { action: "scissors" } }}>
+      <Button
+        action="tx"
+        target={{ pathname: "/rps/frame/txdata", query: { action: "scissors", game: game } }}
+        post_url={{ pathname: "/rps/frame", query: { action: "scissors", game: game } }}>
         SCISSORS
       </Button>,
       <Button
@@ -61,14 +66,19 @@ const handleRequest = frames(async (ctx) => {
   };
 });
 
-const getImage = (action: string) => {
+async function getImage(action: string, userAddress: string | undefined) {
+
+
+
+
+
   if (action === "rock") {
     return <WelcomeRPS
       titleFirst="you played"
       titleSecond="ROCK"
       rowOneFirst="at the"
       rowOneSecond="farcade"
-      rowTwoFirst="built on-chain with the"
+      rowTwoFirst="built onchain with the"
       rowTwoSecond="tavern"
     />
 
@@ -90,6 +100,23 @@ const getImage = (action: string) => {
       titleFirst="you are in the"
       titleSecond="queue"
     />
+  } else if (action == "status" && userAddress) {
+
+    const deployment = getDeployment(CHAIN_ID);
+    const resultAddress = deployment.resultComponent;
+    const data = await getGameResult(CHAIN_ID, resultAddress, RPS_GAME_ADDRESS, userAddress as Address);
+    console.log("data", JSON.stringify(data));
+
+    const result = {data?.winner === zeroAddress ? "draw" : data?.winner === userAddress ? "win" : "loss"}
+
+    return <WelcomeRPS
+      rowOneFirst="you"
+      rowOneSecond=`${result}
+      rowTwoFirst=""
+      rowTwoSecond=""
+      titleFirst="queue size"
+      titleSecond="string"
+    />
   }
   // first load
   return <WelcomeRPS
@@ -97,8 +124,8 @@ const getImage = (action: string) => {
     titleSecond="ROCK PAPER SCISSORS"
     rowOneFirst="at the"
     rowOneSecond="farcade"
-    rowTwoFirst="built on-chain with the"
-    rowTwoSecond="tavern"
+    rowTwoFirst="built onchain with the"
+    rowTwoSecond="tavern protocol"
   />
 }
 

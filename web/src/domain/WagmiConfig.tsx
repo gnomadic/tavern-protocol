@@ -1,6 +1,6 @@
 import { getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { http } from "viem";
-import { localhost, sepolia } from "viem/chains";
+import { base, baseSepolia, localhost, sepolia } from "viem/chains";
 
 const { wallets } = getDefaultWallets();
 
@@ -21,6 +21,7 @@ export const config = getDefaultConfig({
       // optimism,
       // arbitrum,
       // base,
+      baseSepolia,
       sepolia,
       
       ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [localhost] : []),
@@ -28,6 +29,8 @@ export const config = getDefaultConfig({
     transports: {
       
       [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      [baseSepolia.id]: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
+      [base.id]: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`),
       [localhost.id]: http(),
     },
     ssr: true,

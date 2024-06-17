@@ -89,24 +89,24 @@ module.exports = async (hre) => {
     console.log("rps exists");
   }
 
-  if (!rewardExists) {
-    console.log("adding Reward");
-    tx = await game.addComponent(rewardComponent.target);
-    await tx.wait();
+  // if (!rewardExists) {
+  //   console.log("adding Reward");
+  //   tx = await game.addComponent(rewardComponent.target);
+  //   await tx.wait();
 
 
-    tx = await rewardComponent.setReward(game.target, ticket.target);
-    await tx.wait();
+  //   tx = await rewardComponent.setReward(game.target, ticket.target);
+  //   await tx.wait();
   
-    let rewardEnt = await game.getEntity("rewardAddress");
+  //   let rewardEnt = await game.getEntity("rewardAddress");
   
-    tx = await ticket.updateMinter(rewardEnt)
-    await tx.wait();
+  //   tx = await ticket.updateMinter(rewardEnt)
+  //   await tx.wait();
 
 
-  } else {
-    console.log("reward exists");
-  }
+  // } else {
+  //   console.log("reward exists");
+  // }
 
   if (!resultExists) {
     console.log("adding Result");
@@ -125,8 +125,8 @@ module.exports = async (hre) => {
     let keys = [];
     keys.push({name: 'setMatchOrWait(address,address)', value: queueComponent.target});
     keys.push({name: 'oneOnOne(address,address)', value: RPS.target});
-    keys.push({name: 'rewardWinner(address,address)', value: rewardComponent.target});
-    keys.push({name: 'rewardTie(address,address)', value: rewardComponent.target});
+    // keys.push({name: 'rewardWinner(address,address)', value: rewardComponent.target});
+    // keys.push({name: 'rewardTie(address,address)', value: rewardComponent.target});
     keys.push({name: 'storeResult(address,address)', value: resultComponent.target});
  
 

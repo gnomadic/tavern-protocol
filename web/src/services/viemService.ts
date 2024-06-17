@@ -1,7 +1,7 @@
 import { GameFuncParams, GameSummary } from '@/domain/Domain';
 import { GameABI } from '@/domain/abi/GameABI';
 import { Deployments } from '@/domain/deployments';
-import { readPvpResultGetLastGame, readQueueSessionGetPlayerCount, readQueueSessionIsPlayerInQueue, simulateGameExecuteFlow, writeGameExecuteFlow } from '@/generated';
+import { readPvpResultGetLastGame, readPvpResultGetSummary, readQueueSessionGetPlayerCount, readQueueSessionIsPlayerInQueue, simulateGameExecuteFlow, writeGameExecuteFlow } from '@/generated';
 import { Abi, Address, Chain, PublicClient, WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem'
 import { localhost, sepolia } from 'viem/chains'
 import { State, CreateConnectorFn, Connector, createConfig } from 'wagmi';
@@ -43,7 +43,7 @@ function getWalletClient() {
 }
 
 
-function getDeployment(chainId: string) {
+export function getDeployment(chainId: string) {
     for (const key in Deployments) {
         if (Deployments[key].chainId === chainId) {
             return Deployments[key];
@@ -71,6 +71,24 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
 
 
     return data as GameSummary;
+}
+
+export async function getGameResult(chainId: string, resultAddress: Address, gameAddress: Address, playerAddress: Address) {
+    const client = getPublicClient();
+
+    // const data = await client.readContract({
+    //     address: resultAddress,
+    //     abi: GameABI,
+    //     functionName: 'getResult',
+    //     args: [playerAddress]
+    // })
+
+    const data = await readPvpResultGetLastGame(config, {
+        address: resultAddress,
+        args: [gameAddress, playerAddress]
+    })
+
+    return data;
 }
 
 export async function executeFunction(account: Address, address: Address, functionName: string, abi: Abi): Promise<any> {

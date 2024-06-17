@@ -9,9 +9,10 @@ const useDeployment = () => {
   const [deploy, setDeploy] = useState<Deployment>(Deployments['sepolia']);
 
   useEffect(() => {
-    // console.log('Network Change detected to: ' + chain?.name);
-    chain?.name && Deployments.hasOwnProperty(chain.name.toLowerCase())
-      ? setDeploy(Deployments[chain.name.toLowerCase()])
+    const chainName = chain?.name.toLowerCase().replaceAll(' ', '') ?? 'sepolia';
+    console.log('Network Change detected to: ' + chainName);
+    chain?.name && Deployments.hasOwnProperty(chainName)
+      ? setDeploy(Deployments[chainName])
       : setDeploy(Deployments['sepolia']);
   }, [chain, deploy?.gameFactory]);
 

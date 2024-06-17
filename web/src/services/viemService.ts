@@ -123,6 +123,23 @@ export async function getLastGame(chainId: string, gameAddress: Address, playerA
 // useReadQueueSessionIsPlayerInQueue
 // useReadPvpResultGetLastGame
 
+export async function getGameResult(chainId: string, resultAddress: Address, gameAddress: Address, playerAddress: Address) {
+    const client = getPublicClient();
+
+    // const data = await client.readContract({
+    //     address: resultAddress,
+    //     abi: GameABI,
+    //     functionName: 'getResult',
+    //     args: [playerAddress]
+    // })
+
+    const data = await readPvpResultGetLastGame(config, {
+        address: resultAddress,
+        args: [gameAddress, playerAddress]
+    })
+
+    return data;
+}
 
 
 

@@ -42,7 +42,6 @@ function getWalletClient() {
     return walletClient;
 }
 
-
 export function getDeployment(chainId: string) {
     for (const key in Deployments) {
         if (Deployments[key].chainId === chainId) {
@@ -71,45 +70,6 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
 
 
     return data as GameSummary;
-}
-
-export async function getGameResult(chainId: string, resultAddress: Address, gameAddress: Address, playerAddress: Address) {
-    const client = getPublicClient();
-
-    // const data = await client.readContract({
-    //     address: resultAddress,
-    //     abi: GameABI,
-    //     functionName: 'getResult',
-    //     args: [playerAddress]
-    // })
-
-    const data = await readPvpResultGetLastGame(config, {
-        address: resultAddress,
-        args: [gameAddress, playerAddress]
-    })
-
-    return data;
-}
-
-export async function executeFunction(account: Address, address: Address, functionName: string, abi: Abi): Promise<any> {
-    const client = getPublicClient();
-
-    const simulate = await client.simulateContract({
-        account: account,
-        address: address,
-        functionName: functionName,
-        abi: abi,
-        args:[]
-    })
-
-
-    // const execute = await client.writeContract(simulate)
-
-
-
-
-    return simulate;
-
 }
 
 // export async function getQueueSize(){

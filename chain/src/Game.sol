@@ -167,6 +167,10 @@ contract Game is IGame, Initializable {
     }
   }
   error FlowExecutionError(address component, string functionKey);
+  
+  function isGM(address account) external view override returns (bool) {
+    return account == gm;
+  }
 
   modifier onlyGm() {
     if (msg.sender != gm) revert OnlyGM();

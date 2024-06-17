@@ -144,16 +144,16 @@ module.exports = async (hre) => {
   console.log("done deploying");
   if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
     console.log("verifing");
-    await verify(hre, queueSession.address, "QueueSession", "components/");
+    await verify(hre, queueSession.address, "QueueSession", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`]);
     await verify(hre, queueSessionEntity.address, "QueueSessionEntity", "entities/");
     
-    await verify(hre, rockPaperScissors.address, "RockPaperScissors", "components/");
+    await verify(hre, rockPaperScissors.address, "RockPaperScissors", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/RPS.json`]);
     await verify(hre, rockPaperScissorEntity.address, "RockPaperScissorEntity", "entities/");
     
-    await verify(hre, rewardERC20.address, "RewardERC20", "components/");
+    await verify(hre, rewardERC20.address, "RewardERC20", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/RewardERC20.json`]);
     await verify(hre, reward20Entity.address, "Reward20Entity", "entities/");
     
-    await verify(hre, pvpResult.address, "PVPResult", "components/");
+    await verify(hre, pvpResult.address, "PVPResult", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/PVPResult.json`]);
     await verify(hre, pvpResultEntity.address, "PVPResultEntity", "entities/");
   }
 

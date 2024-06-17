@@ -9,10 +9,11 @@ import {
     getContract,
     http,
 } from "viem";
-import { optimism, sepolia } from "viem/chains";
 import { GAME_ABI } from "./abi";
 import { GameFuncParams } from "@/domain/Domain";
-import { frames } from "../frames";
+import { CHAIN_ID, frames } from "../frames";
+import { getDeployment } from "@/services/viemService";
+
 
 
 const handleRequest = frames(async (ctx) => {
@@ -52,19 +53,19 @@ const handleRequest = frames(async (ctx) => {
         args: ["playRPS", params],
     });
 
-    const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http(),
-    });
+    // const publicClient = createPublicClient({
+    //     chain: sepolia,
+    //     transport: http(),
+    // });
 
-    const gameContract = getContract({
-        address: game as Address,
-        abi: GAME_ABI,
-        client: publicClient,
-    });
+    // const gameContract = getContract({
+    //     address: game as Address,
+    //     abi: GAME_ABI,
+    //     client: publicClient,
+    // });
 
     return NextResponse.json({
-        chainId: "eip155:11155111",
+        chainId: `eip155:${CHAIN_ID}`,
         method: "eth_sendTransaction",
         params: {
             abi: GAME_ABI as Abi,

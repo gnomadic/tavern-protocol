@@ -17,6 +17,7 @@ interface IGame {
   function validateIsModule(address module) external view returns (bool);
   function getEntity(string memory key) external view returns (address);
   function addComponent(address component) external;
+  function isGM(address account) external view returns (bool);
 }
 
 struct GameSummary {

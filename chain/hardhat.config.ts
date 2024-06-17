@@ -18,6 +18,14 @@ module.exports = {
     local:{
       url: "http://127.0.0.1:8545",
       accounts: [`${process.env.LOCAL_PRIVATE_KEY}`],
+    },
+    basesep: {
+      url:  "https://base-sepolia.g.alchemy.com/v2/" + process.env.ALCHEMY_API_KEY,
+      accounts: [`${process.env.MAINNET_PRIVATE_KEY}`],
+    },
+    base:{
+      url:  "https://base-mainnet.g.alchemy.com/v2/" + process.env.ALCHEMY_API_KEY,
+      accounts: [`${process.env.MAINNET_PRIVATE_KEY}`],
     }
 
   },
@@ -26,8 +34,12 @@ module.exports = {
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.MAIN_ETHERSCAN_API_KEY,
-    sepolia: process.env.MAIN_ETHERSCAN_API_KEY || "",
+    apiKey:{
+      sepolia: process.env.MAIN_ETHERSCAN_API_KEY || "",
+      base: process.env.BASESCAN_API_KEY || "",
+      baseSepolia: process.env.BASESCAN_API_KEY || "",
+    } 
+    
   },
   namedAccounts: {
     deployer: {

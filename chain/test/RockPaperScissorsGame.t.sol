@@ -50,7 +50,7 @@ contract RockPaperScissorsGame is TavernTest {
   function createFunctions() public override {
     rewardToken = new Mock20();
 
-    rewardComponent.setReward(liveGame, address(rewardToken));
+    rewardComponent.setReward(address(liveGame), address(rewardToken));
 
     joinKeys.push(
       AddressKey('setMatchOrWait(address,address)', address(queueComponent))
@@ -205,7 +205,7 @@ contract RockPaperScissorsGame is TavernTest {
     liveGame.addComponent(address(rpsComponent));
     liveGame.addComponent(address(rewardComponent));
 
-    rewardComponent.setReward(liveGame, address(rewardToken));
+    rewardComponent.setReward(address(liveGame), address(rewardToken));
 
     joinKeys.push(
       AddressKey('setMatchOrWait(address,address)', address(queueComponent))

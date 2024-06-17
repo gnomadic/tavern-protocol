@@ -1,7 +1,7 @@
 import { GameFuncParams, GameSummary } from '@/domain/Domain';
 import { GameABI } from '@/domain/abi/GameABI';
 import { Deployments } from '@/domain/deployments';
-import { readPvpResultGetLastGame, readQueueSessionGetPlayerCount, readQueueSessionIsPlayerInQueue, simulateGameExecuteFlow, writeGameExecuteFlow } from '@/generated';
+import { readPvpResultGetLastGame, readPvpResultGetSummary, readQueueSessionGetPlayerCount, readQueueSessionIsPlayerInQueue, simulateGameExecuteFlow, writeGameExecuteFlow } from '@/generated';
 import { Abi, Address, Chain, PublicClient, WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem'
 import { localhost, sepolia } from 'viem/chains'
 import { State, CreateConnectorFn, Connector, createConfig } from 'wagmi';
@@ -42,8 +42,7 @@ function getWalletClient() {
     return walletClient;
 }
 
-
-function getDeployment(chainId: string) {
+export function getDeployment(chainId: string) {
     for (const key in Deployments) {
         if (Deployments[key].chainId === chainId) {
             return Deployments[key];
@@ -71,27 +70,6 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
 
 
     return data as GameSummary;
-}
-
-export async function executeFunction(account: Address, address: Address, functionName: string, abi: Abi): Promise<any> {
-    const client = getPublicClient();
-
-    const simulate = await client.simulateContract({
-        account: account,
-        address: address,
-        functionName: functionName,
-        abi: abi,
-        args:[]
-    })
-
-
-    // const execute = await client.writeContract(simulate)
-
-
-
-
-    return simulate;
-
 }
 
 // export async function getQueueSize(){

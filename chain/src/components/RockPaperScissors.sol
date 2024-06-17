@@ -83,6 +83,7 @@ contract RockPaperScissors is IComponent {
 
     rpsEntity.setPlayerAction(player, 0);
     rpsEntity.setPlayerAction(player2, 0);
+    gameEntity.addPlayerUint(executor, "action2", player2Action);
   }
 
   event GameResult(Hand player1, Hand player2, address winner);

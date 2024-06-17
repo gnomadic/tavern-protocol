@@ -31,9 +31,10 @@ export default function PlayRPS() {
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
     let actionmap = [
-        { num: "0", value: 'rock' },
-        { num: "1", value: 'paper' },
-        { num: "2", value: 'scissors' }
+        { num: "0", value: 'not found?' },
+        { num: "1", value: 'rock' },
+        { num: "2", value: 'paper' },
+        { num: "3", value: 'scissors' }
     ]
 
 
@@ -95,8 +96,8 @@ export default function PlayRPS() {
         // }
     }, [queueError, writeError, isLoading, isSuccess, data]);
 
-    // const replacer = (key, value) =>
-    //     typeof value === 'bigint' ? value.toString() : value
+    const replacer = (key: any, value: any) =>
+        typeof value === 'bigint' ? value.toString() : value
 
     return (
         <section className='pt-24 px-12 md:px-24' >
@@ -202,6 +203,7 @@ export default function PlayRPS() {
                     <div className=" text-2xl pt-12 md:pt-24 text-center ">
                         Your last game was a
                     </div>
+                    <div>{JSON.stringify(lastGame, replacer)}</div>
                     <div className=" text-center text-4xl">
                         {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == address ? "win" : "loss"}
                     </div>

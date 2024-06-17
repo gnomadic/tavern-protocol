@@ -5,6 +5,9 @@ import { farcasterHubContext } from "frames.js/middleware";
 
 
 // TODO Collecting page data  ..Error: Invalid baseUrl: Invalid URL if this is loaded dynamically? 
+export const CHAIN_ID = "11155111";
+
+
 export const getBaseUrl = () => {
   if (process.env.NODE_ENV === "production") {
     return "https://playtavern.com";

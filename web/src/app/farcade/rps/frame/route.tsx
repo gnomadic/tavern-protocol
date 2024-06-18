@@ -31,7 +31,8 @@ const handleRequest = frames(async (ctx) => {
   const txURL = `/rps/frame/txdata?action=`;
   const imageURL = `/rps/frame/images`;
 
-  const userAddress = "0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3";//ctx?.message?.connectedAddress;
+  // const userAddress = "0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3";//ctx?.message?.connectedAddress;
+  const userAddress = ctx?.message?.connectedAddress;
 
 
 
@@ -130,7 +131,7 @@ const getImage = (action: string, userAddress: string | undefined, result: RPSGa
     // in queue and never played
     // not in queue and played before
     // not in queue and never played
-    
+
     if (inQueue) {
       titleFirst = "you are in the";
       titleSecond = "queue";

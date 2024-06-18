@@ -5,7 +5,7 @@ import { farcasterHubContext } from "frames.js/middleware";
 
 
 // TODO Collecting page data  ..Error: Invalid baseUrl: Invalid URL if this is loaded dynamically? 
-export const CHAIN_ID = "11155111";
+export const CHAIN_ID = "84532";
 
 
 export const getBaseUrl = () => {

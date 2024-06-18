@@ -1,9 +1,10 @@
 import { Address } from 'viem';
 import { Deployment } from './Domain';
+import { baseSepolia, localhost, sepolia } from 'viem/chains';
 
 
 // export const RPS_GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
-export const RPS_GAME_ADDRESS: Address = '0xc19Bc969cfc40DfF49605AedefC69a74c5Aef69E'
+// export const RPS_GAME_ADDRESS: Address = '0xc19Bc969cfc40DfF49605AedefC69a74c5Aef69E'
 
 export const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
 
@@ -41,6 +42,7 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0x8c8864443eACc2059C80B9B82Ffb63E8689Dd5a9',
     queueComponent: '0x74CE425493578B1eEb06A6e9351fABF854262FA9',
     resultComponent: '0x6A3bF184Ba5f4d9959D5FE6E046a4e4CaE127349',
+    viemChain: baseSepolia
   },
   sepolia: {
     gameFactory: '0x14360E6054A666B18d49bF3B4fFeE7D63319770e',
@@ -55,6 +57,7 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0xcfF5fdBAD245183728972Ffd3036d0f6bD2cFb4F',
     queueComponent: '0xe8D49Ea4e2457b2B3c112650b1dA05eCdF2BD3E2',
     resultComponent: '0x44C8c71086EBa3a2AEb61f2CA635Ff64EC143bcE',
+    viemChain: sepolia
   },
 
   localhost: {
@@ -70,6 +73,7 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0xf7Cd8fa9b94DB2Aa972023b379c7f72c65E4De9D',
     queueComponent: '0x0C8E79F3534B00D9a3D4a856B665Bf4eBC22f2ba',
     resultComponent: '0x82C6D3ed4cD33d8EC1E51d0B5Cc1d822Eaa0c3dC',
+    viemChain: localhost
   },
   tavern: {
     gameFactory: '0x0',
@@ -84,6 +88,7 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0x75f71BaBB609b14aaF5c672D4606e5F55B69FC66',
     queueComponent: '0xF31e5B19d061c9a105AB70b929bC6cb895061AeD',
     resultComponent: '0x0',
+    viemChain: baseSepolia
 
   },
 };

@@ -2,9 +2,10 @@
 import { Button } from "frames.js/next";
 import { CHAIN_ID, frames } from "./frames";
 import WelcomeRPS from "./images/WelcomeRPS";
-import { RPS_GAME_ADDRESS } from "@/domain/deployments";
-import { getDeployment, getGameResult } from "@/services/viemService";
+import { getDeployment, getGameResult, isPlayerInQueue } from "@/services/viemService";
 import { Address, zeroAddress } from "viem";
+import { bigIntReplacer } from "@/domain/utils";
+import { RPSGameResult } from "@/domain/Domain";
 
 
 
@@ -21,23 +22,38 @@ const handleRequest = frames(async (ctx) => {
   // }
 
   const action = ctx.searchParams.action;
-  const game = RPS_GAME_ADDRESS;
   if (!action) {
 
   }
   console.log("action", action);
-  // console.log("game", game);
 
   const postURL = `/rps/frame?action=`;
   const txURL = `/rps/frame/txdata?action=`;
   const imageURL = `/rps/frame/images`;
 
-  const userAddress = ctx?.message?.connectedAddress;
+  const userAddress = "0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3";//ctx?.message?.connectedAddress;
 
+
+
+
+
+  const deployment = getDeployment(CHAIN_ID);
+  const resultAddress = deployment.resultComponent;
+  const game = deployment.rpsGame;
+  // console.log('-----------')
+  // console.log('game', game)
+  // console.log('resultAddress', resultAddress)
+  // console.log('userAddress', userAddress)
+  // console.log('-----------')
+
+
+  const result = await getGameResult(CHAIN_ID, resultAddress, game, userAddress as Address);
+  const inQueue = await isPlayerInQueue(CHAIN_ID, game, userAddress as Address);
+// console.log(JSON.stringify(result, bigIntReplacer))
 
   return {
     image: (
-      getImage(action, userAddress)
+      getImage(action, userAddress, result, inQueue)
     ),
     buttons: [
       <Button
@@ -59,8 +75,9 @@ const handleRequest = frames(async (ctx) => {
         SCISSORS
       </Button>,
       <Button
-        action="link" target={"https://www.playtavern.com"}>
-        TAVERN
+        action="post" 
+        target={{ pathname: "/rps/frame", query: { action: "results", game: game } }}>
+        RESULTS
       </Button>,
     ],
   };
@@ -68,11 +85,7 @@ const handleRequest = frames(async (ctx) => {
 
 // async function getImage(action: string, userAddress: string | undefined) {
 
-  const getImage = (action: string, userAddress: string | undefined) => {
-
-
-
-
+const getImage = (action: string, userAddress: string | undefined, result: RPSGameResult, inQueue: boolean) => {
 
   if (action === "rock") {
     return <WelcomeRPS
@@ -102,29 +115,44 @@ const handleRequest = frames(async (ctx) => {
       titleFirst="you are in the"
       titleSecond="queue"
     />
-  // } else if (action == "status" && userAddress) {
+  } else if (action == "results" && userAddress) {
 
-  //   const deployment = getDeployment(CHAIN_ID);
-  //   const resultAddress = deployment.resultComponent;
-  //   const data = await getGameResult(CHAIN_ID, resultAddress, RPS_GAME_ADDRESS, userAddress as Address);
-  //   console.log("data", JSON.stringify(data));
+    let titleFirst = "";
+    let titleSecond = "";
+    let rowOneFirst = "";
+    let rowOneSecond = "";
+    let rowTwoFirst = "";
+    let rowTwoSecond = "";
     
-  //   let result = "draw";
-  //   if (data?.winner === userAddress) {
-  //      result = "win";
-  //   }else {
-  //      result = "loss";
-  //   }
+    // states:
+    // never played
+    // in queue and played before
+    // in queue and never played
+    // not in queue and played before
+    // not in queue and never played
+    
+    if (inQueue) {
+      titleFirst = "you are in the";
+      titleSecond = "queue";
+    }
+
+    
+    let winner = "draw";
+    if (result?.winner === userAddress) {
+      winner = "win";
+    }else {
+      winner = "loss";
+    }
 
 
-  //   return <WelcomeRPS
-  //     rowOneFirst="you"
-  //     rowOneSecond=""
-  //     rowTwoFirst=""
-  //     rowTwoSecond=""
-  //     titleFirst="queue size"
-  //     titleSecond="string"
-  //   />
+    return <WelcomeRPS
+      rowOneFirst="row one"
+      rowOneSecond="one"
+      rowTwoFirst="row two"
+      rowTwoSecond="two "
+      titleFirst="title"
+      titleSecond="title"
+    />
   }
   // first load
   return <WelcomeRPS

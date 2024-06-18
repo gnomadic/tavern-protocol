@@ -1,34 +1,72 @@
 import { GameFuncParams, GameSummary } from '@/domain/Domain';
 import { GameABI } from '@/domain/abi/GameABI';
 import { Deployments } from '@/domain/deployments';
+import { bigIntReplacer } from '@/domain/utils';
 import { readPvpResultGetLastGame, readPvpResultGetSummary, readQueueSessionGetPlayerCount, readQueueSessionIsPlayerInQueue, simulateGameExecuteFlow, writeGameExecuteFlow } from '@/generated';
 import { Abi, Address, Chain, PublicClient, WalletClient, createPublicClient, createWalletClient, custom, http } from 'viem'
-import { localhost, sepolia } from 'viem/chains'
-import { State, CreateConnectorFn, Connector, createConfig } from 'wagmi';
+import { base, baseSepolia, localhost, sepolia } from 'viem/chains'
+import { State, CreateConnectorFn, Connector, createConfig, Config } from 'wagmi';
 import { writeContractMutationOptions } from 'wagmi/query';
 
 
 
-let publicClient: PublicClient;
+// let publicClient: PublicClient;
+
+
+
+let publicClients : { [x: string]: PublicClient | undefined } =  {
+    [sepolia.id.toString()]: undefined,
+    [baseSepolia.id.toString()]: undefined,
+    [base.id.toString()]: undefined
+};
+
+let configs : { [x: string]: any } =  {
+    [sepolia.id.toString()]: undefined,
+    [baseSepolia.id.toString()]: undefined,
+    [base.id.toString()]: undefined
+};
+
 let walletClient: WalletClient;
 
-const config = createConfig({
-    chains: [sepolia],
-    transports: {
-        //   [mainnet.id]: http(),
-        [sepolia.id]: http(),
-    },
-})
+// const config = createConfig({
+//     chains: [sepolia, baseSepolia, base],
+//     transports: {
+//         [sepolia.id]: http(),
+//         [baseSepolia.id]: http(),
+//         [base.id]: http()
+//     },
+// })
 
-function getPublicClient() {
-    if (publicClient) {
-        return publicClient;
+function getConfig(chainId: string) : Config {
+    if (configs[chainId] != undefined){
+        return configs[chainId];
     }
-    publicClient = createPublicClient({
-        chain: sepolia as Chain,
+    configs[chainId] = createConfig({
+        chains: [getDeployment(chainId).viemChain],
+        transports: {
+            [getDeployment(chainId).viemChain.id]: http()
+        }
+    })
+
+    return configs[chainId];
+}
+
+
+function getPublicClient(chainId: string = '11155111') : PublicClient {
+
+    let deployment = getDeployment(chainId);
+    if (publicClients[chainId] != undefined){
+        console.log("getting public client for: " + publicClients[chainId]!.chain?.id)
+
+        return publicClients[chainId]!;
+    }
+    publicClients[chainId] = createPublicClient({
+        chain: deployment.viemChain,
         transport: http(),
     })
-    return publicClient;
+
+    
+    return publicClients[chainId]!;
 }
 
 function getWalletClient() {
@@ -60,7 +98,7 @@ export async function getBlockNumber() {
 }
 
 export async function getGameSummary(chainId: string, gameAddress: Address): Promise<GameSummary> {
-    const client = getPublicClient();
+    const client = getPublicClient(chainId);
 
     const data = await client.readContract({
         address: gameAddress,
@@ -80,7 +118,7 @@ export async function getGameSummary(chainId: string, gameAddress: Address): Pro
 // }
 
 export async function getQueueSize(chainId: string, gameAddress: Address) {
-    const client = getPublicClient();
+    const config = getConfig(chainId);
     const deployment = getDeployment(chainId);
 
     const data = await readQueueSessionGetPlayerCount(config, {
@@ -93,7 +131,7 @@ export async function getQueueSize(chainId: string, gameAddress: Address) {
 }
 
 export async function isPlayerInQueue(chainId: string, gameAddress: Address, playerAddress: Address) {
-    const client = getPublicClient();
+    const config = getConfig(chainId);
     const deployment = getDeployment(chainId);
 
     const data = await readQueueSessionIsPlayerInQueue(config, {
@@ -106,7 +144,7 @@ export async function isPlayerInQueue(chainId: string, gameAddress: Address, pla
 }
 
 export async function getLastGame(chainId: string, gameAddress: Address, playerAddress: Address) {
-    const client = getPublicClient();
+    const config = getConfig(chainId);
     const deployment = getDeployment(chainId);
 
     const data = await readPvpResultGetLastGame(config, {
@@ -124,7 +162,7 @@ export async function getLastGame(chainId: string, gameAddress: Address, playerA
 // useReadPvpResultGetLastGame
 
 export async function getGameResult(chainId: string, resultAddress: Address, gameAddress: Address, playerAddress: Address) {
-    const client = getPublicClient();
+    const config = getConfig(chainId);
 
     // const data = await client.readContract({
     //     address: resultAddress,
@@ -133,17 +171,22 @@ export async function getGameResult(chainId: string, resultAddress: Address, gam
     //     args: [playerAddress]
     // })
 
+    // console.log("getGameResult", resultAddress, gameAddress, playerAddress)
+
     const data = await readPvpResultGetLastGame(config, {
         address: resultAddress,
         args: [gameAddress, playerAddress]
     })
+
+    // console.log(JSON.stringify(data, bigIntReplacer))
 
     return data;
 }
 
 
 
-export async function executeFlow(address: Address, functionName: string, args: GameFuncParams) {
+export async function executeFlow(chainId: string, address: Address, functionName: string, args: GameFuncParams) {
+    const config = getConfig(chainId);
 
     const write = await writeGameExecuteFlow(config, {
         address: address,
@@ -156,7 +199,9 @@ export async function executeFlow(address: Address, functionName: string, args: 
     return write;
 }
 
-export async function simulateGameFlow(address: Address, functionName: string, args: GameFuncParams) {
+export async function simulateGameFlow(chainId: string, address: Address, functionName: string, args: GameFuncParams) {
+    const config = getConfig(chainId);
+
     const simulate = await simulateGameExecuteFlow(config, {
         address: address,
         args: [

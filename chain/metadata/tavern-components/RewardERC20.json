@@ -47,5 +47,14 @@
             "emits": []
         }
     ],
-    "readFunctions":[]
+    "readFunctions":[
+        {
+            "name": "Get Reward Token",
+            "description": "Returns the address of the reward token",
+            "abi": "getRewardToken(address)",
+            "requires": ["gameAddress"],
+            "creates": ["rewardAddress"],
+            "emits":[]
+        }
+    ]
 }

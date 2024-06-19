@@ -5,7 +5,7 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract Reward20Entity is IEntity {
-  address token;
+  address public token;
 
   function setAvailableKeys(string[] storage keys) internal override {
     keys.push('rewardAddress');

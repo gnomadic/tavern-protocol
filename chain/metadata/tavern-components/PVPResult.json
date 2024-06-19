@@ -23,8 +23,8 @@
         "description": "Returns the results of a players last match.",
         "abi": "getLastGame(address,address)",
         "requires": [
-            "player",
-            "game"
+            "gameAddress",
+            "player"
         ],
         "creates": [],
         "emits":[]

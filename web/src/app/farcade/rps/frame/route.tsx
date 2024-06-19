@@ -31,9 +31,20 @@ const handleRequest = frames(async (ctx) => {
   const txURL = `/rps/frame/txdata?action=`;
   const imageURL = `/rps/frame/images`;
 
-  // const userAddress = "0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3";//ctx?.message?.connectedAddress;
-  const userAddress = ctx?.message?.connectedAddress;
 
+  let userAddress = ctx?.message?.connectedAddress;
+  
+  if (process.env.NODE_ENV === "development") {
+    userAddress = "0x2273fFEd38ED040FBcd3e45Cd807594d27ebfAE3";
+  }
+  
+
+
+  
+
+  // ctx.message?.
+
+  // ctx.message?.transactionId -> tx submitted
 
 
 
@@ -56,6 +67,9 @@ const handleRequest = frames(async (ctx) => {
     image: (
       getImage(action, userAddress, result, inQueue)
     ),
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
     buttons: [
       <Button
         action="tx"
@@ -90,31 +104,26 @@ const getImage = (action: string, userAddress: string | undefined, result: RPSGa
 
   if (action === "rock") {
     return <WelcomeRPS
-      titleFirst="you played"
-      titleSecond="ROCK"
-      rowOneFirst="at the"
-      rowOneSecond="farcade"
-      rowTwoFirst="built onchain with the"
-      rowTwoSecond="tavern"
+    cta="make your move!"
+    info1="you won last game"
+    info2="you played rock"
+    info3="0x1234 played scissors"
+
     />
 
   } else if (action == "paper") {
     return <WelcomeRPS
-      rowOneFirst="string"
-      rowOneSecond="string"
-      rowTwoFirst="string"
-      rowTwoSecond="string"
-      titleFirst="it is a"
-      titleSecond="tie!"
+    cta="make your move!"
+    info1="you won last game"
+    info2="you played rock"
+    info3="0x1234 played scissors"
     />
   } else if (action == "scissors") {
     return <WelcomeRPS
-      rowOneFirst="string"
-      rowOneSecond="string"
-      rowTwoFirst=""
-      rowTwoSecond=""
-      titleFirst="you are in the"
-      titleSecond="queue"
+    cta="make your move!"
+    info1="you won last game"
+    info2="you played rock"
+    info3="0x1234 played scissors"
     />
   } else if (action == "results" && userAddress) {
 
@@ -124,13 +133,22 @@ const getImage = (action: string, userAddress: string | undefined, result: RPSGa
     let rowOneSecond = "";
     let rowTwoFirst = "";
     let rowTwoSecond = "";
-    
-    // states:
+
+    if (result.opponent === zeroAddress) {
     // never played
-    // in queue and played before
     // in queue and never played
-    // not in queue and played before
     // not in queue and never played
+    }else{
+    // in queue and played before
+    // not in queue and played before
+    }
+    
+
+    // https://cyan-fiscal-mackerel-412.mypinata.cloud/ipfs/QmbTMY2F1AAAGR85LGpgcF269QRMhroUWfQb7tVDiD1X1Z
+    
+    
+    
+    
 
     if (inQueue) {
       titleFirst = "you are in the";
@@ -147,22 +165,18 @@ const getImage = (action: string, userAddress: string | undefined, result: RPSGa
 
 
     return <WelcomeRPS
-      rowOneFirst="row one"
-      rowOneSecond="one"
-      rowTwoFirst="row two"
-      rowTwoSecond="two "
-      titleFirst="title"
-      titleSecond="title"
+    cta="make your move!"
+    info1="you won last game"
+    info2="you played rock"
+    info3="0x1234 played scissors"
     />
   }
   // first load
   return <WelcomeRPS
-    titleFirst="come play"
-    titleSecond="ROCK PAPER SCISSORS"
-    rowOneFirst="at the"
-    rowOneSecond="farcade"
-    rowTwoFirst="built onchain with the"
-    rowTwoSecond="tavern protocol"
+  cta="play onchain together"
+  info1="built with the"
+  info2="tavern protocol"
+  info3="without any code"
   />
 }
 

@@ -1,15 +1,13 @@
-
-
-type welcomeProps = {
-  cta: string;
-  info1: string;
-  info2: string;
-  info3: string;
+type imageProps = {
+  rowOneFirst: string;
+  rowOneSecond: string;
+  rowTwoFirst: string;
+  rowTwoSecond: string;
+  titleFirst: string;
+  titleSecond: string;
 }
-import { getBaseUrl } from '../frames';
 
-export default function WelcomeRPS(props: welcomeProps) {
-
+export default function rawWelcome(props: imageProps) {
 
   return (
     <div
@@ -24,8 +22,7 @@ export default function WelcomeRPS(props: welcomeProps) {
       fontSize: 32,
       fontWeight: 600,
       color: "#dcfaff",
-      // backgroundImage: `url(${getBaseUrl() + '/images/summerarcade3-min.png'})`,
-      // backgroundImage: 'url(https://cyan-fiscal-mackerel-412.mypinata.cloud/ipfs/QmVeZMnfTWTRAVAmpxbLV5uz2QMyAMHNLWhc7s43bLizGH)',
+      backgroundImage: 'url(https://cyan-fiscal-mackerel-412.mypinata.cloud/ipfs/QmVeZMnfTWTRAVAmpxbLV5uz2QMyAMHNLWhc7s43bLizGH)',
     }}
   >
 
@@ -48,16 +45,14 @@ export default function WelcomeRPS(props: welcomeProps) {
 
     <div style={{ display: 'flex', marginTop: 50, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, paddingBottom: 10 }}>
       <div style={{ flexBasis: '70%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 36, paddingLeft: "10", paddingTop: "10", paddingBottom: "10", color: '#dcfaff' }}>
-        {/* make your move! */}
-        {props.cta}
+        make your move!
       </div>
       <div style={{ flexBasis: '30%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
     </div>
 
     <div style={{ display: 'flex', marginTop:50, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, paddingBottom: 0 }}>
       <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 20, color: '#dcfaff'  }}>
-        {/* you won last game */}
-        {props.info1}
+        you won last game
       </div>
       <div style={{ flexBasis: '60%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
     </div>
@@ -65,16 +60,14 @@ export default function WelcomeRPS(props: welcomeProps) {
 
     <div style={{ display: 'flex', marginTop: 0, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 0, paddingBottom: 0 }}>
       <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 18, color: '#dcfaff' }}>
-        {/* you played rock */}
-        {props.info2}
+        you played rock
       </div>
       <div style={{ flexBasis: '60%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
     </div>
 
     <div style={{ display: 'flex', marginTop: 0, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 0, paddingBottom: 10 }}>
       <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 18, color: '#dcfaff' }}>
-        {/* 0x1234 played scissors */}
-        {props.info3}
+        0x1234 played scissors
       </div>
       <div style={{ flexBasis: '60%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
     </div>

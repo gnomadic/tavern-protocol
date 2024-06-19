@@ -83,6 +83,7 @@ export type ComponentMetadata = {
   description: Address;
   gameFunctions: ComponentMetadataFunction[];
   configFunctions: ComponentMetadataFunction[];
+  readFunctions: ComponentMetadataFunction[];
 }
 
 export type ComponentMetadataFunction = {

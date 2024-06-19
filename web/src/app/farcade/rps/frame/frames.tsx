@@ -21,5 +21,6 @@ export const frames = createFrames({
   basePath: "/farcade",
   baseUrl: getBaseUrl(),
   middleware: [farcasterHubContext()],
+  
 
 });

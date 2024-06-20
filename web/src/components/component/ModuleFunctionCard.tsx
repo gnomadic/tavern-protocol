@@ -1,7 +1,7 @@
 "use client"
 
 import { useMetadata } from '@/hooks/useMetadata';
-import { censor, pretty } from '../../domain/utils';
+import { bigIntReplacer, censor, pretty } from '../../domain/utils';
 import { Address, createPublicClient, createWalletClient, http, parseAbi } from 'viem';
 import { ComponentMetadata, ComponentMetadataFunction } from '@/domain/Domain';
 import { createConfig, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
@@ -27,10 +27,10 @@ export default function ModuleFunctionCard(props: ModuleCardProps) {
 
   return (
     <div className='border-2 border-gray-500'>
-      <div className='border-b-2 border-white text-2xl pl-4 py-2'>
+      <div className='py-2 pl-4 text-2xl border-b-2 border-white'>
         {props.index + 1}{"/"}{data ? censor(data.name) : "loading"}
       </div>
-      <div className='grid grid-cols-1  gap-8 py-12 md:py-24'>
+      <div className='grid grid-cols-1 gap-8 py-12 md:py-24'>
 
         {Array.from({ length: data?.configFunctions.length as number }).map((object, i) => {
           return (
@@ -120,8 +120,8 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
 
 
   return (
-    <div className='border-2 border-gray-500 mx-12'>
-      {/* <div className='border-b-2 border-white text-2xl pl-4 py-2'> */}
+    <div className='mx-12 border-2 border-gray-500'>
+      {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
       <div className='pt-5 pl-5 text-lg border-b-2 border-white '>
 
         {props.index + 1}{"/"}{props.funct.name}
@@ -129,7 +129,7 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
       <div className='pt-5 pb-2 pl-2 text-sm'>
         {censor(props.funct.description)}
       </div>
-      <form onSubmit={executeFunction} className='pt-8 px-4 '>
+      <form onSubmit={executeFunction} className='px-4 pt-8 '>
         {Array.from({ length: props.funct.requires.length as number }).map((object, i) => {
           return <div key={i} className=''>
             <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
@@ -161,7 +161,9 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
   const { data: hash, error: err, isPending: pending, writeContract } = useWriteContract()
   const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-  const {deploy} = useDeployment();
+  const { deploy } = useDeployment();
+
+  const [response, setResponse] = useState<any>()
 
   // const [abi, setABI] = useState<string>("")
   // const [address, setAddress] = useState<Address>("0x0");
@@ -223,17 +225,18 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
     console.log("args are " + args)
     console.log("function name is " + functionName)
     console.log("address is " + props.address)
-    console.log("abi is " + "function " +  props.funct.abi)
-    
+    console.log("abi is " + "function " + props.funct.abi)
+
 
     const data = await readContract(publicClient, {
       address: props.address,
-      abi: parseAbi(["function " + props.funct.abi + " view returns (uint256)"]),
+      abi: parseAbi(["function " + props.funct.abi]),
       functionName: functionName,
       args: args
     })
 
-    console.log("resonse is " + data)
+    console.log("response is " + data);
+    setResponse(data);
     // const result = await readContract(config, {
     //   abi: parseAbi(["function " + props.funct.abi]),
     //   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
@@ -262,8 +265,8 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
 
 
   return (
-    <div className='border-2 border-gray-500 mx-12'>
-      {/* <div className='border-b-2 border-white text-2xl pl-4 py-2'> */}
+    <div className='mx-12 border-2 border-gray-500'>
+      {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
       <div className='pt-5 pl-5 text-lg border-b-2 border-white '>
 
         {props.index + 1}{"/"}{props.funct.name}
@@ -271,9 +274,9 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
       <div className='pt-5 pb-2 pl-2 text-sm'>
         {censor(props.funct.description)}
       </div>
-      <form onSubmit={executeFunction} className='pt-8 px-4 '>
+      <form onSubmit={executeFunction} className='px-4 pt-4 '>
         {Array.from({ length: props.funct.requires.length as number }).map((object, i) => {
-          return <div key={i} className=''>
+          return <div key={i} className='pt-4'>
             <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
               {props.funct.requires[i]}
             </label>
@@ -292,6 +295,11 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
             Execute
             {/* {createGameisPending ? 'Confirming...' : `Deploy game on ${deploy.chain}`} */}
           </button>
+        </div>
+        <div>
+          <div className="block pb-4 mb-2 text-sm text-white text-start">
+            response: {JSON.stringify(response, bigIntReplacer)}
+          </div>
         </div>
       </form>
     </div>

@@ -47,7 +47,7 @@ export default function WelcomeRPS(props: welcomeProps) {
 
 
     <div style={{ display: 'flex', marginTop: 50, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, paddingBottom: 10 }}>
-      <div style={{ flexBasis: '70%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 36, paddingLeft: "10", paddingTop: "10", paddingBottom: "10", color: '#dcfaff' }}>
+      <div style={{ flexBasis: '70%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 36, paddingLeft: "10", paddingTop: "10", paddingBottom: "10"}}>
         {/* make your move! */}
         {props.cta}
       </div>
@@ -55,7 +55,7 @@ export default function WelcomeRPS(props: welcomeProps) {
     </div>
 
     <div style={{ display: 'flex', marginTop:50, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, paddingBottom: 0 }}>
-      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 20, color: '#dcfaff'  }}>
+      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 18, paddingLeft: "10", paddingTop: "10", paddingBottom: "10" }}>
         {/* you won last game */}
         {props.info1}
       </div>
@@ -64,7 +64,7 @@ export default function WelcomeRPS(props: welcomeProps) {
 
 
     <div style={{ display: 'flex', marginTop: 0, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 0, paddingBottom: 0 }}>
-      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 18, color: '#dcfaff' }}>
+      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 18, paddingLeft: "10", paddingTop: "10", paddingBottom: "10" }}>
         {/* you played rock */}
         {props.info2}
       </div>
@@ -72,7 +72,7 @@ export default function WelcomeRPS(props: welcomeProps) {
     </div>
 
     <div style={{ display: 'flex', marginTop: 0, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 0, paddingBottom: 10 }}>
-      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 18, color: '#dcfaff' }}>
+      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 18, paddingLeft: "10", paddingTop: "10", paddingBottom: "10" }}>
         {/* 0x1234 played scissors */}
         {props.info3}
       </div>

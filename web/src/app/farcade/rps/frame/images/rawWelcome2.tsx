@@ -44,14 +44,14 @@ export default function rawWelcome(props: imageProps) {
 
 
     <div style={{ display: 'flex', marginTop: 50, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, paddingBottom: 10 }}>
-      <div style={{ flexBasis: '70%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 36, paddingLeft: "10", paddingTop: "10", paddingBottom: "10", color: '#dcfaff' }}>
+      <div style={{ flexBasis: '70%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 36, paddingLeft: "10", paddingTop: "10", paddingBottom: "10" }}>
         make your move!
       </div>
       <div style={{ flexBasis: '30%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
     </div>
 
     <div style={{ display: 'flex', marginTop:50, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, paddingBottom: 0 }}>
-      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 20, color: '#dcfaff'  }}>
+      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10" }}>
         you won last game
       </div>
       <div style={{ flexBasis: '60%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
@@ -59,14 +59,14 @@ export default function rawWelcome(props: imageProps) {
 
 
     <div style={{ display: 'flex', marginTop: 0, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 0, paddingBottom: 0 }}>
-      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 18, color: '#dcfaff' }}>
+      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 18, paddingLeft: "10", paddingTop: "10", paddingBottom: "10"}}>
         you played rock
       </div>
       <div style={{ flexBasis: '60%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>
     </div>
 
     <div style={{ display: 'flex', marginTop: 0, flexDirection: 'row', flexWrap: 'wrap', paddingTop: 0, paddingBottom: 10 }}>
-      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#808080', backgroundColor: "#08c5fe", fontSize: 20, paddingLeft: "10", paddingTop: "10", paddingBottom: "10",fontSize: 18, color: '#dcfaff' }}>
+      <div style={{ flexBasis: '40%', justifyContent: 'flex-start', color: '#dcfaff', backgroundColor: "#08c5fe", fontSize: 18, paddingLeft: "10", paddingTop: "10", paddingBottom: "10" }}>
         0x1234 played scissors
       </div>
       <div style={{ flexBasis: '60%', justifyContent: 'flex-start', paddingLeft: 15 }}></div>

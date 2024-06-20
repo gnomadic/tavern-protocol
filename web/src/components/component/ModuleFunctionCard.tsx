@@ -202,10 +202,10 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
     // const wconf = createWalletClient({transport: config.transports, });
 
 
-    const readConfig = createConfig({
-      chains: config.chains,
-      transports: config.transports,
-    })
+    // const readConfig = createConfig({
+    //   chains: config.chains,
+    //   transports: config.transports,
+    // })
 
     const publicClient = createPublicClient({
       chain: deploy.viemChain,

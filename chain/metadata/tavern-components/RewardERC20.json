@@ -51,7 +51,7 @@
         {
             "name": "Get Reward Token",
             "description": "Returns the address of the reward token",
-            "abi": "getRewardToken(address)",
+            "abi": "getRewardToken(address) view returns (address)",
             "requires": ["gameAddress"],
             "creates": ["rewardAddress"],
             "emits":[]

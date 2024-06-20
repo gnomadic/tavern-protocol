@@ -22,5 +22,22 @@
         }
     ],
     "configFunctions": [],
-    "readFunctions":[]
+    "readFunctions":[
+        {
+            "name": "Is Player in Queue",
+            "description": "Returns true if the player is in the queue, false if they are not.",
+            "abi": "isPlayerInQueue(address,address) view returns (bool)",
+            "requires": ["gameAddress", "player"],
+            "creates": ["inQueue"],
+            "emits":[]
+        },
+        {
+            "name": "Get Player Count",
+            "description": "Returns the number of players in the queue.",
+            "abi": "getPlayerCount(address) view returns (uint256)",
+            "requires": ["gameAddress"],
+            "creates": ["playerCount"],
+            "emits":[]
+        }
+    ]
 }

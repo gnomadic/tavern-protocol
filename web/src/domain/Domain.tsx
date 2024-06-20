@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import { Address, Chain, Transport } from "viem";
 
 export type Deployment = {
   gameFactory: Address;
@@ -13,6 +13,8 @@ export type Deployment = {
   rpsComponent: Address;
   queueComponent: Address;
   resultComponent: Address;
+  viemChain: Chain;
+  viemTransport: Transport;
 }
 
 export type GameSummary = {
@@ -82,6 +84,7 @@ export type ComponentMetadata = {
   description: Address;
   gameFunctions: ComponentMetadataFunction[];
   configFunctions: ComponentMetadataFunction[];
+  readFunctions: ComponentMetadataFunction[];
 }
 
 export type ComponentMetadataFunction = {
@@ -97,4 +100,13 @@ export type GameMetadata = {
   name: string;
   description: Address;
   gameUrl: string;
+}
+
+export type RPSGameResult = {
+  
+    opponent: `0x${string}`;
+    winner: `0x${string}`;
+    myAction: bigint;
+    opponentAction: bigint;
+
 }

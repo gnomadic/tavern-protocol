@@ -26,7 +26,7 @@ export default function GMSection(props: StepThreeProps) {
         <section id='GMSection' className='relative items-center px-6 md:px-24 pt-24 pb-12'>
             <section>
                 <SmallTitle title={'GM ONLY'} />
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 md:py-24'>
                     {Array.from({ length: summary?.components.length as number }).map((object, i) => {
                         return (
                             <ModuleFunctionCard
@@ -38,6 +38,8 @@ export default function GMSection(props: StepThreeProps) {
                             />
                         );
                     })}
+
+                    
                 </div>
             </section>
         </section>

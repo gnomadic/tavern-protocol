@@ -21,10 +21,10 @@
     "readFunctions":[  {
         "name": "get Last Game",
         "description": "Returns the results of a players last match.",
-        "abi": "getLastGame(address,address)",
+        "abi": "getLastGame(address,address) view returns ((address,address,uint256,uint256))",
         "requires": [
-            "player",
-            "game"
+            "gameAddress",
+            "player"
         ],
         "creates": [],
         "emits":[]

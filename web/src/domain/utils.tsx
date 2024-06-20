@@ -18,6 +18,9 @@ export function safeBigInt(value : BigInt | undefined) : string {
 
 }
 
+export const bigIntReplacer = (key: any, value: any) =>
+	typeof value === 'bigint' ? value.toString() : value
+
 
 
 export function pretty(address :Address){

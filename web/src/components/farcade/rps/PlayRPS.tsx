@@ -12,7 +12,7 @@ import SmallTitle from '@/components/base/SmallTitle';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { config } from '@/domain/WagmiConfig';
-import { pretty } from '@/domain/utils';
+import { bigIntReplacer, pretty } from '@/domain/utils';
 
 
 export default function PlayRPS() {
@@ -96,8 +96,7 @@ export default function PlayRPS() {
         // }
     }, [queueError, writeError, isLoading, isSuccess, data]);
 
-    const replacer = (key: any, value: any) =>
-        typeof value === 'bigint' ? value.toString() : value
+
 
     return (
         <section className='pt-24 px-12 md:px-24' >
@@ -203,7 +202,7 @@ export default function PlayRPS() {
                     <div className=" text-2xl pt-12 md:pt-24 text-center ">
                         Your last game was a
                     </div>
-                    <div>{JSON.stringify(lastGame, replacer)}</div>
+                    {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
                     <div className=" text-center text-4xl">
                         {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == address ? "win" : "loss"}
                     </div>

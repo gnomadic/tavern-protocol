@@ -34,6 +34,10 @@ contract RewardERC20 is IComponent {
     Reward20Entity(IGame(game).getEntity('rewardAddress')).setReward(_reward);
   }
 
+  function getRewardToken(address game) external view returns (address) {
+    return Reward20Entity(IGame(game).getEntity('rewardAddress')).token();
+  }
+
   function rewardWinner(
     address executor,
     address gameAddress

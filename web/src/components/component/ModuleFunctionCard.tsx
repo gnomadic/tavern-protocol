@@ -1,10 +1,17 @@
+"use client"
+
 import { useMetadata } from '@/hooks/useMetadata';
 import { censor, pretty } from '../../domain/utils';
-import { Address, parseAbi } from 'viem';
+import { Address, createPublicClient, createWalletClient, http, parseAbi } from 'viem';
 import { ComponentMetadata, ComponentMetadataFunction } from '@/domain/Domain';
-import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
+import { createConfig, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { readContract } from 'viem/actions';
+import { config } from '@/domain/WagmiConfig';
+import { GameABI } from '@/domain/abi/GameABI';
+import { baseSepolia, localhost } from 'viem/chains';
+import useDeployment from '@/hooks/useDeployment';
 
 
 type ModuleCardProps = {
@@ -128,11 +135,11 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
             <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
               {props.funct.requires[i]}
             </label>
-            <input type="text" 
-            id={i.toString()} 
-            className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500" 
-            placeholder={props.funct.requires[i]}
-            value={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""} />
+            <input type="text"
+              id={i.toString()}
+              className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500"
+              placeholder={props.funct.requires[i]}
+              defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""} />
           </div>
         })}
         <div className='pt-4'>
@@ -154,6 +161,22 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
   const { data: hash, error: err, isPending: pending, writeContract } = useWriteContract()
   const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
+  const {deploy} = useDeployment();
+
+  // const [abi, setABI] = useState<string>("")
+  // const [address, setAddress] = useState<Address>("0x0");
+  // const [functionName, setFunctionName] = useState<string>("")
+  // const [args, setArgs] = useState<any[]>([])
+
+  // const {data: read} = useReadContract({  
+  //   abi,
+  //   address: address,
+  //   functionName: functionName,
+  //   args: args,
+  // });
+
+
+  // const {data: read} = useReadContract()
 
   async function executeFunction(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -168,12 +191,54 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
 
     console.log("Executing function");
 
-    writeContract({
-      abi: parseAbi(["function " + props.funct.abi]),
-      address: props.address,
-      functionName: functionName,
-      args: args,
+    // writeContract({
+    //   abi: parseAbi(["function " + props.funct.abi]),
+    //   address: props.address,
+    //   functionName: functionName,
+    //   args: args,
+    // })
+    // const client = createPublicClient(config);
+
+    // const wconf = createWalletClient({transport: config.transports, });
+
+
+    const readConfig = createConfig({
+      chains: config.chains,
+      transports: config.transports,
     })
+
+    const publicClient = createPublicClient({
+      chain: deploy.viemChain,
+      transport: deploy.viemTransport
+    })
+
+
+    // const data = await client.readContract({
+    //   address: props.address,
+    //   abi: parseAbi(["function " + props.funct.abi]),
+    //   functionName: functionName,
+    //   args: args,
+    // })
+
+    console.log("args are " + args)
+    console.log("function name is " + functionName)
+    console.log("address is " + props.address)
+    console.log("abi is " + "function " +  props.funct.abi)
+    
+
+    const data = await readContract(publicClient, {
+      address: props.address,
+      abi: parseAbi(["function " + props.funct.abi + " view returns (uint256)"]),
+      functionName: functionName,
+      args: args
+    })
+
+    console.log("resonse is " + data)
+    // const result = await readContract(config, {
+    //   abi: parseAbi(["function " + props.funct.abi]),
+    //   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    //   functionName: 'totalSupply',
+    // })
 
 
 
@@ -212,11 +277,12 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
             <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
               {props.funct.requires[i]}
             </label>
-            <input type="text" 
-            id={i.toString()} 
-            className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500" 
-            placeholder={props.funct.requires[i]}
-            value={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""} />
+            <input type="text"
+              id={i.toString()}
+              className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500"
+              placeholder={props.funct.requires[i]}
+              defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""}
+            />
           </div>
         })}
         <div className='pt-4'>

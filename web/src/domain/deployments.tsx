@@ -1,6 +1,7 @@
-import { Address } from 'viem';
+import { Address, http } from 'viem';
 import { Deployment } from './Domain';
 import { baseSepolia, localhost, sepolia } from 'viem/chains';
+
 
 
 // export const RPS_GAME_ADDRESS: Address  = '0xa36F4B4C02D5f583C2747B468730B54D27F7a469';
@@ -35,14 +36,15 @@ export const Deployments: { [key: string]: Deployment } = {
     chain: 'base sepolia',
     chainId: "84532",
     scan:"https://sepolia.basescan.org/address/",
-    gameFactory: '0xf1031FA368a11572b5B5B33B377eeA52979d390C',
+    gameFactory: '0xC690F3193088533C937ACF584f9939c9540AAc3A',
     d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    componentRegistry: '0xa7a9D830F24c71F89dcb4D1f6999094162b57166',
-    rpsGame: '0x349c2878E8Da5eBccd004fAbEe413b874963E173',
-    rpsComponent: '0x8c8864443eACc2059C80B9B82Ffb63E8689Dd5a9',
-    queueComponent: '0x74CE425493578B1eEb06A6e9351fABF854262FA9',
-    resultComponent: '0x6A3bF184Ba5f4d9959D5FE6E046a4e4CaE127349',
-    viemChain: baseSepolia
+    componentRegistry: '0xd7ca29dEc9ed7999A9c1a3069f3aC6Aa393C8928',
+    rpsGame: '0x6aBDb7A65fc155187b8765ac4C1FcB5463C0fAC8',
+    rpsComponent: '0xfB60bf27C65F83fd6BC7B042e3369e1b8CcbE990',
+    queueComponent: '0x613FB7041adEb7381D6001fA1b52DEd5eF1fFfCE',
+    resultComponent: '0xddd34670229D8bFFf07FB9Fc4eE40CE16a4b4478',
+    viemChain: baseSepolia,
+    viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   },
   sepolia: {
     gameFactory: '0x14360E6054A666B18d49bF3B4fFeE7D63319770e',
@@ -57,7 +59,9 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0xcfF5fdBAD245183728972Ffd3036d0f6bD2cFb4F',
     queueComponent: '0xe8D49Ea4e2457b2B3c112650b1dA05eCdF2BD3E2',
     resultComponent: '0x44C8c71086EBa3a2AEb61f2CA635Ff64EC143bcE',
-    viemChain: sepolia
+    viemChain: sepolia,
+    viemTransport: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
+
   },
 
   localhost: {
@@ -73,7 +77,9 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0xf7Cd8fa9b94DB2Aa972023b379c7f72c65E4De9D',
     queueComponent: '0x0C8E79F3534B00D9a3D4a856B665Bf4eBC22f2ba',
     resultComponent: '0x82C6D3ed4cD33d8EC1E51d0B5Cc1d822Eaa0c3dC',
-    viemChain: localhost
+    viemChain: localhost,
+    viemTransport: http()
+
   },
   tavern: {
     gameFactory: '0x0',
@@ -88,7 +94,9 @@ export const Deployments: { [key: string]: Deployment } = {
     rpsComponent: '0x75f71BaBB609b14aaF5c672D4606e5F55B69FC66',
     queueComponent: '0xF31e5B19d061c9a105AB70b929bC6cb895061AeD',
     resultComponent: '0x0',
-    viemChain: baseSepolia
+    viemChain: baseSepolia,
+    viemTransport: http()
+
 
   },
 };

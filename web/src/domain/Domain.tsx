@@ -1,4 +1,4 @@
-import { Address, Chain } from "viem";
+import { Address, Chain, Transport } from "viem";
 
 export type Deployment = {
   gameFactory: Address;
@@ -14,6 +14,7 @@ export type Deployment = {
   queueComponent: Address;
   resultComponent: Address;
   viemChain: Chain;
+  viemTransport: Transport;
 }
 
 export type GameSummary = {

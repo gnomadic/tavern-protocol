@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Outfit, Signika } from 'next/font/google';
 import './globals.css';
 
 import Head from 'next/head';
@@ -21,8 +21,17 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Providers } from './providers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '@/components/Navbar';
 
-const inter = Inter({ subsets: ['latin'] });
+
+const signika = Signika({
+  subsets: ['latin'], weight: "400", variable: '--font-signika',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'], weight: "500", variable: '--font-outfit',
+
+})
 
 export const metadata: Metadata = {
   title: 'Tavern',
@@ -66,6 +75,8 @@ export const metadata: Metadata = {
 // });
 
 // const queryClient = new QueryClient();
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -73,6 +84,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <Head>
+        <title>TAVERN</title>
+      </Head>
+
       {/* <Header/> */}
       {/* <NavigationHeader /> */}
       {/* <MobileNavigationHeader /> */}
@@ -83,9 +98,10 @@ export default function RootLayout({
       </Head> */}
       {/* <div className="flex flex-col min-h-screen"> */}
 
-      <body className={inter.className + " font-anon"}>
+      <body className={`${signika.variable} ${outfit.variable} font-sans`}>
         <Providers>
-          <Header />
+          {/* <Header /> */}
+          <Navbar />
 
           {children}
           <ToastContainer position='bottom-right' />

@@ -13,9 +13,13 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { config } from '@/domain/WagmiConfig';
 import { bigIntReplacer, pretty } from '@/domain/utils';
+import paper from '@/images/rockpaperscissors/paper.png';
+import rock from '@/images/rockpaperscissors/rock.png';
+import Image from 'next/image';
+// import rock from '@/images/rps-rock.png';
 
 
-export default function PlayRPS() {
+export default function RPSResult() {
 
     const { deploy } = useDeployment();
     const { address } = useAccount();
@@ -59,7 +63,7 @@ export default function PlayRPS() {
 
 
     }
-    
+
     useEffect(() => {
         if (queueError) {
             toast.error(queueError.message);
@@ -99,35 +103,36 @@ export default function PlayRPS() {
 
 
     return (
-        <section className='px-12 pt-24 md:px-24' >
-            <section id='intro' className='items-center p-12 md:p-18 md:pb-24'>
-                {/* <div>{JSON.stringify(data?.logs)}</div> */}
-                <div className='flex'>
-                    <div className='justify-right md:w-1/2'></div>
-                    <div className='justify-right md:w-1/2 '>
-                        <p>
-                            This is a multiplayer game of rock-paper-scissors with matchmaking.
-                            This game was deployed using the Tavern game engine without writing any code.
-                            <br />
-                            <br />
-                            First, the game was deployed using the Game Factory.
-                            <br />
-                            Then, three components were added to the game.
-                            <br />
-                            Finally, a Flow was created to call functions in order on all the components.
-                            <br />
-                            <br />
-                            The buttons below will execute that created flow, passing in the players address and choice of action.
-                            <br />
-                            <br />
-                            More details about this game can be found in the Games section.
-                        </p>
-                    </div>
+        <section className='relative min-h-[500px] px-12 pt-24 md:px-24 ' >
+            <section>
+                <div className='absolute top-0 left-0 p-5 text-xl text-tavernGreen'>
+                    kirox.eth
+                </div>
+                <div className='absolute bottom-0 right-0 p-5 text-xl text-red'>
+                    edwardf.eth
+                </div>
+                <div className='absolute top-[10%] left-[20%] rotate-45'>
+                    <Image
+                        src={rock}
+                        alt="Rock Paper Scissors"
+                        width={200}
+                        height={200} />
+                </div>
+                <div className='absolute bottom-[10%] right-[20%] -rotate-45'>
+                    <Image
+                        src={paper}
+                        alt="Rock Paper Scissors"
+                        width={200}
+                        height={200} />
+                </div>
+                <div className='absolute mx-auto text-6xl text-center inset-1/2'>
+                    vs
                 </div>
             </section>
-            <section>
-                <SmallTitle title={inQueue ? "Waiting for player" : Number(queueSize) == 0 ? "Join Queue" : "Play now"} />
 
+            <section>
+                {/* <SmallTitle title={inQueue ? "Waiting for player" : Number(queueSize) == 0 ? "Join Queue" : "Play now"} /> */}
+                {/* 
                 {inQueue ? (
                     <div className='pt-12 text-center'>
                         you can use a second wallet to play against yourself if you want to see the experience!
@@ -140,36 +145,9 @@ export default function PlayRPS() {
                     <div className='pt-12 text-center'>
                         There is someone in the queue waiting so you will play immediately!
                     </div>
-                )}
+                )} */}
 
-                <div className='flex justify-center align-middle pt:12 md:pt-24 justify-items-center'>
-                    <div className='mx-auto'>
-                        <button
-                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800 disabled:bg-slate-950'
-                            onClick={() => { executeFlowTx(1); }}
-                            disabled={inQueue}>
-                            ROCK
-                        </button>
-                    </div>
-                    <div className='mx-auto'>
-                        <button
-                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
-                            onClick={() => { executeFlowTx(2); }}
-                            disabled={inQueue}>
-                            PAPER
 
-                        </button>
-                    </div>
-                    <div className='mx-auto'>
-                        <button
-                            className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800'
-                            onClick={() => { executeFlowTx(3); }}
-                            disabled={inQueue}>
-                            SCISSORS
-                        </button>
-                    </div>
-
-                </div>
             </section>
             <section className='pt-12 md:pt-24'>
                 {/* <div>{JSON.stringify(writeError?.message)}</div> */}

@@ -76,8 +76,11 @@ export default function CreateGameModules() {
 
 
     return (
-        <section id='hero' className='relative items-center pt-12 text-center'>
-            <div className='grid grid-cols-1 gap-8 mx-12 md:grid-cols-2'>
+        <section id='hero' className='relative'>
+            <div className='p-4 text-2xl'>
+                Game Components
+            </div>
+            <div className='grid grid-cols-1 gap-8 mx-12 md:grid-cols-2 pt-8'>
                 {Array.from({ length: currentModules?.length as number }).map((object, i) => {
                     if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
 

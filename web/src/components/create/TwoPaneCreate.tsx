@@ -2,14 +2,11 @@
 
 import { useWriteGameFactoryCreateGame, useReadComponentRegistryGetComponents, useWriteGameFactoryCreateGameWithComponents } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
-import SmallTitle from '../base/SmallTitle';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
-import ChooseModule from './ChooseModule';
 import { useEffect, useState } from 'react';
 import { Address, getAddress } from 'viem';
 import { WriteIPFS } from '@/mutations/WriteIPFS';
 import { toast } from 'react-toastify';
-import CreateForm from './CreateFormOld';
 import CreateGameForm from './CreateGameForm';
 import CreateGameModules from './CreateGameModules';
 

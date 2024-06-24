@@ -32,9 +32,9 @@ type ResultProps = {
 export default function RPSResult(props: ResultProps) {
 
     let actionmap = [
-        { num: "1", value: 'rock', image:  '/images/rockpaperscissors/rock.png' },
-        { num: "2", value: 'paper', image:  '/images/rockpaperscissors/paper.png' },
-        { num: "3", value: 'scissors', image:  '/images/rockpaperscissors/scissors.png' },
+        { num: "1", value: 'rock', image: '/images/rockpaperscissors/rock.png' },
+        { num: "2", value: 'paper', image: '/images/rockpaperscissors/paper.png' },
+        { num: "3", value: 'scissors', image: '/images/rockpaperscissors/scissors.png' },
     ]
 
     // const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
@@ -141,7 +141,7 @@ export default function RPSResult(props: ResultProps) {
 
                 <div className='absolute bottom-[22%] left-[18%] rotate-45'>
                     <Image
-                        src={actionmap[props.selected -1].image}
+                        src={actionmap[props.selected - 1].image}
                         // src={rock}
                         alt="Rock Paper Scissors"
                         width={200}
@@ -165,42 +165,116 @@ export default function RPSResult(props: ResultProps) {
 
     function lastGameView() {
         return (
-            <section>
+            <section className=' grid gap-2 md:gap-2 grid-cols-1 md:grid-cols-3 md:px-12'>
+                {/* row */}
 
-                <div className='absolute bottom-[22%] left-[18%] rotate-45'>
+                {/* <div className='md:block hidden ' /> */}
+                <div className='text-5xl md:text-6xl lg:text-8xl text-center md:col-span-3 '>
+                    {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == props.address ? "winner" : "loser"}
+                </div>
+                {/* <div className='md:block hidden ' /> */}
+
+
+                {/* row */}
+                <div className='block md:hidden -pt-12' />
+                <div className='md:block hidden pt-12 col-span-3' />
+                <div className='scale-75 md:scale-100'>
                     <Image
-                        // src={actionmap[action].image}
-                        src={rock}
+                        className='rotate-45 mx-auto'
+                        src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
+                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                        width={200}
+                        height={200} />
+                </div>
 
+                <div className='md:block hidden' />
+
+                <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
+                    {pretty(props.address)}
+                </div>
+                {/* <div className=' border-2 '> */}
+                <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
+                    <Image
+                        className='rotate-180 '
+                        src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
+                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                        width={200}
+                        height={200} />
+                </div>
+                <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
+                    {pretty(lastGame?.opponent)}
+                </div>
+
+                {/* <div className='md:block hidden' /> */}
+
+                <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
+                    {pretty(props.address)}
+                </div>
+                <div className='md:block hidden' />
+                <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
+                    {pretty(lastGame?.opponent)}
+                </div>
+                <div className='md:block hidden' />
+                <div className='md:block hidden' />
+
+
+                {/* <div className=' border-2 ' /> */}
+
+
+            </section>
+        )
+    }
+
+
+
+
+    function lastGameViewold() {
+        return (
+            <section className=''>
+
+                <div className='absolute bottom-[45%] lg:bottom-[22%] left-[18%] rotate-45 scale-75 lg:scale-100'>
+                    <Image
+                        src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
                         alt="Rock Paper Scissors"
                         width={200}
                         height={200} />
                 </div>
-                <div className='absolute bottom-[22%] right-[22%] -rotate-45 -scale-y-100 '>
+                <div className='absolute  bottom-[10%] lg:bottom-[22%] right-[22%] -rotate-45 -scale-y-75 lg:-scale-y-100 scale-75 lg:scale-100 '>
                     <Image
                         className='rotate-180'
-                        src={rock}
+                        src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
                         alt="Rock Paper Scissors"
                         width={200}
                         height={200} />
                 </div>
 
-                <div>
-                    {props.address}
+                <div className='absolute bottom-[48%] lg:bottom-[10%] lg:left-[15%] text-xl lg:text-4xl text-selected  '>
+                    {pretty(props.address)}
                 </div>
-                <div>
-                    {lastGame?.opponent}
+                <div className='absolute bottom-[8%] lg:bottom-[10%] right-[15%] text-xl lg:text-4xl text-red'>
+                    {pretty(lastGame?.opponent)}
                 </div>
 
-                <div className='absolute text-6xl top-[15%]   '>
-                    {lastGame!.winner == zeroAddress ? "Draw" : lastGame!.winner == props.address ? "Win" : "Loss"}
-                </div>
+                {lastGame!.winner == zeroAddress ?
+                    <div className='absolute text-4xl lg:text-8xl top-[15%] inset-1/2 left-[40%]  '>
+                        Draw
+                    </div>
+                    : lastGame!.winner == props.address ?
+                        <div className='absolute text-4xl lg:text-8xl top-[15%] inset-1/2 left-[32%]  '>
+                            Winner
+                        </div>
+                        :
+                        <div className='absolute text-4xl lg:text-8xl top-[15%] inset-1/2 left-[32%]  '>
+                            Loser
+                        </div>
+                }
+
             </section>
         )
     }
 
     function getView() {
-        return inQueue ? inQueueView() : ((lastGame && lastGame.opponent != zeroAddress)? lastGameView() : unplayedView());
+        return inQueue ? inQueueView() : ((lastGame && lastGame.opponent != zeroAddress) ? lastGameView() : unplayedView());
 
 
         // return inQueueView();
@@ -209,7 +283,7 @@ export default function RPSResult(props: ResultProps) {
 
 
     return (
-        <section className='relative min-h-[500px] px-12 pt-24 md:px-24 ' >
+        <section className='relative  pt-12' >
             {getView()}
 
             <section>
@@ -258,16 +332,16 @@ export default function RPSResult(props: ResultProps) {
 
                 </div> */}
                 {(lastGame && lastGame.opponent != zeroAddress) ? (<div className='pt-12'>
-                    <SmallTitle title="last game" />
-                    <div className="pt-12 text-2xl text-center md:pt-24">
+                    {/* <SmallTitle title="last game" /> */}
+                    {/* <div className="pt-12 text-2xl text-center md:pt-24">
                         Your last game was a
-                    </div>
+                    </div> */}
                     {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
-                    <div className="text-4xl text-center ">
+                    {/* <div className="text-4xl text-center ">
                         {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == props.address ? "win" : "loss"}
-                    </div>
+                    </div> */}
 
-                    <div className="grid gap-8 py-8 pt-12 md:grid-cols-2 md:pt-24">
+                    {/* <div className="grid gap-8 py-8 pt-12 md:grid-cols-2 md:pt-24">
                         <div className="mx-12">
                             <div className="text-lg border-b-2 border-white ">
                                 You played
@@ -291,7 +365,7 @@ export default function RPSResult(props: ResultProps) {
 
 
 
-                    </div>
+                    </div> */}
 
                 </div>) : (<></>)}
 

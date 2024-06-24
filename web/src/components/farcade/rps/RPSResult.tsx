@@ -4,8 +4,8 @@ import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import useDeployment from "@/hooks/useDeployment";
 import { executeFlow } from '@/services/viemService';
 import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadPvpResultGetLastGame, useReadQueueSessionGetPlayerCount, useReadQueueSessionIsPlayerInQueue, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
-import { GameFuncParams } from '@/domain/Domain';
-import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
+import { Deployment, GameFuncParams } from '@/domain/Domain';
+import { useAccount, useEnsName, useWaitForTransactionReceipt } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
 import { Abi, Address, decodeEventLog, erc20Abi, erc721Abi, zeroAddress } from 'viem';
 import SmallTitle from '@/components/base/SmallTitle';
@@ -15,36 +15,42 @@ import { config } from '@/domain/WagmiConfig';
 import { bigIntReplacer, pretty } from '@/domain/utils';
 import paper from '@/images/rockpaperscissors/paper.png';
 import rock from '@/images/rockpaperscissors/rock.png';
+import scissors from '@/images/rockpaperscissors/scissors.png';
 import Image from 'next/image';
 // import rock from '@/images/rps-rock.png';
 
 
-export default function RPSResult() {
 
-    const { deploy } = useDeployment();
-    const { address } = useAccount();
+type ResultProps = {
+    deploy: Deployment;
+    address: Address;
+    actionmap: { num: string, value: string, image: any }[];
+    selected: number;
+}
+
+
+export default function RPSResult(props: ResultProps) {
+
+    let actionmap = [
+        { num: "1", value: 'rock', image:  '/images/rockpaperscissors/rock.png' },
+        { num: "2", value: 'paper', image:  '/images/rockpaperscissors/paper.png' },
+        { num: "3", value: 'scissors', image:  '/images/rockpaperscissors/scissors.png' },
+    ]
 
     // const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
-    const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: deploy.queueComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
+    const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: props.deploy.queueComponent, args: [props.deploy.rpsGame] });
+    const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: props.deploy.queueComponent, args: [props.deploy.rpsGame, props.address] });
     // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
-    const { data: lastGame, error: lastGameError, refetch: refetchGetLastGame } = useReadPvpResultGetLastGame({ address: deploy.resultComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
+    const { data: lastGame, error: lastGameError, refetch: refetchGetLastGame } = useReadPvpResultGetLastGame({ address: props.deploy.resultComponent, args: [props.deploy.rpsGame, props.address] });
 
 
     const { data: hash, error: writeError, writeContract } = useWriteGame();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
-
-    let actionmap = [
-        { num: "0", value: 'not found?' },
-        { num: "1", value: 'rock' },
-        { num: "2", value: 'paper' },
-        { num: "3", value: 'scissors' }
-    ]
-
+    const { data: ens, error: ensError } = useEnsName({ address: props.address, chainId: 1 });
 
     const executeFlowTx = (action: number) => {
-        console.log("games and address", address)
-        if (!address) {
+        console.log("games and address", props.address)
+        if (!props.address) {
             console.log("too soon!");
             return;
         }
@@ -52,14 +58,14 @@ export default function RPSResult() {
         const params: GameFuncParams = {
             strings: [],
             uints: [{ name: 'action', value: BigInt(action) }],
-            addresses: [{ name: "player", value: address! }],
+            addresses: [{ name: "player", value: props.address! }],
         }
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
         // console.log("params", params);
         // console.log("watching for component: ", deploy.rpsComponent)
         // console.log("watching for game: ", deploy.rpsGame)
-        writeContract({ address: deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
+        writeContract({ address: props.deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
 
 
     }
@@ -100,16 +106,14 @@ export default function RPSResult() {
         // }
     }, [queueError, writeError, isLoading, isSuccess, data]);
 
-
-
-    return (
-        <section className='relative min-h-[500px] px-12 pt-24 md:px-24 ' >
+    function inQueueView() {
+        return (
             <section>
                 <div className='absolute top-0 left-0 p-5 text-xl text-tavernGreen'>
-                    kirox.eth
+                    {ens ? ens : pretty(props.address)}
                 </div>
                 <div className='absolute bottom-0 right-0 p-5 text-xl text-red'>
-                    edwardf.eth
+                    Loading...
                 </div>
                 <div className='absolute top-[10%] left-[20%] rotate-45'>
                     <Image
@@ -118,17 +122,95 @@ export default function RPSResult() {
                         width={200}
                         height={200} />
                 </div>
-                <div className='absolute bottom-[10%] right-[20%] -rotate-45'>
+                <div className='absolute bottom-[25%] right-[15%] '>
+                    <div className='text-xl'>
+                        Waiting for Opponent
+                    </div>
+
+                </div>
+                <div className='absolute text-8xl top-1/2 right-1/2 -mx-12 -my-12'>
+                    vs
+                </div>
+            </section>
+        )
+    }
+
+    function unplayedView() {
+        return (
+            <section>
+
+                <div className='absolute bottom-[22%] left-[18%] rotate-45'>
                     <Image
-                        src={paper}
+                        src={actionmap[props.selected -1].image}
+                        // src={rock}
                         alt="Rock Paper Scissors"
                         width={200}
                         height={200} />
                 </div>
-                <div className='absolute mx-auto text-6xl text-center inset-1/2'>
-                    vs
+                <div className='absolute bottom-[22%] right-[22%] -rotate-45 -scale-y-100 '>
+                    <Image
+                        className='rotate-180'
+                        src={rock}
+                        alt="Rock Paper Scissors"
+                        width={200}
+                        height={200} />
+                </div>
+
+                <div className='absolute text-6xl top-[15%]   '>
+                    Make your move
                 </div>
             </section>
+        )
+    }
+
+    function lastGameView() {
+        return (
+            <section>
+
+                <div className='absolute bottom-[22%] left-[18%] rotate-45'>
+                    <Image
+                        // src={actionmap[action].image}
+                        src={rock}
+
+                        alt="Rock Paper Scissors"
+                        width={200}
+                        height={200} />
+                </div>
+                <div className='absolute bottom-[22%] right-[22%] -rotate-45 -scale-y-100 '>
+                    <Image
+                        className='rotate-180'
+                        src={rock}
+                        alt="Rock Paper Scissors"
+                        width={200}
+                        height={200} />
+                </div>
+
+                <div>
+                    {props.address}
+                </div>
+                <div>
+                    {lastGame?.opponent}
+                </div>
+
+                <div className='absolute text-6xl top-[15%]   '>
+                    {lastGame!.winner == zeroAddress ? "Draw" : lastGame!.winner == props.address ? "Win" : "Loss"}
+                </div>
+            </section>
+        )
+    }
+
+    function getView() {
+        return inQueue ? inQueueView() : ((lastGame && lastGame.opponent != zeroAddress)? lastGameView() : unplayedView());
+
+
+        // return inQueueView();
+        // return unplayedView();
+    }
+
+
+    return (
+        <section className='relative min-h-[500px] px-12 pt-24 md:px-24 ' >
+            {getView()}
 
             <section>
                 {/* <SmallTitle title={inQueue ? "Waiting for player" : Number(queueSize) == 0 ? "Join Queue" : "Play now"} /> */}
@@ -182,7 +264,7 @@ export default function RPSResult() {
                     </div>
                     {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
                     <div className="text-4xl text-center ">
-                        {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == address ? "win" : "loss"}
+                        {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == props.address ? "win" : "loss"}
                     </div>
 
                     <div className="grid gap-8 py-8 pt-12 md:grid-cols-2 md:pt-24">
@@ -191,7 +273,7 @@ export default function RPSResult() {
                                 You played
                             </div>
                             <div>
-                                {actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                                {props.actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
                             </div>
 
                         </div>
@@ -202,7 +284,7 @@ export default function RPSResult() {
                                 your opponent, {pretty(lastGame?.opponent)}, played
                             </div>
                             <div>
-                                {actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.value}
+                                {props.actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.value}
                             </div>
 
                         </div>

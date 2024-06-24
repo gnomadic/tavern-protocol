@@ -23,7 +23,8 @@ export const bigIntReplacer = (key: any, value: any) =>
 
 
 
-export function pretty(address :Address){
+export function pretty(address :Address | undefined){
+	if (!address) return "";
     return `${address.toString().substring(0, 6)}...${address.toString().substring(38, 42)}`;
 }
 

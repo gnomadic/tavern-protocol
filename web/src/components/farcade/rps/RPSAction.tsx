@@ -4,7 +4,7 @@ import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import useDeployment from "@/hooks/useDeployment";
 import { executeFlow } from '@/services/viemService';
 import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadPvpResultGetLastGame, useReadQueueSessionGetPlayerCount, useReadQueueSessionIsPlayerInQueue, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
-import { GameFuncParams } from '@/domain/Domain';
+import { Deployment, GameFuncParams } from '@/domain/Domain';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import useThrowBall from '@/mutations/useThrowBall';
 import { Abi, Address, decodeEventLog, erc20Abi, erc721Abi, zeroAddress } from 'viem';
@@ -15,34 +15,36 @@ import { config } from '@/domain/WagmiConfig';
 import { bigIntReplacer, pretty } from '@/domain/utils';
 
 
-export default function RPSAction() {
+type ActionProps = {
+    deploy: Deployment;
+    address: Address;
+    actionmap: { num: string, value: string, image: any }[];
+    selected: number;
+    setSelected: (n: number) => void;
 
-    const { deploy } = useDeployment();
-    const { address } = useAccount();
+}
+
+export default function RPSAction(props: ActionProps) {
+
 
     // const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: deploy.queueComponent, args: [deploy.rpsGame] });
-    const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: deploy.queueComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
+    const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: props.deploy.queueComponent, args: [props.deploy.rpsGame] });
+    const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: props.deploy.queueComponent, args: [props.deploy.rpsGame, props.address] });
     // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
-    const { data: lastGame, error: lastGameError, refetch: refetchGetLastGame } = useReadPvpResultGetLastGame({ address: deploy.resultComponent, args: [deploy.rpsGame, address ? address : zeroAddress] });
+    const { data: lastGame, error: lastGameError, refetch: refetchGetLastGame } = useReadPvpResultGetLastGame({ address: props.deploy.resultComponent, args: [props.deploy.rpsGame, props.address] });
 
 
     const { data: hash, error: writeError, writeContract } = useWriteGame();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
-    const [selected, setSelected] = useState<number>(0);
+    // const [selected, setSelected] = useState<number>(0);
 
-    let actionmap = [
-        // { num: "0", value: 'not found?' },
-        { num: "1", value: 'Rock' },
-        { num: "2", value: 'Paper' },
-        { num: "3", value: 'Scissors' }
-    ]
+
 
 
     const executeFlowTx = (action: number) => {
-        console.log("games and address", address)
-        if (!address) {
+        console.log("games and address", props.address)
+        if (!props.address) {
             console.log("too soon!");
             return;
         }
@@ -50,14 +52,14 @@ export default function RPSAction() {
         const params: GameFuncParams = {
             strings: [],
             uints: [{ name: 'action', value: BigInt(action) }],
-            addresses: [{ name: "player", value: address! }],
+            addresses: [{ name: "player", value: props.address! }],
         }
 
         // const write = await executeFlow(games[0].game, "playRPS", params);
         // console.log("params", params);
         // console.log("watching for component: ", deploy.rpsComponent)
         // console.log("watching for game: ", deploy.rpsGame)
-        writeContract({ address: deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
+        writeContract({ address: props.deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
 
 
     }
@@ -110,14 +112,13 @@ export default function RPSAction() {
             <div className='px-4 text-lg font-outfit'>
                 Choice
             </div>
-
             <div className='flex gap-2 p-4 text-xs font-outfit'>
-                {actionmap.map((element, i) => {
+                {props.actionmap.map((element, i) => {
                     return (
                         <button
                             key={i}
-                            className={'justify-center py-4 border rounded-md basis-1/3 bg-slate-800 ' + ((selected === i) ? 'border-selected text-selected' : 'border-unselected text-unselected')}
-                            onClick={() => { setSelected(i); }}
+                            className={'justify-center py-4 border rounded-md basis-1/3 bg-slate-800 ' + ((props.selected === i + 1) ? 'border-selected text-selected' : 'border-unselected text-unselected')}
+                            onClick={() => { props.setSelected(i + 1); }}
                         >
                             {element.value}
                         </button>
@@ -130,7 +131,7 @@ export default function RPSAction() {
             <div className='absolute bottom-0 flex p-4 inset-x-1'>
                 <button
                     className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
-                    onClick={() => { executeFlowTx(selected); }}
+                    onClick={() => { executeFlowTx(props.selected); }}
                 >
                     play
                 </button>

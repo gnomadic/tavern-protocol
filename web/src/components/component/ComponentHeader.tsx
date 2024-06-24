@@ -19,14 +19,14 @@ export default function ComponentHeader(props: HeaderProps) {
   const { data } = useMetadata<ComponentMetadata>(summary?.metadata);
 
   return (
-    <section className='px-8 py-20 md:px-16'>
-      <div className='border border-white border-dashed'>
+    <section className=''>
+      <div className=''>
 
         <div className='p-4 text-2xl'>
           {data ? censor(data.name) : "loading"}
         </div>
         <div className="px-6 py-2 text-lightgrey">
-              {data.description}
+              {data ? data.description : "loading"}
             </div>
         {/* {!summary || !data ? "loading" :
           <div>

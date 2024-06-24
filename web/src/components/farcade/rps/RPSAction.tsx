@@ -112,26 +112,39 @@ export default function RPSAction(props: ActionProps) {
             <div className='px-4 text-lg font-outfit'>
                 Choice
             </div>
+            {/* <div className='px-4 text-lg font-outfit'>
+                {props.selected}
+            </div> */}
+
             <div className='flex gap-2 p-4 text-xs font-outfit'>
                 {props.actionmap.map((element, i) => {
-                    return (
-                        <button
-                            key={i}
-                            className={'justify-center py-4 border rounded-md basis-1/3 bg-slate-800 ' + ((props.selected === i + 1) ? 'border-selected text-selected' : 'border-unselected text-unselected')}
-                            onClick={() => { props.setSelected(i + 1); }}
-                        >
-                            {element.value}
-                        </button>
+                    if (i != 0) {
+                        return (
+                            <button
+                                key={i}
+                                className={'justify-center py-4 border rounded-md basis-1/3 bg-slate-800 ' + ((props.selected === i) ? 'border-selected text-selected' : 'border-unselected text-unselected')}
+                                onClick={() => {
+                                    if (props.selected == i) {
+                                        props.setSelected(0);
+                                    } else {
+                                        props.setSelected(i);
+                                    }
+                                }}
+                            >
+                                {element.value}
+                            </button>
 
-                    );
+                        );
+                    }
                 })}
 
 
             </div>
             <div className='absolute bottom-0 flex p-4 inset-x-1'>
                 <button
-                    className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
+                    className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen disabled:bg-lightgrey'
                     onClick={() => { executeFlowTx(props.selected); }}
+                    disabled={inQueue || props.selected === 0}
                 >
                     play
                 </button>

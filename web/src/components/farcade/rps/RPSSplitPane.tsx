@@ -1,6 +1,5 @@
 'use client';
 
-import { GlobeAltIcon } from '@heroicons/react/20/solid';
 import useDeployment from "@/hooks/useDeployment";
 import { executeFlow } from '@/services/viemService';
 import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadPvpResultGetLastGame, useReadQueueSessionGetPlayerCount, useReadQueueSessionIsPlayerInQueue, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
@@ -25,17 +24,14 @@ export default function RPSSplitPane() {
     const { deploy } = useDeployment();
     const { address } = useAccount();
 
-
-
-
     let actionmap = [
-        // { num: "0", value: 'not found?', image: { rock } },
-        { num: "1", value: 'rock', image: { rock } },
-        { num: "2", value: 'paper', image: { paper } },
-        { num: "3", value: 'scissors', image: { scissors } }
+        { num: "0", value: 'choose', image: '/images/rockpaperscissors/rock.png' },
+        { num: "1", value: 'rock', image: '/images/rockpaperscissors/rock.png' },
+        { num: "2", value: 'paper', image: '/images/rockpaperscissors/paper.png' },
+        { num: "3", value: 'scissors', image: '/images/rockpaperscissors/scissors.png' },
     ]
 
-    const [selected, setSelected] = useState<number>(1);
+    const [selected, setSelected] = useState<number>(0);
 
 
     return (

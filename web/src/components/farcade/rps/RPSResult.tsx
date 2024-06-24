@@ -108,6 +108,56 @@ export default function RPSResult(props: ResultProps) {
 
     function inQueueView() {
         return (
+            <section className=' grid gap-2 md:gap-2 grid-cols-1 md:grid-cols-3 md:px-12'>
+
+                <div className='text-5xl md:text-6xl lg:text-8xl text-center md:col-span-3 '>
+                    Waiting...
+                </div>
+
+                <div className='block md:hidden -pt-12' />
+                <div className='md:block hidden pt-12 col-span-3' />
+                <div className='scale-75 md:scale-100'>
+                    <Image
+                        className='rotate-45 mx-auto'
+                        src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
+                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                        width={200}
+                        height={200} />
+                </div>
+
+                <div className='md:block hidden' />
+
+                <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
+                    {pretty(props.address)}
+                </div>
+                <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
+                    <Image
+                        className='rotate-180 '
+                        src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
+                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                        width={200}
+                        height={200} />
+                </div>
+                <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
+                    Loading...
+                </div>
+
+
+                <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
+                    {pretty(props.address)}
+                </div>
+                <div className='md:block hidden' />
+                <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
+                    Loading...
+                </div>
+                <div className='md:block hidden' />
+                <div className='md:block hidden' />
+
+            </section>
+        )
+    }
+    function inQueueViewOld() {
+        return (
             <section>
                 <div className='absolute top-0 left-0 p-5 text-xl text-tavernGreen'>
                     {ens ? ens : pretty(props.address)}
@@ -135,29 +185,58 @@ export default function RPSResult(props: ResultProps) {
         )
     }
 
+
     function unplayedView() {
         return (
             <section>
-
-                <div className='absolute bottom-[22%] left-[18%] rotate-45'>
-                    <Image
-                        src={actionmap[props.selected - 1].image}
-                        // src={rock}
-                        alt="Rock Paper Scissors"
-                        width={200}
-                        height={200} />
+                <div className='text-2xl p-4'>
+                    Your next game
                 </div>
-                <div className='absolute bottom-[22%] right-[22%] -rotate-45 -scale-y-100 '>
-                    <Image
-                        className='rotate-180'
-                        src={rock}
-                        alt="Rock Paper Scissors"
-                        width={200}
-                        height={200} />
-                </div>
+                <div className=' grid gap-2 md:gap-2 grid-cols-1 md:grid-cols-3 md:px-12'>
 
-                <div className='absolute text-6xl top-[15%]   '>
-                    Make your move
+                    <div className='text-5xl md:text-6xl lg:text-8xl text-center md:col-span-3 '>
+                        Choose
+                    </div>
+
+                    <div className='block md:hidden -pt-12' />
+                    <div className='md:block hidden pt-12 col-span-3' />
+                    <div className='scale-75 md:scale-100'>
+                        <Image
+                            className='rotate-45 mx-auto'
+                            src={props.actionmap[props.selected].image}
+                            alt={props.actionmap[props.selected].value}
+                            width={200}
+                            height={200} />
+                    </div>
+
+                    <div className='md:block hidden' />
+
+                    <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
+                        {pretty(props.address)}
+                    </div>
+                    {/* <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
+                <Image
+                    className='rotate-180 '
+                    src={props.actionmap[1].image}
+                    alt={props.actionmap[1].value}
+                    width={200}
+                    height={200} />
+            </div> */}
+                    {/* <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
+                {pretty(lastGame?.opponent)}
+            </div> */}
+                    <div className='md:block hidden' />
+
+
+                    <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
+                        {pretty(props.address)}
+                    </div>
+                    <div className='md:block hidden' />
+                    {/* <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
+                {pretty(lastGame?.opponent)}
+            </div> */}
+                    <div className='md:block hidden' />
+                    <div className='md:block hidden' />
                 </div>
             </section>
         )
@@ -165,116 +244,63 @@ export default function RPSResult(props: ResultProps) {
 
     function lastGameView() {
         return (
-            <section className=' grid gap-2 md:gap-2 grid-cols-1 md:grid-cols-3 md:px-12'>
-                {/* row */}
-
-                {/* <div className='md:block hidden ' /> */}
-                <div className='text-5xl md:text-6xl lg:text-8xl text-center md:col-span-3 '>
-                    {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == props.address ? "winner" : "loser"}
+            <section>
+                <div className='text-2xl p-4'>
+                    Your last game
                 </div>
-                {/* <div className='md:block hidden ' /> */}
+                <div className=' grid gap-2 md:gap-2 grid-cols-1 md:grid-cols-3 md:px-12'>
 
-
-                {/* row */}
-                <div className='block md:hidden -pt-12' />
-                <div className='md:block hidden pt-12 col-span-3' />
-                <div className='scale-75 md:scale-100'>
-                    <Image
-                        className='rotate-45 mx-auto'
-                        src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
-                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
-                        width={200}
-                        height={200} />
-                </div>
-
-                <div className='md:block hidden' />
-
-                <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
-                    {pretty(props.address)}
-                </div>
-                {/* <div className=' border-2 '> */}
-                <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
-                    <Image
-                        className='rotate-180 '
-                        src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
-                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
-                        width={200}
-                        height={200} />
-                </div>
-                <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
-                    {pretty(lastGame?.opponent)}
-                </div>
-
-                {/* <div className='md:block hidden' /> */}
-
-                <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
-                    {pretty(props.address)}
-                </div>
-                <div className='md:block hidden' />
-                <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
-                    {pretty(lastGame?.opponent)}
-                </div>
-                <div className='md:block hidden' />
-                <div className='md:block hidden' />
-
-
-                {/* <div className=' border-2 ' /> */}
-
-
-            </section>
-        )
-    }
-
-
-
-
-    function lastGameViewold() {
-        return (
-            <section className=''>
-
-                <div className='absolute bottom-[45%] lg:bottom-[22%] left-[18%] rotate-45 scale-75 lg:scale-100'>
-                    <Image
-                        src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
-                        alt="Rock Paper Scissors"
-                        width={200}
-                        height={200} />
-                </div>
-                <div className='absolute  bottom-[10%] lg:bottom-[22%] right-[22%] -rotate-45 -scale-y-75 lg:-scale-y-100 scale-75 lg:scale-100 '>
-                    <Image
-                        className='rotate-180'
-                        src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
-                        alt="Rock Paper Scissors"
-                        width={200}
-                        height={200} />
-                </div>
-
-                <div className='absolute bottom-[48%] lg:bottom-[10%] lg:left-[15%] text-xl lg:text-4xl text-selected  '>
-                    {pretty(props.address)}
-                </div>
-                <div className='absolute bottom-[8%] lg:bottom-[10%] right-[15%] text-xl lg:text-4xl text-red'>
-                    {pretty(lastGame?.opponent)}
-                </div>
-
-                {lastGame!.winner == zeroAddress ?
-                    <div className='absolute text-4xl lg:text-8xl top-[15%] inset-1/2 left-[40%]  '>
-                        Draw
+                    {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
+                    <div className='text-5xl md:text-6xl lg:text-8xl text-center md:col-span-3 '>
+                        {(lastGame?.winner == zeroAddress || lastGame?.myAction === lastGame?.opponentAction)  ? "Draw" : lastGame?.winner == props.address ? "Winner" : "Loser"}
                     </div>
-                    : lastGame!.winner == props.address ?
-                        <div className='absolute text-4xl lg:text-8xl top-[15%] inset-1/2 left-[32%]  '>
-                            Winner
-                        </div>
-                        :
-                        <div className='absolute text-4xl lg:text-8xl top-[15%] inset-1/2 left-[32%]  '>
-                            Loser
-                        </div>
-                }
 
+                    <div className='block md:hidden -pt-12' />
+                    <div className='md:block hidden pt-12 col-span-3' />
+                    <div className='scale-75 md:scale-100'>
+                        <Image
+                            className='rotate-45 mx-auto'
+                            src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
+                            alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                            width={200}
+                            height={200} />
+                    </div>
+
+                    <div className='md:block hidden' />
+
+                    <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
+                        {pretty(props.address)}
+                    </div>
+                    <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
+                        <Image
+                            className='rotate-180 '
+                            src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
+                            alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                            width={200}
+                            height={200} />
+                    </div>
+                    <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
+                        {pretty(lastGame?.opponent)}
+                    </div>
+
+
+                    <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
+                        {pretty(props.address)}
+                    </div>
+                    <div className='md:block hidden' />
+                    <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
+                        {pretty(lastGame?.opponent)}
+                    </div>
+                    <div className='md:block hidden' />
+                    <div className='md:block hidden' />
+
+                </div>
             </section>
         )
     }
 
     function getView() {
-        return inQueue ? inQueueView() : ((lastGame && lastGame.opponent != zeroAddress) ? lastGameView() : unplayedView());
+        return inQueue ? inQueueView() : ((props.selected === 0 && lastGame && lastGame.opponent != zeroAddress) ? lastGameView() : unplayedView());
 
 
         // return inQueueView();
@@ -283,7 +309,7 @@ export default function RPSResult(props: ResultProps) {
 
 
     return (
-        <section className='relative  pt-12' >
+        <section className='relative' >
             {getView()}
 
             <section>

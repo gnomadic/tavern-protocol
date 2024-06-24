@@ -22,28 +22,29 @@ export default function ExploreComponents() {
   }, [curError, countError]);
 
   return (
-    <div className="px-6 md:px-24 pt-12">
+    <section className='px-8 py-20 md:px-16'>
 
-      <div className='text-center text-2xl md:text-5xl border-b-2 border-t-2 border-white py-2 uppercase'>
-        {deploy.chain}{'/'}reg{'/'}{moduleCount ? moduleCount.toString() : "..."}
-      </div>
+    <div className=" border border-white border-dashed">
 
+        <div className='p-4 text-2xl'>
+            Explore components
+        </div>
 
-      <ul className='pb-24 pt-12'>
+        <div className='pb-24 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8 px-8'>
         {Array.from({ length: currentModules ? currentModules.length : 0 }).map((object, i) => {
           if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
             return (
-              <li key={i} className="pt-8 pb-8">
                 <ModuleCard
+                 key={i}
                   index={i}
                   address={currentModules![i].component}
                   metadata={currentModules![i].metadata}
                 />
-              </li>
             );
           }
         })}
-      </ul>
-    </div>
+      </div>
+      </div>
+    </section>
   );
 }

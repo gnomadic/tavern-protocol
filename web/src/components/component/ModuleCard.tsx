@@ -18,12 +18,12 @@ export default function ModuleCard(props: ModuleCardProps) {
   const { data } = useMetadata<ComponentMetadata>(props.metadata);
 
   return (
-    <div className='border-2 border-gray-500'>
+    <div className='border-2 border-lightgrey rounded-md'>
       <Link href={`/component/${props.address}`}>
-        <div className='border-b-2 border-white text-2xl pl-4 py-2'>
-          {props.index + 1}{"/"}{data ? censor(data.name) : "loading"}
+        <div className='text-2xl pl-4 py-2'>
+          {data ? censor(data.name) : "loading"}
         </div>
-        <div className='pt-5 pb-2 pl-2 text-sm'>
+        <div className='p-4 text-sm'>
           {censor(data?.description)}
         </div>
       </Link>

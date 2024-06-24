@@ -24,7 +24,7 @@ export const config = getDefaultConfig({
       
       baseSepolia,
       sepolia,
-      mainnet,
+      // mainnet,
       
       ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [localhost] : []),
     ],

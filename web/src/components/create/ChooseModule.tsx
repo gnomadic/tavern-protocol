@@ -24,7 +24,7 @@ export default function ChooseModule(props: ModuleCardProps) {
       className={'border-2 rounded-md ' + cardClass + textClass}
       onClick={() => props.setSelected(props.address)}
     >
-      <div className='py-2 pl-4 text-2xl border-white active:border-blue-500'>
+      <div className='py-2 pl-4 text-2xl border-white'>
         {data ? censor(data.name) : "loading"}
       </div>
       <div className='pt-2 pb-2 pl-2 text-sm m-2'>

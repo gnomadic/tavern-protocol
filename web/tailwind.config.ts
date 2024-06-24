@@ -22,7 +22,8 @@ const config: Config = {
      white: '#FFFFFF',
      black: '#000000',
      red: "#E94714",
-     unselected: "#616161",
+    //  unselected: "#616161",
+     unselected: "#858080",
      selected: "#E3A9FF", 
 
 

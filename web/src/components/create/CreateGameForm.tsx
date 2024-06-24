@@ -90,12 +90,12 @@ export default function CreateGameForm() {
                         </label>
                         <input type="text" id="gameName" className="w-full p-2.5 bg-darkgrey active:bg-darkgrey my-4 focus:ring-selected focus:border-selected" placeholder="my cool game" />
                     </div>
-                    <div className='px-4'>
+                    {/* <div className='px-4'>
                         <label htmlFor="gm" className="text-lg font-outfit">
                             Game Manager (GM)
                         </label>
                         <input type="text" id="gm" className="w-full p-2.5 bg-darkgrey my-4" placeholder={address} disabled value={address ? address : ""} />
-                    </div>
+                    </div> */}
                     <div className='px-4'>
                         <label htmlFor="description" className="text-lg font-outfit">
                             Description
@@ -110,7 +110,7 @@ export default function CreateGameForm() {
                     </div>
                     <div className='px-4'>
                         <label htmlFor="gameURL" className="text-lg font-outfit">
-                            Chain
+                            Network and Game Manager
                         </label>
                         <div className='pt-4'>
                         <ConnectButton 

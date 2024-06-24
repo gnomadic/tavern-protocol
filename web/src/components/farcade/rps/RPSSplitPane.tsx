@@ -36,7 +36,6 @@ export default function RPSSplitPane() {
 
     return (
         <section >
-
             <div className='flex flex-col gap-8 px-8 py-20 md:px-16 md:flex-row'>
                 <div className='border border-white border-dashed basis-1/3'>
                     <RPSAction

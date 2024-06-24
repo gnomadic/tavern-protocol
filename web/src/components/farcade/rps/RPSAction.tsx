@@ -107,19 +107,18 @@ export default function RPSAction() {
             </div>
 
 
-            <div className='px-4 text-lg'>
+            <div className='px-4 text-lg font-outfit'>
                 Choice
             </div>
 
-            <div className='flex gap-2 p-4 text-xs'>
+            <div className='flex gap-2 p-4 text-xs font-outfit'>
                 {actionmap.map((element, i) => {
                     return (
-
                         <button
                             key={i}
                             className={'justify-center py-4 border rounded-md basis-1/3 bg-slate-800 ' + ((selected === i) ? 'border-selected text-selected' : 'border-unselected text-unselected')}
                             onClick={() => { setSelected(i); }}
-                            >
+                        >
                             {element.value}
                         </button>
 
@@ -129,12 +128,10 @@ export default function RPSAction() {
 
             </div>
             <div className='absolute bottom-0 flex p-4 inset-x-1'>
-                <button 
-                className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
-                onClick={() => { executeFlowTx(selected); }}
-
+                <button
+                    className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
+                    onClick={() => { executeFlowTx(selected); }}
                 >
-                    
                     play
                 </button>
             </div>

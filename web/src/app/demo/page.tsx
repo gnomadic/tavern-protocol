@@ -19,12 +19,6 @@ export default function Demo({ params }: { params: { address: string, chainid: s
 
 
       </section>
-      {/* <section className='min-w-full pt-36'>
-        <ChainTitle title='Rock Paper Scissors' />
-      </section>
-
-      <PlayRPS /> */}
-
     </main>
   );
 }

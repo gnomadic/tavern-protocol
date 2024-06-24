@@ -18,11 +18,13 @@ const config: Config = {
     colors: {
      tavernGreen:  '#14E943',
      lightgrey: "#858080",
+     darkgrey: "#1B1B1D",
      white: '#FFFFFF',
      black: '#000000',
      red: "#E94714",
      unselected: "#616161",
      selected: "#E3A9FF", 
+
 
       
     },

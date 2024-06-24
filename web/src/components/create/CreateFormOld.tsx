@@ -10,7 +10,7 @@ import { Address, getAddress } from 'viem';
 import { WriteIPFS } from '@/mutations/WriteIPFS';
 import { toast } from 'react-toastify';
 
-export default function CreateForm() {
+export default function CreateFormOld() {
 
     const { deploy } = useDeployment();
     const { address } = useAccount()
@@ -84,8 +84,8 @@ export default function CreateForm() {
 
 
 
-            <form onSubmit={handleCreateGame} className='pt-8 px-24 '>
-                <div className="grid gap-6 grid-cols-1">
+            <form onSubmit={handleCreateGame} className='px-24 pt-8 '>
+                <div className="grid grid-cols-1 gap-6">
                     {/* <div className="grid gap-6 mb-6 md:grid-cols-2"> */}
                     <div>
                         <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
@@ -115,7 +115,7 @@ export default function CreateForm() {
                     <label htmlFor="gameURL" className="block mb-2 text-sm text-white text-start">
                         Components (Choose as many as you want)
                     </label>
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-8 mx-12'>
+                    <div className='grid grid-cols-1 gap-8 mx-12 md:grid-cols-2'>
                         {Array.from({ length: currentModules?.length as number }).map((object, i) => {
                             if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
 

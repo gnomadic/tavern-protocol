@@ -7,7 +7,8 @@ export default function Module({ params }: { params: { address: string } }) {
 
 
   return (
-    <main className='items-center px-5 md:px-24 pt-40'>
+    <main className='font-signika'>
+
       <ComponentHeader moduleAddress={params.address as Address} />
       {/* <Divider /> */}
 

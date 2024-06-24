@@ -19,13 +19,18 @@ export default function ComponentHeader(props: HeaderProps) {
   const { data } = useMetadata<ComponentMetadata>(summary?.metadata);
 
   return (
-    <section id='connect' className='relative items-start pt-24 min-w-screen'>
-      <div className='pb-2'>
-        {!summary || !data ? "loading" :
-          <div>
-            <div className='text-4xl md:text-5xl lg:text-6xl uppercase border-b-2 border-white'>
-              {deploy.chain}{'/'}reg{'/'}{data ? censor(data.name) : "loading"}
+    <section className='px-8 py-20 md:px-16'>
+      <div className='border border-white border-dashed'>
+
+        <div className='p-4 text-2xl'>
+          {data ? censor(data.name) : "loading"}
+        </div>
+        <div className="px-6 py-2 text-lightgrey">
+              {data.description}
             </div>
+        {/* {!summary || !data ? "loading" :
+          <div>
+      
             <div className='text-right pb-2 pl-4 text-xs'>
               <a target="_blank"
                 rel="noopener noreferrer"
@@ -38,13 +43,13 @@ export default function ComponentHeader(props: HeaderProps) {
                 </span>
               </a>
             </div>
-         
+
             <div className="text-base pt-6">
               {data.description}
             </div>
-            
+
           </div>
-        }
+        } */}
       </div>
     </section>
   );

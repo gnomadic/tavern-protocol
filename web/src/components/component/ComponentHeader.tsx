@@ -23,11 +23,23 @@ export default function ComponentHeader(props: HeaderProps) {
       <div className=''>
 
         <div className='p-4 text-2xl'>
-          {data ? censor(data.name) : "loading"}
+
+        <a target="_blank"
+                rel="noopener noreferrer"
+                href={deploy.scan + props.moduleAddress} >
+                {data ? censor(data.name) : "loading"}
+                <span>
+                  <ArrowUpRightIcon
+                    className="w-4 h-4 mb-3"
+                    style={{ display: "inline" }} />
+                </span>
+              </a>
+
+          
         </div>
         <div className="px-6 py-2 text-lightgrey">
-              {data ? data.description : "loading"}
-            </div>
+          {data ? data.description : "loading"}
+        </div>
         {/* {!summary || !data ? "loading" :
           <div>
       

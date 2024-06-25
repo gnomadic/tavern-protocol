@@ -142,7 +142,7 @@ export default function RPSAction(props: ActionProps) {
             </div>
             <div className='absolute bottom-0 flex p-4 inset-x-1'>
                 <button
-                    className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen disabled:bg-lightgrey'
+                    className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen disabled:hidden'
                     onClick={() => { executeFlowTx(props.selected); }}
                     disabled={inQueue || props.selected === 0}
                 >

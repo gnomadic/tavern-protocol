@@ -25,27 +25,30 @@ export default function ComponentTabs(props: StatsProps) {
         <section id='connect' className='relative items-center '>
            <Tabs  defaultIndex={0} className="pt-12">
             <TabList>
-                {/* <Tab disabled={true} >EXPLORE {'/'}</Tab> */}
                 <Tab default={true} >Play</Tab>
-                <Tab>Config</Tab>
+                <Tab>Customize</Tab>
                 <Tab>View</Tab>
             </TabList>
-            {/* <TabPanel>
-                <></>
-            </TabPanel> */}
+
             <TabPanel>
                 <ComponentStats
                 moduleAddress={props.moduleAddress}
+                functions={data?.gameFunctions ?? []}
+                displayName={"Play"}
                  />
             </TabPanel>
             <TabPanel>
                 <ComponentStats
                 moduleAddress={props.moduleAddress}
+                functions={data?.configFunctions ?? []}
+                displayName={"Customize"}
                  />
             </TabPanel>
             <TabPanel>
                 <ComponentStats
                 moduleAddress={props.moduleAddress}
+                functions={data?.readFunctions ?? []}
+                displayName={"View"}
                  />
             </TabPanel>
         </Tabs>

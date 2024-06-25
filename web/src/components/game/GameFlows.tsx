@@ -13,24 +13,23 @@ import ModuleCard from '../component/ModuleCard';
 
 type StepThreeProps = {
     gameAddress: Address
-    summary: GameSummary
 }
 
-export default function GameInfo(props: StepThreeProps) {
+export default function GameFlows(props: StepThreeProps) {
 
-    // const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
+    const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
     const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
-    const { data } = useMetadata<GameMetadata>(props.summary?.metadata);
+    const { data } = useMetadata<GameMetadata>(summary?.metadata);
     const { deploy } = useDeployment();
 
 
     return (
-        <section id='connect' className='py-12 md:py-24'>
-            <section className='mx-4 md:mx-12 font-outfit'>
-                <div className='text-lg'>
+        <section id='connect' className='pt-12 md:pt-24'>
+            <section className='mx-4 md:mx-12 '>
+                <div>
                     Play at
                 </div>
-                <div className='p-2.5 bg-darkgrey text-sm'>
+                <div>
                     <a target="_blank"
                         rel="noopener noreferrer"
                         href={data?.gameUrl} >
@@ -43,10 +42,10 @@ export default function GameInfo(props: StepThreeProps) {
                     </a>
                 </div>
 
-                <div className='text-lg'>
+                <div>
                     Deployed at
                 </div>
-                <div className='p-2.5 bg-darkgrey text-sm'>
+                <div>
                     <a target="_blank"
                         rel="noopener noreferrer"
                         href={deploy.scan + props.gameAddress} >
@@ -58,14 +57,14 @@ export default function GameInfo(props: StepThreeProps) {
                         </span>
                     </a>
                 </div>
-                <div className='text-lg'>
+                <div>
                     Game Manager (GM)
                 </div>
-                <div className='p-2.5 bg-darkgrey text-sm'>
+                <div>
                     <a target="_blank"
                         rel="noopener noreferrer"
-                        href={deploy.scan + props.summary.gm} >
-                        gm: {pretty(props.summary.gm)}
+                        href={deploy.scan + summary?.gm} >
+                        gm: {pretty(summary?.gm)}
                         <span>
                             <ArrowUpRightIcon
                                 className="w-4 h-4 mb-1"
@@ -77,7 +76,7 @@ export default function GameInfo(props: StepThreeProps) {
 
 
             </section>
-            {/* <section>
+            <section>
                 <SmallTitle title={'components/' + summary?.components.length} />
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
                     {Array.from({ length: summary?.components.length as number }).map((object, i) => {
@@ -91,8 +90,8 @@ export default function GameInfo(props: StepThreeProps) {
                         );
                     })}
                 </div>
-            </section> */}
-            {/* <section>
+            </section>
+            <section>
                 <SmallTitle title={'data/' + summary?.availableData.length} />
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
                     {Array.from({ length: summary?.availableData.length as number }).map((object, i) => {
@@ -104,8 +103,8 @@ export default function GameInfo(props: StepThreeProps) {
                         );
                     })}
                 </div>
-            </section> */}
-            {/* <section>
+            </section>
+            <section>
                 <SmallTitle title={'flows/' + summary?.flows.length} />
                 <ul className='py-12 md:py-24'>
                     {Array.from({ length: summary?.flows.length as number }).map((object, i) => {
@@ -146,7 +145,7 @@ export default function GameInfo(props: StepThreeProps) {
                         );
                     })}
                 </ul>
-            </section> */}
+            </section>
         </section>
 
     );

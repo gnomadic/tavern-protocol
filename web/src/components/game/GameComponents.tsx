@@ -14,7 +14,7 @@ import { GameSummary } from '@/domain/Domain';
 
 type StepThreeProps = {
     gameAddress: Address
-        summary: GameSummary
+    summary: GameSummary
 
 }
 

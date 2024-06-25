@@ -25,8 +25,11 @@ export default function GameInfo(props: StepThreeProps) {
 
 
     return (
-        <section id='connect' className='py-12 md:py-24'>
-            <section className='mx-4 md:mx-12 font-outfit'>
+        <section id='connect' className=' font-outfit'>
+            <div className='p-4 text-2xl'>
+                Info
+            </div>
+            <section className='mx-4 md:mx-12 py-8'>
                 <div className='text-lg'>
                     Play at
                 </div>

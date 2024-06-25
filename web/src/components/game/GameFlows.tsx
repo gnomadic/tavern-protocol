@@ -13,6 +13,7 @@ import ModuleCard from '../component/ModuleCard';
 
 type StepThreeProps = {
     gameAddress: Address
+    summary: GameSummary
 }
 
 export default function GameFlows(props: StepThreeProps) {
@@ -24,88 +25,13 @@ export default function GameFlows(props: StepThreeProps) {
 
 
     return (
-        <section id='connect' className='pt-12 md:pt-24'>
-            <section className='mx-4 md:mx-12 '>
-                <div>
-                    Play at
-                </div>
-                <div>
-                    <a target="_blank"
-                        rel="noopener noreferrer"
-                        href={data?.gameUrl} >
-                        {data ? data.gameUrl : "loading"}
-                        <span>
-                            <ArrowUpRightIcon
-                                className="w-4 h-4 mb-1"
-                                style={{ display: "inline" }} />
-                        </span>
-                    </a>
-                </div>
-
-                <div>
-                    Deployed at
-                </div>
-                <div>
-                    <a target="_blank"
-                        rel="noopener noreferrer"
-                        href={deploy.scan + props.gameAddress} >
-                        {pretty(props.gameAddress)}
-                        <span>
-                            <ArrowUpRightIcon
-                                className="w-4 h-4 mb-1"
-                                style={{ display: "inline" }} />
-                        </span>
-                    </a>
-                </div>
-                <div>
-                    Game Manager (GM)
-                </div>
-                <div>
-                    <a target="_blank"
-                        rel="noopener noreferrer"
-                        href={deploy.scan + summary?.gm} >
-                        gm: {pretty(summary?.gm)}
-                        <span>
-                            <ArrowUpRightIcon
-                                className="w-4 h-4 mb-1"
-                                style={{ display: "inline" }} />
-                        </span>
-                    </a>
-                </div>
-
-
-
-            </section>
+        <section id='connect' className=' font-outfit'>
+        <div className='p-4 text-2xl'>
+            Flows
+        </div>
+    
             <section>
-                <SmallTitle title={'components/' + summary?.components.length} />
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
-                    {Array.from({ length: summary?.components.length as number }).map((object, i) => {
-                        return (
-                            <ModuleCard
-                                key={i}
-                                index={i}
-                                address={summary?.componentSummaries[i].component!}
-                                metadata={summary?.componentSummaries[i].metadata!}
-                            />
-                        );
-                    })}
-                </div>
-            </section>
-            <section>
-                <SmallTitle title={'data/' + summary?.availableData.length} />
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12 md:py-24'>
-                    {Array.from({ length: summary?.availableData.length as number }).map((object, i) => {
-                        return (
-                            <div key={i} className="pt-8 pb-8">
-                                <div>{summary?.availableData[i].name}</div>
-                            </div>
-
-                        );
-                    })}
-                </div>
-            </section>
-            <section>
-                <SmallTitle title={'flows/' + summary?.flows.length} />
+                {/* <SmallTitle title={'flows/' + summary?.flows.length} /> */}
                 <ul className='py-12 md:py-24'>
                     {Array.from({ length: summary?.flows.length as number }).map((object, i) => {
                         return (

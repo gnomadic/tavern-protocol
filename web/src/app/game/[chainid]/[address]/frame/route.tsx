@@ -8,7 +8,7 @@ import { Address } from "viem";
 
 function prepareTxPayload(chainid: string, gameAddress: string, gameSummary: GameSummary, action: string) {
 
-  const gameFunction = gameSummary.availableFunctions.find((e) => { e.value === action })
+  const gameFunction = gameSummary.flows.find((e) => { e.values.find((a) =>{a.value === action}) })
 
 
   return {
@@ -16,7 +16,7 @@ function prepareTxPayload(chainid: string, gameAddress: string, gameSummary: Gam
     method: "eth_sendTransaction",
     params: {
       abi: [],
-      to: `${gameFunction?.value}`,
+      to: `${gameAddress}`,
       data: "",
       value: "0"
     }

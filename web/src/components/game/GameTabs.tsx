@@ -34,14 +34,24 @@ export default function GameTabs(props: StatsProps) {
             <Tabs defaultIndex={0} className="pt-12">
                 <TabList>
                     <Tab default={true} >Info</Tab>
+                    <Tab>Customize</Tab>
                     <Tab>Components</Tab>
                     <Tab>Flows</Tab>
-                    <Tab>Config</Tab>
+                    
                 </TabList>
 
                 <TabPanel>
                     {summary ?
                         <GameInfo gameAddress={props.gameAddress} summary={summary} />
+                        :
+                        <div className="py-12 md:py-24 mx-4 md:mx-12 font-outfit text-lg">
+                            loading...
+                        </div>
+                    }
+                </TabPanel>
+                <TabPanel>
+                    {summary ?
+                        <GMSection gameAddress={props.gameAddress} summary={summary} />
                         :
                         <div className="py-12 md:py-24 mx-4 md:mx-12 font-outfit text-lg">
                             loading...
@@ -58,11 +68,15 @@ export default function GameTabs(props: StatsProps) {
                     }
                 </TabPanel>
                 <TabPanel>
-                    <GameFlows gameAddress={props.gameAddress} />
+                    {summary ?
+                        <GameFlows gameAddress={props.gameAddress} summary={summary} />
+                        :
+                        <div className="py-12 md:py-24 mx-4 md:mx-12 font-outfit text-lg">
+                            loading...
+                        </div>
+                    }
                 </TabPanel>
-                <TabPanel>
-                    <GMSection gameAddress={props.gameAddress} />
-                </TabPanel>
+     
 
             </Tabs>
         </section>

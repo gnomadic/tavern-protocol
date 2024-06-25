@@ -12,6 +12,7 @@ import ModuleFunctionCard from '../component/ModuleFunctionCard';
 
 type StepThreeProps = {
     gameAddress: Address
+    summary: GameSummary
 }
 
 export default function GMSection(props: StepThreeProps) {
@@ -23,10 +24,13 @@ export default function GMSection(props: StepThreeProps) {
 
 
     return (
-        <section id='GMSection' className='relative items-center px-6 md:px-24 pt-24 pb-12'>
-            <section>
-                <SmallTitle title={'GM ONLY'} />
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 md:py-24'>
+        <section id='connect' className=' font-outfit'>
+            <div className='p-4 text-2xl'>
+                Customize
+            </div>
+            <section className="mx-4 md:mx-12 py-8">
+                <div className='grid grid-cols-1 lg:grid-cols-1 gap-8 '>
+
                     {Array.from({ length: summary?.components.length as number }).map((object, i) => {
                         return (
                             <ModuleFunctionCard
@@ -38,8 +42,6 @@ export default function GMSection(props: StepThreeProps) {
                             />
                         );
                     })}
-
-                    
                 </div>
             </section>
         </section>

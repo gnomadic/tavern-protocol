@@ -1,3 +1,4 @@
+import { Signika } from 'next/font/google';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -14,16 +15,27 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
-    // colors: {
-      
-    //   white: '#FFFFFF',
-    //   offwhite: "#FEFEFE",
+    colors: {
+     tavernGreen:  '#14E943',
+     lightgrey: "#858080",
+     darkgrey: "#1B1B1D",
+     white: '#FFFFFF',
+     black: '#000000',
+     red: "#E94714",
+    //  unselected: "#616161",
+     unselected: "#858080",
+     selected: "#E3A9FF", 
 
-    //   slate: '#00101C',
-    // },
+
+      
+    },
     fontFamily: {
       roboto: ['Roboto Condensed', 'sans-serif'],
       anon: ['Anonymous Pro', 'monospace'],
+      // signika: ['Signika, sans-serif'],
+      signika: ['var(--font-signika)'],
+      outfit: ['var(--font-outfit)'],
+
     },
   },
   plugins: [],

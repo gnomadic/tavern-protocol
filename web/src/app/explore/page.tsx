@@ -1,10 +1,11 @@
 import ExploreComponents from '@/components/explore/ExploreComponents';
 import ChainTitle from '@/components/base/ChainTitle';
+import ExploreTabs from '@/components/explore/ExploreTabs';
 
-export default function Registry() {
+export default function Explore() {
   return (
     <main className='font-signika'>
-       <ExploreComponents />
+       <ExploreTabs />
   </main>
     // <main className='items-center py-12 md:py-24 font-anon'>
     //   <section className='pt-36 min-w-full'>

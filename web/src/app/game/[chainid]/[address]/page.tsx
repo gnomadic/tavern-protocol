@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { getFrameMetadata } from '@coinbase/onchainkit';
 import GameInfo from '@/components/game/GameInfo';
 import GMSection from '@/components/game/GMSection';
+import GameTabs from '@/components/game/GameTabs';
 
 
 interface Params {
@@ -53,13 +54,16 @@ export async function generateMetadata({
 
 export default function Game({ params }: { params: { address: string, chainid: string } }) {
   return (
-    <main className='items-center'>
+    <main className='font-signika px-8 py-20 md:px-16'>
+      <section className='border border-white border-dashed'>
 
       <GameHeader gameAddress={params.address as Address} />
+      <GameTabs gameAddress={params.address as Address}/>
 
-      <GameInfo gameAddress={params.address as Address} />
+      {/* <GameInfo gameAddress={params.address as Address} />
 
-      <GMSection gameAddress={params.address as Address} />
+      <GMSection gameAddress={params.address as Address} /> */}
+      </section>
 
     </main>
   );

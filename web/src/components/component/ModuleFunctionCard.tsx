@@ -26,12 +26,11 @@ export default function ModuleFunctionCard(props: ModuleCardProps) {
   const { data } = useMetadata<ComponentMetadata>(props.metadata);
 
   return (
-    <div className='border-2 border-gray-500'>
-      <div className='py-2 pl-4 text-2xl border-b-2 border-white'>
-        {props.index + 1}{"/"}{data ? censor(data.name) : "loading"}
+    <div className='border-0 border-gray-500'>
+      <div className='py-2 pl-4 text-2xl border-b-0 border-white'>
+        {data ? censor(data.name) : "loading"}
       </div>
-      <div className='grid grid-cols-1 gap-8 py-12 md:py-24'>
-
+      <div className='grid md:grid-cols-2 grid-cols-1 py-8 gap-8'>
         {Array.from({ length: data?.configFunctions.length as number }).map((object, i) => {
           return (
             <ConfigFunctionCard
@@ -56,6 +55,7 @@ export default function ModuleFunctionCard(props: ModuleCardProps) {
         })}
 
       </div>
+
     </div>
   );
 }
@@ -120,24 +120,26 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
 
 
   return (
-    <div className='mx-12 border-2 border-gray-500'>
-      {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
-      <div className='pt-5 pl-5 text-lg border-b-2 border-white '>
 
-        {props.index + 1}{"/"}{props.funct.name}
+    <div className=' border-2 border-lightgrey rounded-md'>
+      {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
+      <div className='pt-5 pl-5 text-lg border-b-0 border-white '>
+
+        {props.funct.name}
+
       </div>
-      <div className='pt-5 pb-2 pl-2 text-sm'>
+      <div className='pt-5 pb-2 pl-2 text-sm text-lightgrey'>
         {censor(props.funct.description)}
       </div>
       <form onSubmit={executeFunction} className='px-4 pt-8 '>
         {Array.from({ length: props.funct.requires.length as number }).map((object, i) => {
           return <div key={i} className=''>
-            <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
+            <label htmlFor="gameName" className="text-lg ">
               {props.funct.requires[i]}
             </label>
             <input type="text"
               id={i.toString()}
-              className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2.5 bg-darkgrey active:bg-darkgrey my-4 focus:ring-selected focus:border-selected"
               placeholder={props.funct.requires[i]}
               defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""} />
           </div>
@@ -265,24 +267,27 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
 
 
   return (
-    <div className='mx-12 border-2 border-gray-500'>
-      {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
-      <div className='pt-5 pl-5 text-lg border-b-2 border-white '>
+    <div className='border-2 border-lightgrey rounded-md'>
 
-        {props.index + 1}{"/"}{props.funct.name}
+    {/* <div className='mx-12 border-0 border-gray-500'> */}
+      {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
+      <div className='pt-5 pl-5 text-lg border-b-0 border-white '>
+
+        {props.funct.name}
       </div>
-      <div className='pt-5 pb-2 pl-2 text-sm'>
+      <div className='pt-5 pb-2 pl-2 text-sm text-lightgrey'>
+
         {censor(props.funct.description)}
       </div>
       <form onSubmit={executeFunction} className='px-4 pt-4 '>
         {Array.from({ length: props.funct.requires.length as number }).map((object, i) => {
           return <div key={i} className='pt-4'>
-            <label htmlFor="gameName" className="block mb-2 text-sm text-white text-start">
+            <label htmlFor="gameName" className="text-lg ">
               {props.funct.requires[i]}
             </label>
             <input type="text"
               id={i.toString()}
-              className="w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2.5 bg-darkgrey active:bg-darkgrey my-4 focus:ring-selected focus:border-selected"
               placeholder={props.funct.requires[i]}
               defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""}
             />

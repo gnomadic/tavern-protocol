@@ -1,5 +1,5 @@
 {
-    "name": "Queue Session",
+    "name": "PVP Matchmaking",
     "description": "Allow players to join a matchmaking queue and match with other players.  It supports 2 players per match, and if the queue is empty the first player will have to wait.",
     "gameFunctions": [
         {

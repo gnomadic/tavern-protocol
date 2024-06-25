@@ -99,8 +99,8 @@ export default function PlayRPS() {
 
 
     return (
-        <section className='pt-24 px-12 md:px-24' >
-            <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
+        <section className='px-12 pt-24 md:px-24' >
+            <section id='intro' className='items-center p-12 md:p-18 md:pb-24'>
                 {/* <div>{JSON.stringify(data?.logs)}</div> */}
                 <div className='flex'>
                     <div className='justify-right md:w-1/2'></div>
@@ -142,7 +142,7 @@ export default function PlayRPS() {
                     </div>
                 )}
 
-                <div className='flex justify-center pt:12 md:pt-24 align-middle justify-items-center'>
+                <div className='flex justify-center align-middle pt:12 md:pt-24 justify-items-center'>
                     <div className='mx-auto'>
                         <button
                             className='justify-center px-12 py-4 border-2 border-gray-300 rounded-md bg-slate-800 disabled:bg-slate-950'
@@ -199,17 +199,18 @@ export default function PlayRPS() {
                 </div> */}
                 {(lastGame && lastGame.opponent != zeroAddress) ? (<div className='pt-12'>
                     <SmallTitle title="last game" />
-                    <div className=" text-2xl pt-12 md:pt-24 text-center ">
+                    <div className="pt-12 text-2xl text-center md:pt-24">
                         Your last game was a
                     </div>
                     {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
-                    <div className=" text-center text-4xl">
+                    <div className="text-4xl text-center ">
+
                         {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == address ? "win" : "loss"}
                     </div>
 
-                    <div className="grid md:grid-cols-2 py-8 gap-8 pt-12 md:pt-24">
+                    <div className="grid gap-8 py-8 pt-12 md:grid-cols-2 md:pt-24">
                         <div className="mx-12">
-                            <div className="border-b-2 border-white text-lg ">
+                            <div className="text-lg border-b-2 border-white ">
                                 You played
                             </div>
                             <div>
@@ -220,7 +221,7 @@ export default function PlayRPS() {
 
 
                         <div className="mx-12">
-                            <div className="border-b-2 border-white text-lg ">
+                            <div className="text-lg border-b-2 border-white ">
                                 your opponent, {pretty(lastGame?.opponent)}, played
                             </div>
                             <div>
@@ -244,7 +245,7 @@ export default function PlayRPS() {
             {/* <section className='pt-12 md:pt-24'>
                 <SmallTitle title='details' />
             </section>
-            <section id='intro' className=' items-center p-12 md:p-18 md:pb-24'>
+            <section id='intro' className='items-center p-12 md:p-18 md:pb-24'>
                 <div className='flex'>
                     <div className='justify-right md:w-1/2'></div>
                     <div className='justify-right md:w-1/2 '>

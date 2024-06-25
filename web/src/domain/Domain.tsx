@@ -18,13 +18,33 @@ export type Deployment = {
 }
 
 export type GameSummary = {
-  game: Address;
-  gm: Address;
+  // game: Address;
+  // gm: Address;
+  // metadata: string;
+  // // TODO clean this up
+  // displayName: string;
+  // availableFunctions: readonly AddressKey[];
+  // availableData: readonly AddressKey[];
+  game: `0x${string}`;
+  gm: `0x${string}`;
   metadata: string;
-  // TODO clean this up
-  displayName: string;
-  availableFunctions: readonly AddressKey[];
-  availableData: readonly AddressKey[];
+  components: readonly `0x${string}`[];
+  componentSummaries: readonly {
+      component: `0x${string}`;
+      metadata: string;
+  }[];
+  availableData: readonly {
+      name: string;
+      value: `0x${string}`;
+  }[];
+  flows: readonly {
+      name: string;
+      values: readonly {
+          name: string;
+          value: `0x${string}`;
+      }[];
+  
+  }[];
 }
 
 export type AddressKey = {

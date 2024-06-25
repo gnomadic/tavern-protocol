@@ -1,7 +1,7 @@
 'use client';
 
-import DiscoverGames from '@/components/explore/ExploreGames';
-import DiscoverComponents from '@/components/explore/ExploreComponents';
+import ExploreGames from '@/components/explore/ExploreGames';
+import ExploreComponents from '@/components/explore/ExploreComponents';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
 
@@ -17,10 +17,10 @@ export default function ExploreTabs() {
                 <></>
             </TabPanel> */}
             <TabPanel>
-                <DiscoverGames />
+                <ExploreGames />
             </TabPanel>
             <TabPanel>
-                <DiscoverComponents />
+                <ExploreComponents />
             </TabPanel>
         </Tabs>
     )

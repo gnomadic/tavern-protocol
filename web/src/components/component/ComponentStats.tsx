@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentMetadata } from "@/domain/Domain";
+import { ComponentMetadata, ComponentMetadataFunction } from "@/domain/Domain";
 import { censor } from "@/domain/utils";
 import { useReadIComponentGetSummary } from "@/generated";
 import useDeployment from "@/hooks/useDeployment";
@@ -10,6 +10,8 @@ import ComponentFunctions from "./ComponentFunctions";
 
 type StatsProps = {
     moduleAddress: Address
+    functions: ComponentMetadataFunction[]
+    displayName: string;
 }
 
 export default function ComponentStats(props: StatsProps) {
@@ -20,19 +22,25 @@ export default function ComponentStats(props: StatsProps) {
 
     return (
         <section id='connect' className='relative items-center pt-24 pb-12'>
-            {summary && data ?
-                <div>
-                    <div className="text-3xl uppercase">
+        <div className='p-4 text-2xl'>
+                {props.displayName} Functions
+            </div>
+            <div className="px-6 py-2 text-lightgrey">
+                This component has {props.functions.length} functions.  Add this component to your game to use them.
+            </div>
+            {/* {summary && data ? */}
+                {/* <div> */}
+                    {/* <div className="text-3xl uppercase">
                         {censor(data.name)}/functions/{data.gameFunctions?.length}
-                    </div>
-                    <ComponentFunctions functions={data.gameFunctions} />
-                    <div className="text-3xl uppercase pt-20">
+                    </div> */}
+                    <ComponentFunctions functions={props.functions} />
+                    {/* <div className="text-3xl uppercase pt-20">
                         {censor(data.name)}/config/{data.configFunctions?.length}
-                    </div>
-                    <ComponentFunctions functions={data.configFunctions} />
-                </div>
-                :
-                <></>}
+                    </div> */}
+                    {/* <ComponentFunctions functions={data.configFunctions} /> */}
+                {/* </div> */}
+                {/* :
+                <></>} */}
         </section>
     );
 }

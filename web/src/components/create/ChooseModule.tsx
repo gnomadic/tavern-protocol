@@ -10,24 +10,37 @@ type ModuleCardProps = {
   index: number;
   selected: Address[];
   setSelected: (selected: Address) => void;
+  active?: Address[];
 
 }
 
 export default function ChooseModule(props: ModuleCardProps) {
   const { data } = useMetadata<ComponentMetadata>(props.metadata);
 
-  const cardClass = props.selected.includes(props.address) ? ' border-2 border-blue-300' : ' border-2 border-gray-500';
-  const textClass = props.selected.includes(props.address) ? ' text-white' : ' text-gray-500';
+  // const cardClass = props.selected.includes(props.address) ? ' border-selected' : ' border-unselected';
+  const cardClass = props.active?.includes(props.address) ? ' border-tavernGreen' :
+    props.selected.includes(props.address) ? ' border-selected' : ' border-unselected';
+
+  // const textClass = props.selected.includes(props.address) ? ' text-selected' : ' text-unselected';
+  const textClass = props.active?.includes(props.address) ? ' text-white' :
+    props.selected.includes(props.address) ? ' text-selected' : ' text-unselected';
+
+
 
   return (
     <div
-      className={'border-2 ' + cardClass + textClass}
-      onClick={() => props.setSelected(props.address)}
+      className={'border-2 rounded-md ' + cardClass + textClass}
+      onClick={() => {
+        if (!props.active?.includes(props.address)) {
+          props.setSelected(props.address)
+        }
+      }
+      }
     >
-      <div className='border-b-2 border-white text-2xl pl-4 py-2 active:border-blue-500'>
-        {props.index + 1}{"/"}{data ? censor(data.name) : "loading"}
+      <div className='py-2 pl-4 text-2xl border-white'>
+        {data ? censor(data.name) : "loading"}
       </div>
-      <div className='pt-5 pb-2 pl-2 text-sm'>
+      <div className='pt-2 pb-2 pl-2 text-sm m-2'>
         {censor(data?.description)}
       </div>
     </div>

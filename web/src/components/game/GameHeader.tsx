@@ -36,63 +36,20 @@ export default function GameHeader(props: HeaderProps) {
 
 
   return (
-    <section id='connect' className='relative items-start min-w-screen py-12 md:py-24'>
+    <section className=''>
+      <div>
 
-      <div className='pb-2 pt-36'>
-        {!summary || !data ? "loading" :
+        <div className='p-4 text-2xl'>
+          {data ? censor(data.name) : "loading"}
+        </div>
+        <div className="px-6 py-2 text-lightgrey">
+          {data ? data.description : "loading"}
+        </div>
+      
 
-          <div>
-            <ChainTitle title={data.name.length > 0 ? censor(data.name) : "No Name Yet"} />
-
-            <div className="px-6 md:px-24">
-
-              <div className='text-right pb-2 pl-4 text-xs'>
-                <div>
-                  <a target="_blank"
-                    rel="noopener noreferrer"
-                    href={data.gameUrl} >
-                    play at: {data.gameUrl}
-                    <span>
-                      <ArrowUpRightIcon
-                        className="w-4 h-4 mb-1"
-                        style={{ display: "inline" }} />
-                    </span>
-                  </a>
-                </div>
-                <div>
-                  <a target="_blank"
-                    rel="noopener noreferrer"
-                    href={deploy.scan + props.gameAddress} >
-                    deployed at: {pretty(props.gameAddress)}
-                    <span>
-                      <ArrowUpRightIcon
-                        className="w-4 h-4 mb-1"
-                        style={{ display: "inline" }} />
-                    </span>
-                  </a>
-                </div>
-                <div>
-                  <a target="_blank"
-                    rel="noopener noreferrer"
-                    href={deploy.scan + summary.gm} >
-                    gm: {pretty(summary.gm)}
-                    <span>
-                      <ArrowUpRightIcon
-                        className="w-4 h-4 mb-1"
-                        style={{ display: "inline" }} />
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-base pt-12 px-6 md:px-24">
-              {data.description.length > 0 ? censor(data.description) : "No Description Yet"}
-            </div>
-
-          </div>
-        }
       </div>
+
+
     </section>
   );
 }

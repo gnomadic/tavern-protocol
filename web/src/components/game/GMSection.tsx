@@ -1,12 +1,11 @@
 "use client"
 
 import { Address } from 'viem';
-import { useReadGameFlows, useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
+import { useReadGameFlows, useReadGameGetSummary } from '@/generated';
 import { useMetadata } from '@/hooks/useMetadata';
 import { GameMetadata, GameSummary } from '@/domain/Domain';
 import useDeployment from '@/hooks/useDeployment';
-import SmallTitle from '../base/SmallTitle';
-import ModuleCard from '../component/ModuleCard';
+
 import ModuleFunctionCard from '../component/ModuleFunctionCard';
 
 
@@ -17,10 +16,10 @@ type StepThreeProps = {
 
 export default function GMSection(props: StepThreeProps) {
 
-    const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
-    const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
-    const { data } = useMetadata<GameMetadata>(summary?.metadata);
-    const { deploy } = useDeployment();
+    // const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
+    // const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
+    // const { data } = useMetadata<GameMetadata>(summary?.metadata);
+    // const { deploy } = useDeployment();
 
 
     return (
@@ -31,13 +30,13 @@ export default function GMSection(props: StepThreeProps) {
             <section className="mx-4 md:mx-12 py-8">
                 <div className='grid grid-cols-1 lg:grid-cols-1 gap-8 '>
 
-                    {Array.from({ length: summary?.components.length as number }).map((object, i) => {
+                    {Array.from({ length: props.summary.components.length as number }).map((object, i) => {
                         return (
                             <ModuleFunctionCard
                                 key={i}
                                 index={i}
-                                address={summary?.componentSummaries[i].component!}
-                                metadata={summary?.componentSummaries[i].metadata!}
+                                address={props.summary.componentSummaries[i].component!}
+                                metadata={props.summary.componentSummaries[i].metadata!}
                                 gameAddress={props.gameAddress}
                             />
                         );

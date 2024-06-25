@@ -58,7 +58,7 @@ export default function Game({ params }: { params: { address: string, chainid: s
       <section className='border border-white border-dashed'>
 
       <GameHeader gameAddress={params.address as Address} />
-      <GameTabs gameAddress={params.address as Address}/>
+      <GameTabs gameAddress={params.address as Address} chainId={params.chainid}/>
 
       {/* <GameInfo gameAddress={params.address as Address} />
 

@@ -4,13 +4,11 @@ import { useMetadata } from '@/hooks/useMetadata';
 import { bigIntReplacer, censor, pretty } from '../../domain/utils';
 import { Address, createPublicClient, createWalletClient, http, parseAbi } from 'viem';
 import { ComponentMetadata, ComponentMetadataFunction } from '@/domain/Domain';
-import { createConfig, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
+import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { readContract } from 'viem/actions';
-import { config } from '@/domain/WagmiConfig';
-import { GameABI } from '@/domain/abi/GameABI';
-import { baseSepolia, localhost } from 'viem/chains';
+
 import useDeployment from '@/hooks/useDeployment';
 
 
@@ -121,7 +119,7 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
 
   return (
 
-    <div className=' border-2 border-lightgrey rounded-md'>
+    <div className=' border-2 border-lightgrey rounded-md min-h-[500px] relative'>
       {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
       <div className='pt-5 pl-5 text-lg border-b-0 border-white '>
 
@@ -144,8 +142,10 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
               defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""} />
           </div>
         })}
-        <div className='pt-4'>
-          <button className="px-12 border-slate-400 border-[2px] py-4 mt-4 mb-12"
+        <div className='flex p-4 inset-x-1 mt-4 absolute bottom-0'>
+          <button
+            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
+
             // disabled={createGameisPending}
             type="submit">
             Execute
@@ -160,8 +160,8 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
 function ConfigViewCard(props: ConfigFunctionCardProps) {
 
   // const [args, setArgs] = useState<any[]>([props.gameAddress])
-  const { data: hash, error: err, isPending: pending, writeContract } = useWriteContract()
-  const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+  // const { data: hash, error: err, isPending: pending, writeContract } = useWriteContract()
+  // const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
 
   const { deploy } = useDeployment();
 
@@ -182,6 +182,8 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
 
   // const {data: read} = useReadContract()
 
+  // const [validation, setValidation] = useState<string>("")
+
   async function executeFunction(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -189,6 +191,12 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
     let args = [];
 
     for (let i = 0; i < props.funct.requires.length; i++) {
+      let value = (e.currentTarget.elements.namedItem(i.toString()) as HTMLInputElement).value
+      if (value === "" || value === undefined) {
+        // setValidation("Please fill out all fields");
+        toast.error(`Request requires ${props.funct.requires[i]}`);
+        return;
+      }
       args.push((e.currentTarget.elements.namedItem(i.toString()) as HTMLInputElement).value)
     }
     let functionName = props.funct.abi.split("(")[0];
@@ -249,34 +257,34 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
 
   }
 
-  useEffect(() => {
-    if (err) {
-      toast.error(err.message)
-    }
-    if (isLoading) {
-      toast.info("Transaction is pending");
+  // useEffect(() => {
+  //   if (err) {
+  //     toast.error(err.message)
+  //   }
+  //   if (isLoading) {
+  //     toast.info("Transaction is pending");
 
-    }
-    if (isSuccess) {
-      toast.success("Transaction is successful");
-    }
-  }
-    , [err, isLoading, isSuccess])
+  //   }
+  //   if (isSuccess) {
+  //     toast.success("Transaction is successful");
+  //   }
+  // }
+  //   , [err, isLoading, isSuccess])
 
 
+  // const [showExecute, setShowExecute] = useState(false)
 
 
   return (
-    <div className='border-2 border-lightgrey rounded-md'>
+    <div className='border-2 border-lightgrey rounded-md relative min-h-[500px]'>
 
-    {/* <div className='mx-12 border-0 border-gray-500'> */}
+      {/* <div className='mx-12 border-0 border-gray-500'> */}
       {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
       <div className='pt-5 pl-5 text-lg border-b-0 border-white '>
 
         {props.funct.name}
       </div>
       <div className='pt-5 pb-2 pl-2 text-sm text-lightgrey'>
-
         {censor(props.funct.description)}
       </div>
       <form onSubmit={executeFunction} className='px-4 pt-4 '>
@@ -290,22 +298,31 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
               className="w-full p-2.5 bg-darkgrey active:bg-darkgrey my-4 focus:ring-selected focus:border-selected"
               placeholder={props.funct.requires[i]}
               defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""}
+            // onInput={()=>{if (validateForm()) setShowExecute(true)}}
             />
           </div>
         })}
-        <div className='pt-4'>
-          <button className="px-12 border-slate-400 border-[2px] py-4 mt-4 mb-12"
-            // disabled={createGameisPending}
+        <div>
+          <div className="block pb-4 mb-2 text-lg text-white">
+            response
+          </div>
+          <div className="block pb-4 mb-2 text-sm text-white">
+            {JSON.stringify(response, bigIntReplacer)}
+          </div>
+        </div>
+        <div className='flex p-4 inset-x-1 mt-4 absolute bottom-0'>
+          <button
+            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen '
             type="submit">
             Execute
             {/* {createGameisPending ? 'Confirming...' : `Deploy game on ${deploy.chain}`} */}
           </button>
         </div>
-        <div>
+        {/* <div>
           <div className="block pb-4 mb-2 text-sm text-white text-start">
             response: {JSON.stringify(response, bigIntReplacer)}
           </div>
-        </div>
+        </div> */}
       </form>
     </div>
   );

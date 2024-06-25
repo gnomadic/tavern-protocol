@@ -35,46 +35,12 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: 'Tavern',
-  description: 'Play for communities',
+  description: 'Build community by gaming and hanging out',
+  openGraph: {
+    title: 'Tavern',
+    description: 'Build community by gaming and hanging out',
+  },
 };
-
-// export const config = createConfig({
-//   chains: [mainnet, sepolia],
-//   transports: {
-//     [mainnet.id]: http(),
-//     [sepolia.id]: http(),
-//   },
-// })
-
-// const { chains, publicClient } = configureChains(
-//   [
-//     sepolia,
-//     // base
-//   ],
-//   [publicProvider()]
-//   // [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
-// );
-
-// const { connectors } = getDefaultWallets({
-//   appName: "My RainbowKit App",
-//   projectId: "721890c665370dab6a3af12a2b0c7ca9",
-//   chains,
-// });
-
-// const wagmiConfig = createConfig({
-//   autoConnect: true,
-//   connectors,
-//   publicClient,
-// });
-
-// const config = getDefaultConfig({
-//   appName: 'My RainbowKit App',
-//   projectId: 'YOUR_PROJECT_ID',
-//   chains: [mainnet, polygon, optimism, arbitrum, base],
-//   ssr: true, // If your dApp uses server side rendering (SSR)
-// });
-
-// const queryClient = new QueryClient();
 
 
 export default function RootLayout({

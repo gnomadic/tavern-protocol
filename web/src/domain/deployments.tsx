@@ -46,23 +46,23 @@ export const Deployments: { [key: string]: Deployment } = {
     viemChain: baseSepolia,
     viemTransport: http(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   },
-  sepolia: {
-    gameFactory: '0x14360E6054A666B18d49bF3B4fFeE7D63319770e',
-    d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
-    componentRegistry: '0xD47ACDB3B7a7bb9C4a2be1FF9803bca103cd65d9',
-    displayName: 'Tavern',
-    currency: 'eth',
-    chain: 'sepolia',
-    chainId: "11155111",
-    scan:"https://sepolia.etherscan.io/address/",
-    rpsGame: '0x5a8e6d11C3E7E99b11Ef69F9333116b6734c2a28',
-    rpsComponent: '0xcfF5fdBAD245183728972Ffd3036d0f6bD2cFb4F',
-    queueComponent: '0xe8D49Ea4e2457b2B3c112650b1dA05eCdF2BD3E2',
-    resultComponent: '0x44C8c71086EBa3a2AEb61f2CA635Ff64EC143bcE',
-    viemChain: sepolia,
-    viemTransport: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
+  // sepolia: {
+  //   gameFactory: '0x14360E6054A666B18d49bF3B4fFeE7D63319770e',
+  //   d7: '0x43B7D111d966e482bFf3B908Fa1ffE6D2E78f37A',
+  //   componentRegistry: '0xD47ACDB3B7a7bb9C4a2be1FF9803bca103cd65d9',
+  //   displayName: 'Tavern',
+  //   currency: 'eth',
+  //   chain: 'sepolia',
+  //   chainId: "11155111",
+  //   scan:"https://sepolia.etherscan.io/address/",
+  //   rpsGame: '0x5a8e6d11C3E7E99b11Ef69F9333116b6734c2a28',
+  //   rpsComponent: '0xcfF5fdBAD245183728972Ffd3036d0f6bD2cFb4F',
+  //   queueComponent: '0xe8D49Ea4e2457b2B3c112650b1dA05eCdF2BD3E2',
+  //   resultComponent: '0x44C8c71086EBa3a2AEb61f2CA635Ff64EC143bcE',
+  //   viemChain: sepolia,
+  //   viemTransport: http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
 
-  },
+  // },
 
   localhost: {
     gameFactory: '0x8ce361602B935680E8DeC218b820ff5056BeB7af',

@@ -1,14 +1,11 @@
 "use client"
 import { Address } from 'viem';
-import Divider from '../Divider';
-import { useReadGameFlows, useReadGameGetFlows, useReadGameGetSummary } from '@/generated';
 import { useMetadata } from '@/hooks/useMetadata';
 import { GameMetadata, GameSummary } from '@/domain/Domain';
 import { censor, pretty } from '@/domain/utils';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import useDeployment from '@/hooks/useDeployment';
-import SmallTitle from '../base/SmallTitle';
-import ModuleCard from '../component/ModuleCard';
+
 
 
 type StepThreeProps = {
@@ -18,8 +15,7 @@ type StepThreeProps = {
 
 export default function GameInfo(props: StepThreeProps) {
 
-    // const { data: summary } = useReadGameGetSummary({ address: props.gameAddress });
-    const { data: flows } = useReadGameFlows({ address: props.gameAddress, args: ["playRPS", BigInt(0)] });
+
     const { data } = useMetadata<GameMetadata>(props.summary?.metadata);
     const { deploy } = useDeployment();
 
@@ -37,7 +33,7 @@ export default function GameInfo(props: StepThreeProps) {
                     <a target="_blank"
                         rel="noopener noreferrer"
                         href={data?.gameUrl} >
-                        {data ? data.gameUrl : "loading"}
+                        {data ? censor(data.gameUrl) : "loading"}
                         <span>
                             <ArrowUpRightIcon
                                 className="w-4 h-4 mb-1"

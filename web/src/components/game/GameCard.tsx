@@ -1,5 +1,5 @@
 import { Deployment, GameMetadata, GameSummary } from '@/domain/Domain';
-import { censor, pretty } from '../domain/utils';
+import { censor, pretty } from '../../domain/utils';
 import Link from 'next/link';
 import { Address } from 'viem';
 import { useMetadata } from '@/hooks/useMetadata';

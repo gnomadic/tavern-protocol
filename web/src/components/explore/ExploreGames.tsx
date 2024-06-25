@@ -1,6 +1,7 @@
 'use client';
 
-import GameCard from '@/components/GameCard';
+import GameCard from '@/components/game/GameCard';
+import CreateCard from '@/components/base/CreateCard';
 import { useReadGameFactoryGetGameCount, useReadGameFactoryGetGames } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
 import { useEffect } from 'react';
@@ -45,6 +46,7 @@ export default function ExploreGames() {
 
 
                 <div className='pb-24 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8 px-8'>
+                    <CreateCard url='/create' />
                     {Array.from({ length: currentGames ? currentGames.length : 0 }).map((object, i) => {
                         if (currentGames![i].game !== '0x0000000000000000000000000000000000000000') {
                             return (

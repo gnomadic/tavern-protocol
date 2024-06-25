@@ -30,6 +30,7 @@ export default function GMSection(props: StepThreeProps) {
             </div>
             <section className="mx-4 md:mx-12 py-8">
                 <div className='grid grid-cols-1 lg:grid-cols-1 gap-8 '>
+
                     {Array.from({ length: summary?.components.length as number }).map((object, i) => {
                         return (
                             <ModuleFunctionCard
@@ -41,8 +42,6 @@ export default function GMSection(props: StepThreeProps) {
                             />
                         );
                     })}
-
-
                 </div>
             </section>
         </section>

@@ -55,6 +55,7 @@ export default function ModuleFunctionCard(props: ModuleCardProps) {
         })}
 
       </div>
+
     </div>
   );
 }
@@ -119,11 +120,13 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
 
 
   return (
+
     <div className=' border-2 border-lightgrey rounded-md'>
       {/* <div className='py-2 pl-4 text-2xl border-b-2 border-white'> */}
       <div className='pt-5 pl-5 text-lg border-b-0 border-white '>
 
         {props.funct.name}
+
       </div>
       <div className='pt-5 pb-2 pl-2 text-sm text-lightgrey'>
         {censor(props.funct.description)}
@@ -273,6 +276,7 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
         {props.funct.name}
       </div>
       <div className='pt-5 pb-2 pl-2 text-sm text-lightgrey'>
+
         {censor(props.funct.description)}
       </div>
       <form onSubmit={executeFunction} className='px-4 pt-4 '>

@@ -204,6 +204,7 @@ export default function PlayRPS() {
                     </div>
                     {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
                     <div className="text-4xl text-center ">
+
                         {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == address ? "win" : "loss"}
                     </div>
 

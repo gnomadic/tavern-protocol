@@ -64,7 +64,7 @@ export default function RootLayout({
       </Head> */}
       {/* <div className="flex flex-col min-h-screen"> */}
 
-      <body className={`${signika.variable} ${outfit.variable} font-sans`}>
+      <body className={`${signika.variable} ${outfit.variable} font-sans bg-black`}>
         <Providers>
           {/* <Header /> */}
           <Navbar />

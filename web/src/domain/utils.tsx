@@ -15,7 +15,6 @@ const matcher = new RegExpMatcher({
 
 export function safeBigInt(value : BigInt | undefined) : string {
 	return value ? value.toString() : "0";
-
 }
 
 export const bigIntReplacer = (key: any, value: any) =>

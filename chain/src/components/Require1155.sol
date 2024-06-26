@@ -11,7 +11,11 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
 contract RewardERC20 is IComponent {
+  string public metadata;
 
+  constructor(string memory _metadata) {
+    metadata = _metadata;
+  }
 
   function initialize(address game) external override {
     IGame(game).createEntity('Reward20Entity');

@@ -18,13 +18,6 @@ export type Deployment = {
 }
 
 export type GameSummary = {
-  // game: Address;
-  // gm: Address;
-  // metadata: string;
-  // // TODO clean this up
-  // displayName: string;
-  // availableFunctions: readonly AddressKey[];
-  // availableData: readonly AddressKey[];
   game: `0x${string}`;
   gm: `0x${string}`;
   metadata: string;

@@ -8,7 +8,7 @@ import { Address, getAddress, zeroAddress } from 'viem';
 import { WriteIPFS } from '@/mutations/WriteIPFS';
 import { toast } from 'react-toastify';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import useMultipleRequests, { fetcher2, getMetadataURLsFromGame, useMetadataBatch } from '@/hooks/useMetadata';
+import { getMetadataURLsFromGame, useMetadataBatch } from '@/hooks/useMetadata';
 import { bigIntReplacer } from '@/domain/utils';
 import { ComponentMetadata } from '@/domain/Domain';
 import ActionRow from './ActionRow';
@@ -105,11 +105,11 @@ export default function CreateFlow(props: props) {
         // createGame(gameName, gm, description, gameURL, components);
     }
 
-    const [selectedComponent, setSelectedComponent] = useState<>("")
+    // const [selectedComponent, setSelectedComponent] = useState<>("")
 
-    function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        setSelectedComponent(event.target.value);
-    }
+    // function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    //     setSelectedComponent(event.target.value);
+    // }
 
     function addActionRow() {
         setActions([...actions, {

@@ -24,26 +24,26 @@ export default function ExploreComponents() {
   return (
     <section className='px-8 py-20 md:px-16'>
 
-    <div className=" border border-white border-dashed">
+      <div className=" border border-white border-dashed">
 
         <div className='p-4 text-2xl'>
-            Explore components
+          Explore components
         </div>
 
         <div className='pb-24 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8 px-8'>
-        {Array.from({ length: currentModules ? currentModules.length : 0 }).map((object, i) => {
-          if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
-            return (
+          {Array.from({ length: currentModules ? currentModules.length : 0 }).map((object, i) => {
+            if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
+              return (
                 <ModuleCard
-                 key={i}
+                  key={i}
                   index={i}
                   address={currentModules![i].component}
                   metadata={currentModules![i].metadata}
                 />
-            );
-          }
-        })}
-      </div>
+              );
+            }
+          })}
+        </div>
       </div>
     </section>
   );

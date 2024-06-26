@@ -29,7 +29,7 @@ export default function GameFlows(props: StepThreeProps) {
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-8 mx-12'>
-                <CreateCard url='/flows'/>
+                <CreateCard url={`/game/${props.chainid}/${props.gameAddress}/flows`}/>
                 {Array.from({ length: props.summary.flows.length as number }).map((object, i) => {
                     return (
                         <div key={i} className='border-2 border-lightgrey rounded-md'>

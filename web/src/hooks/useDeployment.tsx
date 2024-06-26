@@ -16,7 +16,7 @@ const useDeployment = () => {
       : setDeploy(Deployments['basesepolia']);
   }, [chain, deploy?.gameFactory]);
 
-  console.log("returning deployment: ", deploy.chain)
+  // console.log("returning deployment: ", deploy.chain)
   return { deploy };
 };
 

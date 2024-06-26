@@ -1,6 +1,6 @@
 'use client'
 
-import { useWriteGameFactoryCreateGame, useReadComponentRegistryGetComponents, useWriteGameFactoryCreateGameWithComponents, useReadGameGetSummary } from '@/generated';
+import { useWriteGameFactoryCreateGame, useReadComponentRegistryGetComponents, useWriteGameFactoryCreateGameWithComponents, useReadGameGetSummary, useWriteGameCreateFlow } from '@/generated';
 import useDeployment from '@/hooks/useDeployment';
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { useEffect, useState } from 'react';
@@ -14,7 +14,7 @@ import { ComponentMetadata } from '@/domain/Domain';
 import ActionRow from './ActionRow';
 
 type props = {
-    address: string,
+    address: Address,
     chainid: string
 
 }
@@ -29,8 +29,10 @@ export default function CreateFlow(props: props) {
 
     const [selectedComponents, setSelectedComponents] = useState<Address[]>([]);
 
-    const { data: hash, error: writeError, writeContract } = useWriteGameFactoryCreateGameWithComponents();
+    const { data: hash, error: writeError, writeContract } = useWriteGameCreateFlow();
     const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
+
+    // const {} = useWriteGameCreateFlow();
 
     const { data: summary } = useReadGameGetSummary({ address: props.address as Address });
     const { batch } = useMetadataBatch(getMetadataURLsFromGame(summary));
@@ -59,9 +61,9 @@ export default function CreateFlow(props: props) {
 
 
         // fetcher2("ok", "one", "two", "three", "four");
-        toast.info(`Uploading metadata to IPFS`);
+        // toast.info(`Uploading metadata to IPFS`);
 
-        // const gameName = (e.currentTarget.elements.namedItem('gameName') as HTMLInputElement).value;
+        const flowName = (e.currentTarget.elements.namedItem('flowName') as HTMLInputElement).value;
         // const gm = (e.currentTarget.elements.namedItem('gm') as HTMLInputElement).value;
         // const description = (e.currentTarget.elements.namedItem('description') as HTMLInputElement).value;
         // const gameURL = (e.currentTarget.elements.namedItem('gameURL') as HTMLInputElement).value;
@@ -78,7 +80,23 @@ export default function CreateFlow(props: props) {
 
         // const ipfsURL = `https://ipfs.io/ipfs/${ipfsJSON.IpfsHash}`
 
-        // writeContract({ address: deploy.gameFactory, args: [getAddress(gm), ipfsURL, components] });
+
+        let keys : {name: string, value: Address}[]= [];
+
+        actions.forEach((action) => {
+
+            keys.push({ name: action.func, value: action.address });
+        });
+
+
+        // keys.push({name: 'setMatchOrWait(address,address)', value: queueComponent.target});
+        // keys.push({name: 'oneOnOne(address,address)', value: RPS.target});
+        // keys.push({name: 'rewardWinner(address,address)', value: rewardComponent.target});
+        // keys.push({name: 'rewardTie(address,address)', value: rewardComponent.target});
+        // keys.push({name: 'storeResult(address,address)', value: resultComponent.target});
+     
+
+        writeContract({ address: props.address, args: [flowName, keys] });
 
 
 
@@ -137,10 +155,10 @@ export default function CreateFlow(props: props) {
                 <form onSubmit={handleCreateGame} className=''>
                     <div className="grid grid-cols-1 gap-0">
                         <div className='px-4'>
-                            <label htmlFor="gameName" className="text-lg font-outfit">
+                            <label htmlFor="flowName" className="text-lg font-outfit">
                                 Flow Name
                             </label>
-                            <input type="text" id="gameName" className="w-full p-2.5 bg-darkgrey active:bg-darkgrey my-4 focus:ring-selected focus:border-selected" placeholder="my cool flow" />
+                            <input type="text" id="flowName" className="w-full p-2.5 bg-darkgrey active:bg-darkgrey my-4 focus:ring-selected focus:border-selected" placeholder="my cool flow" />
                         </div>
 
                         <div className="px-4 text-lg font-outfit">

@@ -29,28 +29,78 @@ contract Reward1155 is IComponent {
   }
 
   function setReward(IGame game, address _reward) external {
-    Reward1155Entity(game.getEntity('rewardAddress')).setReward(_reward);
+    Reward1155Entity(game.getEntity('reward1155')).setReward(_reward);
   }
 
-  function reward(address executor, address gameAddress) internal {
+  function setReward(IGame game, address _reward, uint256 tokenId) external {
+    Reward1155Entity(game.getEntity('reward1155')).setReward(_reward, tokenId);
+  }
+
+  function getReward(address game) external view returns (address) {
+    return Reward1155Entity(IGame(game).getEntity('reward1155')).nft();
+  }
+
+  function rewardWinner(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     IGame game = IGame(gameAddress);
-    address player;
-    uint256 token;
-    uint256 amount;
 
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-    player = gameEntity.getPlayerAddress(executor, 'player');
-    token = gameEntity.getPlayerUint(executor, 'token');
-    amount = gameEntity.getPlayerUint(executor, 'amount');
+    uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
+    uint256 tokenID = gameEntity.getPlayerUint(executor, 'tokenId');
 
-    Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
-      player,
-      token,
-      amount
-    );
+    address player = gameEntity.getPlayerAddress(executor, 'winner');
+    if (player != address(0)) {
+      if (!Reward1155Entity(game.getEntity('rewardAddress')).isTokenIDSet()) {
+        Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
+          player,
+          tokenID,
+          amount
+        );
+      } else {
+        Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
+          player,
+          amount
+        );
+      }
+    }
   }
 
-  function sendReward(address player, uint256 token, uint256 amount) external {
-    Reward1155Entity(msg.sender).sendReward(player, token, amount);
+  function rewardTie(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
+    IGame game = IGame(gameAddress);
+
+    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
+    uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
+    uint256 tokenID = gameEntity.getPlayerUint(executor, 'tokenId');
+
+    address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
+    address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
+    if (tiePlayer1 != address(0) && tiePlayer2 != address(0)) {
+      if (!Reward1155Entity(game.getEntity('rewardAddress')).isTokenIDSet()) {
+        Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
+          tiePlayer1,
+          tokenID,
+          amount
+        );
+        Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
+          tiePlayer2,
+          tokenID,
+          amount
+        );
+      } else {
+        Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
+          tiePlayer1,
+          amount
+        );
+        Reward1155Entity(game.getEntity('rewardAddress')).sendReward(
+          tiePlayer2,
+          amount
+        );
+      }
+    }
   }
 }

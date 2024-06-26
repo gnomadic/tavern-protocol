@@ -1,0 +1,77 @@
+{
+    "name": "Reward 1155",
+    "description": "Allow players to receive rewards in the form of ERC1155 tokens.",
+    "gameFunctions": [
+        {
+            "name": "Reward Winner",
+            "description": "Send an ERC1155 token to an address flagged a winner.",
+            "abi": "rewardWinner(address,address)",
+            "requires": [
+                "amount",
+                "winner",
+                "rewardAddress",
+                "tokenId"
+            ],
+            "creates": [],
+            "emits": [
+                "Transfer"
+            ]
+        },
+        {
+            "name": "Reward Tie",
+            "description": "Send an ERC1155 token to two addresses, both of which are flagged as ties.",
+            "abi": "rewardTie(address,address)",
+            "requires": [
+                "amount",
+                "tie1",
+                "tie2",
+                "rewardAddress",
+                "tokenId"
+            ],
+            "creates": [],
+            "emits": [
+                "Transfer"
+            ]
+        }
+    ],
+    "configFunctions": [
+        {
+            "name": "Set Reward",
+            "description": "Set the address of the ERC1155 token to be used for rewards.",
+            "abi": "setReward(address,address)",
+            "requires": [
+                "gameAddress",
+                "rewardAddress"
+            ],
+            "creates": [
+                "rewardAddress"
+            ],
+            "emits": []
+        },
+        {
+            "name": "Set Reward",
+            "description": "Set the address and a single token id of the ERC1155 token to be used for rewards.",
+            "abi": "setReward(address,address,uint256)",
+            "requires": [
+                "gameAddress",
+                "rewardAddress",
+                "tokenId"
+            ],
+            "creates": [
+                "rewardAddress",
+                "tokenId"
+            ],
+            "emits": []
+        }
+    ],
+    "readFunctions":[
+        {
+            "name": "Get Reward Token",
+            "description": "Returns the address of the reward token",
+            "abi": "getRewardToken(address) view returns (address)",
+            "requires": ["gameAddress"],
+            "creates": ["rewardAddress"],
+            "emits":[]
+        }
+    ]
+}

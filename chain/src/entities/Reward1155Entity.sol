@@ -5,10 +5,18 @@ import './interfaces/IEntity.sol';
 import 'forge-std/console.sol';
 
 contract Reward1155Entity is IEntity {
-  address nft;
+  address public nft;
+  uint256 public tokenId;
+  bool public isTokenIDSet;
 
   function setAvailableKeys(string[] storage keys) internal override {
-    keys.push('rewardAddress');
+    keys.push('reward1155');
+  }
+
+  function setReward(address _nft, uint256 _tokenId) external onlyModule {
+    nft = _nft;
+    tokenId = _tokenId;
+    isTokenIDSet = true;
   }
 
   function setReward(address _nft) external onlyModule {
@@ -21,6 +29,10 @@ contract Reward1155Entity is IEntity {
     uint256 amount
   ) external onlyModule {
     SimpleMintable(nft).mint(player, token, amount);
+  }
+
+  function sendReward(address player, uint256 amount) external onlyModule {
+    SimpleMintable(nft).mint(player, tokenId, amount);
   }
 }
 

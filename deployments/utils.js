@@ -12,12 +12,46 @@ async function verify(hre, address_, contractName_, dir_ = "", args_ = []) {
     }
 }
 
-
-
 async function getDeployedContract(name) {
     const deployment = await deployments.get(name);
     return await ethers.getContractAt(name, deployment.address);
 }
+
+async function deployComponent(){
+    const queueSession = await deploy("QueueSession", {
+        from: deployer,
+        log: true,
+        args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`],
+      });
+    
+    
+    
+      const queueSessionEntity = await deploy("QueueSessionEntity", {
+        from: deployer,
+        log: true,
+      });
+
+
+      if (!await componentRegistry.isRegistered(queueSession.address)) {
+        tx = await componentRegistry.register(queueSession.address);
+        await tx.wait();
+      }
+
+      if (await entityFactory.getEntity("QueueSessionEntity") == ZERO_ADDRESS) {
+        tx = await entityFactory.registerEntity("QueueSessionEntity", queueSessionEntity.address);
+        await tx.wait();
+      }
+      object.queueSession = queueSession.address;
+
+      if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
+        console.log("verifing");
+        await verify(hre, queueSession.address, "QueueSession", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`]);
+        await verify(hre, queueSessionEntity.address, "QueueSessionEntity", "entities/");
+        
+
+}
+
+
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 

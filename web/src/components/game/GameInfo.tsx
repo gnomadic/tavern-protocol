@@ -5,6 +5,7 @@ import { GameMetadata, GameSummary } from '@/domain/Domain';
 import { censor, pretty } from '@/domain/utils';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import useDeployment from '@/hooks/useDeployment';
+import { Name } from '@coinbase/onchainkit';
 
 
 
@@ -64,7 +65,7 @@ export default function GameInfo(props: StepThreeProps) {
                     <a target="_blank"
                         rel="noopener noreferrer"
                         href={deploy.scan + props.summary.gm} >
-                        gm: {pretty(props.summary.gm)}
+                        <span><Name address={props.summary.gm}/></span>
                         <span>
                             <ArrowUpRightIcon
                                 className="w-4 h-4 mb-1"

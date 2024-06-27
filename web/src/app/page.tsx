@@ -15,8 +15,8 @@ export default function Home() {
           className='mx-auto'
           src={door}
           alt="door"
-          width={225}
-          height={225}
+          width={300}
+          height={300}
         />
         <div className='mx-auto text-center  text-3xl text-white'>
           Build community by gaming <br /> and hanging out
@@ -36,7 +36,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <section className='grid grid-cols-1 md:grid-cols-2 pt-24 gap-24 text-center md:text-left md:px-12'>
+      <section className='grid grid-cols-1 md:grid-cols-2 pt-24 md:gap-y-72 gap-24 text-center md:text-left md:px-12'>
       <div className='hidden md:block' />
         <div>
           <div className='text-3xl '>
@@ -67,7 +67,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className='pt-12 md:pt-24 min-w-full '>
+      <section className='pt-12 md:pt-48 min-w-full '>
 
         <div className='mx-auto text-center  text-3xl text-white'>
           Want a custom solution?

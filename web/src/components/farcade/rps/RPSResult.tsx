@@ -17,6 +17,7 @@ import paper from '@/images/rockpaperscissors/paper.png';
 import rock from '@/images/rockpaperscissors/rock.png';
 import scissors from '@/images/rockpaperscissors/scissors.png';
 import Image from 'next/image';
+import { Name } from '@coinbase/onchainkit';
 // import rock from '@/images/rps-rock.png';
 
 
@@ -212,7 +213,7 @@ export default function RPSResult(props: ResultProps) {
                     <div className='md:block hidden' />
 
                     <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
-                        {pretty(props.address)}
+                        <Name address={props.address} sliced={true} />
                     </div>
                     {/* <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
                 <Image
@@ -229,7 +230,7 @@ export default function RPSResult(props: ResultProps) {
 
 
                     <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
-                        {pretty(props.address)}
+                        <Name address={props.address} sliced={true} />
                     </div>
                     <div className='md:block hidden' />
                     {/* <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
@@ -269,7 +270,7 @@ export default function RPSResult(props: ResultProps) {
                     <div className='md:block hidden' />
 
                     <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
-                        {pretty(props.address)}
+                        <Name address={props.address} sliced={true} />
                     </div>
                     <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
                         <Image
@@ -280,16 +281,16 @@ export default function RPSResult(props: ResultProps) {
                             height={200} />
                     </div>
                     <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
-                        {pretty(lastGame?.opponent)}
+                        <Name address={lastGame ? lastGame.opponent : zeroAddress} sliced={true} />
                     </div>
 
 
                     <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
-                        {pretty(props.address)}
+                        <Name address={props.address} sliced={true} />
                     </div>
                     <div className='md:block hidden' />
                     <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
-                        {pretty(lastGame?.opponent)}
+                    <Name address={lastGame ? lastGame.opponent : zeroAddress} sliced={true} />
                     </div>
                     <div className='md:block hidden' />
                     <div className='md:block hidden' />
@@ -312,124 +313,7 @@ export default function RPSResult(props: ResultProps) {
         <section className='relative' >
             {getView()}
 
-            <section>
-                {/* <SmallTitle title={inQueue ? "Waiting for player" : Number(queueSize) == 0 ? "Join Queue" : "Play now"} /> */}
-                {/* 
-                {inQueue ? (
-                    <div className='pt-12 text-center'>
-                        you can use a second wallet to play against yourself if you want to see the experience!
-                    </div>
-                ) : Number(queueSize) == 0 ? (
-                    <div className='pt-12 text-center'>
-                        The queue is empty so after you submit your action you&apos;ll have to wait for a match!
-                    </div>
-                ) : (
-                    <div className='pt-12 text-center'>
-                        There is someone in the queue waiting so you will play immediately!
-                    </div>
-                )} */}
-
-
-            </section>
-            <section className='pt-12 md:pt-24'>
-                {/* <div>{JSON.stringify(writeError?.message)}</div> */}
-                {/* <SmallTitle title='STATUS' />
-
-                {queueSize !== undefined && inQueue !== undefined ? (
-
-
-                    <div className='pt-12'>
-                        {inQueue ? "you are in the queue!  If you want to play, you can use a second account." : Number(queueSize) == 0 ? "the queue is empty, you'll be the first one in it!" : "There is a player waiting for you!"}
-                    </div>
-                ) : (
-                    <div className='pt-12'>
-                        Loading Queue Status
-                    </div>
-                )} */}
-
-                {/* <div className='pt-12'>
-                    There are {queueSize?.toString()} players in the queue.
-
-
-                </div> */}
-                {/* <div className='pt-12'>
-                    You are in the queue: {inQueue?.toString()}
-
-
-                </div> */}
-                {(lastGame && lastGame.opponent != zeroAddress) ? (<div className='pt-12'>
-                    {/* <SmallTitle title="last game" /> */}
-                    {/* <div className="pt-12 text-2xl text-center md:pt-24">
-                        Your last game was a
-                    </div> */}
-                    {/* <div>{JSON.stringify(lastGame, bigIntReplacer)}</div> */}
-                    {/* <div className="text-4xl text-center ">
-                        {lastGame?.winner == zeroAddress ? "draw" : lastGame?.winner == props.address ? "win" : "loss"}
-                    </div> */}
-
-                    {/* <div className="grid gap-8 py-8 pt-12 md:grid-cols-2 md:pt-24">
-                        <div className="mx-12">
-                            <div className="text-lg border-b-2 border-white ">
-                                You played
-                            </div>
-                            <div>
-                                {props.actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
-                            </div>
-
-                        </div>
-
-
-                        <div className="mx-12">
-                            <div className="text-lg border-b-2 border-white ">
-                                your opponent, {pretty(lastGame?.opponent)}, played
-                            </div>
-                            <div>
-                                {props.actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.value}
-                            </div>
-
-                        </div>
-
-
-
-                    </div> */}
-
-                </div>) : (<></>)}
-
-                {/* <div className='pt-12'>
-                    error : {lastGameError?.message}
-                    error2: {JSON.stringify(writeError, null, 2)}
-                </div> */}
-            </section>
-
-            {/* <section className='pt-12 md:pt-24'>
-                <SmallTitle title='details' />
-            </section>
-            <section id='intro' className='items-center p-12 md:p-18 md:pb-24'>
-                <div className='flex'>
-                    <div className='justify-right md:w-1/2'></div>
-                    <div className='justify-right md:w-1/2 '>
-                        <p>
-                            This is a multiplayer game of rock-paper-scissors with matchmaking.  
-                            This game was deployed using the Tavern game engine without writing any code.
-                            <br />
-                            <br />
-                            First, the game was deployed using the Game Factory.
-                            <br />
-                            Then, three components were added to the game.
-                            <br />
-                            Finally, a Flow was created to call functions in order on all the components.
-                            <br />
-                            <br />
-                            The buttons below will execute that created flow, passing in the players address and choice of action.
-                            <br />
-                            <br />
-                            More details about this game can be found in the Games section.
-                        </p>
-                    </div>
-
-                </div>
-            </section> */}
-
+    
         </section >
     );
 }

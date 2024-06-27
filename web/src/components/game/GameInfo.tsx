@@ -5,8 +5,7 @@ import { GameMetadata, GameSummary } from '@/domain/Domain';
 import { censor, pretty } from '@/domain/utils';
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import useDeployment from '@/hooks/useDeployment';
-import { Name } from '@coinbase/onchainkit';
-
+import { Name } from '@coinbase/onchainkit/identity';
 
 
 type StepThreeProps = {

@@ -1,16 +1,12 @@
 'use client';
 
-import { useReadPvpResultGetLastGame, useReadQueueSessionGetPlayerCount, useReadQueueSessionIsPlayerInQueue, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
-import { Deployment, GameFuncParams } from '@/domain/Domain';
-import { useEnsName, useWaitForTransactionReceipt } from 'wagmi';
+import { useReadPvpResultGetLastGame, useReadQueueSessionIsPlayerInQueue } from '@/generated';
+import { Deployment } from '@/domain/Domain';
 import { Address, zeroAddress } from 'viem';
-import { toast } from 'react-toastify';
 import rock from '@/images/rockpaperscissors/rock.png';
 import Image from 'next/image';
-// import { Name } from '@coinbase/onchainkit/identity';
-import { useEffect } from 'react';
+import { Name } from '@coinbase/onchainkit/identity';
 import { pretty } from '@/domain/utils';
-// import rock from '@/images/rps-rock.png';
 
 
 
@@ -30,74 +26,8 @@ export default function RPSResult(props: ResultProps) {
         { num: "3", value: 'scissors', image: '/images/rockpaperscissors/scissors.png' },
     ]
 
-    // const { data: games, error: gameError } = useReadGameFactoryGetGames({ address: deploy.gameFactory, args: [0] })
-    const { data: queueSize, error: queueError, refetch: refetchQueuePlayers } = useReadQueueSessionGetPlayerCount({ address: props.deploy.queueComponent, args: [props.deploy.rpsGame] });
     const { data: inQueue, error: inQueueError, refetch: refetchInQueue } = useReadQueueSessionIsPlayerInQueue({ address: props.deploy.queueComponent, args: [props.deploy.rpsGame, props.address] });
-    // const {data: lastGame, error: lastGameError } = useReadPvpResultGetLastGame({address: deploy.resultComponent, args: [address ? address : zeroAddress, deploy.rpsGame]});
     const { data: lastGame, error: lastGameError, refetch: refetchGetLastGame } = useReadPvpResultGetLastGame({ address: props.deploy.resultComponent, args: [props.deploy.rpsGame, props.address] });
-
-
-    const { data: hash, error: writeError, writeContract } = useWriteGame();
-    const { isLoading, isSuccess, data } = useWaitForTransactionReceipt({ hash })
-    const { data: ens, error: ensError } = useEnsName({ address: props.address, chainId: 1 });
-
-    const executeFlowTx = (action: number) => {
-        console.log("games and address", props.address)
-        if (!props.address) {
-            console.log("too soon!");
-            return;
-        }
-        console.log(action);
-        const params: GameFuncParams = {
-            strings: [],
-            uints: [{ name: 'action', value: BigInt(action) }],
-            addresses: [{ name: "player", value: props.address! }],
-        }
-
-        // const write = await executeFlow(games[0].game, "playRPS", params);
-        // console.log("params", params);
-        // console.log("watching for component: ", deploy.rpsComponent)
-        // console.log("watching for game: ", deploy.rpsGame)
-        writeContract({ address: props.deploy.rpsGame, functionName: "executeFlow", args: ["playRPS", params] });
-
-
-    }
-
-    useEffect(() => {
-        if (queueError) {
-            toast.error(queueError.message);
-        }
-        if (writeError) {
-            toast.error(writeError.message);
-        }
-        if (isLoading) {
-            toast.info("Transaction is pending");
-
-        }
-        if (isSuccess) {
-            toast.success("Transaction is successful");
-            refetchGetLastGame();
-            refetchQueuePlayers();
-            refetchInQueue();
-        }
-        // if (data) {
-        //     console.log("data", data.logs);
-        //     const MY_ABI: Abi = [...gameAbi, ...rockPaperScissorsAbi, ...rewardErc20Abi, ...queueSessionAbi, ...erc20Abi, ...erc721Abi];
-
-        //     data.logs.map((log: any) => {
-        //         try {
-        //             const wat = decodeEventLog({ abi: MY_ABI, ...log });
-        //             console.log(wat)
-        //             if (wat.eventName == "GameResult") {
-        //                 console.log("game result", wat)
-        //             }
-        //         } catch (e) {
-        //             console.log("bad abi")
-        //         }
-
-        //     });
-        // }
-    }, [queueError, writeError, isLoading, isSuccess, data]);
 
     function inQueueView() {
         return (
@@ -121,8 +51,8 @@ export default function RPSResult(props: ResultProps) {
                 <div className='md:block hidden' />
 
                 <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
-                    {/* <Name address={props.address} sliced={true} /> */}
-                    {pretty(props.address)}
+                    <Name address={props.address} sliced={true} />
+                    {/* {pretty(props.address)} */}
                 </div>
                 
                 <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
@@ -139,8 +69,8 @@ export default function RPSResult(props: ResultProps) {
 
 
                 <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
-                    {/* <Name address={props.address} sliced={true} /> */}
-                    {pretty(props.address)}
+                    <Name address={props.address} sliced={true} />
+                    {/* {pretty(props.address)} */}
                 </div>
                 <div className='md:block hidden' />
                 <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
@@ -152,35 +82,7 @@ export default function RPSResult(props: ResultProps) {
             </section>
         )
     }
-    function inQueueViewOld() {
-        return (
-            <section>
-                <div className='absolute top-0 left-0 p-5 text-xl text-tavernGreen'>
-                    {/* <Name address={props.address} sliced={true} /> */}
-                    {pretty(props.address)}
-                </div>
-                <div className='absolute bottom-0 right-0 p-5 text-xl text-red'>
-                    Loading...
-                </div>
-                <div className='absolute top-[10%] left-[20%] rotate-45'>
-                    <Image
-                        src={rock}
-                        alt="Rock Paper Scissors"
-                        width={200}
-                        height={200} />
-                </div>
-                <div className='absolute bottom-[25%] right-[15%] '>
-                    <div className='text-xl'>
-                        Waiting for Opponent
-                    </div>
 
-                </div>
-                <div className='absolute text-8xl top-1/2 right-1/2 -mx-12 -my-12'>
-                    vs
-                </div>
-            </section>
-        )
-    }
 
 
     function unplayedView() {
@@ -253,8 +155,8 @@ export default function RPSResult(props: ResultProps) {
                     <div className='md:block hidden' />
 
                     <div className='text-xl lg:text-4xl text-selected text-center -mt-8 md:mt-0 md:hidden'>
-                        {/* <Name address={props.address} sliced={true} /> */}
-                        {pretty(props.address)}
+                        <Name address={props.address} sliced={true} />
+                        {/* {pretty(props.address)} */}
                     </div>
                     <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
                         <Image
@@ -265,19 +167,19 @@ export default function RPSResult(props: ResultProps) {
                             height={200} />
                     </div>
                     <div className='text-xl lg:text-4xl text-red text-center md:hidden'>
-                        {/* <Name address={lastGame ? lastGame.opponent : zeroAddress} sliced={true} /> */}
-                        {pretty(lastGame ? lastGame.opponent : zeroAddress)}
+                        <Name address={lastGame ? lastGame.opponent : zeroAddress} sliced={true} />
+                        {/* {pretty(lastGame ? lastGame.opponent : zeroAddress)} */}
                     </div>
 
 
                     <div className='text-xl xl:text-4xl text-selected text-center hidden md:block'>
-                        {/* <Name address={props.address} sliced={true} /> */}
-                        {pretty(props.address)}
+                        <Name address={props.address} sliced={true} />
+                        {/* {pretty(props.address)} */}
                     </div>
                     <div className='md:block hidden' />
                     <div className='text-xl xl:text-4xl text-red text-center hidden md:block' >
-                        {/* <Name address={lastGame ? lastGame.opponent : zeroAddress} sliced={true} /> */}
-                        {pretty(lastGame ? lastGame.opponent : zeroAddress)}
+                        <Name address={lastGame ? lastGame.opponent : zeroAddress} sliced={true} />
+                        {/* {pretty(lastGame ? lastGame.opponent : zeroAddress)} */}
 
                     </div>
                     <div className='md:block hidden' />

@@ -64,15 +64,31 @@ async function main() {
                   creates: [],
                   emits: []
                 });
+              } else {
+                if (abi.name.includes('updateMetadata') || abi.name.includes('initialize')) {
+                  //ignore
+                } else {
+                  newJson.configFunctions.push({
+                    name: abi.name,
+                    description: `description of ${abi.name}`,
+                    abi: simpleABI,
+                    requires: [],
+                    creates: [],
+                    emits: []
+                  });
+                }
               }
 
 
             }
           }
         });
-        console.log("name  " + newJson.name)
+        console.log("created  " + newJson.name)
         await fs.writeFileSync(`${metadataFolder}/${component.split('.')[0]}.json`, JSON.stringify(newJson, null, 2));
 
+
+      } else {
+        console.log("metadata exists for " + compName);
 
       }
     }

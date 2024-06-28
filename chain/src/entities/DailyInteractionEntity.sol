@@ -6,6 +6,7 @@ import {IEntity} from './interfaces/IEntity.sol';
 contract DailyInteractionEntity is IEntity {
   mapping(address => uint256) public lastActionAt;
   mapping(address => uint256) public dailyActions;
+  uint256 public timeRange;
 
   function setAvailableKeys(string[] storage keys) internal override {
     keys.push('lastActionAt');
@@ -18,6 +19,10 @@ contract DailyInteractionEntity is IEntity {
 
   function getDailyActions(address player) public view returns (uint256) {
     return dailyActions[player];
+  }
+
+  function updateTimeRange(uint256 _timeRange) public onlyModule {
+    timeRange = _timeRange;
   }
 
   function updateLastActionAt(

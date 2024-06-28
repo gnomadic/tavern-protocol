@@ -9,12 +9,10 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import 'forge-std/console.sol';
 
 contract DailyInteraction is IComponent, Initializable {
-
   constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {
-        IGame(game).createEntity('DailyInteractionEntity');
-
+    IGame(game).createEntity('DailyInteractionEntity');
   }
 
   function getSummary()
@@ -30,7 +28,7 @@ contract DailyInteraction is IComponent, Initializable {
     address executor,
     address gameAddress
   ) public onlyGame(gameAddress) {
-          console.log("daily interaction");
+    console.log('daily interaction');
 
     IGame game = IGame(gameAddress);
 
@@ -40,22 +38,43 @@ contract DailyInteraction is IComponent, Initializable {
     DailyInteractionEntity entity = DailyInteractionEntity(
       game.getEntity('dailyActions')
     );
-              console.log("got entity at: ", address(entity));
 
     uint256 lastActionAt = entity.getLastActionAt(player);
+    uint256 timeRange = entity.timeRange();
 
-              console.log("last action at ", lastActionAt);
-
-
-    if (lastActionAt != 0 && block.timestamp - lastActionAt < 14 hours) {
-      console.log("failed");
+    if (lastActionAt != 0 && block.timestamp - lastActionAt < timeRange) {
+      console.log('failed');
       gameEntity.setFailure('Not enough time has passed');
     }
     uint256 dailyActions = entity.getDailyActions(player);
-    entity.updateDailyActions(player,  dailyActions + 1);
+    entity.updateDailyActions(player, dailyActions + 1);
     entity.updateLastActionAt(player, block.timestamp);
 
-    gameEntity.addPlayerUint(executor, "totalActions", entity.getDailyActions(player));
+    gameEntity.addPlayerUint(
+      executor,
+      'totalActions',
+      entity.getDailyActions(player)
+    );
   }
 
+  function updateTimeRange(
+    address gameAddress,
+    uint256 _timeRange
+  ) public onlyGM(gameAddress) {
+    DailyInteractionEntity entity = DailyInteractionEntity(
+      IGame(gameAddress).getEntity('dailyActions')
+    );
+    entity.updateTimeRange(_timeRange);
+  }
+
+  function getTimeRange(address gameAddress)
+    public
+    view
+    returns (uint256)
+  {
+    DailyInteractionEntity entity = DailyInteractionEntity(
+      IGame(gameAddress).getEntity('dailyActions')
+    );
+    return entity.timeRange();
+  }
 }

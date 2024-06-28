@@ -1,0 +1,39 @@
+{
+  "name": "MMOSessionModule",
+  "description": "This component allows players to join an MMO-style game, giving them a unique 1-dimensional index in the game world.",
+  "gameFunctions": [
+    {
+      "name": "joinGame",
+      "description": "Allows a player to register in the MMO.",
+      "abi": [
+        "function joinGame(address,address)"
+      ],
+      "requires": ["player"],
+      "creates": ["playerIndex"],
+      "emits": []
+    }
+  ],
+  "configFunctions": [],
+  "readFunctions": [
+    {
+      "name": "getPlayerCount",
+      "description": "Gets the total number of players who have joined",
+      "abi": [
+        "function getPlayerCount(address) view returns (uint256)"
+      ],
+      "requires": ["gameAddress"],
+      "creates": ["playerCount"],
+      "emits": []
+    },
+    {
+      "name": "getPlayerIndex",
+      "description": "Returns a user's index in the game world.",
+      "abi": [
+        "function getPlayerIndex(address,address) view returns (uint256)"
+      ],
+      "requires": ["gameAddress", "player"],
+      "creates": ["playerIndex"],
+      "emits": []
+    }
+  ]
+}

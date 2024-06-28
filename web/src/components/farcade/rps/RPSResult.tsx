@@ -32,7 +32,6 @@ export default function RPSResult(props: ResultProps) {
     function inQueueView() {
         return (
             <section className=' grid gap-2 md:gap-2 grid-cols-1 md:grid-cols-3 md:px-12'>
-
                 <div className='text-5xl md:text-6xl lg:text-8xl text-center md:col-span-3 '>
                     Waiting...
                 </div>
@@ -42,8 +41,10 @@ export default function RPSResult(props: ResultProps) {
                 <div className='scale-75 md:scale-100'>
                     <Image
                         className='rotate-45 mx-auto'
-                        src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
-                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                        src={actionmap[0].image}
+                        alt={actionmap[0].value}
+                        // src={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.image}
+                        // alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
                         width={200}
                         height={200} />
                 </div>
@@ -58,8 +59,8 @@ export default function RPSResult(props: ResultProps) {
                 <div className='-rotate-45 scale-75 md:scale-100 -scale-y-75 md:-scale-y-100 '>
                     <Image
                         className='rotate-180 '
-                        src={actionmap.find((action) => { return action.num === lastGame?.opponentAction.toString() })!.image}
-                        alt={actionmap.find((action) => { return action.num === lastGame?.myAction.toString() })!.value}
+                        src={actionmap[0].image}
+                        alt={actionmap[0].value}
                         width={200}
                         height={200} />
                 </div>

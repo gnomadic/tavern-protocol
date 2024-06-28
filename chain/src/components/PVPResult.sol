@@ -10,11 +10,9 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import 'forge-std/console.sol';
 
 contract PVPResult is IComponent {
-  string public metadata;
 
-  constructor(string memory _metadata) {
-    metadata = _metadata;
-  }
+
+  constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {
     IGame(game).createEntity('PVPResultEntity');

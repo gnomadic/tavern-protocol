@@ -162,11 +162,14 @@ contract Game is IGame, Initializable {
         revert FlowExecutionError(funcs[i].value, funcs[i].name);
       }else{
         console.log("Execution success");
-      
+      }
+      if (FlowEntity(getEntity('playerParams')).didFail()){
+        revert FlowFailure(funcs[i].value, funcs[i].name, FlowEntity(getEntity('playerParams')).getFailure());
       }
     }
   }
   error FlowExecutionError(address component, string functionKey);
+  error FlowFailure(address component, string functionkey, string failure);
   
   function isGM(address account) external view override returns (bool) {
     return account == gm;

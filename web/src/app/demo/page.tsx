@@ -1,6 +1,6 @@
 import RPSSplitPane from '@/components/farcade/rps/RPSSplitPane';
 
-export default function Demo({ params }: { params: { address: string, chainid: string } }) {
+export default function DemoRPS() {
   return (
     <main className='font-signika'>
       <RPSSplitPane />

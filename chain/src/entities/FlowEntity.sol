@@ -10,6 +10,8 @@ contract FlowEntity is IEntity {
   mapping(address => mapping(string => string)) private strings;
   mapping(address => mapping(string => uint256)) private uints;
   mapping(address => mapping(string => address)) private addresses;
+  string public failure;
+  bool public failureSet;
 
   function setAvailableKeys(string[] storage keys) internal override {
     keys.push('playerParams');
@@ -75,6 +77,19 @@ contract FlowEntity is IEntity {
   ) external {
     addresses[player][key] = value;
   
+  }
+
+  function setFailure(string memory _failure) external {
+    failure = _failure;
+    failureSet = true;
+  }
+
+  function didFail() external view returns (bool) {
+    return failureSet;
+  }
+
+  function getFailure() external view returns (string memory) {
+    return failure;
   }
 
 }

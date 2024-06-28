@@ -3,6 +3,7 @@ import { censor, pretty } from '../../domain/utils';
 import Link from 'next/link';
 import { Address } from 'viem';
 import { useMetadata } from '@/hooks/useMetadata';
+import { Name } from '@coinbase/onchainkit/identity';
 
 type GameCardProps = {
   deployment: Deployment;
@@ -26,7 +27,7 @@ export default function GameCard(props: GameCardProps) {
           {data && data.description.length > 0 ? censor(data?.description) : "No description available"}
         </div>
         <div className='text-right pb-2 px-4 text-xs'>
-          created by: {pretty(props.gm)}
+          created by: <span><Name address={props.gm}/></span>
         </div>
       </Link>
     </div>

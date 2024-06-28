@@ -6,19 +6,15 @@ import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 
-import {Reward20Entity} from '../entities/Reward20Entity.sol';
+import {Require1155Entity} from '../entities/Require1155Entity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
-contract RewardERC20 is IComponent {
-  string public metadata;
-
-  constructor(string memory _metadata) {
-    metadata = _metadata;
-  }
+contract Require1155 is IComponent {
+  constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {
-    IGame(game).createEntity('Reward20Entity');
+    IGame(game).createEntity('Require1155Entity');
   }
 
   function getSummary()
@@ -30,55 +26,103 @@ contract RewardERC20 is IComponent {
     return ComponentSummary(address(this), metadata);
   }
 
-  function setReward(address game, address _reward) external onlyGM(game){
-    Reward20Entity(IGame(game).getEntity('rewardAddress')).setReward(_reward);
+  function setRequiredToken(
+    address game,
+    address _reward
+  ) external onlyGM(game) {
+    Require1155Entity(IGame(game).getEntity('require1155')).setRequiredToken(
+      _reward
+    );
   }
 
-  function getRewardToken(address game) external view returns (address) {
-    return Reward20Entity(IGame(game).getEntity('rewardAddress')).token();
+  function setRequiredToken(
+    address game,
+    address _reward,
+    uint256 _tokenId
+  ) external onlyGM(game) {
+    Require1155Entity(IGame(game).getEntity('require1155')).setRequiredToken(
+      _reward,
+      _tokenId
+    );
   }
 
-  function rewardWinner(
+  function setRequiredBalance(
+    address game,
+    uint256 balance
+  ) external onlyGM(game) {
+    Require1155Entity(IGame(game).getEntity('require1155')).setRequiredBalance(
+      balance
+    );
+  }
+
+  function getRequiredToken(address game) external view returns (address) {
+    return Require1155Entity(IGame(game).getEntity('require1155')).nft();
+  }
+
+  function getRequiredBalance(address game) external view returns (uint256) {
+    return
+      Require1155Entity(IGame(game).getEntity('require1155')).requiredBalance();
+  }
+
+  function requireBalance(
     address executor,
     address gameAddress
   ) public onlyGame(gameAddress) {
-    console.log('reward winner');
-
     IGame game = IGame(gameAddress);
-
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-    uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
 
-    address player = gameEntity.getPlayerAddress(executor, 'winner');
-    if (player != address(0)) {
-      Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-        player,
-        amount
-      );
+    address player = gameEntity.getPlayerAddress(executor, 'player');
+
+    bool hasBalance = Require1155Entity(IGame(game).getEntity('require1155'))
+      .hasBalance(player);
+
+    if (!hasBalance) {
+      console.log('Player does not have required balance');
+      gameEntity.setFailure('Player does not have required balance');
     }
   }
 
-  function rewardTie(
-    address executor,
-    address gameAddress
-  ) public onlyGame(gameAddress) {
-    console.log('reward tie');
-    IGame game = IGame(gameAddress);
+  // function rewardWinner(
+  //   address executor,
+  //   address gameAddress
+  // ) public onlyGame(gameAddress) {
+  //   console.log('reward winner');
 
-    FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-    uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
+  //   IGame game = IGame(gameAddress);
 
-    address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
-    address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
-    if (tiePlayer1 != address(0) && tiePlayer2 != address(0)) {
-      Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-        tiePlayer1,
-        amount
-      );
-      Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-        tiePlayer2,
-        amount
-      );
-    }
-  }
+  //   FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
+  //   uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
+
+  //   address player = gameEntity.getPlayerAddress(executor, 'winner');
+  //   if (player != address(0)) {
+  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+  //       player,
+  //       amount
+  //     );
+  //   }
+  // }
+
+  // function rewardTie(
+  //   address executor,
+  //   address gameAddress
+  // ) public onlyGame(gameAddress) {
+  //   console.log('reward tie');
+  //   IGame game = IGame(gameAddress);
+
+  //   FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
+  //   uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
+
+  //   address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
+  //   address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
+  //   if (tiePlayer1 != address(0) && tiePlayer2 != address(0)) {
+  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+  //       tiePlayer1,
+  //       amount
+  //     );
+  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
+  //       tiePlayer2,
+  //       amount
+  //     );
+  //   }
+  // }
 }

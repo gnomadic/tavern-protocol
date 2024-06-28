@@ -1,0 +1,51 @@
+{
+  "name": "Reward1155",
+  "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
+  "gameFunctions": [
+    {
+      "name": "rewardTie",
+      "description": "description of rewardTie",
+      "abi": [
+        "function rewardTie(address,address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    },
+    {
+      "name": "rewardWinner",
+      "description": "description of rewardWinner",
+      "abi": [
+        "function rewardWinner(address,address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    },
+
+  ],
+  "configFunctions": [
+    {
+      "name": "setReward",
+      "description": "description of setReward",
+      "abi": [
+        "function setReward(address,address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    }
+  ],
+  "readFunctions": [
+    {
+      "name": "getReward",
+      "description": "description of getReward",
+      "abi": [
+        "function getReward(address) view returns (address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    }
+  ]
+}

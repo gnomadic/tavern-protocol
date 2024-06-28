@@ -1,23 +1,12 @@
 'use client';
 
 import useDeployment from "@/hooks/useDeployment";
-import { executeFlow } from '@/services/viemService';
-import { gameAbi, queueSessionAbi, rewardErc20Abi, rockPaperScissorsAbi, useReadGameFactoryGetGames, useReadPvpResultGetLastGame, useReadQueueSessionGetPlayerCount, useReadQueueSessionIsPlayerInQueue, useWatchQueueSessionJoinedQueueEvent, useWatchRockPaperScissorsGameResultEvent, useWriteGame, useWriteGameExecuteFlow, watchRockPaperScissorsGameResultEvent } from '@/generated';
-import { GameFuncParams } from '@/domain/Domain';
-import { useAccount, useEnsName, useWaitForTransactionReceipt } from 'wagmi';
-import useThrowBall from '@/mutations/useThrowBall';
-import { Abi, Address, decodeEventLog, erc20Abi, erc721Abi, zeroAddress } from 'viem';
-import SmallTitle from '@/components/base/SmallTitle';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { config } from '@/domain/WagmiConfig';
-import { bigIntReplacer, pretty } from '@/domain/utils';
-import paper from '@/images/rockpaperscissors/paper.png';
-import rock from '@/images/rockpaperscissors/rock.png';
-import scissors from '@/images/rockpaperscissors/scissors.png';
-import Image from 'next/image';
-import RPSAction from './RPSAction';
-import RPSResult from './RPSResult';
+import { useAccount } from 'wagmi';
+import { zeroAddress } from 'viem';
+import { useState } from 'react';
+
+import RPSAction from '@/components/farcade/rps/RPSAction';
+import RPSResult from '@/components/farcade/rps/RPSResult';
 
 
 export default function RPSSplitPane() {
@@ -52,8 +41,8 @@ export default function RPSSplitPane() {
                         address={address ? address : zeroAddress}
                         actionmap={actionmap}
                         selected={selected}
-                        
-                     />
+
+                    />
                 </div>
 
             </div>

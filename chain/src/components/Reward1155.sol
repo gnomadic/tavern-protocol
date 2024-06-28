@@ -10,11 +10,9 @@ import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract Reward1155 is IComponent {
-  string public metadata;
 
-  constructor(string memory _metadata) {
-    metadata = _metadata;
-  }
+  constructor(string memory _metadata) IComponent(_metadata) {}
+
   function getSummary()
     external
     view

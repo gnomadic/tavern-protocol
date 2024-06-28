@@ -7,12 +7,9 @@ import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
-contract DailyInteractionModule is IComponent, Initializable {
-  string public metadata;
+contract DailyInteraction is IComponent, Initializable {
 
-  constructor(string memory _metadata) {
-    metadata = _metadata;
-  }
+  constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {}
 

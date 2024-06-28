@@ -64,7 +64,6 @@ contract QueueSessionTest is TavernTest {
 
     FlowEntity game = FlowEntity(liveGame.getEntity('playerParams'));
     address player1 = game.getPlayerAddress(address(2), 'player1');
-
     address player2 = game.getPlayerAddress(address(2), 'player2');
 
     assertEq(address(1), player2);

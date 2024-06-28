@@ -22,6 +22,7 @@ import { Providers } from './providers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 
 const signika = Signika({
@@ -71,7 +72,7 @@ export default function RootLayout({
 
           {children}
           <ToastContainer position='bottom-right' />
-
+          <Footer />
           <Analytics />
         </Providers>
       </body>

@@ -12,6 +12,7 @@ import {console} from 'forge-std/console.sol';
 
 contract RewardERC20 is IComponent {
 
+  constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {
     IGame(game).createEntity('Reward20Entity');

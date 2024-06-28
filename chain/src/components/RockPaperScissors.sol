@@ -13,11 +13,8 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import {console} from 'forge-std/console.sol';
 
 contract RockPaperScissors is IComponent {
-  string public metadata;
+  constructor(string memory _metadata) IComponent(_metadata) {}
 
-  constructor(string memory _metadata) {
-    metadata = _metadata;
-  }
   function initialize(address game) external override {
     IGame(game).createEntity('RockPaperScissorEntity');
   }
@@ -38,13 +35,15 @@ contract RockPaperScissors is IComponent {
     IGame game = IGame(gameAddress);
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
-      game.getEntity('actions')
+      game.getEntity('rockpaperscissors')
     );
 
     address player = gameEntity.getPlayerAddress(executor, 'player');
     uint256 action = gameEntity.getPlayerUint(executor, 'action');
     address player2 = gameEntity.getPlayerAddress(executor, 'player2');
     uint256 player2Action = rpsEntity.getPlayerAction(player2);
+    uint256 winAmount = rpsEntity.getWinAmount();
+    uint256 tieAmount = rpsEntity.getTieAmount();
 
     console.log('Player 1: ', player);
     console.log('Player 1 action: ', action);
@@ -52,6 +51,10 @@ contract RockPaperScissors is IComponent {
     console.log('Player 2 action: ', player2Action);
 
     console.log('setting player action');
+
+    if (player == address(0) || action == 0) {
+      return;
+    }
     rpsEntity.setPlayerAction(player, action);
 
     console.log('checking player2');
@@ -72,18 +75,18 @@ contract RockPaperScissors is IComponent {
       console.log('It is a tie');
       gameEntity.addPlayerAddress(executor, 'tie1', player);
       gameEntity.addPlayerAddress(executor, 'tie2', player2);
-      gameEntity.addPlayerUint(executor, 'amount', 1 * 10 ** 18);
+      gameEntity.addPlayerUint(executor, 'amount', tieAmount);
     } else {
       console.log('The winner is: ', winner);
       gameEntity.addPlayerAddress(executor, 'winner', winner);
-      gameEntity.addPlayerUint(executor, 'amount', 3 * 10 ** 18);
+      gameEntity.addPlayerUint(executor, 'amount', winAmount);
     }
 
     emit GameResult(Hand(player, action), Hand(player2, player2Action), winner);
 
     rpsEntity.setPlayerAction(player, 0);
     rpsEntity.setPlayerAction(player2, 0);
-    gameEntity.addPlayerUint(executor, "action2", player2Action);
+    gameEntity.addPlayerUint(executor, 'action2', player2Action);
   }
 
   event GameResult(Hand player1, Hand player2, address winner);
@@ -98,7 +101,6 @@ contract RockPaperScissors is IComponent {
     Hand memory player1,
     Hand memory player2
   ) internal view returns (address) {
-    //TODO require both players to have a nonzero index
     uint256 player1Action = player1.actionIndex;
     uint256 player2Action = player2.actionIndex;
     address winner = address(0);
@@ -117,5 +119,25 @@ contract RockPaperScissors is IComponent {
       console.log('Player 2 wins');
     }
     return winner;
+  }
+
+  function setWinAmount(
+    address gameAddress,
+    uint256 amount
+  ) public onlyGame(gameAddress) {
+    RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
+      IGame(gameAddress).getEntity('rockpaperscissors')
+    );
+    rpsEntity.setWinAmount(amount);
+  }
+
+  function setTieAmount(
+    address gameAddress,
+    uint256 amount
+  ) public onlyGame(gameAddress) {
+    RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
+      IGame(gameAddress).getEntity('rockpaperscissors')
+    );
+    rpsEntity.setTieAmount(amount);
   }
 }

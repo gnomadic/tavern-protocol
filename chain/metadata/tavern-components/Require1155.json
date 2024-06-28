@@ -1,0 +1,51 @@
+{
+  "name": "Require1155",
+  "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
+  "gameFunctions": [
+    {
+      "name": "requireBalance",
+      "description": "description of requireBalance",
+      "abi": [
+        "function requireBalance(address,address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    }
+
+  ],
+  "configFunctions": [
+    {
+      "name": "setRequiredToken",
+      "description": "description of setRequiredToken",
+      "abi": [
+        "function setRequiredToken(address,address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    }
+  ],
+  "readFunctions": [
+    {
+      "name": "getRequiredBalance",
+      "description": "description of getRequiredBalance",
+      "abi": [
+        "function getRequiredBalance(address) view returns (uint256)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    },
+    {
+      "name": "getRequiredToken",
+      "description": "description of getRequiredToken",
+      "abi": [
+        "function getRequiredToken(address) view returns (address)"
+      ],
+      "requires": [],
+      "creates": [],
+      "emits": []
+    }
+  ]
+}

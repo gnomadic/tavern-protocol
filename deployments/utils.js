@@ -17,37 +17,45 @@ async function getDeployedContract(name) {
     return await ethers.getContractAt(name, deployment.address);
 }
 
-async function deployComponent(){
-    const queueSession = await deploy("QueueSession", {
+async function deployComponent(deploy, deployer, component, entity, verify) {
+    
+    
+    const deployedComponent = await deploy(component, {
         from: deployer,
         log: true,
-        args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`],
-      });
-    
-    
-    
-      const queueSessionEntity = await deploy("QueueSessionEntity", {
+        args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/${component}.json`],
+    });
+
+    const deployedEntity = await deploy(entity, {
         from: deployer,
         log: true,
-      });
+    });
 
 
-      if (!await componentRegistry.isRegistered(queueSession.address)) {
-        tx = await componentRegistry.register(queueSession.address);
+
+  const componentRegistry = await getDeployedContract("ComponentRegistry");
+  const entityFactory = await getDeployedContract("EntityFactory");
+
+    if (!await componentRegistry.isRegistered(deployedComponent.address)) {
+        tx = await componentRegistry.register(deployedComponent.address);
         await tx.wait();
-      }
+    }
 
-      if (await entityFactory.getEntity("QueueSessionEntity") == ZERO_ADDRESS) {
-        tx = await entityFactory.registerEntity("QueueSessionEntity", queueSessionEntity.address);
+    if (await entityFactory.getEntity(entity) == ZERO_ADDRESS) {
+        tx = await entityFactory.registerEntity(entity, deployedEntity.address);
         await tx.wait();
-      }
-      object.queueSession = queueSession.address;
+    }
 
-      if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
-        console.log("verifing");
-        await verify(hre, queueSession.address, "QueueSession", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`]);
-        await verify(hre, queueSessionEntity.address, "QueueSessionEntity", "entities/");
-        
+
+    //   object.queueSession = queueSession.address;
+
+    //   if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
+    if (verify) {
+        console.log("verifying " + component);
+        await verify(hre, deployedComponent.address, component, "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/${component}.json`]);
+        await verify(hre, deployedEntity.address, entity, "entities/");
+    }
+    return deployedComponent.address;
 
 }
 
@@ -64,5 +72,6 @@ module.exports = {
     verify,
     ZERO_ADDRESS,
     IPFS_COMPONENTS,
-    IPFS_GAMES
+    IPFS_GAMES,
+    deployComponent
 };

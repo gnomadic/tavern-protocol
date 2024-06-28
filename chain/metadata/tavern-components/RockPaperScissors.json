@@ -1,0 +1,43 @@
+{
+    "name": "Rock Paper Scissors",
+    "description": "Allow players to submit a move out of three options, which will be compared to another player to determine the winner. This follows the rules of rock paper scissors.",
+    "gameFunctions": [
+        {
+            "name": "One on One",
+            "description": "Compare two players actions and determine a winner using the rules of rock paper scissors.  It supports a tie as well. ",
+            "abi": "oneOnOne(address,address)",
+            "requires": [
+                "player1",
+                "player2",
+                "action"
+            ],
+            "creates": ["amount", "winner", "tie1", "tie2"],
+            "emits":["GameResult"]
+        }
+    ],
+    "configFunctions": [
+        {
+            "name": "set Win Amount",
+            "description": "Set the amount value associated with a win.  This will be associated with the player who won.",
+            "abi": "setWinAmount(address,uint256)",
+            "requires": [
+                "gameAddress",
+                "amount"
+            ],
+            "creates": ["winAmount"],
+            "emits":[]
+        },
+        {
+            "name": "Set Tie Amount",
+            "description": "Set the amount value associated with a tie.  This will be associated with both players who tied.",
+            "abi": "setTieAmount(address,address)",
+            "requires": [
+                "gameAddress",
+                "amount"
+            ],
+            "creates": ["tieAmount"],
+            "emits":[]
+        }
+    ],
+    "readFunctions":[]
+}

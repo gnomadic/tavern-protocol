@@ -26,12 +26,8 @@ abstract contract TavernTest is Test {
 
     registry = new ComponentRegistry();
 
-  
-
     factory.createGame(address(0), 'http://ipfs.io/ipfs/QmUXhiGQsawmyaAJ1zdiGEANbW3WAVSdJYrqosX6RTvgLC/template.json');
     liveGame = factory.games(0);
-
-
 
     loadModules();
 

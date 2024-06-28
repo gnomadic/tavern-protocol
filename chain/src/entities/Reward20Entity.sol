@@ -27,6 +27,7 @@ contract Reward20Entity is IEntity {
     SimpleMintableERC20(token).mint(player, amount);
     }
   }
+
 }
 
 interface SimpleMintableERC20 {

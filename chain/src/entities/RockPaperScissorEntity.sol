@@ -19,8 +19,8 @@ contract RockPaperScissorEntity is IEntity {
     actions[2] = 'paper';
     actions[3] = 'scissors';
 
-    winAmount = 3;
-    tieAmount = 1;
+    winAmount = 3 * 10 ** 18;
+    tieAmount = 1 * 10 ** 18;
   }
 
   function getAvailableActions() external view returns (string[4] memory) {

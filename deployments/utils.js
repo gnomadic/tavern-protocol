@@ -63,7 +63,7 @@ async function deployComponent(deploy, deployer, component, entity, verify) {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-const IPFS_COMPONENTS = 'QmdW8chcERiTXdRAtmRn5VsAJqbNCtP34ZNiYMk6KMGLpQ';
+const IPFS_COMPONENTS = 'QmZSarSzxA22SWnxhrNVhXp9rM16P1m6nyxFFMQSbLiMZ6';
 
 const IPFS_GAMES = 'QmVSwRPRRPUe6mUx7Q3VxoQ8YFKfyU6x4abjBKWdT5hkrd';
 

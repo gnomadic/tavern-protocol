@@ -35,7 +35,7 @@ contract MMOSessionModule is IComponent {
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     player = gameEntity.getPlayerAddress(executor, 'player');
 
-    MMOSessionEntity(game.getEntity('players')).addPlayer(player);'
+    MMOSessionEntity(game.getEntity('players')).addPlayer(player);
     gameEntity.addPlayerUint(executor, 'playerIndex', MMOSessionEntity(game.getEntity('players')).getPlayerIndex(player));
   }
 

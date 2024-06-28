@@ -5,6 +5,9 @@ import StepCard from '@/components/landing/StepCard';
 import door from "@/images/door.png";
 import Image from 'next/image';
 import Link from 'next/link';
+import EXPLORE from '@/images/homepage/EXPLORE.png'
+import PLAY from '@/images/homepage/PLAY.png'
+import PVE from '@/images/homepage/PVE.png'
 
 export default function Home() {
 
@@ -36,9 +39,16 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <section className='grid grid-cols-1 md:grid-cols-2 pt-24 md:gap-y-72 gap-24 text-center md:text-left md:px-12'>
-      <div className='hidden md:block' />
-        <div>
+      <section className='grid grid-cols-1 md:grid-cols-2 pt-24 md:pt-48 md:gap-y-48 gap-24 text-center md:text-left md:px-12'>
+        <div className='mx-auto' >
+          <Image
+            src={PVE}
+            alt="explore"
+            width={300}
+            height={300}
+          />
+        </div>
+        <div className='mx-auto'>
           <div className='text-3xl '>
             Super easy to get started. <br /> Seriously, no code.
           </div>
@@ -46,7 +56,7 @@ export default function Home() {
             All it takes is submitting transactions. <br />  Choose your gameplay, customize it, and launch it.
           </div>
         </div>
-        <div>
+        <div className='mx-auto'>
           <div className='text-3xl '>
             We believe in the power of play. <br />
           </div>
@@ -54,10 +64,24 @@ export default function Home() {
             Communities are stronger when they play together.
           </div>
         </div>
-        <div className='hidden md:block' />
-        <div className='hidden md:block' />
-        <div>
-          <div className='text-3xl '>
+        <div className='mx-auto' >
+          <Image
+            src={EXPLORE}
+            alt="explore"
+            width={300}
+            height={300}
+          />
+        </div>
+        <div className='text-center mx-auto' >
+          <Image
+            src={PLAY}
+            alt="explore"
+            width={300}
+            height={300}
+          />
+        </div>
+        <div className='mx-auto '>
+          <div className='text-3xl'>
             Completely onchain <br />
           </div>
           <div className='text-lightgrey text-xl'>

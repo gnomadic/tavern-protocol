@@ -16,6 +16,10 @@ module.exports = async (hre) => {
   let rewardERC20Address = await deployComponent(deploy, deployer, "RewardERC20", "Reward20Entity", false);
   let rockPaperScissorsAddress = await deployComponent(deploy, deployer, "RockPaperScissors", "RockPaperScissorEntity", false);
   let pvpResultAddress = await deployComponent(deploy, deployer, "PVPResult", "PVPResultEntity", false);
+  let MMOSessionAddress = await deployComponent(deploy, deployer, "MMOSessionModule", "MMOSessionEntity", false);
+  let DailyInteractionAddress = await deployComponent(deploy, deployer, "DailyInteraction", "DailyInteractionEntity", false);
+  let require1155Address = await deployComponent(deploy, deployer, "Require1155", "Require1155Entity", false);
+  let reward1155Address = await deployComponent(deploy, deployer, "Reward1155", "Reward1155Entity", false);
 
   // ------------------------------------- write address megafile
 

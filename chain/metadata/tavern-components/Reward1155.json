@@ -1,5 +1,5 @@
 {
-  "name": "Reward1155",
+  "name": "Reward 1155",
   "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
   "gameFunctions": [
     {
@@ -21,8 +21,7 @@
       "requires": [],
       "creates": [],
       "emits": []
-    },
-
+    }
   ],
   "configFunctions": [
     {

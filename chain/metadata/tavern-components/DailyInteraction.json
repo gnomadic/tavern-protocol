@@ -1,5 +1,5 @@
 {
-  "name": "DailyInteraction",
+  "name": "Daily Interaction",
   "description": "This component limits how frequently a player can execute a flow, introducing realtime limits to the game.",
   "gameFunctions": [
     {

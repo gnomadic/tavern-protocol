@@ -1,50 +1,95 @@
 {
   "name": "Require 1155",
-  "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
+  "description": "Require player to hold a balance of a specific 1155 token to be able to play the game.",
   "gameFunctions": [
     {
-      "name": "requireBalance",
-      "description": "description of requireBalance",
+      "name": "Require Balance",
+      "description": "Requires a balance of an 1155 token to proceed.",
       "abi": [
         "function requireBalance(address,address)"
       ],
-      "requires": [],
+      "requires": [
+        "player"
+      ],
       "creates": [],
       "emits": []
     }
-
   ],
   "configFunctions": [
     {
-      "name": "setRequiredToken",
-      "description": "description of setRequiredToken",
+      "name": "Set Required Token",
+      "description": "Set the required ERC1155 token address and tokenID a player must hold to play the game",
       "abi": [
-        "function setRequiredToken(address,address)"
+        "function setRequiredToken(address,address,uint256)"
       ],
-      "requires": [],
-      "creates": [],
+      "requires": [
+        "gameAddress",
+        "requiredTokenAddress",
+        "requiredTokenID"
+      ],
+      "creates": [
+        "requiredTokenAddress",
+        "requiredTokenID"
+      ],
+      "emits": []
+    },
+    {
+      "name": "Set Required Balance",
+      "description": "Set the required balance a user must hold to play the game.",
+      "abi": [
+        "function setRequiredBalance(address,uint256)"
+      ],
+      "requires": [
+        "gameAddress",
+        "requiredTokenBalance"
+      ],
+      "creates": [
+        "requiredTokenBalance"
+      ],
       "emits": []
     }
   ],
   "readFunctions": [
     {
-      "name": "getRequiredBalance",
-      "description": "description of getRequiredBalance",
+      "name": "Get Required Balance",
+      "description": "get the required balance a user must hold",
       "abi": [
         "function getRequiredBalance(address) view returns (uint256)"
       ],
-      "requires": [],
-      "creates": [],
+      "requires": [
+        "gameAddress"
+      ],
+      "creates": [
+        "requiredTokenBalance"
+      ],
       "emits": []
     },
     {
-      "name": "getRequiredToken",
-      "description": "description of getRequiredToken",
+      "name": "get Required Token",
+      "description": "get the address of the required token",
       "abi": [
         "function getRequiredToken(address) view returns (address)"
       ],
-      "requires": [],
-      "creates": [],
+      "requires": [
+        "gameAddress"
+      ],
+      "creates": [
+        "requiredTokenAddress"
+      ],
+      "emits": []
+    },
+    {
+      "name": "get Required Token ID",
+      "description": "get the token ID of the required token",
+      "abi": [
+        "function getRequiredTokenID(address) view returns (uint256)"
+      ],
+      "requires": [
+        "gameAddress"
+      ],
+      "creates": [
+        "requiredTokenID"
+      ],
       "emits": []
     }
   ]

@@ -77,4 +77,24 @@ contract DailyInteraction is IComponent, Initializable {
     );
     return entity.timeRange();
   }
+
+  function getPlayersLastActionAt(
+    address gameAddress,
+    address player
+  ) public view returns (uint256) {
+    DailyInteractionEntity entity = DailyInteractionEntity(
+      IGame(gameAddress).getEntity('dailyActions')
+    );
+    return entity.getLastActionAt(player);
+  }
+
+  function getPlayersTotalActions(
+    address gameAddress,
+    address player
+  ) public view returns (uint256) {
+    DailyInteractionEntity entity = DailyInteractionEntity(
+      IGame(gameAddress).getEntity('dailyActions')
+    );
+    return entity.getDailyActions(player);
+  }
 }

@@ -59,6 +59,10 @@ contract Require1155 is IComponent {
     return Require1155Entity(IGame(game).getEntity('require1155')).nft();
   }
 
+  function getRequiredTokenID(address game) external view returns (uint256) {
+    return Require1155Entity(IGame(game).getEntity('require1155')).tokenId();
+  }
+
   function getRequiredBalance(address game) external view returns (uint256) {
     return
       Require1155Entity(IGame(game).getEntity('require1155')).requiredBalance();

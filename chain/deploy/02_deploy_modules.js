@@ -1,4 +1,4 @@
-const { verify, getDeployedContract, ZERO_ADDRESS, IPFS_COMPONENTS, deployComponent } = require("../../deployments/utils");
+const { deployComponent } = require("../../deployments/utils");
 
 module.exports = async (hre) => {
   const { getNamedAccounts, deployments, getChainId, ethers } = hre;
@@ -12,14 +12,16 @@ module.exports = async (hre) => {
   
   // ------------------------------------- Queue Session Component
 
-  let queueSessionAddress = await deployComponent(deploy, deployer, "QueueSession", "QueueSessionEntity", false);
-  let rewardERC20Address = await deployComponent(deploy, deployer, "RewardERC20", "Reward20Entity", false);
-  let rockPaperScissorsAddress = await deployComponent(deploy, deployer, "RockPaperScissors", "RockPaperScissorEntity", false);
-  let pvpResultAddress = await deployComponent(deploy, deployer, "PVPResult", "PVPResultEntity", false);
-  let MMOSessionAddress = await deployComponent(deploy, deployer, "MMOSessionModule", "MMOSessionEntity", false);
-  let DailyInteractionAddress = await deployComponent(deploy, deployer, "DailyInteraction", "DailyInteractionEntity", false);
-  let require1155Address = await deployComponent(deploy, deployer, "Require1155", "Require1155Entity", false);
-  let reward1155Address = await deployComponent(deploy, deployer, "Reward1155", "Reward1155Entity", false);
+  let runVerify = true;
+
+  let queueSessionAddress = await deployComponent(deploy, deployer, "QueueSession", "QueueSessionEntity", runVerify);
+  let rewardERC20Address = await deployComponent(deploy, deployer, "RewardERC20", "Reward20Entity", runVerify);
+  let rockPaperScissorsAddress = await deployComponent(deploy, deployer, "RockPaperScissors", "RockPaperScissorEntity", runVerify);
+  let pvpResultAddress = await deployComponent(deploy, deployer, "PVPResult", "PVPResultEntity", runVerify);
+  let MMOSessionAddress = await deployComponent(deploy, deployer, "MMOSessionModule", "MMOSessionEntity", runVerify);
+  let DailyInteractionAddress = await deployComponent(deploy, deployer, "DailyInteraction", "DailyInteractionEntity", runVerify);
+  let require1155Address = await deployComponent(deploy, deployer, "Require1155", "Require1155Entity", runVerify);
+  let reward1155Address = await deployComponent(deploy, deployer, "Reward1155", "Reward1155Entity", runVerify);
 
   // ------------------------------------- write address megafile
 

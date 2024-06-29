@@ -26,16 +26,16 @@ contract Reward1155 is IComponent {
     IGame(game).createEntity('Reward1155Entity');
   }
 
-  function setReward(IGame game, address _reward) external {
-    Reward1155Entity(game.getEntity('reward1155')).setReward(_reward);
-  }
-
   function setReward(IGame game, address _reward, uint256 tokenId) external {
     Reward1155Entity(game.getEntity('reward1155')).setReward(_reward, tokenId);
   }
 
   function getReward(address game) external view returns (address) {
     return Reward1155Entity(IGame(game).getEntity('reward1155')).nft();
+  }
+
+  function getRewardTokenID(address game) external view returns (uint256) {
+    return Reward1155Entity(IGame(game).getEntity('reward1155')).tokenId();
   }
 
   function rewardWinner(

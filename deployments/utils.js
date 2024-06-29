@@ -17,7 +17,7 @@ async function getDeployedContract(name) {
     return await ethers.getContractAt(name, deployment.address);
 }
 
-async function deployComponent(deploy, deployer, component, entity, verify) {
+async function deployComponent(deploy, deployer, component, entity, runVerify) {
     
     
     const deployedComponent = await deploy(component, {
@@ -50,7 +50,7 @@ async function deployComponent(deploy, deployer, component, entity, verify) {
     //   object.queueSession = queueSession.address;
 
     //   if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
-    if (verify) {
+    if (runVerify) {
         console.log("verifying " + component);
         await verify(hre, deployedComponent.address, component, "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/${component}.json`]);
         await verify(hre, deployedEntity.address, entity, "entities/");
@@ -63,7 +63,7 @@ async function deployComponent(deploy, deployer, component, entity, verify) {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-const IPFS_COMPONENTS = 'QmZSarSzxA22SWnxhrNVhXp9rM16P1m6nyxFFMQSbLiMZ6';
+const IPFS_COMPONENTS = 'QmRZ3kExp8tiev3XhtQEYPbSMr3R9WafknzCikG1Dw1zsd';
 
 const IPFS_GAMES = 'QmVSwRPRRPUe6mUx7Q3VxoQ8YFKfyU6x4abjBKWdT5hkrd';
 

@@ -22,7 +22,7 @@ export default function CreateGameModules(props: Props) {
             <div className='p-4 text-2xl'>
                 Choose Game Functionality
             </div>
-            <div className='grid grid-cols-1 gap-8 mx-12 md:grid-cols-2 pt-8'>
+            <div className='grid grid-cols-1 gap-8 py-8 mx-12 md:grid-cols-2'>
                 {Array.from({ length: currentModules?.length as number }).map((object, i) => {
                     if (currentModules![i].component !== '0x0000000000000000000000000000000000000000') {
 

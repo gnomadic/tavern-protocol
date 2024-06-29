@@ -18,7 +18,9 @@ contract DailyInteractionTest is TavernTest {
   }
 
   function loadModules() public override {
-    component = new DailyInteraction("http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json");
+    component = new DailyInteraction(
+      'http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json'
+    );
     registry.register(address(component));
 
     DailyInteractionEntity entity = new DailyInteractionEntity();
@@ -42,32 +44,41 @@ contract DailyInteractionTest is TavernTest {
   function test_first_interaction() public {
     clearParams(joinParams);
 
+    uint256 last = component.getPlayersLastActionAt(
+      address(liveGame),
+      address(1)
+    );
+    assertEq(last, 0);
+
     joinParams.addresses.push(AddressKey('player', address(1)));
     liveGame.executeFlow('interact', joinParams);
 
-    // uint256 playerCount = queue.getPlayerCount(liveGame);
-    // assertEq(playerCount, 1);
+    last = component.getPlayersLastActionAt(address(liveGame), address(1));
+
+    assertEq(last, 1);
+
+    uint256 total = component.getPlayersTotalActions(
+      address(liveGame),
+      address(1)
+    );
+
+    assertEq(total, 1);
   }
 
-  function test_second_join() public {
+  function test_second_interaction() public {
     clearParams(joinParams);
 
-    // joinParams.addresses.push(AddressKey('player', address(1)));
-    // vm.prank(address(1));
-    // liveGame.executeFlow('interact', joinParams);
+    joinParams.addresses.push(AddressKey('player', address(1)));
+    liveGame.executeFlow('interact', joinParams);
 
-    // joinParams.addresses[0].value = address(2);
-    // vm.prank(address(2));
-    // liveGame.executeFlow('interact', joinParams);
+    vm.expectRevert();
+    liveGame.executeFlow('interact', joinParams);
 
-    // uint256 playerCount = queue.getPlayerCount(liveGame);
-    // assertEq(playerCount, 0);
+    uint256 total = component.getPlayersTotalActions(
+      address(liveGame),
+      address(1)
+    );
 
-    // FlowEntity game = FlowEntity(liveGame.getEntity('playerParams'));
-    // address player1 = game.getPlayerAddress(address(2), 'player1');
-    // address player2 = game.getPlayerAddress(address(2), 'player2');
-
-    // assertEq(address(1), player2);
-    // assertEq(address(2), player1);
+    assertEq(total, 1);
   }
 }

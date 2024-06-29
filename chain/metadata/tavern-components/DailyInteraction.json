@@ -3,7 +3,7 @@
   "description": "This component limits how frequently a player can execute a flow, introducing realtime limits to the game.",
   "gameFunctions": [
     {
-      "name": "dailyInteraction",
+      "name": "Daily Interaction",
       "description": "Will cause a flow to fail if the user hasn't waited long enough since the last time they executed it.",
       "abi": [
         "function dailyInteraction(address,address)"
@@ -17,7 +17,7 @@
   ],
   "configFunctions": [
     {
-      "name": "updateTimeRange",
+      "name": "Update Time Range",
       "description": "Change how long a player must wait between interactions.",
       "abi": [
         "function updateTimeRange(address,uint256)"
@@ -29,7 +29,7 @@
   ],
   "readFunctions": [
     {
-      "name": "getTimeRange",
+      "name": "Get Time Range",
       "description": "Get the current time range for a player.",
       "abi": [
         "function getTimeRange(address) view returns (uint256)"

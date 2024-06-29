@@ -11,6 +11,7 @@ contract DailyInteractionEntity is IEntity {
   function setAvailableKeys(string[] storage keys) internal override {
     keys.push('lastActionAt');
     keys.push('dailyActions');
+    timeRange = 14 hours;
   }
 
   function getLastActionAt(address player) public view returns (uint256) {

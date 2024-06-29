@@ -36,9 +36,14 @@ contract MMOSessionModule is IComponent {
     player = gameEntity.getPlayerAddress(executor, 'player');
 
     MMOSessionEntity(game.getEntity('players')).addPlayer(player);
+    gameEntity.addPlayerUint(executor, 'playerIndex', MMOSessionEntity(game.getEntity('players')).getPlayerIndex(player));
   }
 
   function getPlayerCount(IGame game) external view returns (uint256) {
     return MMOSessionEntity(game.getEntity('players')).getPlayerCount();
+  }
+
+  function getPlayerIndex(IGame game, address player) external view returns (uint256) {
+    return MMOSessionEntity(game.getEntity('players')).getPlayerIndex(player);
   }
 }

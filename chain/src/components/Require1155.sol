@@ -59,6 +59,10 @@ contract Require1155 is IComponent {
     return Require1155Entity(IGame(game).getEntity('require1155')).nft();
   }
 
+  function getRequiredTokenID(address game) external view returns (uint256) {
+    return Require1155Entity(IGame(game).getEntity('require1155')).tokenId();
+  }
+
   function getRequiredBalance(address game) external view returns (uint256) {
     return
       Require1155Entity(IGame(game).getEntity('require1155')).requiredBalance();
@@ -81,48 +85,4 @@ contract Require1155 is IComponent {
       gameEntity.setFailure('Player does not have required balance');
     }
   }
-
-  // function rewardWinner(
-  //   address executor,
-  //   address gameAddress
-  // ) public onlyGame(gameAddress) {
-  //   console.log('reward winner');
-
-  //   IGame game = IGame(gameAddress);
-
-  //   FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-  //   uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
-
-  //   address player = gameEntity.getPlayerAddress(executor, 'winner');
-  //   if (player != address(0)) {
-  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-  //       player,
-  //       amount
-  //     );
-  //   }
-  // }
-
-  // function rewardTie(
-  //   address executor,
-  //   address gameAddress
-  // ) public onlyGame(gameAddress) {
-  //   console.log('reward tie');
-  //   IGame game = IGame(gameAddress);
-
-  //   FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-  //   uint256 amount = gameEntity.getPlayerUint(executor, 'amount');
-
-  //   address tiePlayer1 = gameEntity.getPlayerAddress(executor, 'tie1');
-  //   address tiePlayer2 = gameEntity.getPlayerAddress(executor, 'tie2');
-  //   if (tiePlayer1 != address(0) && tiePlayer2 != address(0)) {
-  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-  //       tiePlayer1,
-  //       amount
-  //     );
-  //     Reward20Entity(game.getEntity('rewardAddress')).sendReward(
-  //       tiePlayer2,
-  //       amount
-  //     );
-  //   }
-  // }
 }

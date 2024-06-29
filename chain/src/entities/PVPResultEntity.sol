@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import './interfaces/IEntity.sol';
-import 'forge-std/console.sol';
+import {IEntity} from './interfaces/IEntity.sol';
 
 contract PVPResultEntity is IEntity {
 
@@ -22,9 +21,7 @@ contract PVPResultEntity is IEntity {
 
 
   function setLastGame(address player, address opponent, address winner, uint256 myAction, uint256 opponentAction) public {
-    console.log("setting last game in entity");
     lastGames[player] = LastGame(opponent, winner, myAction, opponentAction);
-    console.log("set last game in entity");
   }
 
   function getLastGame(address player) public view returns (LastGame memory) {

@@ -5,6 +5,8 @@ import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-foundry";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
+import "./scripts/updateDeploy";
+
 
 module.exports = {
   solidity: "0.8.24",

@@ -1,50 +1,85 @@
 {
-  "name": "Reward1155",
-  "description": "This component provides some gameplay for the Tavern protocol.  Game Creators can use it as a building block.",
+  "name": "Reward 1155",
+  "description": "Allow players to receive rewards in the form of ERC1155 tokens.",
   "gameFunctions": [
     {
-      "name": "rewardTie",
-      "description": "description of rewardTie",
+      "name": "Reward Tie",
+      "description": "Send an ERC1155 token to two addresses, both of which are flagged as ties.",
       "abi": [
         "function rewardTie(address,address)"
       ],
-      "requires": [],
+      "requires": [
+        "amount",
+        "tie1",
+        "tie2",
+        "rewardAddress",
+        "rewardToken"
+      ],
       "creates": [],
       "emits": []
     },
     {
-      "name": "rewardWinner",
-      "description": "description of rewardWinner",
+      "name": "Reward Winner",
+      "description": "Send an ERC1155 token to an address flagged a winner.",
       "abi": [
         "function rewardWinner(address,address)"
       ],
-      "requires": [],
+      "requires": [
+        "amount",
+        "winner",
+        "rewardAddress",
+        "rewardToken"
+      ],
       "creates": [],
       "emits": []
-    },
-
+    }
   ],
   "configFunctions": [
     {
-      "name": "setReward",
-      "description": "description of setReward",
+      "name": "Set Reward",
+      "description": "Set the reward token address and tokenId to distribute",
       "abi": [
-        "function setReward(address,address)"
+        "function setReward(address,address,uint256)"
       ],
-      "requires": [],
-      "creates": [],
+      "requires": [
+        "gameAddress",
+        "rewardAddress",
+        "rewardToken"
+      ],
+      "creates": [
+        "rewardAddress",
+        "rewardToken"
+      ],
       "emits": []
     }
   ],
   "readFunctions": [
     {
-      "name": "getReward",
-      "description": "description of getReward",
+      "name": "Get Reward",
+      "description": "Get the Address of the reward token",
       "abi": [
         "function getReward(address) view returns (address)"
       ],
-      "requires": [],
-      "creates": [],
+      "requires": [
+        "gameAddress"
+      ],
+      "creates": [
+        "rewardAddress"
+      ],
+      "emits": []
+    },
+    {
+      "name": "Get Reward Token ID",
+      "description": "Get the token ID of the reward token",
+      "abi": [
+        "function getRewardTokenID(address) view returns (uint256)"
+      ],
+      "requires": [
+        "gameAddress"
+      ],
+      "creates": [
+        "rewardToken"
+      ],
       "emits": []
     }
   ]

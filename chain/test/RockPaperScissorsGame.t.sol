@@ -84,7 +84,7 @@ contract RockPaperScissorsGame is TavernTest {
     assertEq(playerCount, 1);
 
     RockPaperScissorEntity rpsEntity = RockPaperScissorEntity(
-      liveGame.getEntity('actions')
+      liveGame.getEntity('rockpaperscissors')
     );
 
     uint256 action = rpsEntity.getPlayerAction(address(1));

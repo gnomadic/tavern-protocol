@@ -10,8 +10,7 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 import 'forge-std/console.sol';
 
 contract QueueSession is IComponent {
-
-    constructor(string memory _metadata) IComponent(_metadata) {}
+  constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {
     IGame(game).createEntity('QueueSessionEntity');

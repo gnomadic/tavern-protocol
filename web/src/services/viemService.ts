@@ -10,7 +10,6 @@ import { writeContractMutationOptions } from 'wagmi/query';
 
 
 
-// let publicClient: PublicClient;
 
 
 
@@ -27,15 +26,6 @@ let configs : { [x: string]: any } =  {
 };
 
 let walletClient: WalletClient;
-
-// const config = createConfig({
-//     chains: [sepolia, baseSepolia, base],
-//     transports: {
-//         [sepolia.id]: http(),
-//         [baseSepolia.id]: http(),
-//         [base.id]: http()
-//     },
-// })
 
 function getConfig(chainId: string) : Config {
     if (configs[chainId] != undefined){

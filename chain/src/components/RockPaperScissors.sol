@@ -45,30 +45,20 @@ contract RockPaperScissors is IComponent {
     uint256 winAmount = rpsEntity.getWinAmount();
     uint256 tieAmount = rpsEntity.getTieAmount();
 
-    console.log('Player 1: ', player);
-    console.log('Player 1 action: ', action);
-    console.log('Player 2: ', player2);
-    console.log('Player 2 action: ', player2Action);
-
-    console.log('setting player action');
-
     if (player == address(0) || action == 0) {
       return;
     }
     rpsEntity.setPlayerAction(player, action);
 
-    console.log('checking player2');
     if (player2 == address(0) || player2Action == 0) {
-      console.log('Player 2 not found');
       return;
     }
 
     if (player == player2) {
-      console.log('Player 1 and Player 2 are the same');
-      return;
+      gameEntity.setFailure(
+        'Cannot play against yourself!  Wait for another player.'
+      );
     }
-
-    console.log('finding winner');
 
     address winner = play(Hand(player, action), Hand(player2, player2Action));
     if (winner == address(0)) {

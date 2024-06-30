@@ -19,7 +19,7 @@ export default function MobileNav(props: MobileNavProps) {
       ></div>
       <nav className='relative flex flex-col w-full h-full px-10 py-8 overflow-y-auto border-r bg-slate-900'>
         <Link href='/' onClick={props.onClick}>
-          <div className='text-3xl text-tavernGreen font-outfit'>
+          <div className='text-3xl text-white font-outfit'>
             Tavern
           </div>
         </Link>

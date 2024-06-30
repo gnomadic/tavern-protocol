@@ -28,7 +28,7 @@ export default function ModuleFunctionCard(props: ModuleCardProps) {
       <div className='py-2 pl-4 text-2xl border-b-0 border-white'>
         {data ? censor(data.name) : "loading"}
       </div>
-      <div className='grid md:grid-cols-2 grid-cols-1 py-8 gap-8'>
+      <div className='grid grid-cols-1 gap-8 py-8 md:grid-cols-2'>
         {Array.from({ length: data?.configFunctions.length as number }).map((object, i) => {
           return (
             <ConfigFunctionCard
@@ -142,9 +142,9 @@ function ConfigFunctionCard(props: ConfigFunctionCardProps) {
               defaultValue={props.funct.requires[i] === "gameAddress" ? props.gameAddress : ""} />
           </div>
         })}
-        <div className='flex p-4 inset-x-1 mt-4 absolute bottom-0'>
+        <div className='absolute bottom-0 flex p-4 mt-4 inset-x-1'>
           <button
-            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
+            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernOrange'
 
             // disabled={createGameisPending}
             type="submit">
@@ -310,9 +310,9 @@ function ConfigViewCard(props: ConfigFunctionCardProps) {
             {JSON.stringify(response, bigIntReplacer)}
           </div>
         </div>
-        <div className='flex p-4 inset-x-1 mt-4 absolute bottom-0'>
+        <div className='absolute bottom-0 flex p-4 mt-4 inset-x-1'>
           <button
-            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen '
+            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernOrange '
             type="submit">
             Execute
             {/* {createGameisPending ? 'Confirming...' : `Deploy game on ${deploy.chain}`} */}

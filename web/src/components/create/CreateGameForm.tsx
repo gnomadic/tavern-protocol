@@ -122,9 +122,9 @@ export default function CreateGameForm(props: Props) {
                     </div>
                 </div>
 
-                <div className='flex p-4 inset-x-1 mt-4'>
+                <div className='flex p-4 mt-4 inset-x-1'>
                     <button
-                        className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
+                        className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernOrange'
                         disabled={createGameisPending}
                         type="submit">
                         {createGameisPending ? 'Confirming...' : `Launch`}

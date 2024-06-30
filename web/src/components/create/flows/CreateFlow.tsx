@@ -86,7 +86,7 @@ export default function CreateFlow(props: props) {
 
     return (
         <section className='px-8 py-20 md:px-24 lg:px-40'>
-            <div className=" border border-white border-dashed">
+            <div className="border border-white border-dashed ">
                 <div className='p-4 text-2xl'>
                     Create Flow
                 </div>
@@ -114,17 +114,17 @@ export default function CreateFlow(props: props) {
                         )}
 
                         <div
-                            className='py-6 mx-4 mt-4 border-2 border-selected text-selected rounded-md text-center relative'
+                            className='relative py-6 mx-4 mt-4 text-center border-2 rounded-md border-selected text-selected'
                             onClick={addActionRow}>
-                            <div className='text-4xl top-1/2 right-1/2 absolute -translate-y-1/2'>
+                            <div className='absolute text-4xl -translate-y-1/2 top-1/2 right-1/2'>
                                 +
                             </div>
                         </div>
                     </div>
 
-                    <div className='flex p-4 inset-x-1 mt-4'>
+                    <div className='flex p-4 mt-4 inset-x-1'>
                         <button
-                            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernGreen'
+                            className='flex-grow py-2 mx-auto text-black rounded-md basis-0 bg-tavernOrange'
                             disabled={isLoading}
                             type="submit">
                             {isLoading ? 'Confirming...' : `Create`}

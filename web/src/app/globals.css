@@ -79,9 +79,9 @@ body {
 
   /* border-radius: 5px 5px 0 0; */
   --tw-border-opacity: 1;
-  border-color: rgb(20 233 67 / var(--tw-border-opacity));
+  border-color: rgb(256 256 256 / var(--tw-border-opacity));
   --tw-text-opacity: 1;
-  color: rgb(20 233 67 / var(--tw-text-opacity));
+  color: rgb(256 256 256 / var(--tw-text-opacity));
 }
 
 .react-tabs__tab--disabled {

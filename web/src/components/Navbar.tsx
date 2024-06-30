@@ -26,7 +26,7 @@ export default function Navbar() {
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>
-              <div className='text-3xl text-tavernGreen font-outfit'>
+              <div className='text-3xl text-white font-outfit'>
                 Tavern
               </div>
             </Link>

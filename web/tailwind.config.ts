@@ -26,6 +26,7 @@ const config: Config = {
      unselected: "#858080",
      selected: "#E3A9FF", 
      subtext: "#CECECE",
+     tavernOrange: '#FF7347'
 
 
       

@@ -21,15 +21,15 @@ export default function Footer() {
   };
 
   return (
-    <header className='py-48 w-full mt-8 font-signika'>
+    <header className='w-full py-48 mt-8 font-signika'>
       <div className='flex px-6 lg:px-16 min-h-[18] items-center flex-shrink-0 flex-col justify-center'>
         <div className='flex items-center self-stretch justify-between'>
           <div className='flex items-start'>
             <Link href='/'>
-              <div className='text-8xl text-tavernGreen font-outfit'>
+              <div className='text-white text-8xl font-outfit'>
                 Tavern
               </div>
-              <div className='uppercase mx-5 text-subtext text-xl'>enter as strangers leave as friends</div>
+              <div className='mx-5 text-xl uppercase text-subtext'>enter as strangers leave as friends</div>
 
             </Link>
           </div>

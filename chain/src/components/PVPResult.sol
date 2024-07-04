@@ -7,7 +7,7 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {FlowParams, UintKey} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-import 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract PVPResult is IComponent {
 
@@ -31,12 +31,12 @@ contract PVPResult is IComponent {
     address executor,
     address gameAddress
   ) public onlyGame(gameAddress) {
-    console.log('storeResult');
+    // console.log('storeResult');
     IGame game = IGame(gameAddress);
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     PVPResultEntity resultEntity = PVPResultEntity(game.getEntity('lastGames'));
 
-    console.log('resultEntity: %s', address(resultEntity));
+    // console.log('resultEntity: %s', address(resultEntity));
 
     address player = gameEntity.getPlayerAddress(executor, 'player');
     address opponent = gameEntity.getPlayerAddress(executor, 'player2');
@@ -44,19 +44,19 @@ contract PVPResult is IComponent {
     uint256 myAction = gameEntity.getPlayerUint(executor, 'action');
     uint256 opponentAction = gameEntity.getPlayerUint(executor, 'action2');
 
-    console.log('player: %s', player);
-    console.log('opponent: %s', opponent);
-    console.log('winner: %s', winner);
-    console.log('myAction: %s', myAction);
-    console.log('opponentAction: %s', opponentAction);
+    // console.log('player: %s', player);
+    // console.log('opponent: %s', opponent);
+    // console.log('winner: %s', winner);
+    // console.log('myAction: %s', myAction);
+    // console.log('opponentAction: %s', opponentAction);
 
     if (player == address(0) || opponent == address(0)) {
-      console.log('player or opponent not found');
+      // console.log('player or opponent not found');
       return;
     }
 
     if (player == opponent) {
-      console.log('player and opponent are the same');
+      // console.log('player and opponent are the same');
       return;
     }
 

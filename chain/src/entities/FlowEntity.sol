@@ -2,14 +2,16 @@
 pragma solidity ^0.8.24;
 
 import {IEntity} from './interfaces/IEntity.sol';
-import {FlowParams, AddressKey, StringKey, UintKey} from '../interfaces/IGame.sol';
+import {FlowParams, AddressKey, StringKey, UintKey, IGame} from '../interfaces/IGame.sol';
 
-import 'forge-std/console.sol';
+
+// import 'forge-std/console.sol';
 
 contract FlowEntity is IEntity {
   mapping(address => mapping(string => string)) private strings;
   mapping(address => mapping(string => uint256)) private uints;
   mapping(address => mapping(string => address)) private addresses;
+  
   string public failure;
   bool public failureSet;
 
@@ -22,6 +24,7 @@ contract FlowEntity is IEntity {
     FlowParams memory params
   ) external {
     for (uint i = 0; i < params.strings.length; i++) {
+
       strings[player][params.strings[i].name] = params.strings[i].value;
     }
     for (uint i = 0; i < params.uints.length; i++) {

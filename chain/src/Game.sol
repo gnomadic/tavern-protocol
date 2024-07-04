@@ -120,7 +120,6 @@ contract Game is IGame, Initializable {
     return false;
   }
 
-  //TODO only GM can create game functions
   function createFlow(
     string memory name,
     AddressKey[] memory funcs
@@ -157,20 +156,24 @@ contract Game is IGame, Initializable {
       (bool success, ) = funcs[i].value.call(
         abi.encodeWithSignature(funcs[i].name, msg.sender, address(this))
       );
-      if (!success){ 
-        console.log("Execution failed");
+      if (!success) {
+        console.log('Execution failed');
         revert FlowExecutionError(funcs[i].value, funcs[i].name);
-      }else{
-        console.log("Execution success");
+      } else {
+        console.log('Execution success');
       }
-      if (FlowEntity(getEntity('playerParams')).didFail()){
-        revert FlowFailure(funcs[i].value, funcs[i].name, FlowEntity(getEntity('playerParams')).getFailure());
+      if (FlowEntity(getEntity('playerParams')).didFail()) {
+        revert FlowFailure(
+          funcs[i].value,
+          funcs[i].name,
+          FlowEntity(getEntity('playerParams')).getFailure()
+        );
       }
     }
   }
   error FlowExecutionError(address component, string functionKey);
   error FlowFailure(address component, string functionkey, string failure);
-  
+
   function isGM(address account) external view override returns (bool) {
     return account == gm;
   }
@@ -181,7 +184,7 @@ contract Game is IGame, Initializable {
   }
   error OnlyGM();
 
-  modifier onlyGMOrFactory(){
+  modifier onlyGMOrFactory() {
     if (msg.sender != gm && msg.sender != gameFactory) revert OnlyGM();
     _;
   }

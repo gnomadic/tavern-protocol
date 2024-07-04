@@ -2,13 +2,12 @@
 pragma solidity ^0.8.24;
 
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
-import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 
 import {Require1155Entity} from '../entities/Require1155Entity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-import {console} from 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract Require1155 is IComponent {
   constructor(string memory _metadata) IComponent(_metadata) {}

@@ -8,7 +8,7 @@ import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {FlowParams, UintKey} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
-import {console} from 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract MMOSessionModule is IComponent {
 
@@ -27,9 +27,9 @@ contract MMOSessionModule is IComponent {
     return ComponentSummary(address(this), metadata);
   }
 
-  function joinGame(address executor, address gameAddress) public {
+  function joinGame(address executor, address gameAddress) public onlyGame(gameAddress) {
     address player;
-    console.log('joining game');
+    // console.log('joining game');
     IGame game = IGame(gameAddress);
 
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));

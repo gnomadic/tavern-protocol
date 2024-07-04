@@ -7,7 +7,7 @@ import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {FlowParams, UintKey} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-import 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract QueueSession is IComponent {
   constructor(string memory _metadata) IComponent(_metadata) {}
@@ -51,7 +51,7 @@ contract QueueSession is IComponent {
     QueueSessionEntity queue = QueueSessionEntity(game.getEntity('nextPlayer'));
 
     if (queue.getQueueSize() == 0) {
-      console.log('joining queue');
+      // console.log('joining queue');
       joinQueue(executor, gameAddress);
       return;
     }
@@ -59,7 +59,7 @@ contract QueueSession is IComponent {
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     address player1 = gameEntity.getPlayerAddress(executor, 'player');
     address player2 = queue.nextPlayer();
-    console.log('setting player one and two');
+    // console.log('setting player one and two');
 
     gameEntity.addPlayerAddress(executor, 'player1', player1);
     gameEntity.addPlayerAddress(executor, 'player2', player2);

@@ -2,11 +2,9 @@
 pragma solidity ^0.8.24;
 
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
-import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {Reward1155Entity} from '../entities/Reward1155Entity.sol';
-import {INumberEntity} from '../entities/interfaces/INumberEntity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
 contract Reward1155 is IComponent {

@@ -19,15 +19,18 @@ module.exports = async (hre) => {
     log: true,
   });
 
-  const gameFactory = await deploy("GameFactory", {
-    from: deployer,
-    log: true,
-  });
-
   const componentRegistry = await deploy("ComponentRegistry", {
     from: deployer,
     log: true,
   });
+
+  const gameFactory = await deploy("GameFactory", {
+    from: deployer,
+    log: true,
+    args: [componentRegistry.address],
+  });
+
+
 
 
   const deployedFactory = await hre.ethers.getContractAt("GameFactory", gameFactory.address);

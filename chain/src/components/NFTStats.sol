@@ -45,7 +45,7 @@ contract NFTStats is IComponent, Initializable {
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
     uint256 tokenId = gameEntity.getPlayerUint(executor, "tokenID");
 
-    string[] memory toSet = FlowEntity(game.getEntity());) 
+    // string[] memory toSet = FlowEntity(game.getEntity())) 
 
 
 

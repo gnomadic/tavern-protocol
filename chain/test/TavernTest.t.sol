@@ -7,6 +7,8 @@ import {IGame, FlowParams} from '../src/interfaces/IGame.sol';
 import {Game} from '../src/Game.sol';
 import {EntityFactory} from '../src/EntityFactory.sol';
 import {ComponentRegistry} from '../src/ComponentRegistry.sol';
+import {InputValidation} from '../src/components/InputValidation.sol';
+import {InputValidationEntity} from '../src/entities/InputValidationEntity.sol';
 
 abstract contract TavernTest is Test {
   GameFactory public factory;
@@ -20,13 +22,27 @@ abstract contract TavernTest is Test {
 
     Game game = new Game();
     entityFactory = new EntityFactory();
-
-    factory = new GameFactory();
-    factory.initialize(address(game), address(entityFactory));
-
     registry = new ComponentRegistry();
 
-    factory.createGame(address(0), 'http://ipfs.io/ipfs/QmUXhiGQsawmyaAJ1zdiGEANbW3WAVSdJYrqosX6RTvgLC/template.json');
+    factory = new GameFactory(address(registry));
+    factory.initialize(address(game), address(entityFactory));
+
+
+
+    InputValidationEntity inputEntity = new InputValidationEntity();
+    entityFactory.registerEntity('InputValidationEntity', address(inputEntity));
+
+        InputValidation input = new InputValidation(
+      'http://ipfs.io/ipfs/QmZCJy4hetvHPqnqVVHobnJgsWy6ARpGgHTFLw77oMJpT5/template.json'
+    );
+    registry.register(address(input));
+
+    registry.registerRequired(address(input), 'validateInput(address,address)');
+
+    factory.createGame(
+      address(0),
+      'http://ipfs.io/ipfs/QmUXhiGQsawmyaAJ1zdiGEANbW3WAVSdJYrqosX6RTvgLC/template.json'
+    );
     liveGame = factory.games(0);
 
     loadModules();
@@ -37,10 +53,8 @@ abstract contract TavernTest is Test {
   }
 
   function loadModules() public virtual;
-  
 
   function createFunctions() public virtual;
-
 
   function clearParams(FlowParams memory toClear) public {
     delete toClear.addresses;

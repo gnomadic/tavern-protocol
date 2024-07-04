@@ -105,7 +105,6 @@ contract RockPaperScissorsGame is TavernTest {
     //player 1 joins with a rock
     joinParams.addresses.push(AddressKey('player', address(1)));
     joinParams.uints.push(UintKey('action', 1));
-
     
     vm.prank(address(1));
     liveGame.executeFlow('playRPS', joinParams);

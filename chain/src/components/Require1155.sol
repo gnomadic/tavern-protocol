@@ -80,7 +80,7 @@ contract Require1155 is IComponent {
       .hasBalance(player);
 
     if (!hasBalance) {
-      console.log('Player does not have required balance');
+      // console.log('Player does not have required balance');
       gameEntity.setFailure('Player does not have required balance');
     }
   }

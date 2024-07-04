@@ -6,6 +6,7 @@ import {ComponentSummary} from '../components/interfaces/IComponent.sol';
 interface IGame {
   function initialize(
     address gameFactory,
+    address componentRegistry,
     address _gm,
     string calldata displayName,
     address entityFactory

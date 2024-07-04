@@ -17,9 +17,8 @@ async function getDeployedContract(name) {
     return await ethers.getContractAt(name, deployment.address);
 }
 
-async function deployComponent(deploy, deployer, component, entity, runVerify) {
-    
-    
+async function deployComponent(deploy, deployer, component, entity, runVerify, required = "") {
+
     const deployedComponent = await deploy(component, {
         from: deployer,
         log: true,
@@ -31,20 +30,27 @@ async function deployComponent(deploy, deployer, component, entity, runVerify) {
         log: true,
     });
 
+    const componentRegistry = await getDeployedContract("ComponentRegistry");
+    const entityFactory = await getDeployedContract("EntityFactory");
+    
+    if (await entityFactory.getEntity(entity) == ZERO_ADDRESS) {
+        tx = await entityFactory.registerEntity(entity, deployedEntity.address);
+        await tx.wait();
+    }
 
-
-  const componentRegistry = await getDeployedContract("ComponentRegistry");
-  const entityFactory = await getDeployedContract("EntityFactory");
-
+    if (required.length > 0) {
+        if (!await componentRegistry.isRequired(deployedComponent.address)) {
+            tx = await componentRegistry.setRequired(deployedComponent.address, required);
+            await tx.wait();
+        }
+    }
     if (!await componentRegistry.isRegistered(deployedComponent.address)) {
         tx = await componentRegistry.register(deployedComponent.address);
         await tx.wait();
     }
 
-    if (await entityFactory.getEntity(entity) == ZERO_ADDRESS) {
-        tx = await entityFactory.registerEntity(entity, deployedEntity.address);
-        await tx.wait();
-    }
+
+
 
 
     //   object.queueSession = queueSession.address;
@@ -58,6 +64,8 @@ async function deployComponent(deploy, deployer, component, entity, runVerify) {
     return deployedComponent.address;
 
 }
+
+
 
 
 

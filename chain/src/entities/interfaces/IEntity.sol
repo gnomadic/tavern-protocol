@@ -43,5 +43,13 @@ abstract contract IEntity is Initializable {
     _;
   }
 
+  modifier onlyModuleOrGame() {
+        // TODO figure out permissions
+    // if (!IGame(game).validateIsModule(msg.sender)) {
+    //   revert('Module not supported');
+    // }
+    _;
+  }
+
 
 }

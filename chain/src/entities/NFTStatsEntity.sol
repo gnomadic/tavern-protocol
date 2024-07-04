@@ -4,7 +4,6 @@ pragma solidity ^0.8.24;
 import {IEntity} from './interfaces/IEntity.sol';
 
 contract NFTStatsEntity is IEntity {
-
   mapping(uint256 => mapping(string => uint256)) public stats;
   string[] public statKeys;
 
@@ -12,27 +11,25 @@ contract NFTStatsEntity is IEntity {
     keys.push('nftStats');
   }
 
-  function setStat(uint256 tokenId, string memory key, uint256 value) external onlyModule {
-    stats[tokenId][key] = value;
-
-    bool statExists = false;
-    for (uint256 i = 0; i < statKeys.length; i++) {
-      if (keccak256(abi.encodePacked(statKeys[i])) == keccak256(abi.encodePacked(key))) {
-        statExists = true;
-        break;
-      }
-    }
-    if (!statExists) {
+  function setStat(
+    uint256 tokenId,
+    string memory key,
+    uint256 value
+  ) external onlyModule {
+    if (stats[tokenId][key] == 0) {
       statKeys.push(key);
     }
+    stats[tokenId][key] = value;
   }
 
-  function getStat(uint256 tokenId, string memory key) external view returns (uint256) {
+  function getStat(
+    uint256 tokenId,
+    string memory key
+  ) external view returns (uint256) {
     return stats[tokenId][key];
   }
 
   function getStatKeys() external view returns (string[] memory) {
     return statKeys;
   }
-
 }

@@ -9,7 +9,6 @@ import {FlowEntity} from '../entities/FlowEntity.sol';
 // import {console} from 'forge-std/console.sol';
 
 contract NFTStats is IComponent, Initializable {
-
   constructor(string memory _metadata) IComponent(_metadata) {}
 
   function initialize(address game) external override {
@@ -26,38 +25,48 @@ contract NFTStats is IComponent, Initializable {
   }
 
   //requires tokenID
-  function loadStats(address executor, address gameAddress) public onlyGame(gameAddress) {
+  function loadStats(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     IGame game = IGame(gameAddress);
     NFTStatsEntity entity = NFTStatsEntity(game.getEntity('nftStats'));
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-    uint256 tokenId = gameEntity.getPlayerUint(executor, "tokenID");
+    uint256 tokenId = gameEntity.getPlayerUint(executor, 'tokenID');
 
     string[] memory statKeys = entity.getStatKeys();
 
     for (uint256 i = 0; i < statKeys.length; i++) {
-      gameEntity.addPlayerUint(executor, statKeys[i], entity.getStat(tokenId, statKeys[i]));
+      gameEntity.addPlayerUint(
+        executor,
+        statKeys[i],
+        entity.getStat(tokenId, statKeys[i])
+      );
     }
   }
 
-  function setStats(address executor, address gameAddress) public onlyGame(gameAddress) {
+  //intended to be called at the end of a flow - 
+  // newStats is an array containing stats to update
+  // every stat in newstat will be reset to it's current value in the flowentity.
+
+  function setStats(
+    address executor,
+    address gameAddress
+  ) public onlyGame(gameAddress) {
     IGame game = IGame(gameAddress);
     NFTStatsEntity entity = NFTStatsEntity(game.getEntity('nftStats'));
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
-    uint256 tokenId = gameEntity.getPlayerUint(executor, "tokenID");
+    uint256 tokenId = gameEntity.getPlayerUint(executor, 'tokenID');
 
-    // string[] memory toSet = FlowEntity(game.getEntity())) 
+    string[] memory toSet = gameEntity.getPlayerStringArray(
+      executor,
+      'newStats'
+    );
 
-
-
-
+    for (uint256 i = 0; i < toSet.length; i++) {
+      string memory key = toSet[i];
+      uint256 value = gameEntity.getPlayerUint(executor, key);
+      entity.setStat(tokenId, key, value);
+    }
   }
-
-  // //requires tokenID
-  // function setStats(address executor, address gameAddress) public {
-  //   IGame game = IGame(gameAddress);
-  //   NFTStatsEntity entity = NFTStatsEntity(game.getEntity('nftStats'));
-  //   entity.setStats(player, stats);
-  // }
-
- 
 }

@@ -5,7 +5,7 @@ import {IEntity} from './interfaces/IEntity.sol';
 import {FlowParams, AddressKey, StringKey, UintKey, IGame} from '../interfaces/IGame.sol';
 
 
-// import 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract FlowEntity is IEntity {
   mapping(address => mapping(string => string)) private strings;

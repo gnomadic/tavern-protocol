@@ -5,7 +5,7 @@ import {AccessControl} from '@openzeppelin/contracts/access/AccessControl.sol';
 import {LibClone} from 'solady/utils/LibClone.sol';
 import {IGame, GameSummary} from './interfaces/IGame.sol';
 import {Game} from './Game.sol';
-import 'forge-std/console.sol';
+import {console} from 'forge-std/console.sol';
 
 
 contract GameFactory {

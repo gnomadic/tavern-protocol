@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import './interfaces/IEntity.sol';
-import 'forge-std/console.sol';
+import {console} from 'forge-std/console.sol';
 
 contract InputValidationEntity is IEntity {
 

@@ -7,6 +7,7 @@ import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {Reward1155Entity} from '../entities/Reward1155Entity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
 
+
 contract Reward1155 is IComponent {
 
   constructor(string memory _metadata) IComponent(_metadata) {}

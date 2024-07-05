@@ -3,12 +3,12 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from 'forge-std/Test.sol';
 
-import {TavernTest} from './TavernTest.t.sol';
-import {DailyInteraction} from '../src/components/DailyInteraction.sol';
-import {DailyInteractionEntity} from '../src/entities/DailyInteractionEntity.sol';
-import {FlowEntity} from '../src/entities/FlowEntity.sol';
+import {TavernTest} from '../TavernTest.t.sol';
+import {DailyInteraction} from '../../src/components/DailyInteraction.sol';
+import {DailyInteractionEntity} from '../../src/entities/DailyInteractionEntity.sol';
+import {FlowEntity} from '../../src/entities/FlowEntity.sol';
 
-import {AddressKey, FlowParams} from '../src/interfaces/IGame.sol';
+import {AddressKey, FlowParams} from '../../src/interfaces/IGame.sol';
 
 contract DailyInteractionTest is TavernTest {
   DailyInteraction component;

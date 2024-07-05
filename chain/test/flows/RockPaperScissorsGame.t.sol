@@ -3,16 +3,16 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from 'forge-std/Test.sol';
 
-import {TavernTest} from './TavernTest.t.sol';
-import {QueueSession} from '../src/components/QueueSession.sol';
-import {QueueSessionEntity} from '../src/entities/QueueSessionEntity.sol';
-import {FlowEntity} from '../src/entities/FlowEntity.sol';
-import {RockPaperScissors} from '../src/components/RockPaperScissors.sol';
-import {RockPaperScissorEntity} from '../src/entities/RockPaperScissorEntity.sol';
-import {AddressKey, FlowParams, UintKey} from '../src/interfaces/IGame.sol';
-import {RewardERC20} from '../src/components/RewardERC20.sol';
-import {Reward20Entity} from '../src/entities/Reward20Entity.sol';
-import {Mock20} from './mocks/Mock20.sol';
+import {TavernTest} from '../TavernTest.t.sol';
+import {QueueSession} from '../../src/components/QueueSession.sol';
+import {QueueSessionEntity} from '../../src/entities/QueueSessionEntity.sol';
+import {FlowEntity} from '../../src/entities/FlowEntity.sol';
+import {RockPaperScissors} from '../../src/components/RockPaperScissors.sol';
+import {RockPaperScissorEntity} from '../../src/entities/RockPaperScissorEntity.sol';
+import {AddressKey, FlowParams, UintKey} from '../../src/interfaces/IGame.sol';
+import {RewardERC20} from '../../src/components/RewardERC20.sol';
+import {Reward20Entity} from '../../src/entities/Reward20Entity.sol';
+import {Mock20} from '../mocks/Mock20.sol';
 
 contract RockPaperScissorsGame is TavernTest {
   QueueSession queueComponent;

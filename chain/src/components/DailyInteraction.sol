@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 import {DailyInteractionEntity} from '../entities/DailyInteractionEntity.sol';
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-import 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract DailyInteraction is IComponent, Initializable {
   constructor(string memory _metadata) IComponent(_metadata) {}
@@ -28,7 +28,7 @@ contract DailyInteraction is IComponent, Initializable {
     address executor,
     address gameAddress
   ) public onlyGame(gameAddress) {
-    console.log('daily interaction');
+    // console.log('daily interaction');
 
     IGame game = IGame(gameAddress);
 
@@ -43,7 +43,6 @@ contract DailyInteraction is IComponent, Initializable {
     uint256 timeRange = entity.timeRange();
 
     if (lastActionAt != 0 && block.timestamp - lastActionAt < timeRange) {
-      console.log('failed');
       gameEntity.setFailure('Not enough time has passed');
     }
     uint256 dailyActions = entity.getDailyActions(player);

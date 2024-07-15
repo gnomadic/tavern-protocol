@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {RockPaperScissorEntity} from '../entities/RockPaperScissorEntity.sol';
@@ -7,10 +7,7 @@ import {RockPaperScissorEntity} from '../entities/RockPaperScissorEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 import {FlowParams, UintKey} from '../interfaces/IGame.sol';
-import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-
-import {console} from 'forge-std/console.sol';
 
 contract RockPaperScissors is IComponent {
   constructor(string memory _metadata) IComponent(_metadata) {}
@@ -62,12 +59,12 @@ contract RockPaperScissors is IComponent {
 
     address winner = play(Hand(player, action), Hand(player2, player2Action));
     if (winner == address(0)) {
-      console.log('It is a tie');
+      // console.log('It is a tie');
       gameEntity.addPlayerAddress(executor, 'tie1', player);
       gameEntity.addPlayerAddress(executor, 'tie2', player2);
       gameEntity.addPlayerUint(executor, 'amount', tieAmount);
     } else {
-      console.log('The winner is: ', winner);
+      // console.log('The winner is: ', winner);
       gameEntity.addPlayerAddress(executor, 'winner', winner);
       gameEntity.addPlayerUint(executor, 'amount', winAmount);
     }
@@ -96,17 +93,17 @@ contract RockPaperScissors is IComponent {
     address winner = address(0);
 
     if (player1Action == player2Action) {
-      console.log('It is a tie');
+      // console.log('It is a tie');
     } else if (
       (player1Action == 1 && player2Action == 3) ||
       (player1Action == 2 && player2Action == 1) ||
       (player1Action == 3 && player2Action == 2)
     ) {
       winner = player1.player;
-      console.log('Player 1 wins');
+      // console.log('Player 1 wins');
     } else {
       winner = player2.player;
-      console.log('Player 2 wins');
+      // console.log('Player 2 wins');
     }
     return winner;
   }

@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
-import {QueueSessionEntity} from '../entities/QueueSessionEntity.sol';
 import {IGame} from '../interfaces/IGame.sol';
 import {IEntityFactory} from '../interfaces/IEntityFactory.sol';
 
 import {Reward20Entity} from '../entities/Reward20Entity.sol';
 import {FlowEntity} from '../entities/FlowEntity.sol';
-import {console} from 'forge-std/console.sol';
+// import {console} from 'forge-std/console.sol';
 
 contract RewardERC20 is IComponent {
 
@@ -40,7 +39,7 @@ contract RewardERC20 is IComponent {
     address executor,
     address gameAddress
   ) public onlyGame(gameAddress) {
-    console.log('reward winner');
+    // console.log('reward winner');
 
     IGame game = IGame(gameAddress);
 
@@ -60,7 +59,7 @@ contract RewardERC20 is IComponent {
     address executor,
     address gameAddress
   ) public onlyGame(gameAddress) {
-    console.log('reward tie');
+    // console.log('reward tie');
     IGame game = IGame(gameAddress);
 
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));

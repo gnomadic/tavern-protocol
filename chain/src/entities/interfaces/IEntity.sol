@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
@@ -10,20 +10,18 @@ import {IGame} from '../../interfaces/IGame.sol';
 /// @notice This is the base class for all Entities.  It defines the interface as well as some helper functions.
 /// @dev Depending on the size and complexity of your entity, you might want another interface layer to minimize import bloat.
 abstract contract IEntity is Initializable {
+  string[] public keys;
 
-    string[] public keys;
-
-  
   /// @notice Every deployed entity is associated with a deployed Game.
   address public game;
 
   /// @notice All data stored in an entity must be accessesible by a string Key
   /// @return Returns a string array containing every accessible key in the entity
-  function getAvailableKeys() external view  returns (string[] memory){
+  function getAvailableKeys() external view returns (string[] memory) {
     return keys;
   }
 
-  function setAvailableKeys(string[] storage _keys) virtual internal;
+  function setAvailableKeys(string[] storage _keys) internal virtual;
 
   /// @notice Initialize the entity after it is created
   /// @dev Because getAvailableKeys returns an unbound array, might want to add keys to a global var here.
@@ -43,5 +41,11 @@ abstract contract IEntity is Initializable {
     _;
   }
 
-
+  modifier onlyModuleOrGame() {
+    // TODO figure out permissions
+    // if (!IGame(game).validateIsModule(msg.sender)) {
+    //   revert('Module not supported');
+    // }
+    _;
+  }
 }

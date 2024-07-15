@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
@@ -8,8 +8,9 @@ import {IEntity} from './entities/interfaces/IEntity.sol';
 import {IComponent, ComponentSummary} from './components/interfaces/IComponent.sol';
 import {IEntityFactory} from './interfaces/IEntityFactory.sol';
 import {FlowEntity} from './entities/FlowEntity.sol';
+import {IComponentRegistry} from './interfaces/IComponentRegistry.sol';
 
-import 'forge-std/console.sol';
+import {console} from 'forge-std/console.sol';
 
 // Roles for access control
 contract Game is IGame, Initializable {
@@ -17,6 +18,7 @@ contract Game is IGame, Initializable {
   string public metadata;
   IEntityFactory public entityFactory;
   address public gameFactory;
+  address public componentRegistry;
 
   IEntity[] public entities;
   address[] public components;
@@ -39,14 +41,22 @@ contract Game is IGame, Initializable {
 
   function initialize(
     address _gameFactory,
+    address _componentRegsitry,
     address _gm,
     string calldata _metadata,
     address _entityFactory
   ) public initializer {
     gameFactory = _gameFactory;
+    componentRegistry = _componentRegsitry;
     gm = _gm;
     metadata = _metadata;
     entityFactory = IEntityFactory(_entityFactory);
+
+    AddressKey[] memory required = IComponentRegistry(_componentRegsitry)
+      .getRequired();
+    for (uint8 i = 0; i < required.length; i++) {
+      addComponent(required[i].value);
+    }
 
     FlowEntity flowEntity = new FlowEntity();
     entityFactory.registerEntity('FlowEntity', address(flowEntity));
@@ -97,7 +107,7 @@ contract Game is IGame, Initializable {
   /// @dev It will load every available function from the module and add it to the game's function lookup.
   /// @dev It will initiatlize the module for the game, so the module can create it's entities or whatever else it needs.
   /// @param component the address of the component to load.
-  function addComponent(address component) external onlyGMOrFactory {
+  function addComponent(address component) public onlyGMOrFactory {
     // TODO verify the module exists in the registry for user safety
 
     IComponent newComponent = IComponent(component);
@@ -120,7 +130,6 @@ contract Game is IGame, Initializable {
     return false;
   }
 
-  //TODO only GM can create game functions
   function createFlow(
     string memory name,
     AddressKey[] memory funcs
@@ -128,6 +137,17 @@ contract Game is IGame, Initializable {
     if (flows[name].length > 0) {
       revert FlowAlreadyExists();
     }
+
+    AddressKey[] memory required = IComponentRegistry(componentRegistry)
+      .getRequired();
+
+    console.log('required length', required.length);
+
+    for (uint8 i = 0; i < required.length; i++) {
+      flows[name].push(required[i]);
+      console.log('required', required[i].name);
+    }
+
     for (uint8 i = 0; i < funcs.length; i++) {
       flows[name].push(funcs[i]);
     }
@@ -151,26 +171,39 @@ contract Game is IGame, Initializable {
       revert FlowDoesNotExist();
     }
 
+    // params.add
+
     FlowEntity(getEntity('playerParams')).setPlayerParams(msg.sender, params);
+
+    // TODO this will break with cross-chain relays
+    FlowEntity(getEntity('playerParams')).addPlayerAddress(
+      msg.sender,
+      'player',
+      msg.sender
+    );
 
     for (uint8 i = 0; i < funcs.length; i++) {
       (bool success, ) = funcs[i].value.call(
         abi.encodeWithSignature(funcs[i].name, msg.sender, address(this))
       );
-      if (!success){ 
-        console.log("Execution failed");
+      if (!success) {
+        console.log('Execution failed');
         revert FlowExecutionError(funcs[i].value, funcs[i].name);
-      }else{
-        console.log("Execution success");
+      } else {
+        console.log('Execution success');
       }
-      if (FlowEntity(getEntity('playerParams')).didFail()){
-        revert FlowFailure(funcs[i].value, funcs[i].name, FlowEntity(getEntity('playerParams')).getFailure());
+      if (FlowEntity(getEntity('playerParams')).didFail()) {
+        revert FlowFailure(
+          funcs[i].value,
+          funcs[i].name,
+          FlowEntity(getEntity('playerParams')).getFailure()
+        );
       }
     }
   }
   error FlowExecutionError(address component, string functionKey);
   error FlowFailure(address component, string functionkey, string failure);
-  
+
   function isGM(address account) external view override returns (bool) {
     return account == gm;
   }
@@ -181,7 +214,7 @@ contract Game is IGame, Initializable {
   }
   error OnlyGM();
 
-  modifier onlyGMOrFactory(){
+  modifier onlyGMOrFactory() {
     if (msg.sender != gm && msg.sender != gameFactory) revert OnlyGM();
     _;
   }

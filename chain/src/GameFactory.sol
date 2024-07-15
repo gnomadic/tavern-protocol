@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {AccessControl} from '@openzeppelin/contracts/access/AccessControl.sol';
 import {LibClone} from 'solady/utils/LibClone.sol';
 import {IGame, GameSummary} from './interfaces/IGame.sol';
 import {Game} from './Game.sol';
-import 'forge-std/console.sol';
+import {console} from 'forge-std/console.sol';
 
 
 contract GameFactory {
   address public gameContract;
   Game[] public games;
   address public entityFactory;
+  address public componentRegistry;
 
   address public admin;
 
-  constructor() {
+  constructor(address _componentRegistry) {
     admin = msg.sender;
+    componentRegistry = _componentRegistry;
   }
 
   function initialize(
@@ -40,7 +42,7 @@ contract GameFactory {
     string calldata metadata
   ) public returns (address) {
     address game = LibClone.clone(gameContract);
-    IGame(game).initialize(address(this), _gm, metadata, entityFactory);
+    IGame(game).initialize(address(this), componentRegistry, _gm, metadata, entityFactory);
     games.push(Game(game));
 
     emit GameCreated(game, _gm, metadata);

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {ComponentSummary} from '../components/interfaces/IComponent.sol';
 
 interface IGame {
   function initialize(
     address gameFactory,
+    address componentRegistry,
     address _gm,
     string calldata displayName,
     address entityFactory

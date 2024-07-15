@@ -9,7 +9,7 @@ module.exports = async (hre) => {
 
   // ------------------------------------- deploy
 
-  
+
   // ------------------------------------- Queue Session Component
 
   let runVerify = true;
@@ -22,6 +22,7 @@ module.exports = async (hre) => {
   let DailyInteractionAddress = await deployComponent(deploy, deployer, "DailyInteraction", "DailyInteractionEntity", runVerify);
   let require1155Address = await deployComponent(deploy, deployer, "Require1155", "Require1155Entity", runVerify);
   let reward1155Address = await deployComponent(deploy, deployer, "Reward1155", "Reward1155Entity", runVerify);
+  let InputValidationAddress = await deployComponent(deploy, deployer, "InputValidation", "InputValidation", runVerify, "validateInput(address,address)");
 
   // ------------------------------------- write address megafile
 
@@ -46,13 +47,13 @@ module.exports = async (hre) => {
   //   console.log("verifing");
   //   // await verify(hre, queueSession.address, "QueueSession", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/QueueSession.json`]);
   //   // await verify(hre, queueSessionEntity.address, "QueueSessionEntity", "entities/");
-    
+
   //   await verify(hre, rockPaperScissors.address, "RockPaperScissors", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/RPS.json`]);
   //   await verify(hre, rockPaperScissorEntity.address, "RockPaperScissorEntity", "entities/");
-    
+
   //   await verify(hre, rewardERC20.address, "RewardERC20", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/RewardERC20.json`]);
   //   await verify(hre, reward20Entity.address, "Reward20Entity", "entities/");
-    
+
   //   await verify(hre, pvpResult.address, "PVPResult", "components/", [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/PVPResult.json`]);
   //   await verify(hre, pvpResultEntity.address, "PVPResultEntity", "entities/");
   // }

@@ -3,12 +3,12 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from 'forge-std/Test.sol';
 
-import {TavernTest} from './TavernTest.t.sol';
-import {QueueSession} from '../src/components/QueueSession.sol';
-import {QueueSessionEntity} from '../src/entities/QueueSessionEntity.sol';
-import {FlowEntity} from '../src/entities/FlowEntity.sol';
+import {TavernTest} from '../TavernTest.t.sol';
+import {QueueSession} from '../../src/components/QueueSession.sol';
+import {QueueSessionEntity} from '../../src/entities/QueueSessionEntity.sol';
+import {FlowEntity} from '../../src/entities/FlowEntity.sol';
 
-import {AddressKey, FlowParams} from '../src/interfaces/IGame.sol';
+import {AddressKey, FlowParams} from '../../src/interfaces/IGame.sol';
 
 contract QueueSessionTest is TavernTest {
   QueueSession queue;

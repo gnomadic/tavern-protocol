@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import './interfaces/IEntity.sol';
-import 'forge-std/console.sol';
+import {console} from 'forge-std/console.sol';
 
 contract Reward1155Entity is IEntity {
   address public nft;

@@ -198,16 +198,21 @@ contract ChainellationRenderer is IChainellationRenderer {
 
     '<g id="skymath" opacity="1" fill="none" stroke="white" stroke-width="1">',
 
-    '<circle r="150" cx="0" cy="256" opacity="1" stroke-dasharray="1 0 1"/>',
-    '<circle r="250" cx="0" cy="256" opacity="1" stroke-dasharray="1 0 1"/>',
-    '<circle r="350" cx="0" cy="256" opacity="1" stroke-dasharray="1 0 1"/>',
-    '<circle r="450" cx="0" cy="256" opacity="1" stroke-dasharray="1 0 1"/>',
-    '<circle r="90" cx="0" cy="256" opacity="1" fill="#fcdc4d" filter="url(#sun)"/>',
+
+      '<ellipse cx="0" cy="256" rx="150" ry="100" stroke-dasharray="1 0 1"/>',
+      '<ellipse cx="0" cy="256" rx="250" ry="200" stroke-dasharray="1 0 1"/>',
+      '<ellipse cx="0" cy="256" rx="350" ry="300" stroke-dasharray="1 0 1"/>',
+      '<ellipse cx="0" cy="256" rx="450" ry="400" stroke-dasharray="1 0 1"/>',
+
+
+
+
+    '<circle r="60" cx="0" cy="256" opacity="1" fill="#fcdc4d" filter="url(#sun)"/>',
     '<g stroke="black" >',
-    '<circle r="20" cx="150" cy="256" opacity="1" fill="#ff4365" />',
-    '<circle r="30" cx="250" cy="256" opacity="1" fill="#81a4cd"/>',
+    '<circle r="10" cx="150" cy="256" opacity="1" fill="#ff4365" />',
+    '<circle r="15" cx="250" cy="256" opacity="1" fill="#81a4cd"/>',
     '<circle r="12" cx="350" cy="256" opacity="1" fill="#ff4365" />',
-    '<circle r="30" cx="450" cy="256" opacity="1" fill="#ff4365" />',
+    '<circle r="20" cx="450" cy="256" opacity="1" fill="#ff4365" />',
     '</g></g>'
 
     

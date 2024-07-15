@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
-import {ERC1155} from 'lib/solady/src/tokens/ERC1155.sol';
-import '@openzeppelin/contracts/utils/Strings.sol';
+import {ERC1155} from '../../lib/solady/src/tokens/ERC1155.sol';
+import {LibString} from "../../lib/solady/src/utils/LibString.sol";
+
 import '@openzeppelin/contracts/utils/Base64.sol';
 
 import {HeroRenderer} from './HeroRenderer.sol';
 
 contract Hero is ERC1155 {
-  using Strings for uint256;
 
   HeroRenderer private _renderer;
   string public name = 'Hero';
@@ -22,7 +22,7 @@ contract Hero is ERC1155 {
     bytes memory dataURI = abi.encodePacked(
       '{',
       '"name": "Hero #',
-      tokenId.toString(),
+      LibString.toString(tokenId),
       '",',
       '"description": "hero",',
       '"image": "',

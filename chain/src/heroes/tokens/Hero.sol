@@ -2,13 +2,14 @@
 pragma solidity 0.8.24;
 
 import "../../../lib/ERC721A/contracts/extensions/ERC721AQueryable.sol";
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {LibString} from "../../../lib/solady/src/utils/LibString.sol";
+
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
 import {HeroRenderer} from "./HeroRenderer.sol";
 
 contract Hero is ERC721AQueryable {
-    using Strings for uint256;
+    // using Strings for uint256;
 
     HeroRenderer private _renderer;
     // mapping(uint256 => HeroRenderer) public renderers;
@@ -16,6 +17,7 @@ contract Hero is ERC721AQueryable {
 
     address public minter;
     address admin;
+    
 
     constructor(address renderer) ERC721A("Senso Hero", "HERO") {
         // addRenderer(renderer);
@@ -29,7 +31,7 @@ contract Hero is ERC721AQueryable {
         bytes memory dataURI = abi.encodePacked(
             "{",
             '"name": "Hero #',
-            tokenId.toString(),
+            LibString.toString(tokenId),
             '",',
             '"description": "hero",',
             '"image": "',

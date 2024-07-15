@@ -9,7 +9,6 @@ import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {HeroRenderer} from "./HeroRenderer.sol";
 
 contract Hero is ERC721AQueryable {
-    // using Strings for uint256;
 
     HeroRenderer private _renderer;
     // mapping(uint256 => HeroRenderer) public renderers;

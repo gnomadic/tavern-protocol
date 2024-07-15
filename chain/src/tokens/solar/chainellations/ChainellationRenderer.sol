@@ -2,24 +2,20 @@
 pragma solidity 0.8.24;
 
 import "../Color.sol";
-import "./Constellations.sol";
-import "../interfaces/IDecorations.sol";
 import "../interfaces/IChainellationRenderer.sol";
 
 contract ChainellationRenderer is IChainellationRenderer {
     function generateSVG(
         uint256 tokenId,
         Color.DNA memory dna,
-        uint256 gazes,
-        bool daytime,
-        address decorator
+        bool daytime
     ) public view returns (string memory) {
         Color.HSL memory primary = Color.HSL(dna.primaryHue, 100, 30);
         Color.HSL memory secondary = Color.HSL(dna.secondaryHue, 100, 30);
         // console.log("Colors are %s and %s ", primary.H, secondary.H);
         string memory svg = string.concat(
             '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><clipPath id="box"><path d="M0 0h512v512H0z"/></clipPath><defs>',
-            getGradients(tokenId, primary, secondary, dna.cloudsAt),
+            getGradients(tokenId, primary, secondary, 1),
             getFilters(tokenId),
             '</defs><svg viewBox="0 0 512 512" clip-path="url(#box)">',
             getBackgrounds(daytime),
@@ -29,13 +25,8 @@ contract ChainellationRenderer is IChainellationRenderer {
             // '<path d="M 340, 0 v 512" stroke="white" opacity="0.4"/>',
             // '<path d="M250 80 h 180 v 180 h -180 v-180" stroke="white" fill="none"/>',
 
-            // buildStars(dna.starSeed, dna.constellationSeed, gazes, daytime),
-            getStars(tokenId, dna.constellation, gazes, daytime),
-            getDecos(decorator, tokenId, dna, gazes, daytime),
-            // getFocus(decorator, dna, gazes, daytime),
-            // getSkyMath(decorator, dna, gazes, daytime),
-            // getDecorationOne(decorator, dna, gazes, daytime),
-            // getSilhouette(decorator, dna, gazes, daytime),
+
+
             "</svg>",
             "</svg>"
         );
@@ -150,139 +141,6 @@ contract ChainellationRenderer is IChainellationRenderer {
         return filters;
     }
 
-    function getStars(
-        uint256 starSeed,
-        uint16 constellationId,
-        uint256 gazes,
-        bool daytime
-    ) public view returns (string memory) {
-        if (daytime) {
-            return "";
-        }
-
-        uint8 starCount = 0;
-        uint8 constCount = 0;
-        if (gazes > 50) {
-            constCount = 20;
-            starCount = 30;
-            gazes = 50;
-        }
-        while (starCount + constCount < gazes) {
-            if (Color.psuedorandom(starSeed, constCount + starCount) % 3 == 1) {
-                constCount++;
-            } else {
-                starCount++;
-            }
-        }
-
-        (string memory constellation, uint8 leftovers) = drawConstellation(
-            constellationId,
-            constCount
-        );
-        string memory stars = "";
-
-        console.log("constCount ", constCount);
-        console.log("starCount ", starCount);
-        console.log("leftovers ", leftovers);
-        stars = string.concat(stars, constellation);
-        stars = string.concat(
-            stars,
-            drawStars(starSeed, starCount + leftovers)
-        );
-        return stars;
-    }
-
-    function drawStars(
-        uint256 starSeed,
-        uint8 toShow
-    ) private pure returns (string memory) {
-        string memory stars = '<g fill="#fff">';
-        string memory x = "";
-        string memory y = "";
-        uint8 seed = 0;
-        string memory duration;
-        // string memory delay;
-        for (uint8 i = 0; i < toShow; i++) {
-            seed = (uint8)(Color.psuedorandom(starSeed, i) % 3);
-            x = Color.toString(
-                (uint16)(Color.psuedorandom(starSeed, i) % 462) + 25
-            );
-
-            y = Color.toString(
-                (uint16)(Color.psuedorandom(starSeed + seed, i) % 462) + 25
-            );
-
-            duration = Color.toString(
-                (uint16)(Color.psuedorandom(starSeed, i) % 4) + 1
-            );
-            // delay = Color.toString(
-            //     (uint16)(Color.psuedorandom(starSeed, i) % 3)
-            // );
-
-            if (seed == 0) {
-                stars = string.concat(
-                    stars,
-                    '<circle r="1" cx="',
-                    x,
-                    '" cy="',
-                    y,
-                    '" fill="#fff"  opacity="1">',
-                    '<animate attributeName="r" values="1;0;2;1;1;1;1;1;1;1" dur="',
-                    duration,
-                    's" start="',
-                    duration,
-                    's" repeatCount="indefinite"/></circle>'
-                );
-            } else if (seed == 1) {
-                stars = string.concat(
-                    stars,
-                    '<path d="M ',
-                    x,
-                    ",",
-                    y,
-                    'c 7,0 7,0 7,-7 c 0,7 0,7 7,7 c -7,0 -7,0 -7,7 c 0,-7 0,-7 -7,-7">',
-                    '<animate attributeName="r" values="1;0;1;1;1;1;1;1;1" dur="',
-                    duration,
-                    's" start="',
-                    duration,
-                    's" repeatCount="indefinite"/></path>'
-                    // '<animateTransform attributeName="transform" type="scale" from="0 0" to="1 1" begin="0s" dur="0.5s" repeatCount="1"/></path>'
-                );
-            } else if (seed == 2) {
-                stars = string.concat(
-                    stars,
-                    '<circle r="3" cx="',
-                    x,
-                    '" cy="',
-                    y,
-                    '" opacity="0.3"><animate attributeName="r" values="0;5;3" dur="1s"/></circle>',
-                    '<circle r="1" cx="',
-                    x,
-                    '" cy="',
-                    y,
-                    '"><animate attributeName="r" values="1;0;2;1;1;1;1;1;1;1" dur="',
-                    duration,
-                    's" start="',
-                    duration,
-                    's" repeatCount="indefinite"/></circle>'
-                );
-            }
-        }
-        return string.concat(stars, "</g>");
-    }
-
-    function drawConstellation(
-        uint16 constellationID,
-        uint8 toShow
-    ) private view returns (string memory, uint8 leftovers) {
-        (string memory constellation, uint8 count) = Constellations
-            .getConstellation(constellationID, toShow);
-        return (
-            string.concat('<g id="constellation">', constellation, "</g>"),
-            count
-        );
-    }
-
     function psuedorandom(
         uint256 tokenId,
         uint256 nonce
@@ -292,57 +150,5 @@ contract ChainellationRenderer is IChainellationRenderer {
 
     function subZero(uint16 first, uint16 second) public pure returns (uint16) {
         return Color.subZero(first, second);
-    }
-
-    function getDecos(
-        address decorator,
-        uint256 tokenId,
-        Color.DNA memory dna,
-        uint256 gazes,
-        bool daytime
-    ) private view returns (string memory) {
-        return
-            string.concat(
-                // getFocus(dna, gazes, daytime),
-                getSkyMath(decorator, tokenId, dna, gazes, daytime),
-                getDecorationOne(decorator, tokenId, dna, gazes, daytime),
-                getSilhouette(decorator, tokenId, dna, gazes, daytime)
-            );
-    }
-
-    function getSilhouette(
-        address decorator,
-        uint256 tokenId,
-        Color.DNA memory dna,
-        uint256 gazes,
-        bool daytime
-    ) private view returns (string memory) {
-        if (decorator == address(0)) return "";
-        IDecorations deco = IDecorations(decorator);
-        return deco.getSilhouette(tokenId, dna, gazes, daytime);
-    }
-
-    function getSkyMath(
-        address decorator,
-        uint256 tokenId,
-        Color.DNA memory dna,
-        uint256 gazes,
-        bool daytime
-    ) private view returns (string memory) {
-        if (decorator == address(0)) return "";
-        IDecorations deco = IDecorations(decorator);
-        return deco.getSkyMath(tokenId, dna, gazes, daytime);
-    }
-
-    function getDecorationOne(
-        address decorator,
-        uint256 tokenId,
-        Color.DNA memory dna,
-        uint256 gazes,
-        bool daytime
-    ) private view returns (string memory) {
-        if (decorator == address(0)) return "";
-        IDecorations deco = IDecorations(decorator);
-        return deco.getDecorationOne(tokenId, dna, gazes, daytime);
     }
 }

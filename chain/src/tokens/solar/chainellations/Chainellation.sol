@@ -7,19 +7,13 @@ import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
 import {IChainellationRenderer} from "../interfaces/IChainellationRenderer.sol";
 import "../Color.sol";
-import "../interfaces/ITwoMoonsEvent.sol";
 
 contract Chainellation is ERC721AQueryable {
     using Strings for uint256;
 
      struct Stats {
-        uint8 constellation;
-        uint8 cloudsAt;
-        uint16 gazes;
         uint32 timeZoneOffset;
         uint32 colors;
-        uint48 lastGaze;
-        uint144 consolidated;
     }
 
     uint256 public currentSupply;
@@ -31,9 +25,7 @@ contract Chainellation is ERC721AQueryable {
     mapping(uint256 => Color.DNA) public dnas;
     mapping(uint256 => Stats) public stats;
 
-    address private _decorator;
     IChainellationRenderer private _renderer;
-    ITwoMoonsEvent private _twoMoonsEvent;
 
     // mapping(uint256 => HeroRenderer) public renderers;
     uint256 rendererCount;
@@ -179,9 +171,6 @@ contract Chainellation is ERC721AQueryable {
             );
         }
 
-        current.constellation = _constellation;
-        current.cloudsAt = _cloudsAt;
-
         stats[currentSupply] = current;
         _mint(_to, 1);
     }
@@ -190,7 +179,7 @@ contract Chainellation is ERC721AQueryable {
         uint256 tokenId
     ) public view returns (string memory) {
         bytes memory svg = abi.encodePacked(
-            generateSVG(tokenId, stats[tokenId].gazes, !isNight(tokenId), 0)
+            generateSVG(tokenId, !isNight(tokenId))
         );
 
         return
@@ -214,73 +203,22 @@ contract Chainellation is ERC721AQueryable {
         }
     }
 
-    function getConstellation(uint256 tokenId) public view returns (uint8) {
-        if (stats[tokenId].constellation == 0) {
-            return uint8(_renderer.psuedorandom(tokenId, 123) % 15) + 1;
-        } else {
-            return stats[tokenId].constellation;
-        }
-    }
-
-    function getCloudsAt(uint256 tokenId) public view returns (uint8) {
-        if (stats[tokenId].cloudsAt == 0) {
-            return uint8(_renderer.psuedorandom(tokenId, 321) % 4) + 1;
-        } else {
-            return stats[tokenId].cloudsAt;
-        }
-    }
-
     function generateSVG(
         uint256 _tokenId,
-        uint256 _gazed,
-        bool _sunUp,
-        uint8 testConstellation
+        bool _sunUp
     ) public view returns (string memory) {
         return
             _renderer.generateSVG(
                 _tokenId,
                 Color.genDNA(
                     _tokenId,
-                    getColors(_tokenId),
-                    getCloudsAt(_tokenId),
-                    testConstellation == 0
-                        ? getConstellation(_tokenId)
-                        : testConstellation
+                    getColors(_tokenId)
                 ),
-                _gazed,
-                _sunUp,
-                _decorator
+                _sunUp
             );
     }
 
-    function starGaze(uint256 tokenId) public {
-        if (ownerOf(tokenId) != msg.sender) revert NotTheOwner();
-        if (!isNight(tokenId)) revert NotNight();
-        if (
-            systemTimeOffsetWithUser(tokenId) - stats[tokenId].lastGaze <
-            14 hours
-        ) revert NotEnoughTimePassed();
-        stats[tokenId].gazes = stats[tokenId].gazes + 1;
-        stats[tokenId].lastGaze = systemTimeOffsetWithUser(tokenId);
-        if (address(_twoMoonsEvent) != address(0)) {
-            ITwoMoonsEvent(_twoMoonsEvent).onStargaze(
-                tokenId,
-                stats[tokenId].gazes
-            );
-        }
-    }
 
-    function gazeBatch(uint256[] calldata tokenIds) public {
-        for (uint256 i = 0; i < tokenIds.length; i++) {
-            starGaze(tokenIds[i]);
-        }
-    }
-
-    function reset(uint256 tokenId) public {
-        if (ownerOf(tokenId) != msg.sender) revert NotTheOwner();
-        stats[tokenId].gazes = 0;
-        // gazes[tokenId] = 0;
-    }
 
     function setMaxSupply(uint256 _maxSupply) public {
         maxSupply = _maxSupply;
@@ -292,14 +230,6 @@ contract Chainellation is ERC721AQueryable {
 
     function setCustomizeCost(uint256 _newCost) public {
         customizeCost = _newCost;
-    }
-
-    function setDecorator(address decorator) public {
-        _decorator = decorator;
-    }
-
-    function setTwoMoonsEvent(address twoMoonsEvent) public {
-        _twoMoonsEvent = ITwoMoonsEvent(twoMoonsEvent);
     }
 
     function setRenderer(address renderer) public {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {Initializable} from 'solady/utils/Initializable.sol';
 
@@ -52,11 +52,11 @@ contract Game is IGame, Initializable {
     metadata = _metadata;
     entityFactory = IEntityFactory(_entityFactory);
 
-    AddressKey[] memory required = IComponentRegistry(_componentRegsitry).getRequired();
+    AddressKey[] memory required = IComponentRegistry(_componentRegsitry)
+      .getRequired();
     for (uint8 i = 0; i < required.length; i++) {
       addComponent(required[i].value);
     }
-
 
     FlowEntity flowEntity = new FlowEntity();
     entityFactory.registerEntity('FlowEntity', address(flowEntity));
@@ -171,7 +171,16 @@ contract Game is IGame, Initializable {
       revert FlowDoesNotExist();
     }
 
+    // params.add
+
     FlowEntity(getEntity('playerParams')).setPlayerParams(msg.sender, params);
+
+    // TODO this will break with cross-chain relays
+    FlowEntity(getEntity('playerParams')).addPlayerAddress(
+      msg.sender,
+      'player',
+      msg.sender
+    );
 
     for (uint8 i = 0; i < funcs.length; i++) {
       (bool success, ) = funcs[i].value.call(

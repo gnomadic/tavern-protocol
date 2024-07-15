@@ -33,7 +33,6 @@ contract DailyInteractionTest is TavernTest {
   FlowParams joinParams;
 
   function createFunctions() public override {
-    // console.log("queue at: " , address(queue));
     joinKeys.push(
       AddressKey('dailyInteraction(address,address)', address(component))
     );
@@ -50,7 +49,7 @@ contract DailyInteractionTest is TavernTest {
     );
     assertEq(last, 0);
 
-    joinParams.addresses.push(AddressKey('player', address(1)));
+    vm.prank(address(1));
     liveGame.executeFlow('interact', joinParams);
 
     last = component.getPlayersLastActionAt(address(liveGame), address(1));
@@ -68,9 +67,11 @@ contract DailyInteractionTest is TavernTest {
   function test_second_interaction() public {
     clearParams(joinParams);
 
-    joinParams.addresses.push(AddressKey('player', address(1)));
+    vm.prank(address(1));
     liveGame.executeFlow('interact', joinParams);
 
+    
+    vm.prank(address(1));
     vm.expectRevert();
     liveGame.executeFlow('interact', joinParams);
 
@@ -80,5 +81,24 @@ contract DailyInteractionTest is TavernTest {
     );
 
     assertEq(total, 1);
+  }
+
+  function test_wait() public {
+    clearParams(joinParams);
+
+    vm.prank(address(1));
+    liveGame.executeFlow('interact', joinParams);
+
+    vm.warp(block.timestamp + 1 days);
+
+    vm.prank(address(1));
+    liveGame.executeFlow('interact', joinParams);
+
+    uint256 total = component.getPlayersTotalActions(
+      address(liveGame),
+      address(1)
+    );
+
+    assertEq(total, 2);
   }
 }

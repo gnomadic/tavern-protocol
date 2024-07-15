@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.24;
 
 import {IComponent, ComponentSummary} from './interfaces/IComponent.sol';
 import {MMOSessionEntity} from '../entities/MMOSessionEntity.sol';

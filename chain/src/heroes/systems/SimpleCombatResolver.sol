@@ -28,7 +28,7 @@ contract SimpleCombatResolver is ISystem {
         uint256 defender,
         address defenseStats
     ) external onlySystem {
-        console.log("simplecombatresolver.hit");
+        // console.log("simplecombatresolver.hit");
 
         IHeroStats stats = IHeroStats(attackStats);
         IHeroStats defenderStats = IHeroStats(defenseStats);
@@ -50,7 +50,7 @@ contract SimpleCombatResolver is ISystem {
             defenseHealth -= damage;
             defenderStats.setNumStat(defender, "health", defenseHealth);
         } else {
-            console.log("no damage");
+            // console.log("no damage");
         }
 
         // uint256 attack = stats.getNumStat(attacker, "attack");

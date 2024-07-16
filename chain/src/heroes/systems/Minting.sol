@@ -17,13 +17,13 @@ contract Minting is ISystem {
     }
 
     function mintHero(uint256 prefabId) public payable {
-        console.log("Minting.mintAHero");
+        // console.log("Minting.mintAHero");
 
         if (msg.value != mintPrice) revert CheckMintPrice();
 
         //mint hero
         uint256 newTokenId = hero.mint(msg.sender);
-        console.log("tokenId: ", newTokenId);
+        // console.log("tokenId: ", newTokenId);
 
         //load prefabs
         for (uint256 i = 0; i < prefabs.length; i++) {

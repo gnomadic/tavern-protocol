@@ -49,7 +49,7 @@ contract InputValidation is IComponent {
     address gameAddress
   ) public onlyGame(gameAddress) {
 
-    console.log("validating input");
+    // console.log("validating input");
     IGame game = IGame(gameAddress);
     FlowEntity gameEntity = FlowEntity(game.getEntity('playerParams'));
 
@@ -58,7 +58,7 @@ contract InputValidation is IComponent {
     );
 
     string[] memory inputKeys = gameEntity.getPlayerStringArray(executor, "allInputKeys");
-    console.log("InputValidation.validateInput",address(inputValidation));
+    // console.log("InputValidation.validateInput",address(inputValidation));
     
 
     bool isValid = inputValidation.validate(inputKeys);

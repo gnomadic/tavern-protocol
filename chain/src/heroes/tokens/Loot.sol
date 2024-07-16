@@ -2,7 +2,7 @@
 pragma solidity 0.8.24;
 
 import "../../../lib/solady/src/tokens/ERC1155.sol";
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {LibString} from "../../../lib/solady/src/utils/LibString.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
 import {HeroRenderer} from "./HeroRenderer.sol";
@@ -34,7 +34,7 @@ contract Loot is ERC1155 {
                         bytes(
                             abi.encodePacked(
                                 '{"name":"Hero #',
-                                Strings.toString(id),
+                                LibString.toString(id),
                                 '",',
                                 '"description":"A hero from the Universe",',
                                 '"image": "https://ipfs.io/ipfs/QmUbRpveuTjqUaAQQP12ETLBWhxFtGHG6XKubqetyu5i6m"}'

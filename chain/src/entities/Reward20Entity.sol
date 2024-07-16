@@ -23,7 +23,7 @@ contract Reward20Entity is IEntity {
       console.log('No token set');
       return;
     }else{
-      console.log('sending token');
+      // console.log('sending token');
     SimpleMintableERC20(token).mint(player, amount);
     }
   }

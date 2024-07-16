@@ -28,7 +28,7 @@ contract InputValidationEntity is IEntity {
   }
 
   function validate(string[] memory keys) public view returns (bool) {
-        console.log("InputValidationEntity.validate", validKeys.length);
+        // console.log("InputValidationEntity.validate", validKeys.length);
 
     for (uint i = 0; i < keys.length; i++) {
       if (!validInput[keys[i]]) {

@@ -10,8 +10,25 @@ module.exports = async (hre) => {
   
     // ------------------------------------- deploy
   
-    const farcadeAlphaTestTicket = await deploy("FarcadeAlphaTestTicket", {
+    const color = await deploy("Color", {
       from: deployer,
+      log: true,
+    });
+
+    const chainellationRenderer = await deploy("ChainellationRenderer", {
+      from: deployer,
+      libraries: {
+        Color: color.address
+      },
+      log: true,
+    });
+  
+    const Chainellation = await deploy("Chainellation", {
+      from: deployer,
+      args: [chainellationRenderer.address],
+      libraries: {
+        Color: color.address,
+      },
       log: true,
     });
   
@@ -22,10 +39,11 @@ module.exports = async (hre) => {
     networkName === "hardhat" ? (networkName = "localhost") : (networkName = hre.network.name);
   
     const object = {};
-    object.farcadeAlphaTestTicket = farcadeAlphaTestTicket.address;
+    object.Chainellation = Chainellation.address;
 
-    const filename = "../deployments/" + networkName + "/tavern-deployment.json";
-  
+    const filename = "../deployments/" + networkName + "/starsystem-deployment.json";
+
+
     await fs.writeFileSync(filename, JSON.stringify(object, null, 2));
     console.log("local address file created");
   
@@ -34,11 +52,13 @@ module.exports = async (hre) => {
     console.log("done deploying");
     if (chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337") {
       console.log("verifing");
-      await verify(hre, farcadeAlphaTestTicket.address, "FarcadeAlphaTestTicket", "tokens/");
+      await verify(hre, color.address, "Color", "tokens/solar/");
+      await verify(hre, chainellationRenderer.address, "ChainellationRenderer", "tokens/solar/chainellations");
+      await verify(hre, Chainellation.address, "Chainellation", "tokens/solar/chainellations");
 
     }
   
   };
   
-  module.exports.tags = ["tokens"];
+  module.exports.tags = ["tokens", "starsystems"];
   

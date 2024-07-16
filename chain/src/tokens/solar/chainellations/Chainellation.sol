@@ -177,7 +177,7 @@ contract Chainellation is ERC721AQueryable {
     uint256 tokenId
   ) public view returns (string memory) {
     bytes memory svg = abi.encodePacked(
-      generateSVG(tokenId, !isNight(tokenId))
+      generateSVG(tokenId)
     );
 
     return
@@ -198,43 +198,21 @@ contract Chainellation is ERC721AQueryable {
   }
 
   function generateSVG(
-    uint256 _tokenId,
-    bool _sunUp
+    uint256 _tokenId
   ) public view returns (string memory) {
     return
       _renderer.generateSVG(
         _tokenId,
-        Color.genDNA(_tokenId, getColors(_tokenId)),
-        _sunUp
+        Color.genDNA(_tokenId, getColors(_tokenId))
       );
-  }
-
-  function setMaxSupply(uint256 _maxSupply) public {
-    maxSupply = _maxSupply;
   }
 
   function setMintCost(uint256 _newMintCost) public {
     mintCost = _newMintCost;
   }
 
-  function setCustomizeCost(uint256 _newCost) public {
-    customizeCost = _newCost;
-  }
-
   function setRenderer(address renderer) public {
     _renderer = IChainellationRenderer(renderer);
-  }
-
-  function systemTimeOffsetWithUser(
-    uint256 tokenId
-  ) public view virtual returns (uint48) {
-    return (uint48)(block.timestamp + (stats[tokenId].timeZoneOffset));
-    // return (uint48)(block.timestamp + (timeZoneOffset[tokenId]));
-  }
-
-  function isNight(uint256 tokenId) public view returns (bool) {
-    uint8 hour = (uint8)((systemTimeOffsetWithUser(tokenId) / 60 / 60) % 24);
-    return hour < 6 || hour > 18;
   }
 
   function withdraw() external {

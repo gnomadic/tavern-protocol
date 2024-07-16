@@ -7,8 +7,7 @@ import '../interfaces/IChainellationRenderer.sol';
 contract ChainellationRenderer is IChainellationRenderer {
   function generateSVG(
     uint256 tokenId,
-    Color.DNA memory dna,
-    bool daytime
+    Color.DNA memory dna
   ) public view returns (string memory) {
     Color.HSL memory primary = Color.HSL(dna.primaryHue, 86, 50);
     Color.HSL memory secondary = Color.HSL(dna.secondaryHue, 50, 33);
@@ -18,7 +17,7 @@ contract ChainellationRenderer is IChainellationRenderer {
       getGradients(tokenId, primary, secondary, 1),
       getFilters(tokenId),
       '</defs><svg viewBox="0 0 512 512" clip-path="url(#box)">',
-      getBackgrounds(daytime),
+      getBackgrounds(),
       getShapes(tokenId),
       // '<path d="M 0, 340 h 512" stroke="white" opacity="0.4"/>',
       // '<path d="M 0, 170 h 512" stroke="white" opacity="0.4"/>',
@@ -102,19 +101,12 @@ contract ChainellationRenderer is IChainellationRenderer {
     return sky;
   }
 
-  function getBackgrounds(bool day) public pure returns (string memory) {
+  function getBackgrounds() public pure returns (string memory) {
     string memory bg = '';
 
     bg = string.concat(
-      '<rect width="100%" height="100%" filter="url(#stars)" opacity="',
-      Color.toString(day ? 0 : 1),
-      '"/>',
-      '<path fill="url(#dayGradient)" d="M0 0h512v512H0z" opacity="',
-      Color.toString(day ? 1 : 0),
-      '"  filter="url(#light)"/>',
-      '<path fill="url(#skyGradient)"  d="M0 0h512v512H0z" opacity=".',
-      Color.toString(day ? 0 : 7),
-      '"/>',
+      '<rect width="100%" height="100%" filter="url(#stars)" opacity="1"/>',
+      '<path fill="url(#skyGradient)"  d="M0 0h512v512H0z" opacity=".7"/>',
       '<path fill="url(#galaxyGradientOne)" filter="url(#galaxyOne)" d="M0 0h512v512H0z"/>'
       // '<path fill="url(#galaxyGradientOne)" filter="url(#galaxyOne)"  d="M0 0h512v512H0z" opacity=".',
       // Color.toString(day ? 0 : 7),
@@ -127,7 +119,9 @@ contract ChainellationRenderer is IChainellationRenderer {
 
   function getFilters(uint256 seed) public pure returns (string memory) {
     string memory filters = '';
-    string memory seed = Color.toString((uint16)(Color.psuedorandom(seed, 123) % 10000));
+    string memory seed = Color.toString(
+      (uint16)(Color.psuedorandom(seed, 123) % 10000)
+    );
     filters = string.concat(
       filters,
       '<filter id="stars"><feTurbulence baseFrequency=".35" seed="',
@@ -152,81 +146,105 @@ contract ChainellationRenderer is IChainellationRenderer {
       '<feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/></filter>'
     );
 
-
     filters = string.concat(
       filters,
       '<filter id="galaxyOne" x="-50%" y="-50%" height="200%" width="200%">',
       '<feGaussianBlur in="sky" stdDeviation="20" result="galaxyblur"/>',
       '<feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="5" result="galaxynoise" seed="4476"/>',
-    //   '<feColorMatrix values="1 0 0 0 ',
-    //   Color.toString(color == 0 ? 1 : 0),
-    //   '0 1 0 0 ',
-    //   Color.toString(color == 1 ? 1 : 0),
-    //   '0 0 1 0 ',
-    //   Color.toString(color == 2 ? 1 : 0),
-    //   '0 0 0 1 0"/>',
-    '<feColorMatrix values="1 0 0 0 1 0 1 0 0 1 0 0 1 0 1 0 0 0 1 0"/>',
+      //   '<feColorMatrix values="1 0 0 0 ',
+      //   Color.toString(color == 0 ? 1 : 0),
+      //   '0 1 0 0 ',
+      //   Color.toString(color == 1 ? 1 : 0),
+      //   '0 0 1 0 ',
+      //   Color.toString(color == 2 ? 1 : 0),
+      //   '0 0 0 1 0"/>',
+      '<feColorMatrix values="1 0 0 0 1 0 1 0 0 1 0 0 1 0 1 0 0 0 1 0"/>',
       '<feComposite operator="in" in2="SourceGraphic"/></filter>'
     );
     filters = string.concat(
-        filters,
-        '<filter id="sun"><feTurbulence baseFrequency=".1" numOctaves="12" seed="',seed,'" />',
-        '<feDisplacementMap in="SourceGraphic" scale="15" /></filter>'
-
+      filters,
+      '<filter id="sun"><feTurbulence baseFrequency=".1" numOctaves="12" seed="',
+      seed,
+      '" />',
+      '<feDisplacementMap in="SourceGraphic" scale="15" /></filter>'
     );
-
-        
-      
-        
 
     return filters;
   }
 
-  function getShapes(uint256 seed) public pure returns (string memory) {
+  function getShapes(uint256 seed) public view returns (string memory) {
     string memory shapes = '';
+
+
+
+
     shapes = string.concat(
-    //   '<g id="skymath" opacity="1" fill="none" stroke="white" stroke-width="1">',
-    //               '<path d="M250 0 v 512"/>',
+      //   '<g id="skymath" opacity="1" fill="none" stroke="white" stroke-width="1">',
+      //               '<path d="M250 0 v 512"/>',
 
-    //   '<circle r="60" cx="256" cy="170"  opacity="1" fill="black" />',
-    //   '<circle r="80" cx="256" cy="170"  opacity="1" />',
-    //   //   '<circle r="80" cx="340" cy="170" stroke-dasharray="0 1 0" opacity="0.8" />',
-    //   //   '<circle r="85" cx="340" cy="170" stroke-dasharray="1 0 1" opacity="0.8" />',
-    //   //   '<circle r="90" cx="340" cy="170" stroke-dasharray="0 1 0" opacity="0.8" />',
-    //   '</g>'
-
-
-    '<g id="skymath" opacity="1" fill="none" stroke="white" stroke-width="1">',
-
-
-      '<ellipse cx="0" cy="256" rx="150" ry="100" stroke-dasharray="1 0 1"/>',
-      '<ellipse cx="0" cy="256" rx="250" ry="200" stroke-dasharray="1 0 1"/>',
-      '<ellipse cx="0" cy="256" rx="350" ry="300" stroke-dasharray="1 0 1"/>',
-      '<ellipse cx="0" cy="256" rx="450" ry="400" stroke-dasharray="1 0 1"/>',
+      //   '<circle r="60" cx="256" cy="170"  opacity="1" fill="black" />',
+      //   '<circle r="80" cx="256" cy="170"  opacity="1" />',
+      //   //   '<circle r="80" cx="340" cy="170" stroke-dasharray="0 1 0" opacity="0.8" />',
+      //   //   '<circle r="85" cx="340" cy="170" stroke-dasharray="1 0 1" opacity="0.8" />',
+      //   //   '<circle r="90" cx="340" cy="170" stroke-dasharray="0 1 0" opacity="0.8" />',
+      //   '</g>'
 
 
 
-
-    '<circle r="60" cx="0" cy="256" opacity="1" fill="#fcdc4d" filter="url(#sun)"/>',
-    '<g stroke="black" >',
-    '<circle r="10" cx="150" cy="256" opacity="1" fill="#ff4365" />',
-    '<circle r="15" cx="250" cy="256" opacity="1" fill="#81a4cd"/>',
-    '<circle r="12" cx="350" cy="256" opacity="1" fill="#ff4365" />',
-    '<circle r="20" cx="450" cy="256" opacity="1" fill="#ff4365" />',
-    '</g></g>'
-
+      '<g fill="none" stroke="white" stroke-width="1">',
+      '<path d="M261 0 v 512 " />',
+      '<path d="M256 0 v 512 "  stroke-dasharray="1 0 1"/>',
+      '<path d="M251 0 v 512 " />',
+      '<path d="M200 0 v 512 " /><path d="M312 0 v 512 " /></g>',
+      getShip(3)
     
-    // '  <path d="M256 0 v 512"/>',
     
-    // '  <circle r="60" cx="256" cy="170" opacity="1" fill="black"/>',
-    // '  <circle r="40" cx="128" cy="170" opacity="1" fill="black"/>',
-    // '  <circle r="40" cx="384" cy="170" opacity="1" fill="black"/>',
-    // '  <circle r="80" cx="256" cy="170" opacity="1"/>',
-    // '</g>'
 
 
+      // '<g id="skymath" opacity="1" fill="none" stroke="white" stroke-width="1">',
+      // '<ellipse cx="0" cy="256" rx="150" ry="100" stroke-dasharray="1 0 1"/>',
+      // '<ellipse cx="0" cy="256" rx="250" ry="200" stroke-dasharray="1 0 1"/>',
+      // '<ellipse cx="0" cy="256" rx="350" ry="300" stroke-dasharray="1 0 1"/>',
+      // '<ellipse cx="0" cy="256" rx="450" ry="400" stroke-dasharray="1 0 1"/>',
+      // '<circle r="60" cx="0" cy="256" opacity="1" fill="#fcdc4d" filter="url(#sun)"/>',
+      // '<g stroke="black" >',
+      // '<circle r="10" cx="150" cy="256" opacity="1" fill="#ff4365" />',
+      // '<circle r="15" cx="250" cy="256" opacity="1" fill="#81a4cd"/>',
+      // '<circle r="12" cx="350" cy="256" opacity="1" fill="#ff4365" />',
+      // '<circle r="20" cx="450" cy="256" opacity="1" fill="#ff4365" />',
+      // '</g></g>'
+
+      // '  <path d="M256 0 v 512"/>',
+
+      // '  <circle r="60" cx="256" cy="170" opacity="1" fill="black"/>',
+      // '  <circle r="40" cx="128" cy="170" opacity="1" fill="black"/>',
+      // '  <circle r="40" cx="384" cy="170" opacity="1" fill="black"/>',
+      // '  <circle r="80" cx="256" cy="170" opacity="1"/>',
+      // '</g>'
     );
     return shapes;
+  }
+
+  function getShip(uint256 whichShip) public view returns (string memory) {
+
+        
+    
+    
+    string memory tank = '<circle r="90" cx="256" cy="256"  />';
+    string memory attacker = '<path d="M256 160 l 80 170 h -160 z "/>';
+    string memory agile = '<ellipse cx="256" cy="256" rx="150" ry="60"/>';
+
+        string memory ship = '<g stroke="white" stroke-width="2" fill="black">';
+        if (whichShip == 1) {
+            ship = string.concat(ship, tank);
+        } else if (whichShip == 2) {
+            ship = string.concat(ship, attacker);
+        } else if (whichShip == 3) {
+            ship = string.concat(ship, agile);
+        }
+        ship = string.concat(ship, '</g>');
+
+    return ship;
   }
 
   function psuedorandom(

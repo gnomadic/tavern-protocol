@@ -14,7 +14,7 @@ async function main() {
   console.log("connected");
 
 
-    let svg = await contract.generateSVG(1, false);
+    let svg = await contract.generateSVG(1);
     
     console.log(svg);  
 }

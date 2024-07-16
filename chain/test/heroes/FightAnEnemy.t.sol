@@ -3,11 +3,11 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from "forge-std/Test.sol";
 
-import {SensoTest} from "./SensoTest.t.sol";
+import {TavernHeroTest} from "./TavernHeroTest.t.sol";
 import {Match} from "../../src/heroes/systems/CombatPVE.sol";
 import {MonsterPrefab} from "../../src/heroes/systems/MonsterStats.sol";
 
-contract FightAnEnemy is SensoTest {
+contract FightAnEnemy is TavernHeroTest {
     function prepareTest() public override {
         // vm.prank(address(2));
         // minting.mintHero{value: 0.05 ether}("TrainingDummy");

@@ -3,12 +3,13 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from 'forge-std/Test.sol';
 
-import {SensoTest} from './SensoTest.t.sol';
+import {TavernHeroTest} from './TavernHeroTest.t.sol';
 import {HeroPrefab, Action} from '../../src/heroes/systems/HeroStats.sol';
 import {CombatPrefab} from '../../src/heroes/systems/CombatActions.sol';
 import {Resolver} from '../../src/heroes/systems/HeroStatResolver.sol';
 
-contract MintAHero is SensoTest {
+
+contract MintAHero is TavernHeroTest {
   function prepareTest() public override {}
 
   function test_mint() public {

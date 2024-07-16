@@ -18,7 +18,7 @@ export default function Home() {
           height={300}
         />
         <div className='mx-auto text-3xl text-center text-white'>
-          Build community by gaming <br /> and hanging out
+          Build community by playing <br /> games together
         </div>
         <div className='pt-4 mx-auto text-xl text-center text-lightgrey'>
           Made for web3 communities <br />

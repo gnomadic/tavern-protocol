@@ -4,6 +4,7 @@ pragma solidity 0.8.24;
 import {console} from "forge-std/console.sol";
 
 contract Random {
+    
     uint256 private nonce;
 
     function getNonce() internal returns (uint256) {

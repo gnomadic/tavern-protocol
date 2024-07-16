@@ -54,16 +54,4 @@ contract Hero is ERC1155 {
     return _renderer.generateSVG(_tokenId);
   }
 
-  //   constructor() ERC1155('Tavern Town', 'TOWN') {}
-
-  //   function mint() public {
-  //     _mint(msg.sender, 1);
-  //   }
-
-  //   function tokenURI(
-  //     uint256 tokenId
-  //   ) public view override returns (string memory) {
-  //     return
-  //       'https://ipfs.io/ipfs/QmUsr6muQSFXoprVpXWBzjmwQsnqeurd5NXKM6N1KKyWKd';
-  //   }
 }

@@ -95,7 +95,9 @@ contract FightAnEnemy is SensoTest {
         //trianing dummy fight is one round
         Match memory curMatch = pve.getMatch(0);
 
+        console.log("checking winner");
         assertEq(curMatch.winner, 1);
+        console.log("checking active");
         assertEq(curMatch.active, false);
         uint256 playerXP = stats.getNumStat(0, "xp");
         uint256 enemyXP = monsterStats.getNumStat(0, "xp");

@@ -12,12 +12,8 @@ contract Chainellation is ERC721AQueryable {
   using Strings for uint256;
 
   struct Stats {
-    uint32 timeZoneOffset;
     uint32 colors;
   }
-
-  uint256 public currentSupply;
-  uint256 public maxSupply = 15000;
 
   uint256 public mintCost = 0;
   uint256 public customizeCost = 0; // 5 * 10 ** 15;
@@ -42,7 +38,7 @@ contract Chainellation is ERC721AQueryable {
   function tokenURI(
     uint256 tokenId
   ) public view virtual override(ERC721A, IERC721A) returns (string memory) {
-    if (tokenId > currentSupply) revert NotMinted();
+    if (!_exists(tokenId)) revert NotMinted();
 
     bytes memory dataURI = abi.encodePacked(
       '{',
@@ -87,7 +83,7 @@ contract Chainellation is ERC721AQueryable {
   function mint(uint32 timezoneOffset) public payable {
     if (msg.value != mintCost) revert Cost();
 
-    _mint(timezoneOffset, 0, 0, 0, msg.sender);
+    _mint( 0, msg.sender);
   }
 
   function mintCustom(
@@ -113,63 +109,33 @@ contract Chainellation is ERC721AQueryable {
     if (msg.value != rollingCost) revert Cost();
 
     _mint(
-      timezoneOffset,
       (uint32(firstH) << 16) | uint32(secondH),
-      _constellation,
-      _cloudsAt,
       msg.sender
     );
   }
 
   function freeMint(uint32 timezoneOffset) public {
-    _mint(timezoneOffset, 0, 0, 0, msg.sender);
+    _mint( 0, msg.sender);
   }
 
   // if the timezone offset is negative, we're gonna pretend like it's a day in the future
   // this doesn't matter because the timezone offset is only used to determine the time of day
   // and not the actual day.
   function _mint(
-    uint32 _timezoneOffset,
     uint32 _colorData,
-    uint8 _constellation,
-    uint8 _cloudsAt,
     address _to
   ) private {
-    if (currentSupply >= maxSupply) revert MaxSupplyReached();
-    currentSupply++;
 
-    Stats memory current;
-    current.timeZoneOffset = _timezoneOffset;
+
 
     // 24248690 is a byte packed 370 + 370, which are the default colors
     if (_colorData == 24248690) {
-      uint16 primary = uint16((currentSupply % 16) * 10);
+      uint16 primary = uint16((_nextTokenId() % 16) * 10);
       uint16 secondary = Color.rotateColor(Color.HSL(primary, 0, 0), 60).H;
       _colorData = (uint32(primary) << 16) | uint32(secondary);
     }
 
-    current.colors = _colorData;
-    if (_constellation > 16) {
-      _constellation = 0;
-    }
 
-    if (_constellation == 0) {
-      _constellation = uint8(
-        (_renderer.psuedorandom(currentSupply, 123) % 15) + 1
-      );
-    }
-
-    if (_cloudsAt > 5) {
-      _cloudsAt = 0;
-    }
-
-    if (_cloudsAt == 0) {
-      _constellation = uint8(
-        (_renderer.psuedorandom(currentSupply, 321) % 4) + 1
-      );
-    }
-
-    stats[currentSupply] = current;
     _mint(_to, 1);
   }
 

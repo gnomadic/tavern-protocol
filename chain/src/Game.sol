@@ -141,11 +141,11 @@ contract Game is IGame, Initializable {
     AddressKey[] memory required = IComponentRegistry(componentRegistry)
       .getRequired();
 
-    console.log('required length', required.length);
+    // console.log('required length', required.length);
 
     for (uint8 i = 0; i < required.length; i++) {
       flows[name].push(required[i]);
-      console.log('required', required[i].name);
+      // console.log('required', required[i].name);
     }
 
     for (uint8 i = 0; i < funcs.length; i++) {
@@ -187,10 +187,10 @@ contract Game is IGame, Initializable {
         abi.encodeWithSignature(funcs[i].name, msg.sender, address(this))
       );
       if (!success) {
-        console.log('Execution failed');
+        // console.log('Execution failed');
         revert FlowExecutionError(funcs[i].value, funcs[i].name);
       } else {
-        console.log('Execution success');
+        // console.log('Execution success');
       }
       if (FlowEntity(getEntity('playerParams')).didFail()) {
         revert FlowFailure(

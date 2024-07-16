@@ -74,8 +74,23 @@ contract HeroStats is ISystem, IHeroStats, IPrefabLoader {
         if (numStats[id][stat] == 0) {
             numStatNames.push(stat);
         }
-        // console.log("setting: ", id, stat, value);
+        console.log(
+            "Setting stat %s to %s",
+            stat,
+            value
+        );
         numStats[id][stat] = value;
+    }
+
+    function addNumStat(
+        uint256 id,
+        string memory stat,
+        uint256 value
+    ) external onlySystem {
+        if (numStats[id][stat] == 0) {
+            numStatNames.push(stat);
+        }
+        numStats[id][stat] += value;
     }
 
     function setStringStat(

@@ -101,6 +101,14 @@ contract MonsterStats is ISystem, IHeroStats, IPrefabLoader, ICombatActions {
         numStats[id][stat] = value;
     }
 
+      function addNumStat(uint256 id, string memory stat, uint256 value) external{
+                if (numStats[id][stat] == 0) {
+            numStatNames.push(stat);
+        }
+        numStats[id][stat] += value;
+      }
+
+
     function setStringStat(
         uint256 id,
         string memory stat,

@@ -77,7 +77,7 @@ abstract contract SensoTest is Test {
     prefabLoaders.push(address(stats));
     prefabLoaders.push(address(combatActions));
     prefabLoaders.push(address(heroStatsGatcha));
-    // prefabLoaders.push(address(heroStatResolver));
+    prefabLoaders.push(address(heroStatResolver));
 
     minting.addPrefabLoader(prefabLoaders);
 
@@ -124,7 +124,7 @@ abstract contract SensoTest is Test {
     //     prefabStrings
     // );
 
-createGatcha();
+    createGatcha();
     createStatResolvers();
     uint256 warriorId = 1;
 
@@ -183,9 +183,7 @@ createGatcha();
   }
 
   function setUp() public {
-    console.log('calling setup?');
     deployTavern();
-    console.log('done deploying setup?');
 
     vm.deal(address(1), 1 ether);
     vm.deal(address(2), 1 ether);
@@ -195,7 +193,6 @@ createGatcha();
   function prepareTest() public virtual;
 
   function createGatcha() public {
-
     string[] memory baseStats = new string[](6);
     baseStats[0] = 'authority';
     baseStats[1] = 'sustainability';
@@ -212,7 +209,7 @@ createGatcha();
     odds[2] = 13;
     odds[3] = 25;
     odds[4] = 75;
-  
+
     heroStatsGatcha.setRarityOdds(odds);
 
     uint8[] memory startingStats = new uint8[](5);
@@ -223,28 +220,16 @@ createGatcha();
     startingStats[4] = 5;
 
     heroStatsGatcha.setStartingStats(startingStats);
-
-
-
-    // uint8[] memory rarityOdds = new uint8[](3);
-    // rarityOdds[0] = 50;
-    // rarityOdds[1] = 30;
-    // rarityOdds[2] = 20;
-
-    // heroStatsGatcha.setRarityOdds(rarityOdds);
-
-    // uint8[] memory startingStats = new uint8[](3);
-    // startingStats[0] = 10;
-    // startingStats[1] = 5;
-    // startingStats[2] = 3;
-
-    // heroStatsGatcha.setStartingStats(startingStats);
-
-
   }
 
   function createStatResolvers() public {
-    // heroStatResolver.addResolver("authority", "attack", 0, 1000);
+    heroStatResolver.addResolver('authority', 'attack', 0, 200);
+    heroStatResolver.addResolver('authority', 'defense', 0, 200);
+    heroStatResolver.addResolver('authority', 'speed', 0, 200);
+    heroStatResolver.addResolver('authority', 'health', 0, 200);
+    heroStatResolver.addResolver('authority', 'maxHealth', 0, 200);
+    heroStatResolver.addResolver('authority', 'critChance', 0, 200);
+    heroStatResolver.addResolver('authority', 'critDamage', 0, 200);
     // heroStatResolver.addResolver("sustainability", "defense", 5, 0);
     // heroStatResolver.addResolver("resiliency", "speed", 3, 0);
     // heroStatResolver.addResolver("literacy", "health", 100, 0);
@@ -262,20 +247,17 @@ createGatcha();
   function createWarrior(uint256 warriorId) public {
     prefabNumKeys.push('authority');
     prefabNums.push(5);
-    prefabNumKeys.push('attack');
-    prefabNums.push(10);
-    prefabNumKeys.push('defense');
+    prefabNumKeys.push('sustainability');
     prefabNums.push(5);
-    prefabNumKeys.push('speed');
-    prefabNums.push(3);
-    prefabNumKeys.push('health');
-    prefabNums.push(100);
-    prefabNumKeys.push('maxHealth');
-    prefabNums.push(100);
-    prefabNumKeys.push('critChance');
+    prefabNumKeys.push('resiliency');
     prefabNums.push(5);
-    prefabNumKeys.push('critDamage');
-    prefabNums.push(20);
+    prefabNumKeys.push('literacy');
+    prefabNums.push(5);
+    prefabNumKeys.push('creativity');
+    prefabNums.push(5);
+    prefabNumKeys.push('culture');
+    prefabNums.push(5);
+
 
     prefabStringKeys.push('name');
     prefabStrings.push('Warrior');
@@ -336,11 +318,11 @@ createGatcha();
     prefabNumKeys.push('attack');
     prefabNums.push(1);
     prefabNumKeys.push('defense');
-    prefabNums.push(1);
+    prefabNums.push(0);
     prefabNumKeys.push('speed');
     prefabNums.push(1);
     prefabNumKeys.push('health');
-    prefabNums.push(5);
+    prefabNums.push(1);
     prefabNumKeys.push('maxHealth');
     prefabNums.push(5);
     prefabNumKeys.push('xp');

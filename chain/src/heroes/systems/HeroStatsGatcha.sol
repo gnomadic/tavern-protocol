@@ -93,14 +93,14 @@ contract HeroStatsGatcha is ISystem, IPrefabLoader {
     uint256 prefabId
   ) external onlySystem {
 
-    console.log("HeroStatsGatcha.loadFromPrefab");
+    // console.log("HeroStatsGatcha.loadFromPrefab");
     // roll for rarity
     uint256 rarity = getRarity(tokenId);
-    console.log("Rarity is %s", rarity);
+    // console.log("Rarity is %s", rarity);
     // add it to stats
     heroStats.setNumStat(tokenId, "rarity", rarity);
     uint8[20] memory points = getStartingStats(tokenId, rarity);
-    console.log("got %s base stats", points.length);
+    // console.log("got %s base stats", points.length);
 
     for(uint8 i = 0; i < baseStats.length; i++) {
       heroStats.addNumStat(tokenId, baseStats[i], points[i]);

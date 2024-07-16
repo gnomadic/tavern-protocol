@@ -88,7 +88,7 @@ contract CombatPVE is ISystem {
         ) + monsters.getNumStat(curMatch.tokenId, "speed");
 
         if (playerSpeed > monsterSpeed) {
-            console.log("player going first");
+            // console.log("player going first");
             callCombatAction(
                 action,
                 tokenId,

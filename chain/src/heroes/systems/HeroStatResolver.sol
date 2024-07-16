@@ -33,23 +33,28 @@ contract HeroStatResolver is ISystem, IPrefabLoader {
     resolvers.push(Resolver(baseStat, newStat, addition, multiplier));
   }
 
+  function getResolvers() external view returns (Resolver[] memory) {
+    return resolvers;
+  }
+
   function loadFromPrefab(
     uint256 tokenId,
     uint256 prefabId
   ) external onlySystem {
     for (uint256 i = 0; i < resolvers.length; i++) {
       Resolver memory resolver = resolvers[i];
-      uint256 baseStat = heroStats.getNumStat(tokenId, resolver.baseStat);
       if (resolver.addition != 0) {
-        heroStats.setNumStat(
+        heroStats.addNumStat(
           tokenId,
           resolver.newStat,
-          baseStat + resolver.addition
+          resolver.addition
         );
       }
       if (resolver.multiplier != 0) {
+        uint256 baseStat = heroStats.getNumStat(tokenId, resolver.baseStat);
+        
         uint256 toAdd = (baseStat * resolver.multiplier) / 100;
-
+        
         heroStats.addNumStat(
           tokenId,
           resolver.newStat,

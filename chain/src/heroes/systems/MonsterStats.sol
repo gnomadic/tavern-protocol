@@ -82,7 +82,7 @@ contract MonsterStats is ISystem, IHeroStats, IPrefabLoader, ICombatActions {
         }
 
         combatActionIds[tokenId] = monster.combatActions;
-        console.log("loaded monster: ", tokenId, monsterId);
+        // console.log("loaded monster: ", tokenId, monsterId);
     }
 
     function getPrefab(uint256 id) public view returns (MonsterPrefab memory) {
@@ -94,7 +94,7 @@ contract MonsterStats is ISystem, IHeroStats, IPrefabLoader, ICombatActions {
         string memory stat,
         uint256 value
     ) external onlySystem {
-        console.log("monsterstats.setNumStat", id, stat, value);
+        // console.log("monsterstats.setNumStat", id, stat, value);
         if (numStats[id][stat] == 0) {
             numStatNames.push(stat);
         }

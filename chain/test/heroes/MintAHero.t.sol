@@ -6,6 +6,7 @@ import {Test, console} from 'forge-std/Test.sol';
 import {SensoTest} from './SensoTest.t.sol';
 import {HeroPrefab, Action} from '../../src/heroes/systems/HeroStats.sol';
 import {CombatPrefab} from '../../src/heroes/systems/CombatActions.sol';
+import {Resolver} from '../../src/heroes/systems/HeroStatResolver.sol';
 
 contract MintAHero is SensoTest {
   function prepareTest() public override {}
@@ -80,6 +81,8 @@ contract MintAHero is SensoTest {
     // }
   }
 
+
+
   function test_mint_gatcha() public {
     uint256 prefabId = 1;
 
@@ -122,24 +125,41 @@ contract MintAHero is SensoTest {
 
 
 
-    console.log('prefabSum ', prefabSum);
-    console.log('gatcha adds ', rarityStats[rarity]);
-    console.log('fullRolledSum ', gatchaSum);
+    // console.log('prefabSum ', prefabSum);
+    // console.log('gatcha adds ', rarityStats[rarity]);
+    // console.log('fullRolledSum ', gatchaSum);
     
     assertEq(gatchaSum, prefabSum + rarityStats[rarity]);
-
-    
-
-
-
-
-
-
 
     // assert gatcha sum is rarity base stats
     // assert different between prefab sum and gatcha sum is also rarity base stats
 
     // assertGt(gatchaSum, 0);
+  }
+
+  function test_mint_resolver() public {
+    uint256 prefabId = 1;
+
+    vm.prank(address(1));
+    minting.mintHero{value: 0.05 ether}(prefabId);
+
+    uint256[] memory tokenIds = hero.tokensOfOwner(address(1));
+
+    Resolver[] memory resolvers = heroStatResolver.getResolvers();
+
+    for (uint256 i = 0; i < resolvers.length; i++) {
+      Resolver memory resolver = resolvers[i];
+      if (resolver.addition != 0) {
+        uint256 tokenStat = stats.getNumStat(tokenIds[0], resolver.newStat);
+        assertEq(tokenStat, resolver.addition);
+      }
+      if (resolver.multiplier != 0) {
+        uint256 baseStat = stats.getNumStat(tokenIds[0], resolver.baseStat);
+        uint256 tokenStat = stats.getNumStat(tokenIds[0], resolver.newStat);
+        uint256 toAdd = (baseStat * resolver.multiplier) / 100;
+        assertEq(tokenStat, toAdd);
+      }
+    }  
   }
 
   function test_mint_fail_no_value() public {

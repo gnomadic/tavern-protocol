@@ -15,7 +15,7 @@ contract FightAnEnemy is SensoTest {
 
     function test_create_pve_match() public {
         vm.prank(address(1));
-        console.log("prank 1");
+        // console.log("prank 1");
         minting.mintHero{value: 0.05 ether}(1);
         uint256 player1token = 0;
 
@@ -95,13 +95,13 @@ contract FightAnEnemy is SensoTest {
         //trianing dummy fight is one round
         Match memory curMatch = pve.getMatch(0);
 
-        console.log("checking winner");
+        // console.log("checking winner");
         assertEq(curMatch.winner, 1);
-        console.log("checking active");
+        // console.log("checking active");
         assertEq(curMatch.active, false);
         uint256 playerXP = stats.getNumStat(0, "xp");
         uint256 enemyXP = monsterStats.getNumStat(0, "xp");
-        console.log("playerXP: ", playerXP);
+        // console.log("playerXP: ", playerXP);
         assertEq(playerXP, enemyXP);
         assertGt(playerXP, 0);
 

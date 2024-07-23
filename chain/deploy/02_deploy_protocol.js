@@ -9,11 +9,12 @@ module.exports = async (hre) => {
 
   // ------------------------------------- deploy
 
+  console.log("game ;");
   const game = await deploy("Game", {
     from: deployer,
     log: true,
   });
-
+  console.log("entityfactory ;");
   const entityFactory = await deploy("EntityFactory", {
     from: deployer,
     log: true,

@@ -12,7 +12,7 @@ module.exports = async (hre) => {
 
   // ------------------------------------- Queue Session Component
 
-  let runVerify = true;
+  let runVerify = chainId !== "31337" && hre.network.name !== "localhost" && hre.network.name !== "1337";
 
   let queueSessionAddress = await deployComponent(deploy, deployer, "QueueSession", "QueueSessionEntity", runVerify);
   let rewardERC20Address = await deployComponent(deploy, deployer, "RewardERC20", "Reward20Entity", runVerify);
@@ -22,7 +22,7 @@ module.exports = async (hre) => {
   let DailyInteractionAddress = await deployComponent(deploy, deployer, "DailyInteraction", "DailyInteractionEntity", runVerify);
   let require1155Address = await deployComponent(deploy, deployer, "Require1155", "Require1155Entity", runVerify);
   let reward1155Address = await deployComponent(deploy, deployer, "Reward1155", "Reward1155Entity", runVerify);
-  let InputValidationAddress = await deployComponent(deploy, deployer, "InputValidation", "InputValidation", runVerify, "validateInput(address,address)");
+  let InputValidationAddress = await deployComponent(deploy, deployer, "InputValidation", "InputValidationEntity", runVerify, "validateInput(address,address)");
 
   // ------------------------------------- write address megafile
 

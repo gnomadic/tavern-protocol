@@ -3,7 +3,6 @@ import { Outfit, Signika } from 'next/font/google';
 import './globals.css';
 
 import Head from 'next/head';
-import Header from '@/components/Header';
 import { Analytics } from '@vercel/analytics/react';
 import '@rainbow-me/rainbowkit/styles.css';
 

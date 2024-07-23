@@ -57,16 +57,15 @@ abstract contract TavernHeroTest is Test {
 
     pve = new CombatPVE(
       address(registry),
-      address(hero),
       address(monsterStats),
       address(stats),
       address(combatActions)
     );
+    minting = new Minting(address(registry));
 
-    minting = new Minting(
-      address(registry),
-      address(hero)
-    );
+    pve.setHero(address(hero));
+
+    minting.setHero(address(hero));
 
     prefabLoaders.push(address(stats));
     prefabLoaders.push(address(combatActions));
@@ -75,7 +74,6 @@ abstract contract TavernHeroTest is Test {
 
     minting.addPrefabLoader(prefabLoaders);
 
-    
     registry.register(address(stats));
     registry.register(address(monsterStats));
     registry.register(address(simpleResolver));
@@ -163,18 +161,6 @@ abstract contract TavernHeroTest is Test {
     heroStatResolver.addResolver('authority', 'maxHealth', 0, 200);
     heroStatResolver.addResolver('authority', 'critChance', 0, 200);
     heroStatResolver.addResolver('authority', 'critDamage', 0, 200);
-    // heroStatResolver.addResolver("sustainability", "defense", 5, 0);
-    // heroStatResolver.addResolver("resiliency", "speed", 3, 0);
-    // heroStatResolver.addResolver("literacy", "health", 100, 0);
-    // heroStatResolver.addResolver("creativity", "maxHealth", 100, 0);
-    // heroStatResolver.addResolver("culture", "critChance", 5, 0);
-    // heroStatResolver.addResolver("critDamage", "critDamage", 20, 0);
-    // authority;
-    // sustainability;
-    // resiliency;
-    // literacy;
-    // creativity;
-    // culture;
   }
 
   function createWarrior(uint256 warriorId) public {
@@ -190,7 +176,6 @@ abstract contract TavernHeroTest is Test {
     prefabNums.push(5);
     prefabNumKeys.push('culture');
     prefabNums.push(5);
-
 
     prefabStringKeys.push('name');
     prefabStrings.push('Warrior');

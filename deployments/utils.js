@@ -18,17 +18,20 @@ async function getDeployedContract(name) {
 }
 
 async function deployComponent(deploy, deployer, component, entity, runVerify, required = "") {
-
+// console.log("deploying component: " + component);
     const deployedComponent = await deploy(component, {
         from: deployer,
         log: true,
         args: [`http://ipfs.io/ipfs/${IPFS_COMPONENTS}/${component}.json`],
     });
+    // console.log("deploying entity: " + entity);
 
     const deployedEntity = await deploy(entity, {
         from: deployer,
         log: true,
     });
+    // console.log("deone");
+
 
     const componentRegistry = await getDeployedContract("ComponentRegistry");
     const entityFactory = await getDeployedContract("EntityFactory");
@@ -40,7 +43,7 @@ async function deployComponent(deploy, deployer, component, entity, runVerify, r
 
     if (required.length > 0) {
         if (!await componentRegistry.isRequired(deployedComponent.address)) {
-            tx = await componentRegistry.setRequired(deployedComponent.address, required);
+            tx = await componentRegistry.registerRequired(deployedComponent.address, required);
             await tx.wait();
         }
     }

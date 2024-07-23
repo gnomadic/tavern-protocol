@@ -7,27 +7,25 @@
     "lib": "lib",
     "test": "test"
   },
+  "files": [
+    "src/**/*.sol",
+    "deployments/basesep/**/*",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "forge build",
-    "deploy:sep": "forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --broadcast --verify -vvvv",
-    "deploycatch:sep": "forge script script/deploy/DeployCatch.s.sol:DeployCatch --rpc-url sepolia --broadcast --verify -vvvv",
-    "deployrps:sep": "forge script script/deploy/DeployRPS.s.sol:DeployRPS --rpc-url sepolia --broadcast --verify -vvvv",
-    "deploy:local": "forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url anvil --broadcast -vvvv",
-    "deploydice:sep": "forge script script/deploy/DeployDice.s.sol:DeployDice --rpc-url sepolia --broadcast --verify -vvvv",
-    "abi": "sh copyabi.sh",
-    "verify:sep": "forge script script/deploy/DeployProtocol.s.sol:DeployProtocol --rpc-url sepolia --verify -vvvv"
+    "build": "forge build"
   },
   "repository": {
     "type": "git",
-    "url": "xxx"
+    "url": "git+https://github.com/gnomadic/tavern-protocol.git"
   },
   "keywords": [
     "solidity",
     "game",
     "protocol"
   ],
-  "author": "rpg-protocol",
+  "author": "@gnomadic",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.1.1",

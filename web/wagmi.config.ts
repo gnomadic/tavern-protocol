@@ -38,7 +38,7 @@ export default defineConfig({
   plugins: [
     hardhat({
       project: '../chain',
-      include: heroes
+      include: tavern
     }),
     react(),
     actions()

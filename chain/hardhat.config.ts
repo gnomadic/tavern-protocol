@@ -9,7 +9,17 @@ import "./scripts/updateDeploy";
 
 
 module.exports = {
-  solidity: "0.8.24",
+
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
+  // solidity: "0.8.24",
 
   networks: {
 

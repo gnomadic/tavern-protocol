@@ -26,12 +26,10 @@ contract CombatPVE is ISystem {
 
     constructor(
         address reg,
-        address _hero,
         address _monster,
         address _stats,
         address _combatActions
     ) ISystem(reg) {
-        hero = BalanceChecker(_hero);
         stats = IHeroStats(_stats);
         monsters = IHeroStats(_monster);
         combatActions = ICombatActions(_combatActions);
@@ -165,6 +163,10 @@ contract CombatPVE is ISystem {
 
     function getMatch(uint256 tokenId) external view returns (Match memory) {
         return matches[tokenId];
+    }
+
+    function setHero(address _hero) external {
+        hero = BalanceChecker(_hero);
     }
 
     error MustHold();

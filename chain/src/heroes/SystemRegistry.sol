@@ -21,6 +21,16 @@ contract SystemRegistry is IComponentRegistry {
         emit SystemRegistered(system);
     }
 
+    function bulkRegister(address[] memory systems) public {
+        if (msg.sender != admin) {
+            revert NotAuthorized();
+        }
+        for (uint256 i = 0; i < systems.length; i++) {
+            activeSystems[systems[i]] = true;
+            emit SystemRegistered(systems[i]);
+        }
+    }
+
     function unregister(address system) public {
         if (msg.sender != admin) {
             revert NotAuthorized();

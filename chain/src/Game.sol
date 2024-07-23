@@ -107,7 +107,8 @@ contract Game is IGame, Initializable {
   /// @dev It will load every available function from the module and add it to the game's function lookup.
   /// @dev It will initiatlize the module for the game, so the module can create it's entities or whatever else it needs.
   /// @param component the address of the component to load.
-  function addComponent(address component) public onlyGMOrFactory {
+  function addComponent(address component) public  {
+    if (msg.sender != gm && msg.sender != gameFactory) revert OnlyGM();
     // TODO verify the module exists in the registry for user safety
 
     IComponent newComponent = IComponent(component);
@@ -214,8 +215,4 @@ contract Game is IGame, Initializable {
   }
   error OnlyGM();
 
-  modifier onlyGMOrFactory() {
-    if (msg.sender != gm && msg.sender != gameFactory) revert OnlyGM();
-    _;
-  }
 }
